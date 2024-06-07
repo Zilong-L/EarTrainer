@@ -8,4 +8,12 @@ export default defineConfig({
   build: {
     target: 'esnext',
   },
+  resolve: {
+    alias: {
+      '@components': '/src/Components',
+      '@utils': '/src/utils',
+      '@assets': '/src/assets',
+      // Add more aliases as needed
+    }
+  },
 })

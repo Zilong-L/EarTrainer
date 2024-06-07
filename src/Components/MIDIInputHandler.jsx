@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { detect }  from "@tonaljs/chord-detect";
-import { Midi }  from "@tonaljs/midi";
+import { Midi,Note }  from "tonal"
 import { Typography,Box } from '@mui/material';
-
+import { detect } from "@tonaljs/chord-detect"
 let notes = []
 
 const MIDIInputHandler = ({ chord, setChord }) => {
@@ -47,7 +46,7 @@ const MIDIInputHandler = ({ chord, setChord }) => {
       {"Chord: "+chord }
   </Typography>
   <Typography variant="h3" component="h3" sx={{width:"100%"}}>
-  {"Notes: "+activeNotes.map(note => midiToNoteWithOctave(note)).join(', ')}
+  {"Notes: "+activeNotes.map(midi => Note.fromMidi(midi)).join(', ')}
   </Typography>
   </Box>);
   }

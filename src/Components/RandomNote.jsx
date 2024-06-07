@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Typography ,Grid} from '@mui/material';
 import MIDIInputHandler from './MIDIInputHandler';
-const notes = ['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+const flatNotes = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+const sharpNotes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 const chordTypeAbbreviations = {
-  'Major': '',
+  'Major': 'M',
   'Minor': 'm',
   'Diminished': 'dim',
   'Augmented': 'aug',
@@ -26,6 +27,7 @@ const chordTypeAbbreviations = {
 const RandomNote = ({ chordType }) => {
   const [currentNote, setCurrentNote] = useState('C');
   const [chord,setChord] = useState('C');
+  const notes = flatNotes;
   useEffect(() => {
     const interval = setInterval(() => {
       const targetChord = currentNote + chordTypeAbbreviations[chordType];
@@ -38,10 +40,10 @@ const RandomNote = ({ chordType }) => {
       if(chordCandidates.some(chord => chord.split('/')[0] === targetChord)){
         setCurrentNote(newNote);
       }
-    }, 200); // 每2000毫秒检查一次
+    }, 100); 
 
-    return () => clearInterval(interval); // 清除定时器
-  }, [chord,currentNote]); // 当和弦变化时重新设置定时器
+    return () => clearInterval(interval); 
+  }, [chord,currentNote]); 
 
   return (
     <Grid container direction="column" alignItems="center" justify="center" style={{ height: '100vh' ,paddingLeft:'10%' }}>
