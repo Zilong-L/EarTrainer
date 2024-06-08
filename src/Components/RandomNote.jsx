@@ -29,8 +29,8 @@ const RandomNote = ({ chordType }) => {
   const [chord,setChord] = useState('C');
   const notes = flatNotes;
   useEffect(() => {
-    const interval = setInterval(() => {
-      const targetChord = currentNote + chordTypeAbbreviations[chordType];
+    
+    const targetChord = currentNote + chordTypeAbbreviations[chordType];
       const chordCandidates = chord.split(', ');
       
       const newNote = notes[Math.floor(Math.random() * notes.length)];
@@ -40,9 +40,6 @@ const RandomNote = ({ chordType }) => {
       if(chordCandidates.some(chord => chord.split('/')[0] === targetChord)){
         setCurrentNote(newNote);
       }
-    }, 100); 
-
-    return () => clearInterval(interval); 
   }, [chord,currentNote]); 
 
   return (
