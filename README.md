@@ -32,6 +32,7 @@ Visit the [Chord Practising App](https://Zilong-L.github.io/ChordTrainer/) and s
 # TODOs
 
 ## Labor-Intensive Tasks
+
 1. ~~**Show Note with Chord Type**~~
    ~~- Currently, only the root note is displayed.~~
    ~~- User has to choose a chord type from the sidebar to play.~~
@@ -47,15 +48,19 @@ Visit the [Chord Practising App](https://Zilong-L.github.io/ChordTrainer/) and s
    ~~- Ensure notes are correctly registered and released when no notes are being played.~~
 
 ## Creative Tasks
+
 4. **Evaluate WebAssembly Performance**
+
    - Determine if WebAssembly is faster than the pure JavaScript implementation.
    - Use browser APIs to compare performance, particularly for FFT results.
 
 5. **Sound to Chord Transformation Algorithm**
+
    - Develop a robust algorithm for converting sound to chord notation.
    - This is crucial for accurate chord detection and feedback.
 
 6. **Random Chord Generation**
+
    - Enhance the practice mode by generating random chords of selected types.
    - This will help users practice a variety of chords in a structured manner.
 
@@ -63,15 +68,16 @@ Visit the [Chord Practising App](https://Zilong-L.github.io/ChordTrainer/) and s
    - Implement functionality for practicing with real chord progressions.
    - Start with simple progressions and gradually introduce more complex sequences.
 
-8. **Open Form Chord Practice Support**
-   - Extend the app to support practice with open form chords.
-   - This will add variety and challenge to the practice sessions.
+~~8. **Open Form Chord Practice Support**~~
+~~ - Extend the app to support practice with open form chords.~~
+~~ - This will add variety and challenge to the practice sessions.~~
 
 9. **Broken Chord Practice Support**
    - Introduce practice modes for broken chords (arpeggios).
    - This will help users develop finger dexterity and musicality.
 
 ## Future Enhancements
+
 10. **Additional Features and Improvements**
     - Continuously gather user feedback to improve the app.
     - Consider adding more instruments and features based on user demand.
