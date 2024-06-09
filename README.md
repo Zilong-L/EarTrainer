@@ -65,12 +65,14 @@ Visit the [Chord Practising App](https://Zilong-L.github.io/ChordTrainer/) and s
    - This will help users practice a variety of chords in a structured manner.
 
 7. **Chord Progression Practice**
+
    - Implement functionality for practicing with real chord progressions.
    - Start with simple progressions and gradually introduce more complex sequences.
 
-~~8. **Open Form Chord Practice Support**~~
-~~ - Extend the app to support practice with open form chords.~~
-~~ - This will add variety and challenge to the practice sessions.~~
+8. ~~**Open Form Chord Practice Support**~~
+
+   - ~~Extend the app to support practice with open form chords.~~
+   - ~~This will add variety and challenge to the practice sessions.~~
 
 9. **Broken Chord Practice Support**
    - Introduce practice modes for broken chords (arpeggios).
