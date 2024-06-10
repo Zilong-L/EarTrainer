@@ -57,7 +57,7 @@ const MIDIInputHandler = ({ chord, setChord }) => {
     } else {
       setChord("");
     }
-  }, [activeNotes, Chord]);
+  }, [activeNotes, chord]);
 
   return (
     <Box sx={{ width: "100%" }}>
