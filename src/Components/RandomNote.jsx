@@ -35,7 +35,7 @@ const chordTypeAbbreviations = {
   Diminished: "dim",
   Augmented: "aug",
   "Dominant 7th": "7",
-  "Major 7th": "M7",
+  "Major 7th": "maj7",
   "Minor 7th": "m7",
   "Half Diminished 7th": "m7-5",
   "Diminished 7th": "dim7",
