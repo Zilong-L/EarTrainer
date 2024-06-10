@@ -58,7 +58,10 @@ const RandomNote = ({ chordType }) => {
     const targetChord = currentNote + chordTypeAbbreviations[chordType];
     const chordCandidates = chord.split(", ");
 
-    const newNote = notes[Math.floor(Math.random() * notes.length)];
+    let newNote = notes[Math.floor(Math.random() * notes.length)];
+    while (newNote == currentNote) {
+      newNote = notes[Math.floor(Math.random() * notes.length)];
+    }
     if (chordCandidates.includes(targetChord)) {
       setCurrentNote(newNote);
     }
