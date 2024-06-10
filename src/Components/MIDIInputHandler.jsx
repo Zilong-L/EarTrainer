@@ -4,9 +4,10 @@ import { Typography, Box } from "@mui/material";
 import { detect } from "@tonaljs/chord-detect";
 import { Piano } from "@tonejs/piano";
 let notes = [];
-
+const SoundLevels = [1, 3, 5, 10, 16];
 const MIDIInputHandler = ({ chord, setChord }) => {
   const [activeNotes, setActiveNotes] = useState([]);
+  const [soundLevel, setSoundLevel] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -16,7 +17,7 @@ const MIDIInputHandler = ({ chord, setChord }) => {
       const midi = await navigator.requestMIDIAccess();
       console.log("MIDI loaded");
       const piano = new Piano({
-        velocities: 5,
+        velocities: SoundLevels[soundLevel],
       });
       //connect it to the speaker output
       piano.toDestination();
@@ -46,7 +47,7 @@ const MIDIInputHandler = ({ chord, setChord }) => {
         }
       }
     })();
-  }, []);
+  }, [soundLevel]);
 
   useEffect(() => {
     const notesString = activeNotes.map((note) => Midi.midiToNoteName(note));
@@ -56,7 +57,7 @@ const MIDIInputHandler = ({ chord, setChord }) => {
     } else {
       setChord("");
     }
-  }, [activeNotes, setChord]);
+  }, [activeNotes, Chord]);
 
   return (
     <Box sx={{ width: "100%" }}>
