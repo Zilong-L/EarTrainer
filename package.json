@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "postbuild": "sed -i 's|<link rel=\"icon\" type=\"image/svg+xml\" href=\"/vite.svg\" />|<link rel=\"icon\" type=\"image/png\" href=\"biglogo.png\" />|' ./dist/index.html && sed -i 's|<title>Vite + React</title>|<title>Chord Trainer</title>|' ./dist/index.html"
+    "postbuild": "bash scripts/update-html.sh"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
