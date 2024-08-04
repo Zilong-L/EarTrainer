@@ -1,6 +1,7 @@
 import React from 'react';
 import { CssBaseline, Container,Box } from '@mui/material';
-import LayoutWrapper from '@components/LayoutWrapper';
+import LayoutWrapper from '@components/LayoutWrapper'
+import ChordTrainer from '@components/ChordTrainer';
 function App() {
 
   return (

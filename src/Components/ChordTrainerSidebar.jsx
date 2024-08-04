@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, List, ListItemButton, ListItemText, Collapse } from '@mui/material';
+import { Toolbar,Drawer, List, ListItemButton, ListItemText, Collapse } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 const chordTypes = {
@@ -7,7 +7,7 @@ const chordTypes = {
   Sevenths: ['Major 7th', 'Minor 7th', 'Dominant 7th', 'Half Diminished 7th', 'Diminished 7th']
 };
 
-const Sidebar = ({ chordType, setChordType, isOpen }) => {
+const ChordTrainerSidebar = ({ chordType, setChordType, isOpen }) => {
   const [open, setOpen] = useState({
     Triads: true,
     Sevenths: true
@@ -38,6 +38,7 @@ const Sidebar = ({ chordType, setChordType, isOpen }) => {
     }}
   >
       <List sx={{marginTop:'30px'}}>
+        <Toolbar/>
         {Object.entries(chordTypes).map(([category, chords]) => (
           <React.Fragment key={category}>
             <ListItemButton onClick={() => handleClick(category)}>
@@ -79,4 +80,4 @@ const Sidebar = ({ chordType, setChordType, isOpen }) => {
   );
 };
 
-export default Sidebar;
+export default ChordTrainerSidebar;
