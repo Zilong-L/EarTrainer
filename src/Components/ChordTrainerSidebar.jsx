@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Toolbar,Drawer, List, ListItemButton, ListItemText, Collapse } from '@mui/material';
+import { Toolbar,SwipeableDrawer, List, ListItemButton, ListItemText, Collapse } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 const chordTypes = {
@@ -7,12 +7,25 @@ const chordTypes = {
   Sevenths: ['Major 7th', 'Minor 7th', 'Dominant 7th', 'Half Diminished 7th', 'Diminished 7th']
 };
 
-const ChordTrainerSidebar = ({ chordType, setChordType, isOpen }) => {
+const ChordTrainerSidebar = ({ chordType, setChordType,isOpen,setIsOpen }) => {
   const [open, setOpen] = useState({
     Triads: true,
     Sevenths: true
   });
-
+  const toggleDrawer = (chordtype,open) => (event) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    console.log(open)
+    if(chordtype){
+      setChordType(chordtype)
+    }
+    setIsOpen(open);
+  };
   const handleClick = (category) => {
     setOpen(prev => ({
       ...prev,
@@ -21,29 +34,19 @@ const ChordTrainerSidebar = ({ chordType, setChordType, isOpen }) => {
   };
   console.log(chordType)
   return (
-    <Drawer
-    variant="permanent"
-    anchor="left"
-
-    sx={{
-      width: isOpen ? 240 : 0,
-      flexShrink: 0,
-      transition: 'width 300ms ease',
-      '& .MuiDrawer-paper': {
-        width: isOpen ? 240 : 0,
-        overflowX: 'overflow',
-        bgcolor: '#f2ecee',
-        transition: 'width 300ms ease'
-      }
-    }}
-  >
-      <List sx={{marginTop:'30px'}}>
-        <Toolbar/>
+    <SwipeableDrawer
+      anchor="left"
+      open={isOpen}
+      onClose={toggleDrawer(null,false)}
+      onOpen={toggleDrawer(null,true)}
+    >
+   <Toolbar/>
+      <List sx={{color: (theme)=>theme.palette.text.secondary}} >
         {Object.entries(chordTypes).map(([category, chords]) => (
           <React.Fragment key={category}>
             <ListItemButton onClick={() => handleClick(category)}>
-              <ListItemText primary={category} />
-              {isOpen?open[category] ? <ExpandLess /> : <ExpandMore />:<></>}
+              <ListItemText primary={category} sx={{width:'200px'}} />
+              {open[category] ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open[category]} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
@@ -55,17 +58,18 @@ const ChordTrainerSidebar = ({ chordType, setChordType, isOpen }) => {
                       whiteSpace: 'nowrap', // Prevents wrapping
                       overflow: 'hidden',  // Hides overflow
                       textOverflow: 'ellipsis',// Adds an ellipsis if the text overflows
-                      bgcolor: chordType === chord ? '#d3d3d3' : 'transparent',
                       '&.Mui-selected': {
-                        bgcolor: '#dddddd', // Darker grey for selected item
+                         bgcolor: (theme)=>theme.palette.action.selected , // Darker grey for selected item
                         '& .MuiListItemText-primary': {
                           fontWeight: 'bold',
-                          color: '#000000'
+                        },
+                        '&.Mui-selected:hover':{
+                          bgcolor: (theme)=>theme.palette.action.selectedHover ,
                         }
                       }
                     }} 
                     
-                    onClick={() => setChordType(chord)}
+                    onClick={toggleDrawer(chord, false)}
                     selected={chordType === chord}
                   >
                     <ListItemText primary={chord} />
@@ -76,7 +80,8 @@ const ChordTrainerSidebar = ({ chordType, setChordType, isOpen }) => {
           </React.Fragment>
         ))}
       </List>
-    </Drawer>
+
+    </SwipeableDrawer>
   );
 };
 

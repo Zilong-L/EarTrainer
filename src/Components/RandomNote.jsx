@@ -76,10 +76,11 @@ const RandomNote = ({ chordType }) => {
       direction="column"
       alignItems="center"
       justify="center"
-      style={{ height: "100vh", paddingLeft: "10%" }}
+      display="absolute"
+      style={{ height: "75vh", paddingLeft: "10%" }}
     >
       <Grid item style={{ height: "30vh", width: "100%" }}>
-        <Typography variant="h1" component="h2" gutterBottom align="left">
+        <Typography color="inherit" variant="h1" component="h2" gutterBottom align="left">
           {currentNote}
           {chordTypeAbbreviations[chordType]}
         </Typography>

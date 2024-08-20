@@ -1,55 +1,61 @@
 import React, { useState } from 'react';
-import { CssBaseline, Container, Grid, Paper, Box,Button} from '@mui/material';
+import { CssBaseline, Container, Grid, Paper, Box,Button,Modal,Typography} from '@mui/material';
 import EarTrainerSidebar from './EarTrainerSidebar';
 import logo from '@assets/logo.png'
 import RandomNote from './RandomNote';
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 
-const ChordTrainer = () => {
-  const [chordType, setChordType] = useState('Major Triad');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // EarTrainerSidebar is visible by default
+const EarTrainer = () => {
+  const [chordType, setChordType] = useState('Major');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // EarTrainerSidebar is visible by default
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <Box sx={{ position: 'absolute',  zIndex: 1300 }}>
-        <Button 
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-          sx={{ 
-            m: 1, 
-            transform: isSidebarOpen ? 'rotateY(180deg)' : 'rotateY(0deg)',  // Rotate the icon
-            transition: 'transform 300ms ease',  // Smooth transition for rotation
-            color:'black'
-          }}
-        >
-          <EastOutlinedIcon />
-        </Button>
-      </Box>
-      <EarTrainerSidebar chordType={chordType} setChordType={setChordType} isOpen={isSidebarOpen} />
-      <Container maxWidth="lg" sx={{ flexGrow: 1, width: '1000px', height: '100%' ,paddingY:'10px' }}>
-        <Paper sx={{
-          paddingTop: '100px',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          overflow: 'auto',
-          width: "100%",
-          position: 'relative'  // Add this line to make Paper a relative container
-        }}>
-          <RandomNote chordType={chordType}/>
-          <img src={logo} alt="Logo" style={{
-            position: 'absolute',
-            right: 0,
-            bottom: 0,
-            maxWidth: '100px',
-            maxHeight: '100px'
-          }} />
-        </Paper>
-      </Container>
+      <EarTrainerSidebar chordType={chordType} setChordType={setChordType} isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      <Container maxWidth="lg" sx={{ flexGrow: 1, width: '1000px', height: '100%', paddingY: '10px'}}>
+  <Paper
+
+    sx={{
+      paddingTop: '100px',
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      overflow: 'auto',
+      width: "100%",
+      position: 'relative',  // Ensures absolute positioning is relative to Paper
+      color:(theme)=>theme.palette.text.secondary 
+    }}
+  >
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: '20px',  // Better positioning near the top
+              left: '110px', // Aligns the button to the right with padding
+            }}
+          >
+            <Button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              variant="contained"
+              color="primary"  // Make the button stand out with a primary color
+              sx={{
+                textTransform: 'uppercase',  // Add a slight emphasis
+                paddingX: '15px',  // Add horizontal padding for better aesthetics
+                paddingY: '8px',
+              }}
+            >
+              Change Chord
+            </Button>
+          </Box>
+    <RandomNote chordType={chordType} />
+    
+
+  </Paper>
+</Container>
     </Box>
   );
 };
 
-export default ChordTrainer;
+export default EarTrainer;
