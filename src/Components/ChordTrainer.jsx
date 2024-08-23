@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { CssBaseline, Container, Grid, Paper, Box, Button, Modal, Typography } from '@mui/material';
+import { CssBaseline, Container, Grid, Paper, Box, Button, Modal, Typography,AppBar,Toolbar } from '@mui/material';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+
 import ChordTrainerSidebar from './ChordTrainerSidebar';
 import logo from '@assets/logo.png'
 import RandomNote from './RandomNote';
@@ -9,13 +11,23 @@ const ChordTrainer = () => {
   const [chordType, setChordType] = useState('Major');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // ChordTrainerSidebar is visible by default
 
-  return (
-    <Box sx={{ display: 'flex' }}>
+  return (<>
+    <AppBar position="static" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+          <Toolbar sx={{ color:(theme)=>theme.palette.text.primary }}>
+            <Typography variant="h6" sx={{ flexGrow: 1}}>
+              Music Trainer
+            </Typography>
+            <Button color="inherit" component={Link} to="/">Chord Trainer</Button>
+            <Button color="inherit" component={Link} to="/ear-trainer">Ear Trainer</Button>
+            {/* Add more buttons for additional trainers */}
+          </Toolbar>
+        </AppBar>
+      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+    
       <CssBaseline />
       <ChordTrainerSidebar chordType={chordType} setChordType={setChordType} isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
       <Container maxWidth="lg" sx={{ flexGrow: 1, width: '1000px', height: '100%', paddingY: '10px' }}>
         <Paper
-
           sx={{
             paddingTop: '100px',
             height: '100%',
@@ -57,6 +69,7 @@ const ChordTrainer = () => {
         </Paper>
       </Container>
     </Box>
+    </>
   );
 };
 

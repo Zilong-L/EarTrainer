@@ -1,6 +1,5 @@
 import React from 'react';
-import { CssBaseline, Box, AppBar, Toolbar, Typography, Button, ThemeProvider, createTheme } from '@mui/material';
-import { lighten } from '@mui/material/styles';
+import { CssBaseline, Box,  ThemeProvider, createTheme } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import ChordTrainer from './ChordTrainer';
 import EarTrainer from './EarTrainer';
@@ -74,23 +73,13 @@ const ThemedContent = () => {
     <ThemeProvider theme={currentTheme}>
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
         <CssBaseline />
-        <AppBar position="static" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-          <Toolbar sx={{ color:(theme)=>theme.palette.text.primary }}>
-            <Typography variant="h6" sx={{ flexGrow: 1}}>
-              Music Trainer
-            </Typography>
-            <Button color="inherit" component={Link} to="/">Chord Trainer</Button>
-            <Button color="inherit" component={Link} to="/ear-trainer">Ear Trainer</Button>
-            {/* Add more buttons for additional trainers */}
-          </Toolbar>
-        </AppBar>
-        <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+        
           <Routes>
             <Route path="/" element={<ChordTrainer />} />
             <Route path="/ear-trainer" element={<EarTrainer />} />
             {/* Add more routes for additional trainers */}
           </Routes>
-        </Box>
+        
       </Box>
     </ThemeProvider>
   );

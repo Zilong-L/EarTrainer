@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Midi, Note } from "tonal";
+import * as Tone from "tone";
 import { Typography, Box } from "@mui/material";
 import { detect } from "@tonaljs/chord-detect";
-import { Piano } from "@tonejs/piano";
 let notes = [];
-let piano = null;
 let midi = null;
-const SoundLevels = [1, 3, 5, 10, 16];
+
+
+const sampler = new Tone.Sampler({
+  urls: {
+    C4: "C4.mp3",
+    "D#4": "Ds4.mp3",
+    "F#4": "Fs4.mp3",
+    A4: "A4.mp3",
+  },
+  release: 1,
+  baseUrl: "https://tonejs.github.io/audio/salamander/",
+}).toDestination();
+
+Tone.loaded().then(() => {
+  console.log("Sampler loaded and ready to use");
+});
 
 const MIDIInputHandler = ({ chord, setChord }) => {
   const [activeNotes, setActiveNotes] = useState([]);
-  const [soundLevel,setSoundLevel ] = useState(0)
   useEffect(() => {
     (async () => {
       if (navigator.requestMIDIAccess == null) {
@@ -19,45 +32,35 @@ const MIDIInputHandler = ({ chord, setChord }) => {
       if(midi == null){
         midi = await navigator.requestMIDIAccess();
         console.log("MIDI loaded");
+        if (midi) {
+          console.log('hi')
+          const inputs = midi.inputs.values();
+          for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
+            input.value.onmidimessage = (message) => {
+              const [command, note, velocity] = message.data;
+              console.log(note)
+              if (command === 144 && velocity > 0) {
+                // Note on
+                notes = notes.concat(note);
+                sampler.triggerAttack(Note.fromMidi(note));
+              } else if (command === 128 || (command === 144 && velocity === 0)) {
+                // Note off
+                sampler.triggerRelease(Note.fromMidi(note));
+                notes = notes.filter((n) => n !== note);
+              }
+    
+              setActiveNotes([...new Set(notes.sort((a, b) => a - b))]);
+            };
+          }
+        }
       }
-      console.log(piano)
-      if(piano == null)
-      {  piano = new Piano({
-          velocities: SoundLevels[soundLevel],
-        });
-        //connect it to the speaker output
-        piano.toDestination();
-        await piano.load();
-        console.log("Piano loaded");
-      }})();
+
+      })();
 
     }, []);
-  useEffect(() => {
-    if (midi && piano) {
-      const inputs = midi.inputs.values();
-      for (
-        let input = inputs.next();
-        input && !input.done;
-        input = inputs.next()
-      ) {
-        input.value.onmidimessage = (message) => {
-          const [command, note, velocity] = message.data;
-          console.log('midi input')
-          if (command === 144) {
-            notes = notes.concat(note);
-            piano.keyDown({
-              note: Note.fromMidi(note),
-              velocity: velocity / 127,
-            });
-          } else if (command === 128) {
-            piano.keyUp({ note: Note.fromMidi(note) });
-            notes = notes.filter((n) => n !== note);
-          }
-          setActiveNotes([... new Set(notes.sort((a, b) => a - b))]);
-        };
-      }
-    }
-  }, [soundLevel,piano,midi]);
+    useEffect(() => {
+      
+    }, [midi]);
 
   useEffect(() => {
     const notesString = activeNotes.map((note) => Midi.midiToNoteName(note));
