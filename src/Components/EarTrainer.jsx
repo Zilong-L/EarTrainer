@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { CssBaseline, Container,  Paper, Box, Button,  Typography,AppBar,Toolbar } from '@mui/material';
-import {  Link } from 'react-router-dom';
+import { CssBaseline, Container, Paper, Box, Button, Typography, AppBar, Toolbar } from '@mui/material';
+import { Link } from 'react-router-dom';
 import EarTrainerSidebar from './EarTrainerSidebar';
 import RandomNote from './RandomNote';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const EarTrainer = () => {
   const [chordType, setChordType] = useState('Major');
@@ -10,13 +11,23 @@ const EarTrainer = () => {
 
   return (
     <>
-      <AppBar position="static" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      <AppBar position="static" sx={{
+        zIndex: (theme) => theme.zIndex.drawer + 1
+      }}>
         <Toolbar sx={{ color: (theme) => theme.palette.text.primary }}>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Music Trainer
+          <Button
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            variant="contained"
+            color="primary"  // Make the button stand out with a primary color
+            sx={{ boxShadow: 'none' }}
+          >
+            <MenuIcon />
+          </Button>
+          <Typography variant="h6" sx={{ marginLeft: '15px', flexGrow: 1 }}>
+            Ear Trainer
           </Typography>
-          <Button color="inherit" component={Link} to="/">Chord Trainer</Button>
-          <Button color="inherit" component={Link} to="/ear-trainer">Ear Trainer</Button>
+          <Button variant="contained" component={Link} to="/ear-trainer" sx={{ boxShadow: 'none' }}>Ear Trainer</Button>
+          <Button variant="contained" component={Link} to="/chord-trainer" sx={{ boxShadow: 'none' }}>Chord Trainer</Button>
           {/* Add more buttons for additional trainers */}
         </Toolbar>
       </AppBar>
@@ -46,18 +57,7 @@ const EarTrainer = () => {
                 left: '110px', // Aligns the button to the right with padding
               }}
             >
-              <Button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                variant="contained"
-                color="primary"  // Make the button stand out with a primary color
-                sx={{
-                  textTransform: 'uppercase',  // Add a slight emphasis
-                  paddingX: '15px',  // Add horizontal padding for better aesthetics
-                  paddingY: '8px',
-                }}
-              >
-                Change Chord
-              </Button>
+
             </Box>
             <RandomNote chordType={chordType} />
 

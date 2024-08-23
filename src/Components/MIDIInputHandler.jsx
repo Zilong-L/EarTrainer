@@ -9,10 +9,19 @@ let midi = null;
 
 const sampler = new Tone.Sampler({
   urls: {
+    C1: "C1.mp3",
+    C2: "C2.mp3",
+    C3: "C3.mp3",
     C4: "C4.mp3",
-    "D#4": "Ds4.mp3",
-    "F#4": "Fs4.mp3",
+    C5: "C5.mp3",
+    C6: "C6.mp3",
+    A1: "A1.mp3",
+    A2: "A2.mp3",
+    A3: "A3.mp3",
     A4: "A4.mp3",
+    A5: "A5.mp3",
+    A6: "A6.mp3",
+    
   },
   release: 1,
   baseUrl: "https://tonejs.github.io/audio/salamander/",
@@ -56,11 +65,10 @@ const MIDIInputHandler = ({ chord, setChord }) => {
       }
 
       })();
+      return 
 
     }, []);
-    useEffect(() => {
-      
-    }, [midi]);
+
 
   useEffect(() => {
     const notesString = activeNotes.map((note) => Midi.midiToNoteName(note));

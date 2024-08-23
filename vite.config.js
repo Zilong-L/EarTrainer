@@ -4,7 +4,6 @@ import react from "@vitejs/plugin-react-swc";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // base: '/ChordTrainer',
   build: {
     target: "esnext",
   },
@@ -13,6 +12,7 @@ export default defineConfig({
       "@components": "/src/Components",
       "@utils": "/src/utils",
       "@assets": "/src/assets",
+      "@themes": "/src/themes"
       // Add more aliases as needed
     },
   },
