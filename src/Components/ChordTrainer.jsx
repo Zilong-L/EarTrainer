@@ -2,38 +2,45 @@ import React, { useState } from 'react';
 import { CssBaseline, Container,  Paper, Box, Button,  Typography,AppBar,Toolbar } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-import ChordTrainerSidebar from './ChordTrainerSidebar';
+import Sidebar from './Sidebar';
 import RandomNote from './RandomNote';
 import MenuIcon from '@mui/icons-material/Menu';
+const apps = [{name: 'Ear Trainer', path: '/ear-trainer'}, {name: 'Chord Trainer', path: '/chord-trainer'}]
 
 const ChordTrainer = () => {
   const [chordType, setChordType] = useState('Major');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // ChordTrainerSidebar is visible by default
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar is visible by default
 
   return (<>
-    <AppBar position="static" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-          <Toolbar sx={{ color:(theme)=>theme.palette.text.primary }}>
+    <AppBar position="static" sx={{
+      boxShadow: 0
+      }}>
+        <Toolbar sx={{ color: (theme) => theme.palette.text.primary }}>
+
+          <Typography variant="h6" sx={{ marginLeft: '15px', flexGrow: 1 }}>
+            Chord Trainer
+          </Typography>
+
           <Button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                variant="contained"
-                color="primary"  // Make the button stand out with a primary color
-                sx={{boxShadow:'none'}}
-              >
-                <MenuIcon/>
-              </Button>
-          <Typography variant="h6" sx={{ marginLeft:'15px', flexGrow: 1 }}>
-              Chord Trainer
-            </Typography>
-            <Button variant="contained"  sx={{boxShadow:'none'}} component={Link} to="/ear-trainer">Ear Trainer</Button>
-            <Button variant="contained" sx={{boxShadow:'none'}} component={Link} to="/chord-trainer">Chord Trainer</Button>
-            {/* Add more buttons for additional trainers */}
-          </Toolbar>
-        </AppBar>
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            variant="contained"
+            color="primary"  // Make the button stand out with a primary color
+            sx={{ boxShadow: 'none', '@media (min-width:600px)': { display: 'none' } }}
+          >
+            <MenuIcon />
+          </Button>
+
+          {apps.map((item)=>(<Button variant="contained" component={Link} to={item.path} key={item.name}sx={{
+            display: 'none',
+            '@media (min-width:600px)': { display: 'block', boxShadow: 'none', textTransform: 'none' }
+          }}>{item.name}</Button>))
+          }
+        </Toolbar>
+      </AppBar>
       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
     
       <CssBaseline />
-      <ChordTrainerSidebar chordType={chordType} setChordType={setChordType} isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-      <Container maxWidth="lg" sx={{ flexGrow: 1, width: '1000px', height: '100%', paddingY: '10px' }}>
+      <Sidebar  isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
         <Paper
           sx={{
             paddingTop: '100px',
@@ -48,6 +55,7 @@ const ChordTrainer = () => {
             color: (theme) => theme.palette.text.secondary
           }}
         >
+            <Container maxWidth="lg" >
 
           <Box
             sx={{
@@ -61,9 +69,8 @@ const ChordTrainer = () => {
 
           <RandomNote chordType={chordType} />
 
-
+          </Container>
         </Paper>
-      </Container>
     </Box>
     </>
   );

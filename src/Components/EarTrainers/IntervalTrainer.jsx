@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Sidebar from '@components/Sidebar';
 import MenuIcon from '@mui/icons-material/Menu';
 const apps = [{name: 'Ear Trainer', path: '/ear-trainer'}, {name: 'Chord Trainer', path: '/chord-trainer'}]
-const trainers = [{name:'Degree',path:'/ear-trainer/degree-trainer'},{name:'Interval',path:'/ear-trainer/interval-trainer'},{name:'Scale',path:'/ear-trainer/scale-trainer'},{name:'Progression',path:'/ear-trainer/progression-trainer'}]
+const trainers = [{name:'Degree Trainer',path:'/ear-trainer/degree-trainer'},{name:'Interval Trainer',path:'/ear-trainer/interval-trainer'},{name:'Scale Trainer',path:'/ear-trainer/scale-trainer'},{name:'Progression Trainer',path:'/progression-trainer'}]
 const EarTrainer = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar is visible by default
 
@@ -35,6 +35,7 @@ const EarTrainer = () => {
         </Toolbar>
       </AppBar>
       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+        <CssBaseline />
         <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
         <Container maxWidth="lg" sx={{paddingTop:'20px',
           '@media (min-width:600px)': {paddingTop:'4rem'}
@@ -42,7 +43,7 @@ const EarTrainer = () => {
             <Grid container spacing={2}>
               {trainers.map((item) => (
                 <Grid item xs={12} sm={6} md={4} key={item.name}>
-                  <Button variant="contained" fullWidth LinkComponent={Link} sx={{ height:'12rem',textTransform: 'none' }} to={item.path}><Typography variant="h3">{item.name}</Typography></Button>
+                  <Button variant="contained" fullWidth LinkComponent={Link} sx={{ height:'100px',textTransform: 'none' }} to={item.path}>{item.name}</Button>
                 </Grid>
               ))}
             </Grid>

@@ -1,16 +1,39 @@
 import { createTheme } from '@mui/material';
-
+import NunitoRegular from '@assets/font/Nunito-Regular.ttf';
+import NunitoBold from '@assets/font/Nunito-Bold.ttf';
+const base = createTheme({
+  typography: {
+    fontFamily: 'Nunito, sans-serif',
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: `
+        @font-face {
+          font-family: 'Nunito';
+          src: url(${NunitoRegular}) format('truetype');
+          font-weight: 400;
+        }
+        @font-face {
+          font-family: 'Nunito';
+          src: url(${NunitoBold}) format('truetype');
+          font-weight: 700;
+        }
+      `,
+    },
+  },
+})
 const earTrainerTheme = createTheme({
+  ...base,
   palette: {
-    primary: { main: '#00712D' }, // Chord Trainer primary color
-    secondary: { main: '#FFD700' }, // Optional secondary color
+    primary: { main: '#FFFBE6' }, // Chord Trainer primary color
+    secondary: { main: '#FFFBE6' }, // Optional secondary color
     background: {
       default: '#FFFBE6', // Background for pages
-      paper: '#fffefc', // Background for paper surfaces (cards, modals)
+      paper: '#FFFBE6', // Background for paper surfaces (cards, modals)
       modal: 'FFFBE6'
     },
     text: {
-      primary: '#FFFEFE', // Main text color
+      primary: '#202020', // Main text color
       secondary: '#202020', // Secondary text color
       disabled: '#b0b0b0', // Disabled text color
     },
@@ -25,16 +48,17 @@ const earTrainerTheme = createTheme({
   },
 })
 const chordTrainerTheme = createTheme({
+  ...base,
   palette: {
     primary: { main: '#222831' }, // Ear Trainer primary color
-    secondary: { main: '#393E46' }, // Optional secondary color
+    secondary: { main: '#222831' }, // Optional secondary color
     background: {
-      default: '#eeeeee', // Background for pages
-      paper: '#f9f9f9', // Background for paper surfaces
+      default: '#222831', // Background for pages
+      paper: '#222831', // Background for paper surfaces
     },
     text: {
-      primary: '#EEEEEE', // Main text color
-      secondary: '#393E46', // Secondary text color
+      primary: '#ffffff', // Main text color
+      secondary: '#ffffff', // Secondary text color
       disabled: '#bdbdbd', // Disabled text color
     },
     divider: '#bdbdbd', // Divider color
@@ -52,6 +76,7 @@ const themes = {
     '/ear-trainer': earTrainerTheme,
     '/chord-trainer': chordTrainerTheme,
     // Add more themes for additional trainers
+    
   };
 
 export default themes;

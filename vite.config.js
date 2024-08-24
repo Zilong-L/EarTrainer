@@ -10,6 +10,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@components": "/src/Components",
+      "@EarTrainers": "/src/Components/EarTrainers",
       "@utils": "/src/utils",
       "@assets": "/src/assets",
       "@themes": "/src/themes"

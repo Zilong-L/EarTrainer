@@ -1,38 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Midi, Note } from "tonal";
-import * as Tone from "tone";
+import { getPianoSampler } from '@components/ToneInstance';
 import { Typography, Box } from "@mui/material";
 import { detect } from "@tonaljs/chord-detect";
 let notes = [];
 let midi = null;
 
 
-const sampler = new Tone.Sampler({
-  urls: {
-    C1: "C1.mp3",
-    C2: "C2.mp3",
-    C3: "C3.mp3",
-    C4: "C4.mp3",
-    C5: "C5.mp3",
-    C6: "C6.mp3",
-    A1: "A1.mp3",
-    A2: "A2.mp3",
-    A3: "A3.mp3",
-    A4: "A4.mp3",
-    A5: "A5.mp3",
-    A6: "A6.mp3",
-    
-  },
-  release: 1,
-  baseUrl: "https://tonejs.github.io/audio/salamander/",
-}).toDestination();
-
-Tone.loaded().then(() => {
-  console.log("Sampler loaded and ready to use");
-});
-
 const MIDIInputHandler = ({ chord, setChord }) => {
   const [activeNotes, setActiveNotes] = useState([]);
+  const midiMessageHandler = (message) => {
+    const [command, note, velocity] = message.data;
+    const pianoSampler = getPianoSampler()
+    console.log(note)
+    if (command === 144 && velocity > 0) {
+      // Note on
+      notes = notes.concat(note);
+      pianoSampler.triggerAttack(Note.fromMidi(note));
+    } else if (command === 128 || (command === 144 && velocity === 0)) {
+      // Note off
+      pianoSampler.triggerRelease(Note.fromMidi(note));
+      notes = notes.filter((n) => n !== note);
+    }
+
+    setActiveNotes([...new Set(notes.sort((a, b) => a - b))]);
+  };
   useEffect(() => {
     (async () => {
       if (navigator.requestMIDIAccess == null) {
@@ -41,31 +33,22 @@ const MIDIInputHandler = ({ chord, setChord }) => {
       if(midi == null){
         midi = await navigator.requestMIDIAccess();
         console.log("MIDI loaded");
-        if (midi) {
+      }
+      if (midi) {
           console.log('hi')
           const inputs = midi.inputs.values();
           for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
-            input.value.onmidimessage = (message) => {
-              const [command, note, velocity] = message.data;
-              console.log(note)
-              if (command === 144 && velocity > 0) {
-                // Note on
-                notes = notes.concat(note);
-                sampler.triggerAttack(Note.fromMidi(note));
-              } else if (command === 128 || (command === 144 && velocity === 0)) {
-                // Note off
-                sampler.triggerRelease(Note.fromMidi(note));
-                notes = notes.filter((n) => n !== note);
-              }
-    
-              setActiveNotes([...new Set(notes.sort((a, b) => a - b))]);
-            };
+            input.value.onmidimessage = midiMessageHandler
           }
         }
-      }
 
       })();
-      return 
+      return ()=>{
+        const inputs = midi.inputs.values();
+        for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
+            input.value.onmidimessage = null
+        }
+      }
 
     }, []);
 
@@ -82,10 +65,36 @@ const MIDIInputHandler = ({ chord, setChord }) => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography variant="h3" component="h3" sx={{ width: "100%" }}>
+       <Typography
+      variant="h3"
+      component="h3"
+      sx={{
+        width: '100%',
+        fontSize: {
+          xs: '2rem', // 小屏幕 (extra small)：1.5rem
+          sm: '2rem',   // 中小屏幕 (small)：2rem
+          md: '2.5rem', // 中等屏幕 (medium)：2.5rem
+          lg: '3rem',   // 大屏幕 (large)：3rem
+          xl: '3.5rem', // 超大屏幕 (extra large)：3.5rem
+        },
+      }}
+    >
         {"Chord: " + chord}
       </Typography>
-      <Typography variant="h3" component="h3" sx={{ width: "100%" }}>
+      <Typography
+      variant="h3"
+      component="h3"
+      sx={{
+        width: '100%',
+        fontSize: {
+          xs: '2rem', // 小屏幕 (extra small)：1.5rem
+          sm: '2rem',   // 中小屏幕 (small)：2rem
+          md: '2.5rem', // 中等屏幕 (medium)：2.5rem
+          lg: '3rem',   // 大屏幕 (large)：3rem
+          xl: '3.5rem', // 超大屏幕 (extra large)：3.5rem
+        },
+      }}
+    >
         {"Notes: " + activeNotes.map((midi) => Note.fromMidi(midi)).join(", ")}
       </Typography>
     </Box>
