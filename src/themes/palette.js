@@ -26,15 +26,15 @@ const earTrainerTheme = createTheme({
   ...base,
   palette: {
     primary: { main: '#FFFBE6' }, // Chord Trainer primary color
-    secondary: { main: '#FFFBE6' }, // Optional secondary color
+    secondary: { main: '#000000' }, // Optional secondary color
     background: {
       default: '#FFFBE6', // Background for pages
       paper: '#FFFBE6', // Background for paper surfaces (cards, modals)
-      modal: 'FFFBE6'
+      modal: '#FFFBE6',
     },
     text: {
       primary: '#202020', // Main text color
-      secondary: '#202020', // Secondary text color
+      secondary: '#000000', // Secondary text color
       disabled: '#b0b0b0', // Disabled text color
     },
     divider: '#e0e0e0', // Divider color

@@ -4,19 +4,18 @@ import { Link } from 'react-router-dom';
 import Sidebar from '@components/Sidebar';
 import MenuIcon from '@mui/icons-material/Menu';
 const apps = [{name: 'Ear Trainer', path: '/ear-trainer'}, {name: 'Chord Trainer', path: '/chord-trainer'}]
-const trainers = [{name:'Degree',path:'/ear-trainer/degree-trainer'},{name:'Interval',path:'/ear-trainer/interval-trainer'},{name:'Scale',path:'/ear-trainer/scale-trainer'},{name:'Progression',path:'/ear-trainer/progression-trainer'}]
+const trainers = [{name:'Degree',path:'/ear-trainer/degree-trainer'}]
 const EarTrainer = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar is visible by default
 
   return (
     <>
-      <AppBar position="static" sx={{boxShadow: 0,
-      }}>
-        <Toolbar sx={{ color: (theme) => theme.palette.text.primary, }}>
-
-          <Typography variant="h6" sx={{ marginLeft: '15px', flexGrow: 1 }} component={Link} to='/ear-trainer'>
+      <AppBar position="static" sx={{ boxShadow: 0 ,paddingX:'0.5rem' }}>
+        <Toolbar sx={{ color: (theme) => theme.palette.text.primary,height:'64px'}}>
+          <Typography variant="h5" sx={{  flexGrow: 1 }} component={Link} to='/ear-trainer'>
             Ear Trainer
           </Typography>
+
 
           <Button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}

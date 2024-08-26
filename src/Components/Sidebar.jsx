@@ -3,7 +3,6 @@ import { Toolbar,SwipeableDrawer, List, ListItemButton, ListItemText, Collapse, 
 import { Link } from 'react-router-dom';
 
 const apps = [{name: 'Ear Trainer', path: '/ear-trainer'}, {name: 'Chord Trainer', path: '/chord-trainer'}]
-const Trainers = ['']
 const Sidebar = ({ isOpen,setIsOpen }) => {
 
   const toggleDrawer = (open) => (event) => {

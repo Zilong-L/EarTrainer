@@ -1,15 +1,19 @@
 // toneInstance.js
 import * as Tone from 'tone';
-
 let pianoSampler = null;
-let toneInstance = null;
 let droneInstance = null;
 
+
+
 let pianoGainNode = null
-let droneGainNode = null;
-
-
-function getPianoSampler() {
+function getPianoGainNode() {
+  if (!pianoGainNode) {
+    pianoGainNode = new Tone.Gain(0.5).toDestination(); // Initialize with a default volume (0.5)
+  }
+  return pianoGainNode;
+}
+function getPianoInstance() {
+  
   if (!pianoSampler) {
     pianoSampler = new Tone.Sampler({
       urls: {
@@ -23,79 +27,96 @@ function getPianoSampler() {
     });
     pianoSampler.connect(getPianoGainNode());
   }
-  return pianoSampler;
-}
-function getPianoGainNode() {
-  if (!pianoGainNode) {
-    pianoGainNode = new Tone.Gain(0.5).toDestination(); // Initialize with a default volume (0.5)
+  function setVolume(value) {
+    const clampedValue = Math.min(1, Math.max(0, value)); // Clamp between 0 and 1
+    getPianoGainNode().gain.value = clampedValue; // Map to 0-0
   }
-  return pianoGainNode;
+  return {
+    sampler: pianoSampler,
+    setVolume
+  };
 }
-function getToneInstance() {
-  if (!toneInstance) {
-    toneInstance = Tone; // Assign the Tone.js library as the global instance
-  }
-  return toneInstance;
-}
+
 
 
 function getDroneInstance() {
   let masterGainNode = null;
-
+  let rootMax = Tone.Frequency("C5").toMidi()
+  let rootMin = Tone.Frequency("C2").toMidi()
   if (!droneInstance) {
-    // Initialize the oscillators
-    const C2 = new Tone.Oscillator("C2", "sine");
-    const C3 = new Tone.Oscillator("C3", "sine"); // First harmonic
-    const G2 = new Tone.Oscillator("G2", "sine"); // Second harmonic
-    const E3 = new Tone.Oscillator("E3", "sine"); // Second harmonic
+    // Initialize the oscillators with updated names
+    const rootOscillator = new Tone.Oscillator("C2", "sine");
+    const octaveOscillator = new Tone.Oscillator("C3", "sine"); // First harmonic
+    const fifthOscillator = new Tone.Oscillator("G2", "sine"); // Second harmonic
 
     // Initialize gain nodes for each part
-    const C2Gain = new Tone.Gain(0.8); // Strongest component
-    const C3Gain = new Tone.Gain(0.2); // Quieter harmonic
-    const G2Gain = new Tone.Gain(0.1); // Even quieter harmonic
+    const rootGain = new Tone.Gain(0.8); // Strongest component
+    const octaveGain = new Tone.Gain(0.2); // Quieter harmonic
+    const fifthGain = new Tone.Gain(0.1); // Even quieter harmonic
 
     // Create a master gain node to control overall volume
     masterGainNode = new Tone.Gain(0.075).toDestination(); // Default volume at midpoint
 
     // Connect oscillators to their respective gain nodes
-    C2.connect(C2Gain);
-    C3.connect(C3Gain);
-    G2.connect(G2Gain);
+    rootOscillator.connect(rootGain);
+    octaveOscillator.connect(octaveGain);
+    fifthOscillator.connect(fifthGain);
 
     // Connect gain nodes to the master gain node
-    C2Gain.connect(masterGainNode);
-    C3Gain.connect(masterGainNode);
-    G2Gain.connect(masterGainNode);
+    rootGain.connect(masterGainNode);
+    octaveGain.connect(masterGainNode);
+    fifthGain.connect(masterGainNode);
 
     // Create a start function that starts all oscillators
     function start() {
-      C2.start();
-      C3.start();
-      G2.start();
+      rootOscillator.start();
+      octaveOscillator.start();
+      fifthOscillator.start();
     }
 
     // Create a stop function that stops all oscillators
     function stop() {
-      C2.stop();
-      C3.stop();
-      G2.stop();
+      rootOscillator.stop();
+      octaveOscillator.stop();
+      fifthOscillator.stop();
     }
 
     // Create a setVolume function that maps 0-1 to 0-0.15
     function setVolume(value) {
       const clampedValue = Math.min(1, Math.max(0, value)); // Clamp between 0 and 1
-      masterGainNode.gain.value = clampedValue * 0.15; // Map to 0-0.15
+      masterGainNode.gain.value = clampedValue * 0.35; // Map to 0-0.15
     }
 
-    // Return the drone instance with start, stop, and setVolume functions
+    // Create an updateRoot function to change the root note
+    function updateRoot(rootMidiValue) {
+      if(rootMidiValue > rootMax || rootMidiValue < rootMin){
+        return
+      }
+      // Define the new root, octave, and fifth based on the root MIDI value
+      const rootNote = Tone.Frequency(rootMidiValue, "midi").toNote();
+      const octaveNote = Tone.Frequency(rootMidiValue + 12, "midi").toNote();
+      const fifthNote = Tone.Frequency(rootMidiValue + 7, "midi").toNote();
+
+      // Update oscillator frequencies
+      rootOscillator.frequency.value = rootNote;
+      octaveOscillator.frequency.value = octaveNote;
+      fifthOscillator.frequency.value = fifthNote;
+    }
+
+    // Return the drone instance with start, stop, setVolume, and updateRoot functions
     droneInstance = {
       start,
       stop,
       setVolume,
+      updateRoot,
+      rootMin,
+      rootMax
     };
   }
 
   return droneInstance;
 }
 
-export { getPianoSampler, getToneInstance, getDroneInstance, getPianoGainNode };
+
+
+export { getPianoInstance,  getDroneInstance };
