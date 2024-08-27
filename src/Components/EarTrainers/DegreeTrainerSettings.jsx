@@ -1,8 +1,27 @@
-import React, { useState } from 'react';
-import { Modal, Box, Button, Slider, Checkbox, Typography, Grid } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Modal, Box, Button, Slider, Checkbox, Typography, Grid ,Switch } from '@mui/material';
 import { getPianoInstance, getDroneInstance } from '@components/ToneInstance';
 import HomeIcon from '@mui/icons-material/Home';
 import * as Tone from 'tone';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function DegreeTrainerSettings({
   isSettingsOpen,
@@ -19,10 +38,16 @@ function DegreeTrainerSettings({
   setRange,
   currentNotes,
   setCurrentNotes,
-  playNote
+  playNote,
+  isStatOpen,
+  setIsStatOpen,
+  practiceRecords,
+  setPracticeRecords
 }) {
   const [showDegreeSettings, setShowDegreeSettings] = useState(false);
   const [showVolumeSettings, setShowVolumeSettings] = useState(false);
+  const [showStatistics, setShowStatistics] = useState(false);
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const drone = getDroneInstance();
   const piano = getPianoInstance();
   let midiMin = drone.rootMin;
@@ -38,8 +63,52 @@ function DegreeTrainerSettings({
     setIsSettingsOpen(false);
     setShowDegreeSettings(false);
     setShowVolumeSettings(false);
+    setShowStatistics(false);
+    setIsDeleteConfirmOpen(false);
     playNote();
+
+    saveSettingsToLocalStorage(); // 在组件卸载时保存设置
   };
+
+  const calculateAccuracy = (record) => {
+    return record.total > 0 ? (record.correct / record.total) * 100 : 0;
+  };
+
+  const generateChartData = () => {
+    const labels = Object.keys(practiceRecords);
+    const data = labels.map((degree) => calculateAccuracy(practiceRecords[degree]));
+    console.log(data)
+    return {
+      labels,
+      datasets: [
+        {
+          label: '正确率 (%)',
+          data,
+          backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        },
+      ],
+    };
+  };
+
+  const handleDeleteConfirm = () => {
+    localStorage.removeItem('degreeTrainerRecords');
+    setPracticeRecords({});
+    setIsDeleteConfirmOpen(false);
+  };
+
+  function saveSettingsToLocalStorage() {
+    const settings = {
+      bpm,
+      droneVolume,
+      pianoVolume,
+      rootNote,
+      range,
+      currentNotes,
+    };
+    localStorage.setItem('degreeTrainerSettings', JSON.stringify(settings));
+  }
+
+
 
   return (
     <Modal open={isSettingsOpen} onClose={closeSettings}>
@@ -62,10 +131,13 @@ function DegreeTrainerSettings({
       >
         <h2 style={{ fontSize: '2rem', textAlign: 'center' }}>设置</h2>
 
-        {!showDegreeSettings && !showVolumeSettings ? (
+        {!showDegreeSettings && !showVolumeSettings && !showStatistics ? (
           <>
             <Button sx={{ display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }} color='secondary' onClick={() => setShowDegreeSettings(true)}>
               练习设置
+            </Button>
+            <Button sx={{ display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }} color='secondary' onClick={() => setShowStatistics(true)}>
+              统计
             </Button>
             <Button sx={{ display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left' }} color='secondary' onClick={() => setShowVolumeSettings(true)}>
               音量设置
@@ -140,6 +212,84 @@ function DegreeTrainerSettings({
               color='secondary'
               onClick={() => setShowDegreeSettings(false)}
               sx={{ display: 'flex', justifyContent: 'flex-center', fontSize: '1.2rem', marginLeft: 'auto' }}
+            >
+              <HomeIcon/>
+            </Button>
+          </>
+        ) : showStatistics ? (
+          <>
+            <h3 >音程正确率统计</h3>
+            <Bar data={generateChartData()} />
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: 2,
+                cursor: 'pointer',
+                padding: '6px 8px',
+                '&:hover': { bgcolor: 'action.hover' },
+              }}
+              onClick={() => setIsStatOpen(!isStatOpen)}
+            >
+              <Typography variant="body1" sx={{ textAlign: 'left' }}>
+                统计
+              </Typography>
+              <Switch
+                checked={isStatOpen}
+                onChange={() => setIsStatOpen(!isStatOpen)}
+                name="toggleStatistics"
+                color="secondary"
+              />
+            </Box>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => setIsDeleteConfirmOpen(true)}
+              sx={{ marginTop: 2, marginLeft: 'auto', display: 'block' }}
+            >
+              删除本地统计数据
+            </Button>
+            <Modal
+              open={isDeleteConfirmOpen}
+              onClose={() => setIsDeleteConfirmOpen(false)}
+              aria-labelledby="delete-confirmation-title"
+              aria-describedby="delete-confirmation-description"
+            >
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: 300,
+                  bgcolor: 'background.paper',
+                  border: '2px solid #000',
+                  boxShadow: 24,
+                  p: 4,
+                  borderRadius: 2,
+                }}
+              >
+                <Typography id="delete-confirmation-title" variant="h6" component="h2">
+                  确认删除
+                </Typography>
+                <Typography id="delete-confirmation-description" sx={{ mt: 2 }}>
+                  确定要删除所有本地统计数据吗？此操作不可恢复。
+                </Typography>
+                <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
+                  <Button onClick={handleDeleteConfirm} color="secondary" variant="contained">
+                    删除
+                  </Button>
+                  <Button onClick={() => setIsDeleteConfirmOpen(false)} color="primary" variant="outlined">
+                    取消
+                  </Button>
+                </Box>
+              </Box>
+            </Modal>
+            <Button
+              color='secondary'
+              onClick={() => setShowStatistics(false)}
+              sx={{ display: 'flex', justifyContent: 'flex-center', fontSize: '1.2rem', marginLeft: 'auto',marginTop:'1rem' }}
             >
               <HomeIcon/>
             </Button>

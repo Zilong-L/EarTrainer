@@ -31,7 +31,9 @@ const degrees = [
 const EarTrainer = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isStatOpen,setIsStatOpen] = useState(true);
   const [isIntroOpen, setIsIntroOpen] = useState(true); // 控制 IntroModal 的显示状态
+
 
   const [currentNote, setCurrentNote] = useState("");
   const [disabledNotes, setDisabledNotes] = useState([]);
@@ -42,6 +44,7 @@ const EarTrainer = () => {
   const [filteredNotes, setFilteredNotes] = useState(degrees);
   const [possibleMidiList, setPossibleMidiList] = useState([]);
 
+  const [practiceRecords, setPracticeRecords] = useState({});
   const [droneVolume, setDroneVolume] = useState(0.3);
   const [pianoVolume, setPianoVolume] = useState(1.0);
   const [rootNote, setRootNote] = useState(Tone.Frequency('C3').toMidi());
@@ -51,6 +54,34 @@ const EarTrainer = () => {
   const drone = getDroneInstance();
 
   const pianoSampler = piano.sampler;
+
+  // 在组件挂载时加载练习记录
+  useEffect(() => {
+    const storedRecords = JSON.parse(localStorage.getItem('degreeTrainerRecords')) || {};
+    console.log(storedRecords)
+    setPracticeRecords(storedRecords);
+  }, []);
+
+  // 更新练习记录并存储到 localStorage
+  const updatePracticeRecords = (degree, isCorrect) => {
+    setPracticeRecords((prevRecords) => {
+      const updatedRecords = {
+        ...prevRecords,
+        [degree]: {
+          total: (prevRecords[degree]?.total || 0) + 1,
+          correct: (prevRecords[degree]?.correct || 0) + (isCorrect ? 1 : 0),
+        },
+      };
+      localStorage.setItem('degreeTrainerRecords', JSON.stringify(updatedRecords));
+      return updatedRecords;
+    });
+  };
+
+  // 计算音程
+  const calculateDegree = (guessedNoteMidi, currentNoteMidi) => {
+    const interval = (guessedNoteMidi - rootNote) % 12;
+    return degrees.find(degree => degree.distance === interval)?.name || "Unknown";
+  };
 
   useEffect(() => {
     console.log('Degree Trainer mounted');
@@ -137,7 +168,13 @@ const EarTrainer = () => {
     const guessedNoteMidi = Tone.Frequency(guessedNote).toMidi();
     const currentNoteMidi = Tone.Frequency(currentNote).toMidi();
     console.log(guessedNote, currentNote);
-    if (guessedNoteMidi % 12 === currentNoteMidi % 12) {
+
+    const guessedDegree = calculateDegree(guessedNoteMidi, currentNoteMidi);
+    const isCorrect = guessedNoteMidi % 12 === currentNoteMidi % 12;
+
+    updatePracticeRecords(guessedDegree, isCorrect);
+
+    if (isCorrect) {
       setDisabledNotes([]);
       setCurrentNote(() => {
         const nextNote = generateRandomNoteBasedOnRoot(rootNote, filteredNotes);
@@ -154,6 +191,44 @@ const EarTrainer = () => {
     setIsIntroOpen(false);
     startGame(); // 在关闭 IntroModal 后开始游戏
   };
+  const renderRecords = () => {
+    const totalResults = Object.values(practiceRecords).reduce(
+      (acc, record) => {
+        acc.total += record.total;
+        acc.correct += record.correct;
+        return acc;
+      },
+      { total: 0, correct: 0 }
+    );
+
+    return <>
+      <Typography variant="body1">
+        总尝试: {totalResults.total}
+      </Typography>
+      <Typography variant="body1">
+        正确数: {totalResults.correct}
+      </Typography>
+      <Typography variant="body1">
+        正确率: {totalResults.total>0?Math.round((totalResults.correct/totalResults.total).toFixed(2)*100)+'%':'0%'}
+      </Typography>
+    </>
+  }
+
+  const loadSettingsFromLocalStorage = () => {
+    const storedSettings = JSON.parse(localStorage.getItem('degreeTrainerSettings'));
+    if (storedSettings) {
+      setBpm(storedSettings.bpm);
+      setDroneVolume(storedSettings.droneVolume);
+      setPianoVolume(storedSettings.pianoVolume);
+      setRootNote(storedSettings.rootNote);
+      setRange(storedSettings.range);
+      setCurrentNotes(storedSettings.currentNotes);
+    }
+  };
+
+  useEffect(() => {
+    loadSettingsFromLocalStorage(); // 在组件挂载时加载设置
+  }, []);
 
   return (
     <>
@@ -225,10 +300,16 @@ const EarTrainer = () => {
           currentNotes={currentNotes}
           setCurrentNotes={setCurrentNotes}
           playNote={playNote}
+          isStatOpen={isStatOpen}
+          setIsStatOpen={setIsStatOpen}
+          practiceRecords={practiceRecords}
+          setPracticeRecords={setPracticeRecords}
         />
         <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} />
         {gameStarted && (
+
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%', marginBottom: '2rem' }}>
+            {isStatOpen&&renderRecords()}
             <Box sx={{ flexGrow: 1 }} /> {/* 这个空的 Box 会推动下面的内容到底部 */}
             <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
               {filteredNotes.map((note) => (
