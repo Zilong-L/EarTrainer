@@ -12,32 +12,37 @@ import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainerSettings
 import { getPianoInstance, getDroneInstance } from '@components/ToneInstance';
 
 const apps = [{ name: 'Ear Trainer', path: '/ear-trainer' }, { name: 'Chord Trainer', path: '/chord-trainer' }];
-const noteRange = ["C4", "D4", "E4", "F4", "G4", "A4", "B4"];
 const degrees = [
-  { degree: 0, name: "I", distance: 0 },
-  { degree: 1, name: "II", },
-  { degree: 2, name: "III" },
-  { degree: 3, name: "IV" },
-  { degree: 4, name: "V" },
-  { degree: 5, name: "VI" },
-  { degree: 6, name: "VII" },
-
+  { name: "I", distance: 0, enable: true },
+  { name: "IIb", distance: 1, enable: false },
+  { name: "II", distance: 2, enable: true },
+  { name: "IIIb", distance: 3, enable: true },
+  { name: "III", distance: 4, enable: true },
+  { name: "IV", distance: 5, enable: true },
+  { name: "Vb", distance: 6, enable: false },
+  { name: "V", distance: 7, enable: true },
+  { name: "VIb", distance: 8, enable: false },
+  { name: "VI", distance: 9, enable: true },
+  { name: "VIIb", distance: 10, enable: false },
+  { name: "VII", distance: 11, enable: true },
 ]
-const intervals = [0,2,4,5,7,9,11]
 const EarTrainer = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [currentNotes, setCurrentNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState("");
   const [disabledNotes, setDisabledNotes] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
-  
+
 
   const [bpm, setBpm] = useState(60);
+  const [currentNotes, setCurrentNotes] = useState(degrees);
+  const [filteredNotes, setFilteredNotes] = useState(degrees);
+  const [possibleMidiList, setPossibleMidiList] = useState([]);
+
   const [droneVolume, setDroneVolume] = useState(0.3);
   const [pianoVolume, setPianoVolume] = useState(0.3);
   const [rootNote, setRootNote] = useState(36);
-  const [Range, setRange] = useState([Tone.Frequency('C3').toMidi(),Tone.Frequency('C6').toMidi()])
+  const [range, setRange] = useState([Tone.Frequency('C3').toMidi(), Tone.Frequency('C6').toMidi()])
 
   const piano = getPianoInstance();
   const drone = getDroneInstance();
@@ -45,15 +50,12 @@ const EarTrainer = () => {
   const pianoSampler = piano.sampler;
   useEffect(() => {
     console.log('Degree Trainer mounted');
-    drone.updateRoot(rootNote);
-
     return () => {
-      console.log('Release all scheduled notes');
-
+      console.log('drone stopped')
       drone.stop();
+      console.log('Release all scheduled notes');
       Tone.getTransport().stop();
       Tone.getTransport().cancel(); // Cancel all scheduled events
-      // Here, you would clean up any resources, such as cancelling subscriptions, clearing timers, or removing event listeners.
     };
   }, []);
   useEffect(() => {
@@ -62,14 +64,22 @@ const EarTrainer = () => {
     piano.setVolume(pianoVolume);
   }
     , [droneVolume, pianoVolume, rootNote]);
+  useEffect(() => {
+    const newNotes = currentNotes.filter((obj) => obj.enable)
+    setFilteredNotes(newNotes)
+  }, [currentNotes])
+  
   useEffect(()=>{
-    const newNotes = intervals.map((interval)=>Tone.Frequency(rootNote+interval,'midi').toNote())
-    setCurrentNotes(newNotes)
-    console.log(newNotes)
-  },[rootNote])
-  useEffect(()=>{
-    console.log(Range)
-  },[Range])
+    const newNote = generateRandomNoteBasedOnRoot();
+    setCurrentNote(newNote);
+    
+    if(gameStarted){
+      playNote(newNote,1)
+    }
+  },[possibleMidiList])
+  useEffect(() => {
+    console.log(range)
+  }, [range])
 
   const startGame = () => {
     // Reset transport for each game start
@@ -81,39 +91,71 @@ const EarTrainer = () => {
     setDisabledNotes([]);
 
     // const endtime = playKeyEstablishMelody();
-    const note = noteRange[Math.floor(Math.random() * noteRange.length)];
+    const note = generateRandomNoteBasedOnRoot();
     setCurrentNote(note);
+    playNote(note,1);
 
     // Schedule the random note to play after the melody
     drone.start();
-    playNote(note);
 
     // Start the transport
     Tone.getTransport().start();
   };
 
   // Function to replay the melody within the game
-  const playNote = (note = null) => {
+  const playNote = (note = null,delay=0) => {
     Tone.getTransport().stop();
     Tone.getTransport().position = 0;
     Tone.getTransport().cancel(); // Clear all previous scheduled events
     if (!note) {
       note = currentNote;
     }
-    pianoSampler.triggerAttackRelease(note, 60 / bpm);
+    pianoSampler.triggerAttackRelease(note, 60 / bpm,Tone.now()+delay);
   };
 
 
+  const generateRandomNoteBasedOnRoot = () => {
+    if (possibleMidiList.length === 0) return null;
+    const nextNoteMidi = possibleMidiList[Math.floor(Math.random() * possibleMidiList.length)];
+    return Tone.Frequency(nextNoteMidi, 'midi').toNote();
+  };
+  
 
-  const handleNoteGuess = (note) => {
-    if (note === currentNote) {
-      setDisabledNotes([]); // Reset for next round
-      const nextNote = noteRange[Math.floor(Math.random() * noteRange.length)];
-      console.log(nextNote)
-      setCurrentNote(nextNote);
-      playNote(nextNote)
+  useEffect(() => {
+    const expandedIntervals = [];
+
+    // 扩展每个音符到所有可能的八度范围内
+    filteredNotes.forEach((note) => {
+      for (let octaveShift = -4; octaveShift <= 4; octaveShift++) {
+        const midiValue = rootNote + note.distance + octaveShift * 12;
+        expandedIntervals.push(midiValue);
+      }
+    });
+
+    // 过滤掉不在范围内的音符
+    const newIntervalList = expandedIntervals.filter(
+      (midi) => midi >= range[0] && midi <= range[1]
+    );
+
+    setPossibleMidiList(newIntervalList);
+    console.log(newIntervalList);
+  }, [rootNote, range, filteredNotes]);
+
+  const handleNoteGuess = (guessedNote) => {
+    const guessedNoteMidi = Tone.Frequency(guessedNote).toMidi();
+    const currentNoteMidi = Tone.Frequency(currentNote).toMidi();
+    console.log(guessedNote,currentNote)
+    // 检查两个音符是否在同一音阶内，即相差一个或多个八度
+    if (guessedNoteMidi % 12 === currentNoteMidi % 12) {
+      setDisabledNotes([]); // 重置禁用音符状态，准备下一轮
+      setCurrentNote(() => {
+        const nextNote = generateRandomNoteBasedOnRoot(rootNote, filteredNotes);
+        playNote(nextNote);
+        return nextNote;
+      });
     } else {
-      setDisabledNotes((prev) => [...prev, note]);
+      setDisabledNotes((prev) => [...prev, guessedNote]);
+      playNote(); 
     }
   };
 
@@ -160,11 +202,10 @@ const EarTrainer = () => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between', // Space out content to push buttons to the bottom
-          paddingTop: '4rem',
-          paddingBottom: '2rem',
+          justifyContent: 'space-between',
+          height: 'calc(100vh - 64px)',
+          paddingY: '1rem',
           paddingX: '1.5rem',
-
         }}
       >
         <CssBaseline />
@@ -180,59 +221,57 @@ const EarTrainer = () => {
           setPianoVolume={setPianoVolume}
           rootNote={rootNote}
           setRootNote={setRootNote}
-          Range = {Range}
-          setRange= {setRange}
+          range={range}
+          setRange={setRange}
+          currentNotes={currentNotes}
+          setCurrentNotes={setCurrentNotes}
         />
-        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          {!gameStarted && (
+        {!gameStarted ? (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={startGame}
+            sx={{ height: '30vh', marginTop: 'auto', marginBottom: '1rem' }}
+            fullWidth
+          >
+            <Typography variant='h2'>开始</Typography>
+          </Button>
+        ) : (
+          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%' }}>
+            <Box sx={{ flexGrow: 1 }} /> {/* 这个空的 Box 会推动下面的内容到底部 */}
+            <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
+              {filteredNotes.map((note) => (
+                <Grid item xs={4} key={note.name}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleNoteGuess(Tone.Frequency(rootNote + note.distance, 'midi').toNote())}
+                    disabled={disabledNotes.includes(Tone.Frequency(rootNote + note.distance, 'midi').toNote())}
+                    fullWidth
+                    sx={{ textTransform: 'none', fontSize: '1.5rem', height: '4rem' }}
+                  >
+                    {note.name}
+                  </Button>
+                </Grid>
+              ))}
+            </Grid>
             <Button
               variant="contained"
               color="primary"
-              onClick={startGame}
-              sx={{ height: '30vh' }}
+              onClick={() => playNote()}
               fullWidth
+              sx={{
+                textTransform: 'none',
+                padding: '1rem',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 'auto',
+              }}
             >
-              <Typography variant='h2'>Start</Typography>
+              <ReplayIcon sx={{ fontSize: '3rem' }} />
             </Button>
-          )}
-          {gameStarted && (
-            <>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => playNote()}
-                fullWidth
-                sx={{
-                  marginBottom: 2,
-                  textTransform: 'none',
-                  padding: '1rem',
-                  display: 'flex', // Use flexbox for centering
-                  justifyContent: 'center', // Center horizontally
-                  alignItems: 'center', // Center vertically
-                }}
-              >
-                <ReplayIcon sx={{ fontSize: '4rem' }} /> {/* Adjust the size of the icon */}
-              </Button>
-            </>
-          )}
-        </Box>
-        {gameStarted && (
-          <Grid container spacing={2}>
-            {degrees.map((note) => (
-              <Grid item xs={4} key={note.name}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleNoteGuess(noteRange[note.degree])}
-                  disabled={disabledNotes.includes(noteRange[note.degree])}
-                  fullWidth
-                  sx={{ textTransform: 'none', fontSize: '2rem' }}
-                >
-                  {note.name}
-                </Button>
-              </Grid>
-            ))}
-          </Grid>
+          </Box>
         )}
       </Container>
     </>
