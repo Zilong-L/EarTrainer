@@ -158,7 +158,7 @@ function DegreeTrainerSettings({
             
             <Button
               color='secondary'
-              onClick={() => setShowDegreeSettings(false)}
+              onClick={() => setShowVolumeSettings(false)}
               sx={{ display: 'flex', justifyContent: 'flex-center', fontSize: '1.2rem', marginLeft: 'auto' }}
             >
               <HomeIcon/>

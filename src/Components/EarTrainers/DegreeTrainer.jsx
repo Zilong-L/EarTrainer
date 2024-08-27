@@ -10,76 +10,80 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from '@components/Sidebar';
 import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainerSettings';
 import { getPianoInstance, getDroneInstance } from '@components/ToneInstance';
+import IntroModal from '@components/EarTrainers/DegreeTrainerIntro';  // 新增导入
 
 const apps = [{ name: 'Ear Trainer', path: '/ear-trainer' }, { name: 'Chord Trainer', path: '/chord-trainer' }];
 const degrees = [
   { name: "I", distance: 0, enable: true },
   { name: "IIb", distance: 1, enable: false },
   { name: "II", distance: 2, enable: true },
-  { name: "IIIb", distance: 3, enable: true },
+  { name: "IIIb", distance: 3, enable: false },
   { name: "III", distance: 4, enable: true },
-  { name: "IV", distance: 5, enable: true },
+  { name: "IV", distance: 5, enable: false },
   { name: "Vb", distance: 6, enable: false },
-  { name: "V", distance: 7, enable: true },
+  { name: "V", distance: 7, enable: false },
   { name: "VIb", distance: 8, enable: false },
-  { name: "VI", distance: 9, enable: true },
+  { name: "VI", distance: 9, enable: false },
   { name: "VIIb", distance: 10, enable: false },
-  { name: "VII", distance: 11, enable: true },
-]
+  { name: "VII", distance: 11, enable: false },
+];
+
 const EarTrainer = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isIntroOpen, setIsIntroOpen] = useState(true); // 控制 IntroModal 的显示状态
+
   const [currentNote, setCurrentNote] = useState("");
   const [disabledNotes, setDisabledNotes] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
 
-
-  const [bpm, setBpm] = useState(60);
+  const [bpm, setBpm] = useState(40);
   const [currentNotes, setCurrentNotes] = useState(degrees);
   const [filteredNotes, setFilteredNotes] = useState(degrees);
   const [possibleMidiList, setPossibleMidiList] = useState([]);
 
   const [droneVolume, setDroneVolume] = useState(0.3);
-  const [pianoVolume, setPianoVolume] = useState(0.3);
-  const [rootNote, setRootNote] = useState(36);
-  const [range, setRange] = useState([Tone.Frequency('C3').toMidi(), Tone.Frequency('C6').toMidi()])
+  const [pianoVolume, setPianoVolume] = useState(1.0);
+  const [rootNote, setRootNote] = useState(Tone.Frequency('C3').toMidi());
+  const [range, setRange] = useState([Tone.Frequency('C3').toMidi(), Tone.Frequency('C4').toMidi()]);
 
   const piano = getPianoInstance();
   const drone = getDroneInstance();
 
   const pianoSampler = piano.sampler;
+
   useEffect(() => {
     console.log('Degree Trainer mounted');
     return () => {
-      console.log('drone stopped')
+      console.log('drone stopped');
       drone.stop();
       console.log('Release all scheduled notes');
       Tone.getTransport().stop();
       Tone.getTransport().cancel(); // Cancel all scheduled events
     };
   }, []);
+
   useEffect(() => {
     drone.updateRoot(rootNote);
     drone.setVolume(droneVolume);
     piano.setVolume(pianoVolume);
-  }
-    , [droneVolume, pianoVolume, rootNote]);
+  }, [droneVolume, pianoVolume, rootNote]);
+
   useEffect(() => {
-    const newNotes = currentNotes.filter((obj) => obj.enable)
-    setFilteredNotes(newNotes)
-  }, [currentNotes])
-  
-  useEffect(()=>{
+    const newNotes = currentNotes.filter((obj) => obj.enable);
+    setFilteredNotes(newNotes);
+  }, [currentNotes]);
+
+  useEffect(() => {
     const newNote = generateRandomNoteBasedOnRoot();
     setCurrentNote(newNote);
-    
-  },[possibleMidiList])
+  }, [possibleMidiList]);
+
   useEffect(() => {
-    console.log(range)
-  }, [range])
+    console.log(range);
+  }, [range]);
 
   const startGame = () => {
-    // Reset transport for each game start
     Tone.getTransport().stop();
     Tone.getTransport().position = 0;
     Tone.getTransport().cancel(); // Clear all previous scheduled events
@@ -87,41 +91,33 @@ const EarTrainer = () => {
     setGameStarted(true);
     setDisabledNotes([]);
 
-    // const endtime = playKeyEstablishMelody();
     const note = generateRandomNoteBasedOnRoot();
     setCurrentNote(note);
-    playNote(note,1);
+    playNote(note, 1);
 
-    // Schedule the random note to play after the melody
     drone.start();
-
-    // Start the transport
     Tone.getTransport().start();
   };
 
-  // Function to replay the melody within the game
-  const playNote = (note = null,delay=0) => {
+  const playNote = (note = null, delay = 0) => {
     Tone.getTransport().stop();
     Tone.getTransport().position = 0;
     Tone.getTransport().cancel(); // Clear all previous scheduled events
     if (!note) {
       note = currentNote;
     }
-    pianoSampler.triggerAttackRelease(note, 60 / bpm,Tone.now()+delay);
+    pianoSampler.triggerAttackRelease(note, 60 / bpm, Tone.now() + delay);
   };
-
 
   const generateRandomNoteBasedOnRoot = () => {
     if (possibleMidiList.length === 0) return null;
     const nextNoteMidi = possibleMidiList[Math.floor(Math.random() * possibleMidiList.length)];
     return Tone.Frequency(nextNoteMidi, 'midi').toNote();
   };
-  
 
   useEffect(() => {
     const expandedIntervals = [];
 
-    // 扩展每个音符到所有可能的八度范围内
     filteredNotes.forEach((note) => {
       for (let octaveShift = -4; octaveShift <= 4; octaveShift++) {
         const midiValue = rootNote + note.distance + octaveShift * 12;
@@ -129,7 +125,6 @@ const EarTrainer = () => {
       }
     });
 
-    // 过滤掉不在范围内的音符
     const newIntervalList = expandedIntervals.filter(
       (midi) => midi >= range[0] && midi <= range[1]
     );
@@ -141,10 +136,9 @@ const EarTrainer = () => {
   const handleNoteGuess = (guessedNote) => {
     const guessedNoteMidi = Tone.Frequency(guessedNote).toMidi();
     const currentNoteMidi = Tone.Frequency(currentNote).toMidi();
-    console.log(guessedNote,currentNote)
-    // 检查两个音符是否在同一音阶内，即相差一个或多个八度
+    console.log(guessedNote, currentNote);
     if (guessedNoteMidi % 12 === currentNoteMidi % 12) {
-      setDisabledNotes([]); // 重置禁用音符状态，准备下一轮
+      setDisabledNotes([]);
       setCurrentNote(() => {
         const nextNote = generateRandomNoteBasedOnRoot(rootNote, filteredNotes);
         playNote(nextNote);
@@ -152,17 +146,19 @@ const EarTrainer = () => {
       });
     } else {
       setDisabledNotes((prev) => [...prev, guessedNote]);
-      playNote(); 
+      playNote();
     }
   };
 
-
+  const handleIntroClose = () => {
+    setIsIntroOpen(false);
+    startGame(); // 在关闭 IntroModal 后开始游戏
+  };
 
   return (
     <>
       <AppBar position="static" sx={{ boxShadow: 0, paddingX: '0.5rem' }}>
         <Toolbar sx={{ color: (theme) => theme.palette.text.primary, height: '64px' }}>
-
           <Typography variant="h5" sx={{ flexGrow: 1, textAlign: 'left' }}>
             <Link to="/ear-trainer" style={{ textDecoration: 'none', color: 'inherit' }}>
               Ear Trainer
@@ -171,8 +167,8 @@ const EarTrainer = () => {
           <Button
             onClick={() => setIsSettingsOpen(!isSettingsOpen)}
             variant="contained"
-            color="primary"  // Make the button stand out with a primary color
-            sx={{ boxShadow: 'none', }}
+            color="primary"
+            sx={{ boxShadow: 'none' }}
           >
             <SettingsIcon />
           </Button>
@@ -185,10 +181,16 @@ const EarTrainer = () => {
             <MenuIcon />
           </Button>
           {apps.map((item) => (
-            <Button variant="contained" key={item.name} component={Link} to={item.path} sx={{
-              display: 'none',
-              '@media (min-width:600px)': { display: 'block', boxShadow: 'none', textTransform: 'none' }
-            }}>
+            <Button
+              variant="contained"
+              key={item.name}
+              component={Link}
+              to={item.path}
+              sx={{
+                display: 'none',
+                '@media (min-width:600px)': { display: 'block', boxShadow: 'none', textTransform: 'none' },
+              }}
+            >
               {item.name}
             </Button>
           ))}
@@ -224,18 +226,9 @@ const EarTrainer = () => {
           setCurrentNotes={setCurrentNotes}
           playNote={playNote}
         />
-        {!gameStarted ? (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={startGame}
-            sx={{ height: '30vh', marginTop: 'auto', marginBottom: '2rem' }}
-            fullWidth
-          >
-            <Typography variant='h2'>开始</Typography>
-          </Button>
-        ) : (
-          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%',marginBottom:'2rem' }}>
+        <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} />
+        {gameStarted && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%', marginBottom: '2rem' }}>
             <Box sx={{ flexGrow: 1 }} /> {/* 这个空的 Box 会推动下面的内容到底部 */}
             <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
               {filteredNotes.map((note) => (

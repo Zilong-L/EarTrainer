@@ -41,50 +41,49 @@ function getPianoInstance() {
 
 function getDroneInstance() {
   let masterGainNode = null;
-  let rootMax = Tone.Frequency("C5").toMidi()
-  let rootMin = Tone.Frequency("C2").toMidi()
+  let rootMax = Tone.Frequency("C5").toMidi();
+  let rootMin = Tone.Frequency("C2").toMidi();
   if (!droneInstance) {
-    // Initialize the oscillators with updated names
     const rootOscillator = new Tone.Oscillator("C2", "sine");
-    const octaveOscillator = new Tone.Oscillator("C3", "sine"); // First harmonic
-    const fifthOscillator = new Tone.Oscillator("G2", "sine"); // Second harmonic
+    const octaveOscillator = new Tone.Oscillator("C3", "sine");
+    const fifthOscillator = new Tone.Oscillator("G2", "sine");
 
-    // Initialize gain nodes for each part
-    const rootGain = new Tone.Gain(0.8); // Strongest component
-    const octaveGain = new Tone.Gain(0.2); // Quieter harmonic
-    const fifthGain = new Tone.Gain(0.1); // Even quieter harmonic
+    const rootGain = new Tone.Gain(0.8);
+    const octaveGain = new Tone.Gain(0.2);
+    const fifthGain = new Tone.Gain(0.1);
 
-    // Create a master gain node to control overall volume
-    masterGainNode = new Tone.Gain(0.075).toDestination(); // Default volume at midpoint
+    // Create a limiter to prevent distortion
+    const limiter = new Tone.Limiter(-10).toDestination();
 
-    // Connect oscillators to their respective gain nodes
+    // Adjust the master gain node as needed
+    masterGainNode = new Tone.Gain(0.35);
+
     rootOscillator.connect(rootGain);
     octaveOscillator.connect(octaveGain);
     fifthOscillator.connect(fifthGain);
 
-    // Connect gain nodes to the master gain node
     rootGain.connect(masterGainNode);
     octaveGain.connect(masterGainNode);
     fifthGain.connect(masterGainNode);
 
-    // Create a start function that starts all oscillators
+    // Connect the master gain to the limiter
+    masterGainNode.connect(limiter);
+
     function start() {
       rootOscillator.start();
       octaveOscillator.start();
       fifthOscillator.start();
     }
 
-    // Create a stop function that stops all oscillators
     function stop() {
       rootOscillator.stop();
       octaveOscillator.stop();
       fifthOscillator.stop();
     }
 
-    // Create a setVolume function that maps 0-1 to 0-0.15
     function setVolume(value) {
-      const clampedValue = Math.min(1, Math.max(0, value)); // Clamp between 0 and 1
-      masterGainNode.gain.value = clampedValue * 0.35; // Map to 0-0.15
+      const clampedValue = Math.min(1, Math.max(0, value));
+      masterGainNode.gain.value = clampedValue * 0.35; // Adjusted volume
     }
 
     // Create an updateRoot function to change the root note
