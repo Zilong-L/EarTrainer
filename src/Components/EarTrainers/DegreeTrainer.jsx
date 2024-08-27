@@ -73,9 +73,6 @@ const EarTrainer = () => {
     const newNote = generateRandomNoteBasedOnRoot();
     setCurrentNote(newNote);
     
-    if(gameStarted){
-      playNote(newNote,1)
-    }
   },[possibleMidiList])
   useEffect(() => {
     console.log(range)
@@ -225,19 +222,20 @@ const EarTrainer = () => {
           setRange={setRange}
           currentNotes={currentNotes}
           setCurrentNotes={setCurrentNotes}
+          playNote={playNote}
         />
         {!gameStarted ? (
           <Button
             variant="contained"
             color="primary"
             onClick={startGame}
-            sx={{ height: '30vh', marginTop: 'auto', marginBottom: '1rem' }}
+            sx={{ height: '30vh', marginTop: 'auto', marginBottom: '2rem' }}
             fullWidth
           >
             <Typography variant='h2'>开始</Typography>
           </Button>
         ) : (
-          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%',marginBottom:'2rem' }}>
             <Box sx={{ flexGrow: 1 }} /> {/* 这个空的 Box 会推动下面的内容到底部 */}
             <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
               {filteredNotes.map((note) => (
