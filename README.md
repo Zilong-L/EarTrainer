@@ -12,9 +12,9 @@
    - 和弦选择与练习: 选择一种和弦类型并通过MIDI设备演奏，正确演奏后将生成下一个和弦。
    - 随机和弦生成: 为您生成各种和弦进行练习，提高演奏速度。
 ## 网站功能
-<img src="pics/image.png" alt="alt text" style="max-width: 200px; height: auto;" />
-<img src="pics/image1.png" alt="alt text" style="max-width: 200px; height: auto;" />
-<img src="pics/image3.png" alt="alt text" style="max-width: 200px; height: auto;" />
-<img src="pics/image2.png" alt="alt text" style="max-width: 200px; height: auto;" />
+<img src="pics/image.png" alt="alt text" width="200" style="height: auto;" />
+<img src="pics/image1.png" alt="alt text" width="200" style="height: auto;" />
+<img src="pics/image3.png" alt="alt text" width="200" style="height: auto;" />
+<img src="pics/image2.png" alt="alt text" width="200" style="height: auto;" />
 
 ## [点这里进入网站](https://musictrainer.barnman.cc)
