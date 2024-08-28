@@ -1,87 +1,20 @@
-# Chord Practising App
+# [音乐难民](https://musictrainer.barnman.cc)
+中文 | [English](README_en.md)
 
-Welcome to the [Chord Practising App](https://Zilong-L.github.io/ChordTrainer/)! It's a simple and efficient tool to help you play chords faster.
+这是一款简单的视唱练耳工具，帮助提高乐感。
 
-## Features
+## 核心功能
+- [听音训练](https://musictrainer.barnman.cc/ear-trainer)
+   - 音级识别: 练习识别音级，帮助提高音乐听觉。我觉得音程没用。
+   - 练习统计: 练习数据存储在本地，随时查看进展。
+   - 键盘与MIDI输入支持: 无论是使用键盘还是MIDI设备，都可以进行练习。
+- [和弦训练](https://musictrainer.barnman.cc/chord-trainer)
+   - 和弦选择与练习: 选择一种和弦类型并通过MIDI设备演奏，正确演奏后将生成下一个和弦。
+   - 随机和弦生成: 为您生成各种和弦进行练习，提高演奏速度。
+## 网站功能
+<img src="pics/image.png" alt="alt text" style="max-width: 200px; height: auto;" />
+<img src="pics/image1.png" alt="alt text" style="max-width: 200px; height: auto;" />
+<img src="pics/image3.png" alt="alt text" style="max-width: 200px; height: auto;" />
+<img src="pics/image2.png" alt="alt text" style="max-width: 200px; height: auto;" />
 
-- **Random Chord Generation**: Get a new chord to play each time you play the current one correctly.
-- **Instant Feedback**: Know immediately if you played the chord correctly.
-- **Simple Interface**: Easy to use and navigate.
-
-## How to Use
-
-1. **Open the Website**: Launch the app in your browser.
-2. **Play the Chord**: Follow the generated chord notation.
-3. **Get a New Chord**: Once you play the chord correctly, a new chord will be generated.
-
-## Supported Browsers
-
-- **Browsers Tested**: Works well on Firefox and Edge on Windows.
-- **Safari**: Rumored to not support MIDI input, but not tested.
-
-## Benefits
-
-- **Practice Efficiently**: Improve your chord playing speed.
-- **User-Friendly**: Simple interface makes practicing easy.
-- **Real-Time Learning**: Immediate feedback helps you learn faster.
-
-## Get Started
-
-Visit the [Chord Practising App](https://Zilong-L.github.io/ChordTrainer/) and start improving your chord skills today!
-
-# TODOs
-
-## Labor-Intensive Tasks
-
-1. ~~**Show Note with Chord Type**~~
-   ~~- Currently, only the root note is displayed.~~
-   ~~- User has to choose a chord type from the sidebar to play.~~
-   ~~- Make the interface more intuitive by showing the complete chord type along with the root note.~~
-
-2. ~~**Support for Chord Inversions**~~
-   ~~- Currently, only closed forms of chords are supported.~~
-   ~~- Inversions can be detected and displayed but cannot be practiced.~~
-   ~~- Implement practice functionality for chord inversions.~~
-
-3. ~~**MIDI Improvement**~~
-   ~~- Improve MIDI input handling to reduce wrong detections.~~
-   ~~- Ensure notes are correctly registered and released when no notes are being played.~~
-
-## Creative Tasks
-
-4. **Evaluate WebAssembly Performance**
-
-   - Determine if WebAssembly is faster than the pure JavaScript implementation.
-   - Use browser APIs to compare performance, particularly for FFT results.
-
-5. **Sound to Chord Transformation Algorithm**
-
-   - Develop a robust algorithm for converting sound to chord notation.
-   - This is crucial for accurate chord detection and feedback.
-
-6. **Random Chord Generation**
-
-   - Enhance the practice mode by generating random chords of selected types.
-   - This will help users practice a variety of chords in a structured manner.
-
-7. **Chord Progression Practice**
-
-   - Implement functionality for practicing with real chord progressions.
-   - Start with simple progressions and gradually introduce more complex sequences.
-
-8. ~~**Open Form Chord Practice Support**~~
-
-   - ~~Extend the app to support practice with open form chords.~~
-   - ~~This will add variety and challenge to the practice sessions.~~
-
-9. **Broken Chord Practice Support**
-   - Introduce practice modes for broken chords (arpeggios).
-   - This will help users develop finger dexterity and musicality.
-
-## Future Enhancements
-
-10. **Additional Features and Improvements**
-    - Continuously gather user feedback to improve the app.
-    - Consider adding more instruments and features based on user demand.
-
----
+## [点这里进入网站](https://musictrainer.barnman.cc)

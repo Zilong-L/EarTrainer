@@ -78,7 +78,7 @@ const EarTrainer = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [filteredNotes, rootNote]);
+  }, [filteredNotes, rootNote,currentNote]);
   
   useEffect(() => {
     const midiMessageHandler = (message) => {
@@ -111,7 +111,6 @@ const EarTrainer = () => {
             input.value.onmidimessage = midiMessageHandler
           }
         }
-
       })();
       return ()=>{
         console.log('midi is not deleted, but delete listener')
@@ -120,8 +119,7 @@ const EarTrainer = () => {
             input.value.onmidimessage = null
         }
       }
-
-    }, []);
+  }, []);
   const renderRecords = () => {
     const totalResults = Object.values(practiceRecords).reduce(
       (acc, record) => {
@@ -235,7 +233,6 @@ const EarTrainer = () => {
                       textTransform: 'none',
                       fontSize: '1.5rem',
                       height: '4rem',
-                      '&:active': { transform: 'scale(0.85)', transition: 'transform 0.5s' },
                       background: disabledNotes.some(disabledNote => Tone.Frequency(rootNote + note.distance, 'midi').toNote().slice(0, -1) === disabledNote.slice(0, -1)) ? (theme) => theme.palette.action.disabled : 'default',
                     }}
                     data-note={Tone.Frequency(rootNote + note.distance, 'midi').toNote().slice(0, -1)}
