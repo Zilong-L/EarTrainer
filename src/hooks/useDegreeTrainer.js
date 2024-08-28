@@ -12,6 +12,7 @@ const useDegreeTrainer = () => {
     rootNote,
     range,
     practiceRecords,
+    currentNotes,
     setBpm,
     setDroneVolume,
     setPianoVolume,
@@ -19,12 +20,12 @@ const useDegreeTrainer = () => {
     setRange,
     setPracticeRecords,
     updatePracticeRecords,
+    setCurrentNotes,
   } = useDegreeTrainerSettings();
 
   const [currentNote, setCurrentNote] = useState("");
   const [disabledNotes, setDisabledNotes] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
-  const [currentNotes, setCurrentNotes] = useState(degrees);
   const [filteredNotes, setFilteredNotes] = useState(degrees);
   const [possibleMidiList, setPossibleMidiList] = useState([]);
   const [activeNote, setActiveNote] = useState(null);

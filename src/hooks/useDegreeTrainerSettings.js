@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
+import { degrees } from '@utils/Constants';
 
 const useDegreeTrainerSettings = () => {
   const [bpm, setBpm] = useState(40);
@@ -8,6 +9,7 @@ const useDegreeTrainerSettings = () => {
   const [rootNote, setRootNote] = useState(Tone.Frequency('C3').toMidi());
   const [range, setRange] = useState([Tone.Frequency('C3').toMidi(), Tone.Frequency('C4').toMidi()]);
   const [practiceRecords, setPracticeRecords] = useState({});
+  const [currentNotes, setCurrentNotes] = useState(degrees);
 
   useEffect(() => {
     const storedRecords = JSON.parse(localStorage.getItem('degreeTrainerRecords')) || {};
@@ -17,12 +19,14 @@ const useDegreeTrainerSettings = () => {
   // 新增 useEffect 从 localStorage 加载设置
   useEffect(() => {
     const storedSettings = JSON.parse(localStorage.getItem('degreeTrainerSettings'));
+    console.log(storedSettings)
     if (storedSettings) {
       setBpm(storedSettings.bpm || 40);
       setDroneVolume(storedSettings.droneVolume || 0.3);
       setPianoVolume(storedSettings.pianoVolume || 1.0);
       setRootNote(storedSettings.rootNote || Tone.Frequency('C3').toMidi());
       setRange(storedSettings.range || [Tone.Frequency('C3').toMidi(), Tone.Frequency('C4').toMidi()]);
+      setCurrentNotes(storedSettings.currentNotes || degrees);
     }
   }, []);
 
@@ -47,6 +51,7 @@ const useDegreeTrainerSettings = () => {
     rootNote,
     range,
     practiceRecords,
+    currentNotes,
     setBpm,
     setDroneVolume,
     setPianoVolume,
@@ -54,6 +59,7 @@ const useDegreeTrainerSettings = () => {
     setRange,
     setPracticeRecords,
     updatePracticeRecords,
+    setCurrentNotes
   };
 };
 
