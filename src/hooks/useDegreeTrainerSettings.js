@@ -14,6 +14,18 @@ const useDegreeTrainerSettings = () => {
     setPracticeRecords(storedRecords);
   }, []);
 
+  // 新增 useEffect 从 localStorage 加载设置
+  useEffect(() => {
+    const storedSettings = JSON.parse(localStorage.getItem('degreeTrainerSettings'));
+    if (storedSettings) {
+      setBpm(storedSettings.bpm || 40);
+      setDroneVolume(storedSettings.droneVolume || 0.3);
+      setPianoVolume(storedSettings.pianoVolume || 1.0);
+      setRootNote(storedSettings.rootNote || Tone.Frequency('C3').toMidi());
+      setRange(storedSettings.range || [Tone.Frequency('C3').toMidi(), Tone.Frequency('C4').toMidi()]);
+    }
+  }, []);
+
   const updatePracticeRecords = (degree, isCorrect) => {
     setPracticeRecords((prevRecords) => {
       const updatedRecords = {

@@ -52,7 +52,7 @@ const EarTrainer = () => {
   useEffect(() => {
     const handleKeyPress = (event) => {
       const key = event.key;
-      if (key === 'r' || key === ' ') {
+      if (key === 'r' ) {
         playNote(currentNote);
         return;
       }
