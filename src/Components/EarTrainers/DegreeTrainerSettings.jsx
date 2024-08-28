@@ -164,7 +164,7 @@ function DegreeTrainerSettings({
                   }
                 }}
                 disableSwap
-                min={Tone.Frequency('C3').toMidi()}
+                min={Tone.Frequency('C2').toMidi()}
                 max={Tone.Frequency('C6').toMidi()}
                 valueLabelDisplay="auto"
                 sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
