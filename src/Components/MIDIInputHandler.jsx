@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Midi, Note } from "tonal";
-import { getPianoInstance } from '@components/ToneInstance';
+import { getPianoInstance } from '@utils/ToneInstance';
 import { Typography, Box } from "@mui/material";
 import { detect } from "@tonaljs/chord-detect";
 let notes = [];

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Box, Button, Slider, Checkbox, Typography, Grid ,Switch } from '@mui/material';
-import { getPianoInstance, getDroneInstance } from '@components/ToneInstance';
+import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
 import HomeIcon from '@mui/icons-material/Home';
 import * as Tone from 'tone';
 import {

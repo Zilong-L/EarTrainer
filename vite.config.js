@@ -13,7 +13,9 @@ export default defineConfig({
       "@EarTrainers": "/src/Components/EarTrainers",
       "@utils": "/src/utils",
       "@assets": "/src/assets",
-      "@themes": "/src/themes"
+      "@themes": "/src/themes",
+      "@hooks": "/src/hooks"
+
       // Add more aliases as needed
     },
   },
