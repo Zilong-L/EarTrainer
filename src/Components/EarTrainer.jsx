@@ -4,15 +4,19 @@ import { Link } from 'react-router-dom';
 import Sidebar from '@components/Sidebar';
 import MenuIcon from '@mui/icons-material/Menu';
 const apps = [{name: 'Ear Trainer', path: '/ear-trainer'}, {name: 'Chord Trainer', path: '/chord-trainer'}]
-const trainers = [{name:'Degree',path:'/ear-trainer/degree-trainer'}]
+const trainers = [
+  {name:'Degree',path:'/ear-trainer/degree-trainer'},
+  {name:'Sequence',path:'/ear-trainer/sequence-trainer'} // 新增的 Sequence Trainer
+]
 const EarTrainer = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar is visible by default
 
   return (
     <>
+    <Paper sx={{borderRadius:0,height:'100vh'}}>
       <AppBar position="static" sx={{ boxShadow: 0 ,paddingX:'0.5rem' }}>
         <Toolbar sx={{ color: (theme) => theme.palette.text.primary,height:'64px'}}>
-          <Typography variant="h5" sx={{  flexGrow: 1 }} component={Link} to='/ear-trainer'>
+          <Typography variant="h5" sx={{  flexGrow: 1,color:'white' }} component={Link} to='/ear-trainer'>
             Ear Trainer
           </Typography>
 
@@ -34,19 +38,20 @@ const EarTrainer = () => {
         </Toolbar>
       </AppBar>
       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-        <Container maxWidth="lg" sx={{paddingTop:'20px',
-          '@media (min-width:600px)': {paddingTop:'4rem'}
-        }}>
-            <Grid container spacing={2}>
-              {trainers.map((item) => (
-                <Grid item xs={12} sm={6} md={4} key={item.name}>
-                  <Button variant="contained" fullWidth LinkComponent={Link} sx={{ height:'12rem',textTransform: 'none' }} to={item.path}><Typography variant="h3">{item.name}</Typography></Button>
-                </Grid>
-              ))}
-            </Grid>
-        </Container>
+          <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+          <Container maxWidth="lg" sx={{paddingTop:'20px',
+            '@media (min-width:600px)': {paddingTop:'4rem'},
+          }}>
+              <Grid container spacing={2}>
+                {trainers.map((item) => (
+                  <Grid item xs={12} sm={6} md={4} key={item.name}>
+                    <Button variant="contained" fullWidth LinkComponent={Link} sx={{ height:'12rem',textTransform: 'none' }} to={item.path}><Typography variant="h3">{item.name}</Typography></Button>
+                  </Grid>
+                ))}
+              </Grid>
+          </Container>
       </Box>
+        </Paper>
     </>
   );
 };

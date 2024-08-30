@@ -33,7 +33,7 @@ const earTrainerTheme = createTheme({
       modal: '#603F26', // White background for modals
     },
     bg:{
-      primary:'#FFEAC5',
+      primary:'#6C4E31',
     },
     text: {
       primary: '#ffffff', // Dark grey main text color
