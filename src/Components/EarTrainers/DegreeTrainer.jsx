@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Box, Button, Typography, AppBar, Toolbar, Container, Grid } from '@mui/material';
+import { CssBaseline,Paper, Box, Button, Typography, AppBar, Toolbar, Container, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import ReplayIcon from '@mui/icons-material/Replay';
@@ -34,6 +34,7 @@ const EarTrainer = () => {
     setRange,
     setCurrentNotes,
     startGame,
+    endGame,
     playNote,
     setPracticeRecords
   } = useDegreeTrainer();
@@ -47,7 +48,11 @@ const EarTrainer = () => {
     setIsIntroOpen(false);
     startGame();
   };
-
+  useEffect(() => {
+    return ()=>{
+      endGame();
+    }
+  }, []);
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -132,9 +137,9 @@ const EarTrainer = () => {
 
     return (
       <>
-        <Typography variant="body1">总尝试: {totalResults.total}</Typography>
-        <Typography variant="body1">正确数: {totalResults.correct}</Typography>
-        <Typography variant="body1">
+        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>总尝试: {totalResults.total}</Typography>
+        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>正确数: {totalResults.correct}</Typography>
+        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>
           正确率: {totalResults.total > 0 ? Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) + '%' : '0%'}
         </Typography>
       </>
@@ -144,9 +149,10 @@ const EarTrainer = () => {
   return (
     <>
       <AppBar position="static" sx={{ boxShadow: 0, paddingX: '0.5rem' }}>
-        <Toolbar sx={{ color: (theme) => theme.palette.text.primary, height: '64px' }}>
-          <Typography variant="h5" sx={{ flexGrow: 1, textAlign: 'left' }}>
-            <Link to="/ear-trainer" style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Toolbar sx={{ height: '64px',color: (theme) => theme.palette.text.primary }}>
+          
+          <Typography variant="h5" sx={{ flexGrow: 1, textAlign: 'left', color: (theme) => theme.palette.text.primary }}>
+            <Link to="/ear-trainer" style={{ textDecoration: 'none',color: 'inherit' }}>
               Ear Trainer
             </Link>
           </Typography>
@@ -182,6 +188,7 @@ const EarTrainer = () => {
           ))}
         </Toolbar>
       </AppBar>
+      <Paper sx={{borderRadius:0}}>
       <Container
         maxWidth="sm"
         sx={{
@@ -192,7 +199,7 @@ const EarTrainer = () => {
           paddingY: '1rem',
           paddingX: '1.5rem',
         }}
-      >
+        >
         <CssBaseline />
         <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
         <DegreeTrainerSettings
@@ -215,7 +222,7 @@ const EarTrainer = () => {
           setIsStatOpen={setIsStatOpen}
           practiceRecords={practiceRecords}
           setPracticeRecords={setPracticeRecords}
-        />
+        />  
         <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} />
         {gameStarted && (
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%', marginBottom: '2rem' }}>
@@ -226,7 +233,6 @@ const EarTrainer = () => {
                 <Grid item xs={4} key={note.name}>
                   <Button
                     variant="contained"
-                    color="primary"
                     onClick={() => setActiveNote(Tone.Frequency(rootNote + note.distance, 'midi').toNote())}
                     fullWidth
                     sx={{
@@ -261,6 +267,7 @@ const EarTrainer = () => {
           </Box>
         )}
       </Container>
+        </Paper>
     </>
   );
 };

@@ -25,52 +25,56 @@ const base = createTheme({
 const earTrainerTheme = createTheme({
   ...base,
   palette: {
-    primary: { main: '#FFFBE6' }, // Chord Trainer primary color
-    secondary: { main: '#000000' }, // Optional secondary color
+    primary: { main: '#6C4E31' }, // Primary color: Green
+    secondary: { main: '#f4b350' }, // Secondary color: Orange
     background: {
-      default: '#FFFBE6', // Background for pages
-      paper: '#FFFBE6', // Background for paper surfaces (cards, modals)
-      modal: '#FFFBE6',
+      default: '#000000', // Light grey background for pages
+      paper: '#FFEAC5', // White background for paper surfaces (cards, modals)
+      modal: '#603F26', // White background for modals
+    },
+    bg:{
+      primary:'#FFEAC5',
     },
     text: {
-      primary: '#202020', // Main text color
-      secondary: '#000000', // Secondary text color
-      disabled: '#b0b0b0', // Disabled text color
+      primary: '#ffffff', // Dark grey main text color
+      secondary: '#aaaaaa', // Medium grey secondary text color
+      disabled: '#BDBDBD', // Light grey disabled text color
+      paper: '#634806',
     },
-    divider: '#e0e0e0', // Divider color
+    divider: '#E0E0E0', // Light grey divider color
     action: {
-      active: '#6FDCE3', // Active icon color
-      hover: '#efeeec', // Hover color
-      selected: '#dddcda', // Selected color
-      selectedHover:'#cdccca',
-      disabled: '#cfd8dc', // Disabled color
+      active: '#4CAF50', // Active icon color: Green
+      hover: '#E8F5E9', // Light green hover color
+      selected: '#C8E6C9', // Light green selected color
+      selectedHover: '#A5D6A7', // Slightly darker green for selected hover
+      disabled: '#E0E0E0', // Light grey disabled color
     },
   },
-})
+});
 const chordTrainerTheme = createTheme({
   ...base,
   palette: {
-    primary: { main: '#222831' }, // Ear Trainer primary color
-    secondary: { main: '#222831' }, // Optional secondary color
+    primary: { main: '#3F51B5' }, // Primary color: Indigo
+    secondary: { main: '#FF4081' }, // Secondary color: Pink
     background: {
-      default: '#222831', // Background for pages
-      paper: '#222831', // Background for paper surfaces
+      default: '#303030', // Dark grey background for pages
+      paper: '#424242', // Darker grey background for paper surfaces
     },
     text: {
-      primary: '#ffffff', // Main text color
-      secondary: '#ffffff', // Secondary text color
-      disabled: '#bdbdbd', // Disabled text color
+      primary: '#FFFFFF', // White main text color
+      secondary: '#BDBDBD', // Light grey secondary text color
+      disabled: '#757575', // Medium grey disabled text color
     },
-    divider: '#bdbdbd', // Divider color
+    divider: '#BDBDBD', // Light grey divider color
     action: {
-      active: '#ffffff', // Active icon color
-      hover: '#e9e9e9', // Hover color
-      selected: '#e1e1e1', // Selected color
-      disabled: '#ffffff', // Disabled color
-      selectedHover:'#d9d9d9'
+      active: '#FF4081', // Active icon color: Pink
+      hover: '#F8BBD0', // Light pink hover color
+      selected: '#F48FB1', // Light pink selected color
+      selectedHover: '#F06292', // Slightly darker pink for selected hover
+      disabled: '#BDBDBD', // Light grey disabled color
     },
   },
-})
+});
 const themes = {
     '/':earTrainerTheme ,
     '/ear-trainer': earTrainerTheme,

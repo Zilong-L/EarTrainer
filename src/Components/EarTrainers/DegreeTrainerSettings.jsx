@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Box, Button, Slider, Checkbox, Typography, Grid ,Switch } from '@mui/material';
+import { Modal, Box, Button, Slider, Container,Checkbox, Typography, Grid ,Switch } from '@mui/material';
 import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
 import HomeIcon from '@mui/icons-material/Home';
 import * as Tone from 'tone';
@@ -111,7 +111,7 @@ function DegreeTrainerSettings({
 
 
   return (
-    <Modal open={isSettingsOpen} onClose={closeSettings}>
+    <Modal open={isSettingsOpen} onClose={closeSettings} sx={{color:(theme)=>theme.palette.text.primary}}>
       <Box
         sx={{
           position: 'absolute',
@@ -120,8 +120,7 @@ function DegreeTrainerSettings({
           transform: 'translate(-50%, -50%)',
           width: '80%',
           maxWidth: 500,
-          bgcolor: 'background.paper',
-          border: '2px solid #000',
+          bgcolor: (theme)=>theme.palette.background.modal,
           boxShadow: 24,
           p: 4,
           borderRadius: 2,
@@ -129,19 +128,21 @@ function DegreeTrainerSettings({
           overflowY: 'auto',
         }}
       >
-        <h2 style={{ fontSize: '2rem', textAlign: 'center' }}>设置</h2>
+        <Typography variant='h4' sx={{textAlign:'center'}}>设置</Typography>
 
         {!showDegreeSettings && !showVolumeSettings && !showStatistics ? (
           <>
-            <Button sx={{ display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }} color='secondary' onClick={() => setShowDegreeSettings(true)}>
-              练习设置
-            </Button>
-            <Button sx={{ display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }} color='secondary' onClick={() => setShowStatistics(true)}>
-              统计
-            </Button>
-            <Button sx={{ display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left' }} color='secondary' onClick={() => setShowVolumeSettings(true)}>
-              音量设置
-            </Button>
+            <Container sx={{marginTop:'3rem'}}>
+              <Button  sx={{  color:'text.primary' , display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }}  onClick={() => setShowDegreeSettings(true)}>
+                练习设置
+              </Button>
+              <Button   sx={{ color:'text.primary' ,  display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }}  onClick={() => setShowStatistics(true)}>
+                统计
+              </Button>
+              <Button   sx={{ color:'text.primary' ,  display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left' }}  onClick={() => setShowVolumeSettings(true)}>
+                音量设置
+              </Button>
+            </Container>
           </>
         ) : showDegreeSettings ? (
           <>
@@ -228,7 +229,6 @@ function DegreeTrainerSettings({
                 marginBottom: 2,
                 cursor: 'pointer',
                 padding: '6px 8px',
-                '&:hover': { bgcolor: 'action.hover' },
               }}
               onClick={() => setIsStatOpen(!isStatOpen)}
             >

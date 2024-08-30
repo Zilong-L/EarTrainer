@@ -130,6 +130,15 @@ const useDegreeTrainer = () => {
     return degrees.find(degree => degree.distance === interval)?.name || "Unknown";
   };
 
+  const endGame = () => {
+    Tone.getTransport().stop();
+    Tone.getTransport().position = 0;
+    Tone.getTransport().cancel();
+    setGameStarted(false);
+    setDisabledNotes([]);
+    drone.stop();
+  };
+
   return {
     currentNote,
     disabledNotes,
@@ -153,7 +162,8 @@ const useDegreeTrainer = () => {
     setCurrentNotes,
     startGame,
     playNote,
-    setPracticeRecords
+    setPracticeRecords,
+    endGame
   };
 };
 
