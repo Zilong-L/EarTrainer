@@ -9,6 +9,7 @@ import SequenceTrainerSettings from '@components/EarTrainers/SequenceTrainerSett
 import IntroModal from '@components/EarTrainers/SequenceTrainerIntro';
 import { apps, keyMap, degrees } from '@utils/Constants';
 import useSequenceTrainer from '@hooks/useSequenceTrainer';
+import useSequenceTrainerSettings from '@hooks/useSequenceTrainerSettings';
 import * as Tone from 'tone';
 
 let midi = null;
@@ -18,29 +19,32 @@ const SequenceTrainer = () => {
     sequenceIndex,
     disabledNotes,
     gameStarted,
+    filteredNotes,
+    setActiveNote,
+    startGame,
+    endGame,
+    playSequence,
+  } = useSequenceTrainer();
+
+  const {
     bpm,
     currentNotes,
-    filteredNotes,
     practiceRecords,
     droneVolume,
     pianoVolume,
     rootNote,
     range,
-    setActiveNote,
+    sequenceLength,
     setBpm,
     setDroneVolume,
     setPianoVolume,
     setRootNote,
     setRange,
     setCurrentNotes,
-    startGame,
-    endGame,
-    playSequence,
     setPracticeRecords,
-    sequenceLength,
     setSequenceLength,
     saveSettings
-  } = useSequenceTrainer();
+  } = useSequenceTrainerSettings();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -53,7 +57,7 @@ const SequenceTrainer = () => {
   };
 
   const handleReplay = () => {
-    playSequence(0); // 立即播放整个序列
+    playSequence(0);
   };
 
   useEffect(() => {

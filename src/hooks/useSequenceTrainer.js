@@ -4,6 +4,7 @@ import { degrees } from '@utils/Constants';
 import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
 import useSequenceTrainerSettings from './useSequenceTrainerSettings';
 import { playNotes, cancelAllSounds } from '@utils/ToneInstance';
+
 const useSequenceTrainer = () => {
   const {
     bpm,
@@ -13,21 +14,12 @@ const useSequenceTrainer = () => {
     range,
     practiceRecords,
     currentNotes,
-    setBpm,
-    setDroneVolume,
-    setPianoVolume,
-    setRootNote,
-    setRange,
-    setPracticeRecords,
     updatePracticeRecords,
-    setCurrentNotes,
     sequenceLength,
-    setSequenceLength,
-    saveSettings
   } = useSequenceTrainerSettings();
 
   const [currentSequence, setCurrentSequence] = useState([]);
-  const [sequenceIndex, setSequenceIndex] = useState(0); // 新增状态
+  const [sequenceIndex, setSequenceIndex] = useState(0);
   const [disabledNotes, setDisabledNotes] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [filteredNotes, setFilteredNotes] = useState(degrees);
@@ -37,15 +29,7 @@ const useSequenceTrainer = () => {
   const piano = getPianoInstance();
   const drone = getDroneInstance();
   const pianoSampler = piano.sampler;
-  // const generateRandoSequenceBasedOnRoot = () => {
-  //   const sequence = [];
-  //   for (let i = 0; i < sequenceLength; i++) {
-  //     const randomIndex = Math.floor(Math.random() * possibleMidiList.length);
-  //     sequence.push(possibleMidiList[randomIndex]);
-  //   }
-  //   console.log('genertated',sequence);
-  //   return sequence;
-  // };
+
   useEffect(() => {
     drone.updateRoot(rootNote);
     drone.setVolume(droneVolume);
@@ -56,7 +40,6 @@ const useSequenceTrainer = () => {
     const newNotes = currentNotes.filter((obj) => obj.enable);
     setFilteredNotes(newNotes);
   }, [currentNotes]);
-
 
   useEffect(() => {
     const expandedIntervals = [];
@@ -83,23 +66,22 @@ const useSequenceTrainer = () => {
     setDisabledNotes([]);
     const sequence = generateRandomSequenceBasedOnRoot();
     setCurrentSequence(sequence);
-    setSequenceIndex(0); // 重置序列索引
-    playSequence(sequence,1);
+    setSequenceIndex(0);
+    playSequence(sequence, 1);
     drone.start();
   };
 
-  const playSequence = (sequence=null,delay=0) => {
-    if(!sequence){
+  const playSequence = (sequence = null, delay = 0) => {
+    if (!sequence) {
       sequence = currentSequence;
     }
-    playNotes(sequence, delay,bpm);
+    playNotes(sequence, delay, bpm);
   };
-
 
   const generateRandomSequenceBasedOnRoot = () => {
     if (possibleMidiList.length === 0) return [];
     const sequence = [];
-    for (let i = 0; i < sequenceLength; i++) { // 使用状态变量
+    for (let i = 0; i < sequenceLength; i++) {
       const nextNoteMidi = possibleMidiList[Math.floor(Math.random() * possibleMidiList.length)];
       sequence.push(Tone.Frequency(nextNoteMidi, 'midi').toNote());
     }
@@ -108,7 +90,7 @@ const useSequenceTrainer = () => {
 
   const handleNoteGuess = (guessedNote) => {
     const guessedNoteMidi = Tone.Frequency(guessedNote).toMidi();
-    const currentNoteMidi = Tone.Frequency(currentSequence[sequenceIndex]).toMidi(); // 使用序列索引
+    const currentNoteMidi = Tone.Frequency(currentSequence[sequenceIndex]).toMidi();
     const guessedDegree = calculateDegree(guessedNoteMidi, currentNoteMidi);
     const isCorrect = guessedNoteMidi % 12 === currentNoteMidi % 12;
     if (isCorrect) {
@@ -121,15 +103,14 @@ const useSequenceTrainer = () => {
         if (nextIndex >= currentSequence.length) {
           const newSequence = generateRandomSequenceBasedOnRoot();
           setCurrentSequence(newSequence);
-          playSequence(newSequence,1);
+          playSequence(newSequence, 1);
           return 0;
         } else {
-          // playSequence(currentSequence.slice(nextIndex));
           return nextIndex;
         }
       });
     } else {
-      pianoSampler.triggerAttackRelease(guessedNote,60/bpm);
+      pianoSampler.triggerAttackRelease(guessedNote, 60 / bpm);
       if (!disabledNotes.includes(guessedNote)) {
         setDisabledNotes((prev) => [...prev, guessedNote]);
         updatePracticeRecords(guessedDegree, isCorrect);
@@ -144,11 +125,12 @@ const useSequenceTrainer = () => {
     const interval = (guessedNoteMidi - rootNote) % 12;
     return degrees.find(degree => degree.distance === interval)?.name || "Unknown";
   };
+
   useEffect(() => {
     const newSequence = generateRandomSequenceBasedOnRoot();
     setCurrentSequence(newSequence);
-    setSequenceIndex(0); // 重置序列索引
-  }, [possibleMidiList,sequenceLength]);
+    setSequenceIndex(0);
+  }, [possibleMidiList, sequenceLength]);
 
   const endGame = () => {
     cancelAllSounds();
@@ -159,35 +141,16 @@ const useSequenceTrainer = () => {
 
   return {
     currentSequence,
-    sequenceIndex, // 返回序列索引
+    sequenceIndex,
     disabledNotes,
     gameStarted,
-    bpm,
-    currentNotes,
     filteredNotes,
     possibleMidiList,
-    practiceRecords,
-    droneVolume,
-    pianoVolume,
-    rootNote,
-    range,
     activeNote,
     setActiveNote,
-    setBpm,
-    setDroneVolume,
-    setPianoVolume,
-    setRootNote,
-    setRange,
-    setCurrentNotes,
     startGame,
     playSequence,
-    setPracticeRecords,
-    currentSequence,
-    sequenceIndex,
     endGame,
-    sequenceLength,
-    setSequenceLength,
-    saveSettings
   };
 };
 

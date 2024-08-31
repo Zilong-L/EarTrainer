@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline,Paper, Box, Button, Typography, AppBar, Toolbar, Container, Grid } from '@mui/material';
+import { CssBaseline, Paper, Box, Button, Typography, AppBar, Toolbar, Container, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import ReplayIcon from '@mui/icons-material/Replay';
@@ -7,37 +7,40 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from '@components/Sidebar';
 import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainerSettings';
 import IntroModal from '@components/EarTrainers/DegreeTrainerIntro';
-import { apps ,keyMap,degrees} from '@utils/Constants';
+import { apps, keyMap, degrees } from '@utils/Constants';
 import useDegreeTrainer from '@hooks/useDegreeTrainer';
- // Start of Selection
+import useDegreeTrainerSettings from '@hooks/useDegreeTrainerSettings';
 import * as Tone from 'tone';
 
-let midi = null
+let midi = null;
 const EarTrainer = () => {
   const {
     currentNote,
     disabledNotes,
     gameStarted,
+    filteredNotes,
+    setActiveNote,
+    startGame,
+    endGame,
+    playNote,
+  } = useDegreeTrainer();
+
+  const {
     bpm,
     currentNotes,
-    filteredNotes,
     practiceRecords,
     droneVolume,
     pianoVolume,
     rootNote,
     range,
-    setActiveNote,
     setBpm,
     setDroneVolume,
     setPianoVolume,
     setRootNote,
     setRange,
     setCurrentNotes,
-    startGame,
-    endGame,
-    playNote,
-    setPracticeRecords
-  } = useDegreeTrainer();
+    setPracticeRecords,
+  } = useDegreeTrainerSettings();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);

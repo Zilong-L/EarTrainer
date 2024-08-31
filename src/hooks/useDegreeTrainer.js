@@ -11,16 +11,8 @@ const useDegreeTrainer = () => {
     pianoVolume,
     rootNote,
     range,
-    practiceRecords,
     currentNotes,
-    setBpm,
-    setDroneVolume,
-    setPianoVolume,
-    setRootNote,
-    setRange,
-    setPracticeRecords,
     updatePracticeRecords,
-    setCurrentNotes,
   } = useDegreeTrainerSettings();
 
   const [currentNote, setCurrentNote] = useState("");
@@ -29,6 +21,7 @@ const useDegreeTrainer = () => {
   const [filteredNotes, setFilteredNotes] = useState(degrees);
   const [possibleMidiList, setPossibleMidiList] = useState([]);
   const [activeNote, setActiveNote] = useState(null);
+  const [isAdvance, setIsAdvance] = useState(false);
 
   const piano = getPianoInstance();
   const drone = getDroneInstance();
@@ -70,6 +63,19 @@ const useDegreeTrainer = () => {
     }
   }, [activeNote]);
 
+  useEffect(() => {
+    if (isAdvance) {
+      const timer = setTimeout(() => {
+        const nextNote = generateRandomNoteBasedOnRoot();
+        setCurrentNote(nextNote);
+        playNote(nextNote);
+        setIsAdvance(false);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isAdvance]);
+
   const startGame = () => {
     Tone.getTransport().stop();
     Tone.getTransport().position = 0;
@@ -109,12 +115,8 @@ const useDegreeTrainer = () => {
     if (isCorrect) {
       setDisabledNotes([]);
       updatePracticeRecords(guessedDegree, isCorrect);
-      setCurrentNote(() => {
-        const nextNote = generateRandomNoteBasedOnRoot(rootNote, filteredNotes);
-        playNote(nextNote);
-        return nextNote;
-      });
-      setActiveNote(null);
+      playNote(currentNote);
+      setIsAdvance(true);
     } else {
       if (!disabledNotes.includes(guessedNote)) {
         setDisabledNotes((prev) => [...prev, guessedNote]);
@@ -143,26 +145,12 @@ const useDegreeTrainer = () => {
     currentNote,
     disabledNotes,
     gameStarted,
-    bpm,
-    currentNotes,
     filteredNotes,
     possibleMidiList,
-    practiceRecords,
-    droneVolume,
-    pianoVolume,
-    rootNote,
-    range,
     activeNote,
     setActiveNote,
-    setBpm,
-    setDroneVolume,
-    setPianoVolume,
-    setRootNote,
-    setRange,
-    setCurrentNotes,
     startGame,
     playNote,
-    setPracticeRecords,
     endGame
   };
 };
