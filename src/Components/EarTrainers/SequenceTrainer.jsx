@@ -52,11 +52,17 @@ const SequenceTrainer = () => {
     startGame();
   };
 
+  const handleReplay = () => {
+    playSequence(0); // 立即播放整个序列
+  };
+
   useEffect(() => {
     const handleKeyPress = (event) => {
+      const now = new Date();
+      console.log(`Current Date and Time: ${now.toISOString()}`);
       const key = event.key;
       if (key === 'r') {
-        playSequence(currentSequence);
+        handleReplay();
         return;
       }
 
@@ -106,9 +112,11 @@ const SequenceTrainer = () => {
     })();
     return () => {
       console.log('midi is not deleted, but delete listener');
-      const inputs = midi.inputs.values();
-      for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
-        input.value.onmidimessage = null;
+      if(midi){
+        const inputs = midi.inputs.values();
+        for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
+          input.value.onmidimessage = null;
+        }
       }
       endGame();
     };
@@ -208,7 +216,7 @@ const SequenceTrainer = () => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              height: 'calc(100vh - 64px)',
+              height: 'calc(100svh - 64px)',
               paddingY: '1rem',
               paddingX: '1.5rem',
             }}
@@ -269,7 +277,7 @@ const SequenceTrainer = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => playSequence(currentSequence)}
+                  onClick={handleReplay}
                   fullWidth
                   sx={{
                     textTransform: 'none',

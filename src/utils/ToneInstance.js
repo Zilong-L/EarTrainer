@@ -3,8 +3,6 @@ import * as Tone from 'tone';
 let pianoSampler = null;
 let droneInstance = null;
 
-
-
 let pianoGainNode = null
 function getPianoGainNode() {
   if (!pianoGainNode) {
@@ -36,8 +34,6 @@ function getPianoInstance() {
     setVolume
   };
 }
-
-
 
 function getDroneInstance() {
   let masterGainNode = null;
@@ -117,5 +113,43 @@ function getDroneInstance() {
 }
 
 
+function playNotes(input, delay = 0, bpm = 60) {
+  // 取消之前的播放
+  const activeTransport = Tone.getTransport();
+  if (activeTransport) {
+    activeTransport.stop();
+    activeTransport.cancel();
+  }
 
-export { getPianoInstance,  getDroneInstance };
+  const pianoInstance = getPianoInstance();
+  const { sampler } = pianoInstance;
+
+  // 处理 MIDI 输入和音符字符串输入
+  const notes = Array.isArray(input) ? input : [input];
+
+  notes.forEach((note, index) => {
+    activeTransport.schedule((time) => {
+      if (sampler._buffers && sampler._buffers.loaded) {
+        // 检查是否为 MIDI 值
+        if (typeof note === 'number') {
+          sampler.triggerAttackRelease(Tone.Frequency(note, 'midi').toNote(), 60 / bpm, time);
+        } else {
+          sampler.triggerAttackRelease(note, 60 / bpm, time);
+        }
+      }
+    }, `+${index * (60 / bpm) + delay}`);
+  });
+
+  activeTransport.start();
+}
+
+function cancelAllSounds() {
+  const activeTransport = Tone.getTransport();
+
+  if (activeTransport) {
+    activeTransport.stop();
+    activeTransport.cancel();
+  }
+}
+
+export { getPianoInstance, getDroneInstance, playNotes, cancelAllSounds };

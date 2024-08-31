@@ -119,10 +119,12 @@ const EarTrainer = () => {
       })();
       return ()=>{
         console.log('midi is not deleted, but delete listener')
-        const inputs = midi.inputs.values();
-        for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
-            input.value.onmidimessage = null
-        }
+        if(midi){
+          const inputs = midi.inputs.values();
+          for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
+              input.value.onmidimessage = null
+          }
+      }
       }
   }, []);
   const renderRecords = () => {
@@ -195,7 +197,7 @@ const EarTrainer = () => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          height: 'calc(100vh - 64px)',
+          height: 'calc(100svh - 64px)',
           paddingY: '1rem',
           paddingX: '1.5rem',
         }}

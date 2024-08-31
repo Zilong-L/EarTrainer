@@ -46,7 +46,6 @@ function SequenceTrainerSettings({
     setShowStatistics(false);
     setIsDeleteConfirmOpen(false);
     saveSettings();
-
     playSequence();
   };
 

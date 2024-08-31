@@ -42,6 +42,9 @@ const ThemedContent = () => {
             <Route path="/ear-trainer/sequence-trainer" element={<SequenceTrainer />} /> {/* 新增的 Sequence Trainer 路由 */}
           </Routes>
         
+        <Box sx={{ textAlign: 'center', padding: 2 }}>
+          <p>我是开源的，欢迎访问 <a href="https://github.com/Zilong-L/EarTrainer/issues" target="_blank" rel="noopener noreferrer" style={{ color: 'lightblue' }}>GitHub 仓库</a> 提出功能需求</p>
+        </Box>
       </Box>
     </ThemeProvider>
   );

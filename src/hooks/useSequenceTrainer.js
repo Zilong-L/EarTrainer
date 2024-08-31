@@ -3,7 +3,7 @@ import * as Tone from 'tone';
 import { degrees } from '@utils/Constants';
 import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
 import useSequenceTrainerSettings from './useSequenceTrainerSettings';
-
+import { playNotes, cancelAllSounds } from '@utils/ToneInstance';
 const useSequenceTrainer = () => {
   const {
     bpm,
@@ -37,14 +37,15 @@ const useSequenceTrainer = () => {
   const piano = getPianoInstance();
   const drone = getDroneInstance();
   const pianoSampler = piano.sampler;
-  const generateRandoSequenceBasedOnRoot = () => {
-    const sequence = [];
-    for (let i = 0; i < sequenceLength; i++) {
-      const randomIndex = Math.floor(Math.random() * possibleMidiList.length);
-      sequence.push(possibleMidiList[randomIndex]);
-    }
-    return sequence;
-  };
+  // const generateRandoSequenceBasedOnRoot = () => {
+  //   const sequence = [];
+  //   for (let i = 0; i < sequenceLength; i++) {
+  //     const randomIndex = Math.floor(Math.random() * possibleMidiList.length);
+  //     sequence.push(possibleMidiList[randomIndex]);
+  //   }
+  //   console.log('genertated',sequence);
+  //   return sequence;
+  // };
   useEffect(() => {
     drone.updateRoot(rootNote);
     drone.setVolume(droneVolume);
@@ -78,32 +79,22 @@ const useSequenceTrainer = () => {
   }, [activeNote]);
 
   const startGame = () => {
-    Tone.getTransport().stop();
-    Tone.getTransport().position = 0;
-    Tone.getTransport().cancel();
     setGameStarted(true);
     setDisabledNotes([]);
-    const sequence = generateRandoSequenceBasedOnRoot();
+    const sequence = generateRandomSequenceBasedOnRoot();
     setCurrentSequence(sequence);
     setSequenceIndex(0); // 重置序列索引
-    playSequence(sequence, 1);
+    playSequence(sequence,1);
     drone.start();
-    Tone.getTransport().start();
   };
 
-  const playSequence = (sequence = null, delay = 0) => {
-    Tone.getTransport().stop();
-    Tone.getTransport().position = 0;
-    Tone.getTransport().cancel();
-    if (!sequence) {
+  const playSequence = (sequence=null,delay=0) => {
+    if(!sequence){
       sequence = currentSequence;
     }
-    if (pianoSampler._buffers && pianoSampler._buffers.loaded) {
-      sequence.forEach((note, index) => {
-        pianoSampler.triggerAttackRelease(note, 60 / bpm, Tone.now() + delay + index * (60 / bpm));
-      });
-    }
+    playNotes(sequence, delay,bpm);
   };
+
 
   const generateRandomSequenceBasedOnRoot = () => {
     if (possibleMidiList.length === 0) return [];
@@ -124,25 +115,28 @@ const useSequenceTrainer = () => {
       setDisabledNotes([]);
       updatePracticeRecords(guessedDegree, isCorrect);
       setSequenceIndex((prevIndex) => {
+        pianoSampler.triggerAttackRelease(currentSequence[prevIndex], 60 / bpm);
         const nextIndex = prevIndex + 1;
+        
         if (nextIndex >= currentSequence.length) {
           const newSequence = generateRandomSequenceBasedOnRoot();
           setCurrentSequence(newSequence);
-          playSequence(newSequence);
+          playSequence(newSequence,1);
           return 0;
         } else {
           // playSequence(currentSequence.slice(nextIndex));
           return nextIndex;
         }
       });
-      setActiveNote(null);
     } else {
+      pianoSampler.triggerAttackRelease(guessedNote,60/bpm);
       if (!disabledNotes.includes(guessedNote)) {
         setDisabledNotes((prev) => [...prev, guessedNote]);
         updatePracticeRecords(guessedDegree, isCorrect);
       }
-      playSequence([guessedNote]);
     }
+    const now = new Date();
+    console.log(`Current Date and Time: ${now.toISOString()}`);
     setActiveNote(null);
   };
 
@@ -157,9 +151,7 @@ const useSequenceTrainer = () => {
   }, [possibleMidiList,sequenceLength]);
 
   const endGame = () => {
-    Tone.getTransport().stop();
-    Tone.getTransport().position = 0;
-    Tone.getTransport().cancel();
+    cancelAllSounds();
     setGameStarted(false);
     setDisabledNotes([]);
     drone.stop();
