@@ -3,11 +3,11 @@ import { CssBaseline, Box,  ThemeProvider, createTheme } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import ChordTrainer from './ChordTrainer';
 import EarTrainer from './EarTrainer';
-import DegreeTrainer from '@EarTrainers/DegreeTrainer'
+import DegreeTrainer from '@EarTrainers/DegreeTrainer/DegreeTrainer'
+import SequenceTrainer from'@EarTrainers/SequenceTrainer/SequenceTrainer' // 新增的 Sequence Trainer
 import IntervalTrainer from'@EarTrainers/IntervalTrainer'
 import ScaleTrainer from'@EarTrainers/ScaleTrainer'
 import ProgressionTrainer from'@EarTrainers/ProgressionTrainer'
-import SequenceTrainer from'@EarTrainers/SequenceTrainer' // 新增的 Sequence Trainer
 import themes from '@themes/palette.js'
 // Import additional trainers here
 

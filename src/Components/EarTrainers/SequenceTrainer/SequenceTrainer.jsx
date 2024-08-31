@@ -5,15 +5,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ReplayIcon from '@mui/icons-material/Replay';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from '@components/Sidebar';
-import SequenceTrainerSettings from '@components/EarTrainers/SequenceTrainerSettings';
-import IntroModal from '@components/EarTrainers/SequenceTrainerIntro';
+import SequenceTrainerSettings from '@components/EarTrainers/SequenceTrainer/SequenceTrainerSettings';
+import IntroModal from '@components/EarTrainers/SequenceTrainer/SequenceTrainerIntro';
+import useSequenceTrainer from '@components/EarTrainers/SequenceTrainer/useSequenceTrainer';
+import useSequenceTrainerSettings from '@components/EarTrainers/SequenceTrainer/useSequenceTrainerSettings';
 import { apps, keyMap, degrees } from '@utils/Constants';
-import useSequenceTrainer from '@hooks/useSequenceTrainer';
-import useSequenceTrainerSettings from '@hooks/useSequenceTrainerSettings';
 import * as Tone from 'tone';
 
 let midi = null;
 const SequenceTrainer = () => {
+  const settings = useSequenceTrainerSettings();
   const {
     currentSequence,
     sequenceIndex,
@@ -24,8 +25,7 @@ const SequenceTrainer = () => {
     startGame,
     endGame,
     playSequence,
-  } = useSequenceTrainer();
-
+  } = useSequenceTrainer(settings);
   const {
     bpm,
     currentNotes,
@@ -44,7 +44,7 @@ const SequenceTrainer = () => {
     setPracticeRecords,
     setSequenceLength,
     saveSettings
-  } = useSequenceTrainerSettings();
+  } = settings;
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);

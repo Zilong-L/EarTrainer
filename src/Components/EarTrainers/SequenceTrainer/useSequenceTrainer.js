@@ -2,21 +2,19 @@ import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@utils/Constants';
 import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
-import useSequenceTrainerSettings from './useSequenceTrainerSettings';
 import { playNotes, cancelAllSounds } from '@utils/ToneInstance';
 
-const useSequenceTrainer = () => {
+const useSequenceTrainer = (settings) => {
   const {
     bpm,
     droneVolume,
     pianoVolume,
     rootNote,
     range,
-    practiceRecords,
     currentNotes,
     updatePracticeRecords,
     sequenceLength,
-  } = useSequenceTrainerSettings();
+  } = settings;
 
   const [currentSequence, setCurrentSequence] = useState([]);
   const [sequenceIndex, setSequenceIndex] = useState(0);

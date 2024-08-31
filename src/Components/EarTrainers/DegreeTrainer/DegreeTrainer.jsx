@@ -5,15 +5,17 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ReplayIcon from '@mui/icons-material/Replay';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from '@components/Sidebar';
-import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainerSettings';
-import IntroModal from '@components/EarTrainers/DegreeTrainerIntro';
+import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/DegreeTrainerSettings';
+import IntroModal from '@components/EarTrainers/DegreeTrainer/DegreeTrainerIntro';
+import useDegreeTrainer from '@components/EarTrainers/DegreeTrainer/useDegreeTrainer';
+import useDegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/useDegreeTrainerSettings';
 import { apps, keyMap, degrees } from '@utils/Constants';
-import useDegreeTrainer from '@hooks/useDegreeTrainer';
-import useDegreeTrainerSettings from '@hooks/useDegreeTrainerSettings';
 import * as Tone from 'tone';
 
 let midi = null;
 const EarTrainer = () => {
+  const settings = useDegreeTrainerSettings();
+
   const {
     currentNote,
     disabledNotes,
@@ -22,17 +24,17 @@ const EarTrainer = () => {
     setActiveNote,
     startGame,
     endGame,
-    playNote,
-  } = useDegreeTrainer();
+    playNote
+  } = useDegreeTrainer(settings);
 
   const {
     bpm,
-    currentNotes,
-    practiceRecords,
     droneVolume,
     pianoVolume,
     rootNote,
     range,
+    currentNotes,
+    practiceRecords,
     setBpm,
     setDroneVolume,
     setPianoVolume,
@@ -40,7 +42,7 @@ const EarTrainer = () => {
     setRange,
     setCurrentNotes,
     setPracticeRecords,
-  } = useDegreeTrainerSettings();
+  } = settings;
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -64,7 +66,7 @@ const EarTrainer = () => {
         playNote(currentNote);
         return;
       }
-      
+    
       let degreeIndex;
       if (keyMap[key] !== undefined) {
         degreeIndex = keyMap[key];
@@ -78,7 +80,7 @@ const EarTrainer = () => {
           button.click();
         }
       }
-  
+    
       // Hit the replay button if R or space is pressed
       
     };
@@ -87,7 +89,7 @@ const EarTrainer = () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
   }, [filteredNotes, rootNote,currentNote]);
-  
+
   useEffect(() => {
     const midiMessageHandler = (message) => {
       const [command, note, velocity] = message.data;

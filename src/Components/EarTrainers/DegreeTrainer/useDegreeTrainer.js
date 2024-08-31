@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@utils/Constants';
 import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
-import useDegreeTrainerSettings from './useDegreeTrainerSettings';
 
-const useDegreeTrainer = () => {
+const useDegreeTrainer = (settings) => {
   const {
     bpm,
     droneVolume,
@@ -13,7 +12,7 @@ const useDegreeTrainer = () => {
     range,
     currentNotes,
     updatePracticeRecords,
-  } = useDegreeTrainerSettings();
+  } = settings;
 
   const [currentNote, setCurrentNote] = useState("");
   const [disabledNotes, setDisabledNotes] = useState([]);
