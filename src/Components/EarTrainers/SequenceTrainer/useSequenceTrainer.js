@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
-import { degrees } from '@utils/Constants';
+import { degrees } from '@components/EarTrainers/SequenceTrainer/Constants';
 import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
 import { playNotes, cancelAllSounds } from '@utils/ToneInstance';
 

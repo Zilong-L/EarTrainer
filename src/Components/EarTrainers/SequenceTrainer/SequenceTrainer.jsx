@@ -9,7 +9,7 @@ import SequenceTrainerSettings from '@components/EarTrainers/SequenceTrainer/Seq
 import IntroModal from '@components/EarTrainers/SequenceTrainer/SequenceTrainerIntro';
 import useSequenceTrainer from '@components/EarTrainers/SequenceTrainer/useSequenceTrainer';
 import useSequenceTrainerSettings from '@components/EarTrainers/SequenceTrainer/useSequenceTrainerSettings';
-import { apps, keyMap, degrees } from '@utils/Constants';
+import { apps, keyMap, degrees } from '@components/EarTrainers/SequenceTrainer/Constants';
 import * as Tone from 'tone';
 
 let midi = null;

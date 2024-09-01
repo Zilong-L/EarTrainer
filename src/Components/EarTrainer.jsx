@@ -6,7 +6,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 const apps = [{name: 'Ear Trainer', path: '/ear-trainer'}, {name: 'Chord Trainer', path: '/chord-trainer'}]
 const trainers = [
   {name:'Degree',path:'/ear-trainer/degree-trainer'},
-  {name:'Sequence',path:'/ear-trainer/sequence-trainer'} // 新增的 Sequence Trainer
+  {name:'Sequence',path:'/ear-trainer/sequence-trainer'},
+  {name:'Chord Color',path:'/ear-trainer/chord-color-trainer'}
 ]
 const EarTrainer = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar is visible by default

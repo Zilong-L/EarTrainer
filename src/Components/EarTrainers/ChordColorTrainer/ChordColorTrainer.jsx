@@ -5,43 +5,32 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ReplayIcon from '@mui/icons-material/Replay';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from '@components/Sidebar';
-import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/DegreeTrainerSettings';
-import IntroModal from '@components/EarTrainers/DegreeTrainer/DegreeTrainerIntro';
-import useDegreeTrainer from '@components/EarTrainers/DegreeTrainer/useDegreeTrainer';
-import useDegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/useDegreeTrainerSettings';
-import { apps, keyMap, degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
+import ChordColorTrainerSettings from '@components/EarTrainers/ChordColorTrainer/Settings';
+import IntroModal from '@components/EarTrainers/ChordColorTrainer/ChordColorTrainerIntro';
+import useChordColorTrainer from '@components/EarTrainers/ChordColorTrainer/useChordColorTrainer';
+import useChordColorTrainerSettings from '@components/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings';
+import { apps, keyMap, degrees } from '@components/EarTrainers/ChordColorTrainer/Constants';
 import * as Tone from 'tone';
-
+import StairsIcon from '@mui/icons-material/Stairs';
 let midi = null;
 const EarTrainer = () => {
-  const settings = useDegreeTrainerSettings();
+  const settings = useChordColorTrainerSettings();
 
   const {
     currentNote,
-    disabledNotes,
+    disabledChords,
     gameStarted,
-    filteredNotes,
-    setActiveNote,
+    filteredChords,
+    setActiveChord,
     startGame,
     endGame,
-    playNote
-  } = useDegreeTrainer(settings);
+    playChord,
+    playBrokenChord,
+  } = useChordColorTrainer(settings);
 
   const {
-    bpm,
-    droneVolume,
-    pianoVolume,
     rootNote,
-    range,
-    currentNotes,
     practiceRecords,
-    setBpm,
-    setDroneVolume,
-    setPianoVolume,
-    setRootNote,
-    setRange,
-    setCurrentNotes,
-    setPracticeRecords,
   } = settings;
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -63,7 +52,7 @@ const EarTrainer = () => {
     const handleKeyPress = (event) => {
       const key = event.key;
       if (key === 'r' ) {
-        playNote(currentNote);
+        playChord();
         return;
       }
     
@@ -88,7 +77,7 @@ const EarTrainer = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [filteredNotes, rootNote,currentNote]);
+  }, [ rootNote,currentNote]);
 
   useEffect(() => {
     const midiMessageHandler = (message) => {
@@ -102,7 +91,7 @@ const EarTrainer = () => {
         // buttons.forEach(button => {
         //     button.click();
         // });
-        setActiveNote(noteName)
+        setActiveChord(noteName)
       } 
   
     };
@@ -209,26 +198,11 @@ const EarTrainer = () => {
         >
         <CssBaseline />
         <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-        <DegreeTrainerSettings
+        <ChordColorTrainerSettings
           isSettingsOpen={isSettingsOpen}
           setIsSettingsOpen={setIsSettingsOpen}
-          bpm={bpm}
-          setBpm={setBpm}
-          droneVolume={droneVolume}
-          setDroneVolume={setDroneVolume}
-          pianoVolume={pianoVolume}
-          setPianoVolume={setPianoVolume}
-          rootNote={rootNote}
-          setRootNote={setRootNote}
-          range={range}
-          setRange={setRange}
-          currentNotes={currentNotes}
-          setCurrentNotes={setCurrentNotes}
-          playNote={playNote}
-          isStatOpen={isStatOpen}
-          setIsStatOpen={setIsStatOpen}
-          practiceRecords={practiceRecords}
-          setPracticeRecords={setPracticeRecords}
+          playChord={playChord}
+          settings={settings}
         />  
         <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} />
         {gameStarted && (
@@ -236,41 +210,61 @@ const EarTrainer = () => {
             {isStatOpen && renderRecords()}
             <Box sx={{ flexGrow: 1 }} />
             <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
-              {filteredNotes.map((note) => (
-                <Grid item xs={4} key={note.name}>
+              {filteredChords.map((note) => (
+                <Grid item xs={4} key={`${note.degree}${note.chordType}`}>
                   <Button
                     variant="contained"
-                    onClick={() => setActiveNote(Tone.Frequency(rootNote + note.distance, 'midi').toNote())}
+                    onClick={() => setActiveChord(`${note.degree}${note.chordType}`)}
                     fullWidth
                     sx={{
                       textTransform: 'none',
                       fontSize: '1.5rem',
                       height: '4rem',
-                      background: disabledNotes.some(disabledNote => Tone.Frequency(rootNote + note.distance, 'midi').toNote().slice(0, -1) === disabledNote.slice(0, -1)) ? (theme) => theme.palette.action.disabled : 'default',
+                      background: disabledChords.some(disabledNote => `${note.degree}${note.chordType}` === disabledNote) ? (theme) => theme.palette.action.disabled : 'default',
                     }}
                     data-note={Tone.Frequency(rootNote + note.distance, 'midi').toNote().slice(0, -1)}
                   >
-                    {note.name}
+                    {note.degree}{note.chordType}
                   </Button>
                 </Grid>
               ))}
             </Grid>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => playNote(currentNote)}
-              fullWidth
-              sx={{
-                textTransform: 'none',
-                padding: '1rem',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 'auto',
-              }}
-            >
-              <ReplayIcon sx={{ fontSize: '3rem' }} />
-            </Button>
+            <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
+              <Grid item xs={6}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => playChord()}
+                  fullWidth
+                  sx={{
+                    textTransform: 'none',
+                    padding: '1rem',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <ReplayIcon sx={{ fontSize: '3rem' }} />
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => playBrokenChord()}
+                  fullWidth
+                  sx={{
+                    textTransform: 'none',
+                    padding: '1rem',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <StairsIcon sx={{ fontSize: '3rem' }} />
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
         )}
       </Container>

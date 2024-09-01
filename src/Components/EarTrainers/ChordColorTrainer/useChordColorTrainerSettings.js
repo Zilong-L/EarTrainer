@@ -1,32 +1,44 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
-import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
+import {  } from '@utils/Constants';
+import { Chord } from "tonal";
+import { degrees,defaultDegreeChordTypes, CHORD_TYPES } from "@components/EarTrainers/ChordColorTrainer/Constants";
+// 定义和弦类型常量
 
-const useDegreeTrainerSettings = () => {
+const useChordColorTrainerSettings = () => {
   const [bpm, setBpm] = useState(40);
   const [droneVolume, setDroneVolume] = useState(0.3);
   const [pianoVolume, setPianoVolume] = useState(1.0);
   const [rootNote, setRootNote] = useState(Tone.Frequency('C3').toMidi());
-  const [range, setRange] = useState([Tone.Frequency('C3').toMidi(), Tone.Frequency('C4').toMidi()]);
+  const [range, setRange] = useState([Tone.Frequency('C3').toNote(), Tone.Frequency('C4').toNote()]);
   const [practiceRecords, setPracticeRecords] = useState({});
   const [currentNotes, setCurrentNotes] = useState(degrees);
+  const [preset, setPreset] = useState('major');
+
+  // 存储每个级数对应的和弦类型数组
+  const [degreeChordTypes, setDegreeChordTypes] = useState(defaultDegreeChordTypes);
+
+
 
   useEffect(() => {
-    const storedRecords = JSON.parse(localStorage.getItem('degreeTrainerRecords')) || {};
+    const storedRecords = JSON.parse(localStorage.getItem('ChordColorTrainerRecords')) || {};
     setPracticeRecords(storedRecords);
   }, []);
 
-  // 新增 useEffect 从 localStorage 加载设置
+
+
+  // 新增 useEffect 从 localStorage 加载 degreeChordTypes 设置
   useEffect(() => {
-    const storedSettings = JSON.parse(localStorage.getItem('degreeTrainerSettings'));
-    console.log(storedSettings)
+    const storedSettings = JSON.parse(localStorage.getItem('ChordColorTrainerSettings'));
     if (storedSettings) {
       setBpm(storedSettings.bpm || 40);
       setDroneVolume(storedSettings.droneVolume || 0.3);
       setPianoVolume(storedSettings.pianoVolume || 1.0);
       setRootNote(storedSettings.rootNote || Tone.Frequency('C3').toMidi());
-      setRange(storedSettings.range || [Tone.Frequency('C3').toMidi(), Tone.Frequency('C4').toMidi()]);
+      setRange(storedSettings.range || [Tone.Frequency('C3').toNote(), Tone.Frequency('C4').toNote()]);
       setCurrentNotes(storedSettings.currentNotes || degrees);
+      setDegreeChordTypes(storedSettings.degreeChordTypes || defaultDegreeChordTypes);
+      setPreset(storedSettings.preset || 'major');
     }
   }, []);
 
@@ -39,7 +51,7 @@ const useDegreeTrainerSettings = () => {
           correct: (prevRecords[degree]?.correct || 0) + (isCorrect ? 1 : 0),
         },
       };
-      localStorage.setItem('degreeTrainerRecords', JSON.stringify(updatedRecords));
+      localStorage.setItem('ChordColorTrainerRecords', JSON.stringify(updatedRecords));
       return updatedRecords;
     });
   };
@@ -59,8 +71,13 @@ const useDegreeTrainerSettings = () => {
     setRange,
     setPracticeRecords,
     updatePracticeRecords,
-    setCurrentNotes
+    setCurrentNotes,
+    degreeChordTypes,
+    setDegreeChordTypes,
+    CHORD_TYPES,
+    preset,
+    setPreset
   };
 };
 
-export default useDegreeTrainerSettings;
+export default useChordColorTrainerSettings;

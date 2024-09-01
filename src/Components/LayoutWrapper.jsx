@@ -7,6 +7,7 @@ import DegreeTrainer from '@EarTrainers/DegreeTrainer/DegreeTrainer'
 import SequenceTrainer from'@EarTrainers/SequenceTrainer/SequenceTrainer' // 新增的 Sequence Trainer
 import IntervalTrainer from'@EarTrainers/IntervalTrainer'
 import ScaleTrainer from'@EarTrainers/ScaleTrainer'
+import ChordColorTrainer from'@EarTrainers/ChordColorTrainer/ChordColorTrainer'
 import ProgressionTrainer from'@EarTrainers/ProgressionTrainer'
 import themes from '@themes/palette.js'
 // Import additional trainers here
@@ -37,6 +38,7 @@ const ThemedContent = () => {
             <Route path="/ear-trainer" element={<EarTrainer />} />
             <Route path="/ear-trainer/degree-trainer" element={<DegreeTrainer />} />
             <Route path="/ear-trainer/interval-trainer" element={<IntervalTrainer />} />
+            <Route path="/ear-trainer/chord-color-trainer" element={<ChordColorTrainer />} />
             <Route path="/ear-trainer/scale-trainer" element={<ScaleTrainer />} />
             <Route path="/ear-trainer/progression-trainer" element={<ProgressionTrainer />} />
             <Route path="/ear-trainer/sequence-trainer" element={<SequenceTrainer />} /> {/* 新增的 Sequence Trainer 路由 */}

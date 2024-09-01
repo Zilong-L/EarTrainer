@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
-import { degrees } from '@utils/Constants';
+import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
 
 const useDegreeTrainer = (settings) => {
@@ -96,6 +96,7 @@ const useDegreeTrainer = (settings) => {
       note = currentNote;
     }
     if (pianoSampler._buffers && pianoSampler._buffers.loaded) {
+      console.log('play note',note)
       pianoSampler.triggerAttackRelease(note, 60 / bpm, Tone.now() + delay);
     }
   };
