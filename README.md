@@ -18,3 +18,12 @@
 <img src="pics/image2.png" alt="alt text" width="200" style="height: auto;" />
 
 ## [点这里进入网站](https://musictrainer.barnman.cc)
+
+## 自行托管方法
+1. 克隆仓库: `git clone my repo`
+2. 使用nvm安装Node.js v22: `nvm install 22`
+3. 切换到Node.js v22: `nvm use 22`
+4. 安装依赖: `npm i`
+5. 启动开发服务器: `npm run dev`
+
+测试环境: Node v22.7.0 (npm 10.8.2) `~/.local/share/nvm/v22.7.0/bin/node`
