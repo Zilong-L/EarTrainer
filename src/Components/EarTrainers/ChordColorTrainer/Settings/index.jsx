@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Box, Button, Container, Typography } from '@mui/material';
 import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
 import PracticeSettings from './PracticeSettings';
@@ -19,6 +19,8 @@ function ChordColorTrainerSettings({
     range,
     currentNotes,
     degreeChordTypes,
+    preset,
+    customPresets, 
   } = settings;
 
   const [showPracticeSettings, setShowPracticeSettings] = useState(false);
@@ -43,9 +45,13 @@ function ChordColorTrainerSettings({
       range,
       currentNotes,
       degreeChordTypes,
+      preset,
+      customPresets
     };
     localStorage.setItem('ChordColorTrainerSettings', JSON.stringify(settings));
   }
+
+
 
   return (
     <Modal open={isSettingsOpen} onClose={closeSettings} sx={{color:(theme)=>theme.palette.text.primary}}>
@@ -85,6 +91,8 @@ function ChordColorTrainerSettings({
           <PracticeSettings
             settings={settings}
             setShowPracticeSettings={setShowPracticeSettings}
+            customPresets={customPresets}
+
           />
         ) : showStatistics ? (
           <Statistics

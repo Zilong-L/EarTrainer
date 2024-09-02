@@ -92,8 +92,18 @@ const defaultDegreeChordTypes = [
     chordTypes: ['o']
   }
 ]
+
+/**
+ * @typedef {Object} ChordSetting
+ * @property {string} degree - 和弦的度数
+ * @property {string[]} chordTypes - 和弦类型数组
+ */
+
+/**
+ * @type {{ [key: string]: ChordSetting[] }}
+ */
 const chordPreset = {
-  'major':[{
+  '大调': [{
     degree: 'I',
     chordTypes: ['M'] // 保持不变
   },
@@ -121,7 +131,7 @@ const chordPreset = {
     degree: 'VII',
     chordTypes: ['o'] // 修改为数组
   }],
-  'minor':[{
+  '小调': [{
     degree: 'I',
     chordTypes: ['m'] // 修改为数组
   },
@@ -149,10 +159,93 @@ const chordPreset = {
     degree: 'VII',
     chordTypes: ['M'] // 修改为数组
   }],
-  
-  
-}
+  '基础色彩':[
+    {
+      degree: 'I',
+      distance: 0, // 添加距离
+      chordTypes: ['M','m','o']
+    },
+  ],
+  'custom': [
+    {
+      degree: 'I',
+      distance: 0, // 添加距离
+      chordTypes: ['M']
+    },
+    {
+      degree: 'IIb',
+      distance: 1, // 添加距离
+      chordTypes: []
+    },
+    {
+      degree: 'II',
+      distance: 2, // 添加距离
+      chordTypes: []
+    },
+    {
+      degree: 'IIIb',
+      distance: 3, // 添加距离
+      chordTypes: []
+    },
+    {
+      degree: 'III',
+      distance: 4, // 添加距离
+      chordTypes: []
+    },
+    {
+      degree: 'IV',
+      distance: 5, // 添加距离
+      chordTypes: []
+    },
+    {
+      degree: 'Vb',
+      distance: 6, // 添加距离
+      chordTypes: []
+    },
+    {
+      degree: 'V',
+      distance: 7, // 添加距离
+      chordTypes: []
+    },
+    {
+      degree: 'VIb',
+      distance: 8, // 添加距离
+      chordTypes: []
+    },
+    {
+      degree: 'VI',
+      distance: 9, // 添加距离
+      chordTypes: []
+    },
+    {
+      degree: 'VIIb',
+      distance: 10, // 添加距离
+      chordTypes: []
+    },
+    {
+      degree: 'VII',
+      distance: 11, // 添加距离
+      chordTypes: []
+    }
+  ]
+  // 用户可以在这里添加更多自定义设置
+};
+
 const VoicingDictionary = {
+  rootPosition:{
+    M: ["1P 3M 5P"], // 保持不变，使用根音位置
+    m: ["1P 3m 5P"], // 保持不变，使用根音位置
+    o: ["1P 3m 5d"], // 保持不变，使用根音位置
+    aug: ["1P 3m 5A"], // 保持不变，使用根音位置
+    m7: ["1P 3m 5P 7m"], // 保持不变，使用根音位置
+    "7": ["1P 3M 5P 7m"], // 修改为根音位置
+    "M7": ["1P 3M 5P 7M"], // 修改为根音位置
+    "69": ["1P 3M 5P 6A"], // 修改为根音位置
+    m7b5: ["1P 3m 5d 7m"], // 修改为根音位置
+    "7b9": ["1P 3M 5m 7m"], // 修改为根音位置
+    "7b13": ["1P 3M 5m 7m"], // 修改为根音位置
+    o7: ["1P 3m 5d 6M"], // 修改为根音位置
+  },
   M: ["1P 3M 5P", "3M 5P 8P", "5P 8P 10M"],
   m: ["1P 3m 5P", "3m 5P 8P", "5P 8P 10m"],
   o: ["1P 3m 5d", "3m 5d 8P", "5d 8P 10m"],

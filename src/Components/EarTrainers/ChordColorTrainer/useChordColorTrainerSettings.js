@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import {  } from '@utils/Constants';
-import { Chord } from "tonal";
+import { chordPreset } from "@components/EarTrainers/ChordColorTrainer/Constants";
 import { degrees,defaultDegreeChordTypes, CHORD_TYPES } from "@components/EarTrainers/ChordColorTrainer/Constants";
 // 定义和弦类型常量
 
@@ -14,6 +14,7 @@ const useChordColorTrainerSettings = () => {
   const [practiceRecords, setPracticeRecords] = useState({});
   const [currentNotes, setCurrentNotes] = useState(degrees);
   const [preset, setPreset] = useState('major');
+  const [customPresets, setCustomPresets] = useState({});
 
   // 存储每个级数对应的和弦类型数组
   const [degreeChordTypes, setDegreeChordTypes] = useState(defaultDegreeChordTypes);
@@ -37,10 +38,14 @@ const useChordColorTrainerSettings = () => {
       setRootNote(storedSettings.rootNote || Tone.Frequency('C3').toMidi());
       setRange(storedSettings.range || [Tone.Frequency('C3').toNote(), Tone.Frequency('C4').toNote()]);
       setCurrentNotes(storedSettings.currentNotes || degrees);
-      setDegreeChordTypes(storedSettings.degreeChordTypes || defaultDegreeChordTypes);
       setPreset(storedSettings.preset || 'major');
+      setCustomPresets(storedSettings.customPresets || {});
     }
   }, []);
+  useEffect(() => {
+    setDegreeChordTypes(customPresets[preset] || chordPreset[preset] || defaultDegreeChordTypes);
+    console.log('runs here')
+  },[preset])
 
   const updatePracticeRecords = (degree, isCorrect) => {
     setPracticeRecords((prevRecords) => {
@@ -76,7 +81,9 @@ const useChordColorTrainerSettings = () => {
     setDegreeChordTypes,
     CHORD_TYPES,
     preset,
-    setPreset
+    setPreset,
+    customPresets,
+    setCustomPresets
   };
 };
 

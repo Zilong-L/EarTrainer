@@ -59,7 +59,7 @@ const useChordColorTrainer = (settings) => {
     setCurrentChord(nextChord);
     setIsAdvance(false);
     setDisabledChords([]);
-    playChord(nextChord.notes,1);
+    playChord(nextChord.notes,0.2);
   }
   const startGame = () => {
     Tone.getTransport().stop();
@@ -73,7 +73,6 @@ const useChordColorTrainer = (settings) => {
 
   const playChord = (notes = null, delay = 0) => {
 
-    console.log(currentChord)
     if(!notes){
       notes = currentChord.notes
     }
@@ -118,9 +117,8 @@ const useChordColorTrainer = (settings) => {
     const allCombinations = degreeChordTypes.flatMap(chord => 
       chord.chordTypes.map(chordType => ({ degree: chord.degree, chordType }))
     );
-    console.log('allCombinations are: ',allCombinations)
-    setFilteredChords(allCombinations);
-  }, [degreeChordTypes]);
+      setFilteredChords(allCombinations);
+  }, [degreeChordTypes,rootNote]);
 
   // 生成一个随机的级数和和弦类型组合
   const generateRandomChord = () => {
@@ -129,14 +127,13 @@ const useChordColorTrainer = (settings) => {
       return null
     }
     // 生成和弦的音符
-    console.log('RomanNumeral is: ',RomanNumeral)
     const chord = Progression.fromRomanNumerals(Tone.Frequency(rootNote,'midi').toNote().slice(0,-1), [`${RomanNumeral.degree}${RomanNumeral.chordType}`])[0]; // 使用随机的级数和和弦类型
-    console.log('chord is: ',chord)
     const chordRange = [range[0], Note.fromMidi(Note.midi(range[1]) + Interval.semitones('P8'))];
-    const dictionary = {
-        [RomanNumeral.chordType]: [VoicingDictionary[RomanNumeral.chordType][0]] // 使用原位triad
-    };
-    const notes = Voicing.search(chord,chordRange,dictionary)[0];
+    const dictionary = VoicingDictionary.rootPosition;
+    // TODO:this can be configured later to allow different voicings
+    // for now, we only have root position voicings
+    const possibleChords = Voicing.search(chord,chordRange,dictionary)
+    const notes = possibleChords[Math.floor(Math.random() * possibleChords.length)];
     return {...RomanNumeral,notes:notes};
   };
 

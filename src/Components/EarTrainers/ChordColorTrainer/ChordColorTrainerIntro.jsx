@@ -22,10 +22,10 @@ const IntroModal = ({ isOpen, handleClose }) => {
         borderRadius: 2 // 添加圆角
       }}>
         <Typography id="intro-modal-title" variant="h6" component="h2" sx={{ color: (theme) => theme.palette.text.paper }}>
-          欢迎使用音程训练器
+          欢迎使用和弦颜色训练器
         </Typography>
         <Typography id="intro-modal-description" sx={{ mt: 2, color: (theme) => theme.palette.text.paper }}>
-          您将会听到一个低音作为主音，随后会播放另一个音符。您需要根据听到的音符选择相应的音程级数。
+          您将会听到一个和弦。您需要根据听到的和弦选择相应的和弦颜色。
           在右上角的设置中，您可以调节音量和练习内容。
         </Typography>
         <Button onClick={handleClose} variant="contained" color="primary" sx={{ mt: 3 }}>
