@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
-import {  } from '@utils/Constants';
+import { getDroneInstance } from '@utils/ToneInstance';
 import { chordPreset } from "@components/EarTrainers/ChordColorTrainer/Constants";
 import { degrees,defaultDegreeChordTypes, CHORD_TYPES } from "@components/EarTrainers/ChordColorTrainer/Constants";
 // 定义和弦类型常量
@@ -15,7 +15,9 @@ const useChordColorTrainerSettings = () => {
   const [currentNotes, setCurrentNotes] = useState(degrees);
   const [preset, setPreset] = useState('major');
   const [customPresets, setCustomPresets] = useState({});
+  const [muteDrone, setMuteDrone] = useState(false);
 
+  const drone = getDroneInstance();
   // 存储每个级数对应的和弦类型数组
   const [degreeChordTypes, setDegreeChordTypes] = useState(defaultDegreeChordTypes);
 
@@ -40,12 +42,20 @@ const useChordColorTrainerSettings = () => {
       setCurrentNotes(storedSettings.currentNotes || degrees);
       setPreset(storedSettings.preset || 'major');
       setCustomPresets(storedSettings.customPresets || {});
+      setMuteDrone(storedSettings.muteDrone || false);
     }
   }, []);
   useEffect(() => {
     setDegreeChordTypes(customPresets[preset] || chordPreset[preset] || defaultDegreeChordTypes);
     console.log('runs here')
   },[preset])
+  useEffect(() => {
+    if(muteDrone){
+      drone.stop()
+    }else{
+      drone.start()
+    }
+  },[muteDrone])
 
   const updatePracticeRecords = (degree, isCorrect) => {
     setPracticeRecords((prevRecords) => {
@@ -83,7 +93,9 @@ const useChordColorTrainerSettings = () => {
     preset,
     setPreset,
     customPresets,
-    setCustomPresets
+    setCustomPresets,
+    muteDrone,
+    setMuteDrone,
   };
 };
 
