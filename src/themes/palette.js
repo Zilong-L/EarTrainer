@@ -25,8 +25,11 @@ const base = createTheme({
 const earTrainerTheme = createTheme({
   ...base,
   palette: {
-    primary: { main: '#6C4E31' }, // Primary color: Green
-    secondary: { main: '#f4b350' }, // Secondary color: Orange
+    primary: { main: '#6C4E31' }, 
+    secondary: { main: '#f4b350' }, 
+    success:{
+      main:'#109c8e'
+    },
     background: {
       default: '#000000', // Light grey background for pages
       paper: '#FFEAC5', // White background for paper surfaces (cards, modals)

@@ -177,7 +177,7 @@ function DegreeTrainerSettings({
             </div>
             <div style={{ padding: '6px 8px', }}>
               <label style={{ fontSize: '1.1rem' }}>BPM: </label>
-              <Slider color='secondary' value={bpm} onChange={(e, value) => setBpm(value)} min={40} max={200} valueLabelDisplay="auto" sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} />
+              <Slider color='secondary' value={bpm} onChange={(e, value) => setBpm(value)} min={10} max={200} valueLabelDisplay="auto" sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} />
             </div>
             <div style={{ padding: '6px 8px',fontSize: '1.1rem' }}>
               <label style={{ fontSize: '1.1rem' }}>选择练习级数</label>

@@ -69,7 +69,7 @@ const useDegreeTrainer = (settings) => {
         setCurrentNote(nextNote);
         playNote(nextNote);
         setIsAdvance(false);
-      }, 1000);
+      }, (60/bpm)*1100);
 
       return () => clearTimeout(timer);
     }
@@ -148,6 +148,7 @@ const useDegreeTrainer = (settings) => {
     filteredNotes,
     possibleMidiList,
     activeNote,
+    isAdvance,
     setActiveNote,
     startGame,
     playNote,
