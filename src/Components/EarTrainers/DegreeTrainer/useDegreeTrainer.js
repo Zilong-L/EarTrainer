@@ -117,8 +117,8 @@ const useDegreeTrainer = (settings) => {
   const handleNoteGuess = (guessedNote) => {
     const guessedNoteMidi = Tone.Frequency(guessedNote).toMidi();
     const currentNoteMidi = Tone.Frequency(currentNote).toMidi();
-    const guessedDegree = calculateDegree(guessedNoteMidi, currentNoteMidi);
     const isCorrect = guessedNoteMidi % 12 === currentNoteMidi % 12;
+    const guessedDegree = calculateDegree(guessedNoteMidi, currentNoteMidi);
     if (isCorrect) {
       setDisabledNotes([]);
       updatePracticeRecords(guessedDegree, isCorrect);
@@ -138,6 +138,12 @@ const useDegreeTrainer = (settings) => {
     const interval = (guessedNoteMidi - rootNote) % 12;
     return degrees.find(degree => degree.distance === interval)?.name || "Unknown";
   };
+  const isCorrect = (guessedNote) => {
+    const guessedNoteMidi = Tone.Frequency(guessedNote).toMidi();
+    const currentNoteMidi = Tone.Frequency(currentNote).toMidi();
+    return guessedNoteMidi % 12 === currentNoteMidi % 12;
+
+  }
 
   const endGame = () => {
     Tone.getTransport().stop();
@@ -156,6 +162,7 @@ const useDegreeTrainer = (settings) => {
     possibleMidiList,
     activeNote,
     isAdvance,
+    isCorrect,
     setActiveNote,
     startGame,
     playNote,

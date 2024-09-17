@@ -23,6 +23,7 @@ const EarTrainer = () => {
     gameStarted,
     filteredNotes,
     isAdvance,
+    isCorrect,
     setActiveNote,
     startGame,
     endGame,
@@ -262,7 +263,7 @@ const EarTrainer = () => {
               <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
                 {filteredNotes.map((note) => {
                   const noteName = Tone.Frequency(rootNote + note.distance, 'midi').toNote();
-                  const isCorrectAnswer = isAdvance && noteName === currentNote;
+                  const isCorrectAnswer = isCorrect(noteName)
                   return (
                     <Grid item xs={4} key={note.name}>
                       <Button
@@ -275,10 +276,10 @@ const EarTrainer = () => {
                           height: '4rem',
                           background: disabledNotes.some(disabledNote => noteName.slice(0, -1) === disabledNote.slice(0, -1)) ?
                             (theme) => theme.palette.action.disabled :
-                            isCorrectAnswer ?
+                            isCorrectAnswer&&isAdvance ?
                               (theme) => theme.palette.success.main :
                               'default',
-                          color: isCorrectAnswer ?
+                          color: isCorrectAnswer&&isAdvance ?
                             (theme) => theme.palette.success.contrastText :
                             'default',
                           '&:hover': {
@@ -286,7 +287,7 @@ const EarTrainer = () => {
                               (disabledNote) => noteName.slice(0, -1) === disabledNote.slice(0, -1)
                             )
                               ? (theme) => theme.palette.action.disabled
-                              : isCorrectAnswer
+                              : isCorrectAnswer&&isAdvance
                                 ? (theme) => theme.palette.success.main
                                 : 'default',
                           },
