@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Paper, Box, Button, Typography, AppBar, Toolbar, Container, Grid } from '@mui/material';
+import { CssBaseline, Paper, Box, Button, Typography, ToggleButton, AppBar, Tooltip, Toolbar, Container, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import ReplayIcon from '@mui/icons-material/Replay';
+import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from '@components/Sidebar';
 import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/DegreeTrainerSettings';
@@ -36,7 +37,7 @@ const EarTrainer = () => {
     range,
     currentNotes,
     practiceRecords,
-    handfree,
+    isHandfree,
     setBpm,
     setDroneVolume,
     setPianoVolume,
@@ -44,7 +45,7 @@ const EarTrainer = () => {
     setRange,
     setCurrentNotes,
     setPracticeRecords,
-    setHandfree,
+    setIsHandfree,
   } = settings;
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -166,14 +167,34 @@ const EarTrainer = () => {
               Ear Trainer
             </Link>
           </Typography>
-          <Button
-            onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-            variant="contained"
-            color="primary"
-            sx={{ boxShadow: 'none' }}
-          >
-            <SettingsIcon />
-          </Button>
+          <Tooltip title="Toggle Handfree Mode">
+            <ToggleButton
+              value="check"
+              selected={isHandfree}
+              onChange={() => setIsHandfree(!isHandfree)}
+              sx={{
+                marginRight: '0.5rem', boxShadow: 'none',
+                "&.Mui-selected, &.Mui-selected:hover": {
+                  color: (theme) => theme.palette.text.paper,
+                  backgroundColor: (theme) => theme.palette.background.paper
+                },
+                color: (theme) => theme.palette.text.primary,
+                border: 'none'
+              }}
+            >
+              <AllInclusiveIcon />
+            </ToggleButton>
+          </Tooltip>
+          <Tooltip title="Settings">
+            <Button
+              onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+              variant="contained"
+              color="primary"
+              sx={{ boxShadow: 'none' }}
+            >
+              <SettingsIcon />
+            </Button>
+          </Tooltip>
           <Button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             variant="contained"

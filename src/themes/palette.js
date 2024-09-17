@@ -22,7 +22,7 @@ const base = createTheme({
     },
   },
 })
-const earTrainerTheme = createTheme({
+let earTrainerTheme = createTheme({
   ...base,
   palette: {
     primary: { main: '#6C4E31' }, 

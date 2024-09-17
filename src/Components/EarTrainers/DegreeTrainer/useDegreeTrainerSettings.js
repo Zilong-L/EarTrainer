@@ -10,7 +10,7 @@ const useDegreeTrainerSettings = () => {
   const [range, setRange] = useState([Tone.Frequency('C3').toMidi(), Tone.Frequency('C4').toMidi()]);
   const [practiceRecords, setPracticeRecords] = useState({});
   const [currentNotes, setCurrentNotes] = useState(degrees);
-  const [handfree, setHandfree] = useState(false);
+  const [isHandfree, setIsHandfree] = useState(false);
   useEffect(() => {
     const storedRecords = JSON.parse(localStorage.getItem('degreeTrainerRecords')) || {};
     setPracticeRecords(storedRecords);
@@ -52,7 +52,7 @@ const useDegreeTrainerSettings = () => {
     range,
     practiceRecords,
     currentNotes,
-    handfree,
+    isHandfree,
     setBpm,
     setDroneVolume,
     setPianoVolume,
@@ -61,7 +61,7 @@ const useDegreeTrainerSettings = () => {
     setPracticeRecords,
     updatePracticeRecords,
     setCurrentNotes,
-    setHandfree,
+    setIsHandfree,
   };
 };
 

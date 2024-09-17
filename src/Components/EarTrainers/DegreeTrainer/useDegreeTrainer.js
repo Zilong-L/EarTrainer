@@ -5,6 +5,7 @@ import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
 
 const useDegreeTrainer = (settings) => {
   const {
+    isHandfree,
     bpm,
     droneVolume,
     pianoVolume,
@@ -72,8 +73,14 @@ const useDegreeTrainer = (settings) => {
       }, (60/bpm)*1100);
 
       return () => clearTimeout(timer);
+    }else if(isHandfree && gameStarted){
+      const timer = setTimeout(() => {
+        playNote(currentNote);
+        setIsAdvance(true);
+      }, (60/bpm)*1100);
+      return () => clearTimeout(timer);
     }
-  }, [isAdvance]);
+  }, [isAdvance,gameStarted,isHandfree]);
 
   const startGame = () => {
     Tone.getTransport().stop();
