@@ -118,7 +118,7 @@ function SequenceTrainerSettings({
                 value={range}
                 valueLabelFormat={(value) => Tone.Frequency(value, 'midi').toNote()}
                 onChange={(_, newValue) => {
-                  if (Math.abs(newValue[1] - newValue[0]) >= 12) {
+                  if (Math.abs(newValue[1] - newValue[0]) >= 11) {
                     setRange(newValue);
                   }
                 }}
