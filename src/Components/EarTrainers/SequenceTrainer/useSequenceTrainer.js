@@ -69,7 +69,7 @@ const useSequenceTrainer = (settings) => {
     drone.start();
   };
 
-  const playSequence = (sequence = null, delay = 0) => {
+  const playSequence = (sequence = null, delay = 0.05) => {
     if (!sequence) {
       sequence = currentSequence;
     }
@@ -114,8 +114,6 @@ const useSequenceTrainer = (settings) => {
         updatePracticeRecords(guessedDegree, isCorrect);
       }
     }
-    const now = new Date();
-    console.log(`Current Date and Time: ${now.toISOString()}`);
     setActiveNote(null);
   };
 

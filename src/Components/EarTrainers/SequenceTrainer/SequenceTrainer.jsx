@@ -57,7 +57,8 @@ const SequenceTrainer = () => {
   };
 
   const handleReplay = () => {
-    playSequence(0);
+    console.log(sequenceIndex)
+    playSequence(currentSequence.slice(sequenceIndex));
   };
 
   useEffect(() => {
