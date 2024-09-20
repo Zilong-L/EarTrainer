@@ -3,6 +3,7 @@ import { Modal, Box, Button, Slider, Container, Checkbox, Typography, Grid, Swit
 import { getDroneInstance } from '@utils/ToneInstance';
 import HomeIcon from '@mui/icons-material/Home';
 import * as Tone from 'tone';
+import { useTranslation } from 'react-i18next';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,6 +25,7 @@ ChartJS.register(
 );
 
 function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, playNote,isStatOpen,setIsStatOpen}) {
+  const { t } = useTranslation('degreeTrainer');
   const {
     bpm,
     setBpm,
@@ -113,31 +115,37 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
           overflowY: 'auto',
         }}
       >
-        <Typography variant='h4' sx={{ textAlign: 'center' }}>设置</Typography>
+        <Typography variant='h4' sx={{ textAlign: 'center' }}>{t('settings.Settings')}</Typography>
 
         {!showDegreeSettings && !showVolumeSettings && !showStatistics ? (
           <>
             <Container sx={{ marginTop: '3rem' }}>
-              <Button sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }} onClick={() => setShowDegreeSettings(true)}>
-                练习设置
+              <Button
+                sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }}
+                onClick={() => setShowDegreeSettings(true)}
+              >
+                {t('settings.PracticeSettings')}
               </Button>
-              <Button sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }} onClick={() => setShowStatistics(true)}>
-                统计
+              <Button
+                sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }}
+                onClick={() => setShowStatistics(true)}
+              >
+                {t('settings.Statistics')}
               </Button>
-              <Button sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left' }} onClick={() => setShowVolumeSettings(true)}>
-                音量设置
+              <Button
+                sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left' }}
+                onClick={() => setShowVolumeSettings(true)}
+              >
+                {t('settings.VolumeSettings')}
               </Button>
             </Container>
           </>
         ) : showDegreeSettings ? (
           <>
-
-
-
-
+            {/* 练习设置内容 */}
             <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
               <label id="note-range-slider" style={{ fontSize: '1.1rem' }}>
-                Note Range
+                {t('settings.NoteRange')}
               </label>
               <Slider
                 color='secondary'
@@ -157,15 +165,32 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
               />
             </div>
             <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-              <label style={{ fontSize: '1.1rem' }}>Root Note</label>
-              <Slider color='secondary' valueLabelFormat={(value) => Tone.Frequency(value, 'midi').toNote()} value={rootNote} onChange={(e, value) => setRootNote(value)} min={midiMin} max={midiMax} valueLabelDisplay="auto" sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} />
+              <label style={{ fontSize: '1.1rem' }}>{t('settings.RootNote')}</label>
+              <Slider
+                color='secondary'
+                valueLabelFormat={(value) => Tone.Frequency(value, 'midi').toNote()}
+                value={rootNote}
+                onChange={(e, value) => setRootNote(value)}
+                min={midiMin}
+                max={midiMax}
+                valueLabelDisplay="auto"
+                sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
+              />
             </div>
-            <div style={{ padding: '6px 8px', }}>
-              <label style={{ fontSize: '1.1rem' }}>BPM: </label>
-              <Slider color='secondary' value={bpm} onChange={(e, value) => setBpm(value)} min={10} max={200} valueLabelDisplay="auto" sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} />
+            <div style={{ padding: '6px 8px' }}>
+              <label style={{ fontSize: '1.1rem' }}>{t('settings.BPM')}: </label>
+              <Slider
+                color='secondary'
+                value={bpm}
+                onChange={(e, value) => setBpm(value)}
+                min={10}
+                max={200}
+                valueLabelDisplay="auto"
+                sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
+              />
             </div>
             <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-              <label style={{ fontSize: '1.1rem' }}>选择练习级数</label>
+              <label style={{ fontSize: '1.1rem' }}>{t('settings.SelectDegrees')}</label>
               <Grid container spacing={1} sx={{ marginTop: '4px', paddingLeft: 0 }}>
                 {currentNotes.map((note, index) => (
                   <Grid item xs={4} key={note.name} sx={{ padding: 0 }}>
@@ -204,7 +229,7 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
           </>
         ) : showStatistics ? (
           <>
-            <h3 >音程正确率统计</h3>
+            <h3>{t('settings.Statistics')}</h3>
             <Bar data={generateChartData()} />
             <Box
               sx={{
@@ -218,7 +243,7 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
               onClick={() => setIsStatOpen(!isStatOpen)}
             >
               <Typography variant="body1" sx={{ textAlign: 'left' }}>
-                统计
+                {t('settings.Statistics')}
               </Typography>
               <Switch
                 checked={isStatOpen}
@@ -233,7 +258,7 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
               onClick={() => setIsDeleteConfirmOpen(true)}
               sx={{ marginTop: 2, marginLeft: 'auto', display: 'block' }}
             >
-              删除本地统计数据
+              {t('settings.DeleteData')}
             </Button>
             <Modal
               open={isDeleteConfirmOpen}
@@ -255,18 +280,18 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
                   borderRadius: 2,
                 }}
               >
-                <Typography id="delete-confirmation-title" variant="h6" component="h2">
-                  确认删除
+                <Typography id="delete-confirmation-title" variant="h6" component="h2" sx={{color:(theme)=>theme.palette.text.paper}}>
+                  {t('settings.ConfirmDelete')}
                 </Typography>
-                <Typography id="delete-confirmation-description" sx={{ mt: 2 }}>
-                  确定要删除所有本地统计数据吗？此操作不可恢复。
+                <Typography id="delete-confirmation-description" sx={{ mt: 2 ,color:(theme)=>theme.palette.text.paper}}>
+                  {t('settings.DeleteConfirmation')}
                 </Typography>
                 <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
                   <Button onClick={handleDeleteConfirm} color="secondary" variant="contained">
-                    删除
+                    {t('settings.Delete')}
                   </Button>
                   <Button onClick={() => setIsDeleteConfirmOpen(false)} color="primary" variant="outlined">
-                    取消
+                    {t('settings.Cancel')}
                   </Button>
                 </Box>
               </Box>
@@ -281,14 +306,33 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
           </>
         ) : (
           <>
-
             <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-              <label style={{ fontSize: '1.1rem' }}>Drone Volume</label>
-              <Slider color='secondary' value={droneVolume} valueLabelFormat={(value) => Math.round(value * 100)} onChange={(e, value) => setDroneVolume(value)} min={0} max={1} step={0.01} valueLabelDisplay="auto" sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} />
+              <label style={{ fontSize: '1.1rem' }}>{t('settings.DroneVolume')}</label>
+              <Slider
+                color='secondary'
+                value={droneVolume}
+                valueLabelFormat={(value) => Math.round(value * 100)}
+                onChange={(e, value) => setDroneVolume(value)}
+                min={0}
+                max={1}
+                step={0.01}
+                valueLabelDisplay="auto"
+                sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
+              />
             </div>
             <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-              <label style={{ fontSize: '1.1rem' }}>Piano Volume </label>
-              <Slider color='secondary' valueLabelFormat={(value) => Math.round(value * 100)} value={pianoVolume} onChange={(e, value) => setPianoVolume(value)} min={0} max={1} step={0.01} valueLabelDisplay="auto" sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} />
+              <label style={{ fontSize: '1.1rem' }}>{t('settings.PianoVolume')}</label>
+              <Slider
+                color='secondary'
+                valueLabelFormat={(value) => Math.round(value * 100)}
+                value={pianoVolume}
+                onChange={(e, value) => setPianoVolume(value)}
+                min={0}
+                max={1}
+                step={0.01}
+                valueLabelDisplay="auto"
+                sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
+              />
             </div>
 
             <Button

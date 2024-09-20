@@ -10,10 +10,11 @@ import IntroModal from '@components/EarTrainers/SequenceTrainer/SequenceTrainerI
 import useSequenceTrainer from '@components/EarTrainers/SequenceTrainer/useSequenceTrainer';
 import useSequenceTrainerSettings from '@components/EarTrainers/SequenceTrainer/useSequenceTrainerSettings';
 import { apps, keyMap, degrees } from '@components/EarTrainers/SequenceTrainer/Constants';
+import { useTranslation } from 'react-i18next';
 import * as Tone from 'tone';
-
 let midi = null;
 const SequenceTrainer = () => {
+  const { t } = useTranslation('sequenceTrainer');
   const settings = useSequenceTrainerSettings();
   const {
     currentSequence,
@@ -179,7 +180,7 @@ const SequenceTrainer = () => {
         <Toolbar sx={{ color: (theme) => theme.palette.text.primary, height: '64px' }}>
           <Typography variant="h5" sx={{ flexGrow: 1, textAlign: 'left' }}>
             <Link to="/ear-trainer" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Ear Trainer
+              {t('home.title')}
             </Link>
           </Typography>
           <Button
@@ -209,98 +210,97 @@ const SequenceTrainer = () => {
                 '@media (min-width:600px)': { display: 'block', boxShadow: 'none', textTransform: 'none' },
               }}
             >
-              {item.name}
+              {t(`buttons.${item.name}`) || item.name}
             </Button>
           ))}
         </Toolbar>
       </AppBar>
       <Paper sx={{borderRadius:0}}>
-          <Container
-            maxWidth="sm"
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              height: 'calc(100svh - 64px)',
-              paddingY: '1rem',
-              paddingX: '1.5rem',
-            }}
-          >
-            <CssBaseline />
-            <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-            <SequenceTrainerSettings
-              isSettingsOpen={isSettingsOpen}
-              setIsSettingsOpen={setIsSettingsOpen}
-              bpm={bpm}
-              setBpm={setBpm}
-              droneVolume={droneVolume}
-              setDroneVolume={setDroneVolume}
-              pianoVolume={pianoVolume}
-              setPianoVolume={setPianoVolume}
-              rootNote={rootNote}
-              setRootNote={setRootNote}
-              range={range}
-              setRange={setRange}
-              currentNotes={currentNotes}
-              setCurrentNotes={setCurrentNotes}
-              playSequence={playSequence}
-              isStatOpen={isStatOpen}
-              setIsStatOpen={setIsStatOpen}
-              practiceRecords={practiceRecords}
-              setPracticeRecords={setPracticeRecords}
-              sequenceLength={sequenceLength}
-              setSequenceLength={setSequenceLength}
-              saveSettings={saveSettings}
-            />
-            <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} />
-            {gameStarted && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%', marginBottom: '2rem' }}>
-                {isStatOpen && renderRecords()}
-                {renderSequenceProgress()}
-                <Box sx={{ flexGrow: 1 }} />
-                <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
-                  {filteredNotes.map((note) => (
-                    <Grid item xs={4} key={note.name}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => setActiveNote(Tone.Frequency(rootNote + note.distance, 'midi').toNote())}
-                        fullWidth
-                        sx={{
-                          textTransform: 'none',
-                          fontSize: '1.5rem',
-                          height: '4rem',
-                          background: disabledNotes.some(disabledNote => Tone.Frequency(rootNote + note.distance, 'midi').toNote().slice(0, -1) === disabledNote.slice(0, -1)) ? (theme) => theme.palette.action.disabled : 'default',
-                        }}
-                        data-note={Tone.Frequency(rootNote + note.distance, 'midi').toNote().slice(0, -1)}
-                      >
-                        {note.name}
-                      </Button>
-                    </Grid>
-                  ))}
-                </Grid>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleReplay}
-                  fullWidth
-                  sx={{
-                    textTransform: 'none',
-                    padding: '1rem',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 'auto',
-                  }}
-                >
-                  <ReplayIcon sx={{ fontSize: '3rem' }} />
-                </Button>
-              </Box>
-            )}
-          </Container>
+        <Container
+          maxWidth="sm"
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            height: 'calc(100svh - 64px)',
+            paddingY: '1rem',
+            paddingX: '1.5rem',
+          }}
+        >
+          <CssBaseline />
+          <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+          <SequenceTrainerSettings
+            isSettingsOpen={isSettingsOpen}
+            setIsSettingsOpen={setIsSettingsOpen}
+            bpm={bpm}
+            setBpm={setBpm}
+            droneVolume={droneVolume}
+            setDroneVolume={setDroneVolume}
+            pianoVolume={pianoVolume}
+            setPianoVolume={setPianoVolume}
+            rootNote={rootNote}
+            setRootNote={setRootNote}
+            range={range}
+            setRange={setRange}
+            currentNotes={currentNotes}
+            setCurrentNotes={setCurrentNotes}
+            playSequence={playSequence}
+            isStatOpen={isStatOpen}
+            setIsStatOpen={setIsStatOpen}
+            practiceRecords={practiceRecords}
+            setPracticeRecords={setPracticeRecords}
+            sequenceLength={sequenceLength}
+            setSequenceLength={setSequenceLength}
+            saveSettings={saveSettings}
+          />
+          <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} />
+          {gameStarted && (
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%', marginBottom: '2rem' }}>
+              {isStatOpen && renderRecords()}
+              {renderSequenceProgress()}
+              <Box sx={{ flexGrow: 1 }} />
+              <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
+                {filteredNotes.map((note) => (
+                  <Grid item xs={4} key={note.name}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => setActiveNote(Tone.Frequency(rootNote + note.distance, 'midi').toNote())}
+                      fullWidth
+                      sx={{
+                        textTransform: 'none',
+                        fontSize: '1.5rem',
+                        height: '4rem',
+                        background: disabledNotes.some(disabledNote => Tone.Frequency(rootNote + note.distance, 'midi').toNote().slice(0, -1) === disabledNote.slice(0, -1)) ? (theme) => theme.palette.action.disabled : 'default',
+                      }}
+                      data-note={Tone.Frequency(rootNote + note.distance, 'midi').toNote().slice(0, -1)}
+                    >
+                      {note.name}
+                    </Button>
+                  </Grid>
+                ))}
+              </Grid>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleReplay}
+                fullWidth
+                sx={{
+                  textTransform: 'none',
+                  padding: '1rem',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 'auto',
+                }}
+              >
+                <ReplayIcon sx={{ fontSize: '3rem' }} />
+              </Button>
+            </Box>
+          )}
+        </Container>
       </Paper>
     </>
   );
 };
-
 export default SequenceTrainer;

@@ -1,0 +1,39 @@
+{
+  "title": "音级训练",
+  "intro": {
+    "welcomeMessage": "欢迎使用音程训练",
+    "introDescription": "您将会听到一个低音作为主音，随后会播放另一个音符。您需要根据听到的音符选择相应的音程级数。在右上角的设置中，您可以调节音量和练习内容。",
+    "startPractice": "开始练习"
+  },
+  "home":{
+      "totalAttempts": "总尝试：",
+      "correctCount": "正确数：",
+      "accuracyRate": "正确率：",
+      "title": "音级训练"
+    },
+    "buttons":{
+      "settings": "设置",
+      "handfreeOn": "打开免提模式",
+      "handfreeOff": "关闭免提模式",
+      "earTrainer": "音乐难民",
+      "chordTrainer": "和弦练习"
+    },
+  "settings": {
+    "Settings": "设置",
+    "PracticeSettings": "练习设置",
+    "Statistics": "统计",
+    "VolumeSettings": "音量设置",
+    "DeleteData": "删除本地统计数据",
+    "ConfirmDelete": "确认删除",
+    "DeleteConfirmation": "确定要删除所有本地统计数据吗？此操作不可恢复。",
+    "Delete": "删除",
+    "Cancel": "取消",
+    "NoteRange": "音符范围",
+    "RootNote": "主音",
+    "BPM": "BPM",
+    "SelectDegrees": "选择练习级数",
+    "DroneVolume": "主音音量",
+    "PianoVolume": "钢琴音量",
+    "Home": "主页"
+  }
+}

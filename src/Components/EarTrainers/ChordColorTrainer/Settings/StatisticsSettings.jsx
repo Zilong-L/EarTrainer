@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Box, Button, Typography, Switch, Modal } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import { useTranslation } from 'react-i18next';
 
-function Statistics({ settings,setShowStatistics }) {
-  const { practiceRecords, isStatOpen,  setPracticeRecords,setIsStatOpen } = settings;
+function Statistics({ settings, setShowStatistics }) {
+  const { t } = useTranslation('chordTrainer');
+  const { practiceRecords, isStatOpen, setPracticeRecords, setIsStatOpen } = settings;
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
   const calculateAccuracy = (record) => {
@@ -18,7 +20,7 @@ function Statistics({ settings,setShowStatistics }) {
       labels,
       datasets: [
         {
-          label: '正确率 (%)',
+          label: t('statistics.chartLabel'), // Add 'chartLabel' to your JSON files
           data,
           backgroundColor: 'rgba(75, 192, 192, 0.6)',
         },
@@ -34,7 +36,7 @@ function Statistics({ settings,setShowStatistics }) {
 
   return (
     <>
-      <h3>音程正确率统计</h3>
+      <Typography variant="h5">{t('statistics.chordAccuracy')}</Typography>
       <Bar data={generateChartData()} />
       <Box
         sx={{
@@ -48,7 +50,7 @@ function Statistics({ settings,setShowStatistics }) {
         onClick={() => setIsStatOpen(!isStatOpen)}
       >
         <Typography variant="body1" sx={{ textAlign: 'left' }}>
-          统计
+          {t('statistics.statistics')}
         </Typography>
         <Switch
           checked={isStatOpen}
@@ -63,7 +65,7 @@ function Statistics({ settings,setShowStatistics }) {
         onClick={() => setIsDeleteConfirmOpen(true)}
         sx={{ marginTop: 2, marginLeft: 'auto', display: 'block' }}
       >
-        删除本地统计数据
+        {t('statistics.deleteLocalData')}
       </Button>
       <Modal
         open={isDeleteConfirmOpen}
@@ -85,28 +87,39 @@ function Statistics({ settings,setShowStatistics }) {
             borderRadius: 2,
           }}
         >
-          <Typography id="delete-confirmation-title" variant="h6" component="h2">
-            确认删除
+          <Typography id="delete-confirmation-title" variant="h6" component="h2" sx={{color:(theme)=>theme.palette.text.paper}}>
+            {t('statistics.confirmDeleteTitle')}
           </Typography>
-          <Typography id="delete-confirmation-description" sx={{ mt: 2 }}>
-            确定要删除所有本地统计数据吗？此操作不可恢复。
+          <Typography id="delete-confirmation-description" sx={{ mt: 2 ,color:(theme)=>theme.palette.text.paper}}>
+            {t('statistics.confirmDeleteDescription')}
           </Typography>
           <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
             <Button onClick={handleDeleteConfirm} color="secondary" variant="contained">
-              删除
+              {t('statistics.delete')}
             </Button>
-            <Button onClick={() => setIsDeleteConfirmOpen(false)} color="primary" variant="outlined">
-              取消
+            <Button
+              onClick={() => setIsDeleteConfirmOpen(false)}
+              color="primary"
+              variant="outlined"
+            >
+              {t('statistics.cancel')}
             </Button>
           </Box>
         </Box>
       </Modal>
       <Button
-        color='secondary'
+        color="secondary"
         onClick={() => setShowStatistics(false)}
-        sx={{ display: 'flex', justifyContent: 'flex-center', fontSize: '1.2rem', marginLeft: 'auto', marginTop: '1rem' }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-center',
+          fontSize: '1.2rem',
+          marginLeft: 'auto',
+          marginTop: '1rem',
+        }}
+        aria-label={t('buttons.home')}
       >
-        <HomeIcon/>
+        <HomeIcon />
       </Button>
     </>
   );

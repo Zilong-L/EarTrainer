@@ -1,0 +1,77 @@
+{
+    "title": "Sequence Trainer",
+    "intro": {
+      "welcomeMessage": "欢迎使用旋律练习",
+      "introDescription": "您将会听到一个低音作为主音，随后会播放一系列音符。您需要根据听到的音符选择相应的音程级数。在右上角的设置中，您可以调节音量和练习内容。",
+      "startPractice": "开始练习"
+    },
+    "home": {
+      "totalAttempts": "总尝试: ",
+      "correctCount": "正确数: ",
+      "accuracyRate": "正确率: ",
+      "title": "旋律练习",
+      "Replay": "重放",
+      "Settings": "设置",
+      "SequenceProgress": "旋律进度",
+      "OpenSourceMessage": "这是开源项目，欢迎访问 GitHub 仓库提交功能请求"
+    },
+    "settings": {
+      "Settings": "设置",
+      "PracticeSettings": "练习设置",
+      "Statistics": "统计",
+      "VolumeSettings": "音量设置",
+      "DeleteData": "删除本地统计数据",
+      "ConfirmDelete": "确认删除",
+      "DeleteConfirmation": "确定要删除所有本地统计数据吗？此操作不可恢复。",
+      "Delete": "删除",
+      "Cancel": "取消",
+      "NoteRange": "音符范围",
+      "RootNote": "主音",
+      "BPM": "节拍",
+      "SelectDegrees": "选择练习级数",
+      "DroneVolume": "持续音量",
+      "PianoVolume": "钢琴音量",
+      "SequenceLength": "旋律长度",
+      "Home": "首页"
+    },
+    "sequenceTrainer": {
+      "accuracyStatistics": "音程正确率统计",
+      "toggleStatistics": "显示统计",
+      "deleteStatistics": "删除本地统计数据",
+      "confirmDeleteTitle": "确认删除",
+      "confirmDeleteDescription": "确定要删除所有本地统计数据吗？此操作不可恢复。",
+      "confirmDelete": "删除",
+      "cancelDelete": "取消",
+      "sequenceProgressLabel": "旋律进度",
+      "replaySequence": "重放旋律",
+      "startSequence": "开始旋律",
+      "endSequence": "结束旋律"
+    },
+    "buttons": {
+      "startPractice": "开始练习",
+      "replay": "重放",
+      "settings": "设置",
+      "delete": "删除",
+      "cancel": "取消",
+      "earTrainer": "音乐难民",
+      "chordTrainer": "和弦练习"
+    },
+    "labels": {
+      "totalAttempts": "总尝试",
+      "correctCount": "正确数",
+      "accuracyRate": "正确率",
+      "bpm": "节拍",
+      "sequenceLength": "旋律长度",
+      "droneVolume": "主音音量",
+      "pianoVolume": "钢琴音量",
+      "rootNote": "主音",
+      "noteRange": "音符范围",
+      "selectDegrees": "选择练习级数"
+    },
+    "messages": {
+      "welcome": "欢迎使用旋律练习",
+      "introDescription": "您将会听到一个低音作为主音，随后会播放一系列音符。您需要根据听到的音符选择相应的音程级数。在右上角的设置中，您可以调节音量和练习内容。",
+      "deleteConfirmation": "确定要删除所有本地统计数据吗？此操作不可恢复。"
+    }
+  }
+  

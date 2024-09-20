@@ -1,5 +1,5 @@
 
-const apps = [{ name: 'Ear Trainer', path: '/ear-trainer' }, { name: 'Chord Trainer', path: '/chord-trainer' }];
+const apps = [{ name: 'earTrainer', path: '/ear-trainer' }, { name: 'chordTrainer', path: '/chord-trainer' }];
 const CHORD_TYPES = ['M', 'm', 'o','M7','m7','7'];
 
 const keyMap = {

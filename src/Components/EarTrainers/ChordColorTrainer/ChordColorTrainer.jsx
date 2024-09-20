@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Paper, Box, Button, Typography, AppBar, Toolbar, Container, Grid } from '@mui/material';
+import { CssBaseline, Paper, Box, Button, Typography, AppBar, Toolbar, Container, Grid, Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
 import * as Tone from 'tone';
 
@@ -16,8 +16,13 @@ import IntroModal from '@components/EarTrainers/ChordColorTrainer/ChordColorTrai
 import useChordColorTrainer from '@components/EarTrainers/ChordColorTrainer/useChordColorTrainer';
 import useChordColorTrainerSettings from '@components/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings';
 import { apps, keyMap, degrees } from '@components/EarTrainers/ChordColorTrainer/Constants';
+
+import { useTranslation } from 'react-i18next';
+
 let midi = null;
 const EarTrainer = () => {
+  const { t } = useTranslation('chordTrainer');
+
   const settings = useChordColorTrainerSettings();
 
   const {
@@ -30,7 +35,6 @@ const EarTrainer = () => {
     endGame,
     playChord,
     playBrokenChord,
-
   } = useChordColorTrainer(settings);
 
   const {
@@ -49,10 +53,11 @@ const EarTrainer = () => {
     setIsIntroOpen(false);
     startGame();
   };
+
   useEffect(() => {
     return () => {
       endGame();
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -69,16 +74,12 @@ const EarTrainer = () => {
       }
       if (degreeIndex !== undefined) {
         const selectedDegree = degrees[degreeIndex];
-        const noteName = Tone.Frequency(rootNote + selectedDegree.distance, 'midi').toNote().slice(0, -1); // 获取对应的音符名称
-        // 模拟点击对应的按钮
+        const noteName = Tone.Frequency(rootNote + selectedDegree.distance, 'midi').toNote().slice(0, -1);
         const button = document.querySelector(`button[data-note="${noteName}"]`);
         if (button) {
           button.click();
         }
       }
-
-      // Hit the replay button if R or space is pressed
-
     };
     window.addEventListener('keydown', handleKeyPress);
     return () => {
@@ -90,17 +91,9 @@ const EarTrainer = () => {
     const midiMessageHandler = (message) => {
       const [command, note, velocity] = message.data;
       if (command === 144 && velocity > 0) {
-        const noteName = Tone.Frequency(note, 'midi').toNote(); // 获取当前音符名称
-        const noteWithoutOctave = noteName.slice(0, -1); // 去掉最后一位（八度）
-        // 模拟点击对应的按钮，忽略八度
-        // const buttons = document.querySelectorAll(`button[data-note="${noteWithoutOctave}"]`); // 匹配以音符字母开头的按钮
-
-        // buttons.forEach(button => {
-        //     button.click();
-        // });
-        setActiveChord(noteName)
+        const noteName = Tone.Frequency(note, 'midi').toNote();
+        setActiveChord(noteName);
       }
-
     };
     (async () => {
       if (navigator.requestMIDIAccess == null) {
@@ -108,26 +101,27 @@ const EarTrainer = () => {
       }
       if (midi == null) {
         midi = await navigator.requestMIDIAccess();
-        console.log("MIDI loaded for degree trainer");
+        console.log('MIDI loaded for chord trainer');
       }
       if (midi) {
-        console.log('midi is already loaded, now register listener')
+        console.log('MIDI is already loaded, now register listener');
         const inputs = midi.inputs.values();
         for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
-          input.value.onmidimessage = midiMessageHandler
+          input.value.onmidimessage = midiMessageHandler;
         }
       }
     })();
     return () => {
-      console.log('midi is not deleted, but delete listener')
+      console.log('MIDI is not deleted, but delete listener');
       if (midi) {
         const inputs = midi.inputs.values();
         for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
-          input.value.onmidimessage = null
+          input.value.onmidimessage = null;
         }
       }
-    }
+    };
   }, []);
+
   const renderRecords = () => {
     const totalResults = Object.values(practiceRecords).reduce(
       (acc, record) => {
@@ -140,25 +134,32 @@ const EarTrainer = () => {
 
     return (
       <>
-        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>总尝试: {totalResults.total}</Typography>
-        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>正确数: {totalResults.correct}</Typography>
         <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>
-          正确率: {totalResults.total > 0 ? Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) + '%' : '0%'}
+          {t('labels.totalAttempts')}: {totalResults.total}
+        </Typography>
+        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>
+          {t('labels.correctCount')}: {totalResults.correct}
+        </Typography>
+        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>
+          {t('labels.accuracyRate')}:{' '}
+          {totalResults.total > 0
+            ? Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) + '%'
+            : '0%'}
         </Typography>
       </>
     );
   };
 
-
-
   return (
     <>
       <AppBar position="static" sx={{ boxShadow: 0, paddingX: '0.5rem' }}>
         <Toolbar sx={{ height: '64px', color: (theme) => theme.palette.text.primary }}>
-
-          <Typography variant="h5" sx={{ flexGrow: 1, textAlign: 'left', color: (theme) => theme.palette.text.primary }}>
+          <Typography
+            variant="h5"
+            sx={{ flexGrow: 1, textAlign: 'left', color: (theme) => theme.palette.text.primary }}
+          >
             <Link to="/ear-trainer" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Ear Trainer
+              {t('app.title')}
             </Link>
           </Typography>
           <Button
@@ -169,6 +170,7 @@ const EarTrainer = () => {
           >
             <SettingsIcon />
           </Button>
+
           <Button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             variant="contained"
@@ -177,19 +179,32 @@ const EarTrainer = () => {
           >
             <MenuIcon />
           </Button>
-          {muteDrone ?
-            <Button 
-            variant="contained"
-            color="primary"
-            sx={{ boxShadow: 'none' }}
-            onClick={() => { setMuteDrone(!muteDrone) }}><SensorsOffIcon /></Button>
-            :
-            <Button
-            variant="contained"
-            color="primary"
-            sx={{ boxShadow: 'none' }}
-            onClick={() => { setMuteDrone(!muteDrone) }}><SensorsIcon  /></Button> 
-          }
+          {muteDrone ? (
+            <Tooltip title={t('buttons.unmuteDrone')}><Button
+              variant="contained"
+              color="primary"
+              sx={{ boxShadow: 'none' }}
+              onClick={() => {
+                setMuteDrone(!muteDrone);
+              }}
+            >
+              <SensorsOffIcon />
+            </Button>
+            </Tooltip>
+          ) : (
+            <Tooltip title={t('buttons.muteDrone')}>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ boxShadow: 'none' }}
+                onClick={() => {
+                  setMuteDrone(!muteDrone);
+                }}
+              >
+                <SensorsIcon />
+              </Button>
+            </Tooltip>
+          )}
           {apps.map((item) => (
             <Button
               variant="contained"
@@ -201,7 +216,7 @@ const EarTrainer = () => {
                 '@media (min-width:600px)': { display: 'block', boxShadow: 'none', textTransform: 'none' },
               }}
             >
-              {item.name}
+              {t(`buttons.${item.name}`)}
             </Button>
           ))}
         </Toolbar>
@@ -228,7 +243,15 @@ const EarTrainer = () => {
           />
           <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} />
           {gameStarted && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%', marginBottom: '2rem' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+                height: '100%',
+                marginBottom: '2rem',
+              }}
+            >
               {isStatOpen && renderRecords()}
               <Box sx={{ flexGrow: 1 }} />
               <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
@@ -242,11 +265,16 @@ const EarTrainer = () => {
                         textTransform: 'none',
                         fontSize: '1.5rem',
                         height: '4rem',
-                        background: disabledChords.some(disabledNote => `${note.degree}${note.chordType}` === disabledNote) ? (theme) => theme.palette.action.disabled : 'default',
+                        background: disabledChords.some(
+                          (disabledNote) => `${note.degree}${note.chordType}` === disabledNote
+                        )
+                          ? (theme) => theme.palette.action.disabled
+                          : 'default',
                       }}
                       data-note={Tone.Frequency(rootNote + note.distance, 'midi').toNote().slice(0, -1)}
                     >
-                      {note.degree}{note.chordType}
+                      {note.degree}
+                      {note.chordType}
                     </Button>
                   </Grid>
                 ))}

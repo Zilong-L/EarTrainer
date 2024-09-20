@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, Box, Button, Container, Typography } from '@mui/material';
 import PracticeSettings from './PracticeSettings';
 import VolumeSettings from './VolumeSettings';
 import Statistics from './StatisticsSettings';
+import { useTranslation } from 'react-i18next';
 
 function ChordColorTrainerSettings({
   isSettingsOpen,
   setIsSettingsOpen,
   playChord,
-  settings
+  settings,
 }) {
+  const { t } = useTranslation('chordTrainer');
+
   const {
     bpm,
     droneVolume,
@@ -19,7 +22,7 @@ function ChordColorTrainerSettings({
     currentNotes,
     degreeChordTypes,
     preset,
-    customPresets, 
+    customPresets,
   } = settings;
 
   const [showPracticeSettings, setShowPracticeSettings] = useState(false);
@@ -36,7 +39,7 @@ function ChordColorTrainerSettings({
   };
 
   function saveSettingsToLocalStorage() {
-    const settings = {
+    const settingsToSave = {
       bpm,
       droneVolume,
       pianoVolume,
@@ -45,15 +48,17 @@ function ChordColorTrainerSettings({
       currentNotes,
       degreeChordTypes,
       preset,
-      customPresets
+      customPresets,
     };
-    localStorage.setItem('ChordColorTrainerSettings', JSON.stringify(settings));
+    localStorage.setItem('ChordColorTrainerSettings', JSON.stringify(settingsToSave));
   }
 
-
-
   return (
-    <Modal open={isSettingsOpen} onClose={closeSettings} sx={{color:(theme)=>theme.palette.text.primary}}>
+    <Modal
+      open={isSettingsOpen}
+      onClose={closeSettings}
+      sx={{ color: (theme) => theme.palette.text.primary }}
+    >
       <Box
         sx={{
           position: 'absolute',
@@ -62,7 +67,7 @@ function ChordColorTrainerSettings({
           transform: 'translate(-50%, -50%)',
           width: '80%',
           maxWidth: 500,
-          bgcolor: (theme)=>theme.palette.background.modal,
+          bgcolor: (theme) => theme.palette.background.modal,
           boxShadow: 24,
           p: 4,
           borderRadius: 2,
@@ -70,19 +75,50 @@ function ChordColorTrainerSettings({
           overflowY: 'auto',
         }}
       >
-        <Typography variant='h4' sx={{textAlign:'center'}}>设置</Typography>
+        <Typography variant="h4" sx={{ textAlign: 'center' }}>
+          {t('settingsMenu.settings')}
+        </Typography>
 
         {!showPracticeSettings && !showVolumeSettings && !showStatistics ? (
           <>
-            <Container sx={{marginTop:'3rem'}}>
-              <Button  sx={{  color:'text.primary' , display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }}  onClick={() => setShowPracticeSettings(true)}>
-                练习设置
+            <Container sx={{ marginTop: '3rem' }}>
+              <Button
+                sx={{
+                  color: 'text.primary',
+                  display: 'block',
+                  fontSize: '1.5rem',
+                  width: '100%',
+                  textAlign: 'left',
+                  marginBottom: '1rem',
+                }}
+                onClick={() => setShowPracticeSettings(true)}
+              >
+                {t('settingsMenu.practiceSettings')}
               </Button>
-              <Button   sx={{ color:'text.primary' ,  display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }}  onClick={() => setShowStatistics(true)}>
-                统计
+              <Button
+                sx={{
+                  color: 'text.primary',
+                  display: 'block',
+                  fontSize: '1.5rem',
+                  width: '100%',
+                  textAlign: 'left',
+                  marginBottom: '1rem',
+                }}
+                onClick={() => setShowStatistics(true)}
+              >
+                {t('settingsMenu.statistics')}
               </Button>
-              <Button   sx={{ color:'text.primary' ,  display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left' }}  onClick={() => setShowVolumeSettings(true)}>
-                音量设置
+              <Button
+                sx={{
+                  color: 'text.primary',
+                  display: 'block',
+                  fontSize: '1.5rem',
+                  width: '100%',
+                  textAlign: 'left',
+                }}
+                onClick={() => setShowVolumeSettings(true)}
+              >
+                {t('settingsMenu.volumeSettings')}
               </Button>
             </Container>
           </>
@@ -91,18 +127,11 @@ function ChordColorTrainerSettings({
             settings={settings}
             setShowPracticeSettings={setShowPracticeSettings}
             customPresets={customPresets}
-
           />
         ) : showStatistics ? (
-          <Statistics
-            settings={settings}
-            setShowStatistics={setShowStatistics}
-          />
+          <Statistics settings={settings} setShowStatistics={setShowStatistics} />
         ) : (
-          <VolumeSettings
-            settings={settings}
-            setShowVolumeSettings={setShowVolumeSettings}
-          />
+          <VolumeSettings settings={settings} setShowVolumeSettings={setShowVolumeSettings} />
         )}
       </Box>
     </Modal>

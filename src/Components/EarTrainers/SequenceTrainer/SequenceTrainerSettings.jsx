@@ -3,7 +3,7 @@ import { Modal, Box, Button, Slider, Checkbox, Typography, Grid, Switch } from '
 import HomeIcon from '@mui/icons-material/Home';
 import * as Tone from 'tone';
 import { Bar } from 'react-chartjs-2';
-
+import { useTranslation } from 'react-i18next';
 function SequenceTrainerSettings({
   isSettingsOpen,
   setIsSettingsOpen,
@@ -28,6 +28,7 @@ function SequenceTrainerSettings({
   setSequenceLength,
   saveSettings
 }) {
+  const { t } = useTranslation('sequenceTrainer');
   const [showSequenceSettings, setShowSequenceSettings] = useState(false);
   const [showVolumeSettings, setShowVolumeSettings] = useState(false);
   const [showStatistics, setShowStatistics] = useState(false);
@@ -93,25 +94,37 @@ function SequenceTrainerSettings({
           overflowY: 'auto',
         }}
       >
-        <h2 style={{ fontSize: '2rem', textAlign: 'center' }}>设置</h2>
+        <h2 style={{ fontSize: '2rem', textAlign: 'center' }}>{t('settings.Settings')}</h2>
 
         {!showSequenceSettings && !showVolumeSettings && !showStatistics ? (
           <>
-            <Button sx={{ color:(theme)=>theme.palette.text.primary, display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }} color='secondary' onClick={() => setShowSequenceSettings(true)}>
-              练习设置
+            <Button 
+              sx={{ color: (theme) => theme.palette.text.primary, display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }} 
+              color='secondary' 
+              onClick={() => setShowSequenceSettings(true)}
+            >
+              {t('settings.PracticeSettings')}
             </Button>
-            <Button sx={{ color:(theme)=>theme.palette.text.primary, display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }} color='secondary' onClick={() => setShowStatistics(true)}>
-              统计
+            <Button 
+              sx={{ color: (theme) => theme.palette.text.primary, display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }} 
+              color='secondary' 
+              onClick={() => setShowStatistics(true)}
+            >
+              {t('settings.Statistics')}
             </Button>
-            <Button sx={{ color:(theme)=>theme.palette.text.primary, display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left' }} color='secondary' onClick={() => setShowVolumeSettings(true)}>
-              音量设置
+            <Button 
+              sx={{ color: (theme) => theme.palette.text.primary, display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left' }} 
+              color='secondary' 
+              onClick={() => setShowVolumeSettings(true)}
+            >
+              {t('settings.VolumeSettings')}
             </Button>
           </>
         ) : showSequenceSettings ? (
           <>
             <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
               <label id="note-range-slider" style={{ fontSize: '1.1rem' }}>
-                Note Range
+                {t('labels.noteRange')}
               </label>
               <Slider
                 color='secondary'
@@ -130,54 +143,71 @@ function SequenceTrainerSettings({
               />
             </div>
             <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-              <label style={{ fontSize: '1.1rem' }}>Root Note</label>
-              <Slider color='secondary' valueLabelFormat={(value) => Tone.Frequency(value, 'midi').toNote()} value={rootNote} onChange={(e, value) => setRootNote(value)} min={Tone.Frequency('C2').toMidi()} max={Tone.Frequency('C6').toMidi()} valueLabelDisplay="auto" sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} />
+              <label style={{ fontSize: '1.1rem' }}>{t('labels.rootNote')}</label>
+              <Slider 
+                color='secondary' 
+                valueLabelFormat={(value) => Tone.Frequency(value, 'midi').toNote()} 
+                value={rootNote} 
+                onChange={(e, value) => setRootNote(value)} 
+                min={Tone.Frequency('C2').toMidi()} 
+                max={Tone.Frequency('C6').toMidi()} 
+                valueLabelDisplay="auto" 
+                sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} 
+              />
             </div>
-            <div style={{ padding: '6px 8px', }}>
-              <label style={{ fontSize: '1.1rem' }}>BPM: </label>
-              <Slider color='secondary' value={bpm} onChange={(e, value) => setBpm(value)} min={40} max={200} valueLabelDisplay="auto" sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} />
+            <div style={{ padding: '6px 8px' }}>
+              <label style={{ fontSize: '1.1rem' }}>{t('labels.bpm')}: </label>
+              <Slider 
+                color='secondary' 
+                value={bpm} 
+                onChange={(e, value) => setBpm(value)} 
+                min={40} 
+                max={200} 
+                valueLabelDisplay="auto" 
+                sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} 
+              />
             </div>
-                  <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-                    <label style={{ fontSize: '1.1rem' }}>Sequence Length</label>
-                    <Slider
-                      color='secondary'
-                      value={sequenceLength}
-                      onChange={(e, value) => setSequenceLength(value)}
-                      min={1}
-                      max={10}
-                      valueLabelDisplay="auto"
-                      sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
-                    />
-            <div style={{ padding: '6px 8px',fontSize: '1.1rem' }}>
-              <label style={{ fontSize: '1.1rem' }}>选择练习级数</label>
-              <Grid container spacing={1} sx={{marginTop:'4px',paddingLeft:0}}>
-                {currentNotes.map((note, index) => (
-                  <Grid item xs={4} key={note.name} sx={{padding:0}}>
-                    <Box
-                      onClick={() => handleNoteToggle(index)}
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        cursor: 'pointer',
-                        padding: '4px',
-                        '&:hover': { bgcolor: 'action.hover' },
-                      }}
-                    >
-                      <Checkbox
-                        color='secondary'
-                        checked={note.enable}
-                        tabIndex={-1}
-                        size="small"
-                        sx={{ padding: '2px' }}
-                      />
-                      <Typography variant="body2" sx={{ marginLeft: '4px', fontSize: '1.1rem' }}>
-                        {note.name}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
-            </div>
+            <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
+              <label style={{ fontSize: '1.1rem' }}>{t('labels.sequenceLength')}</label>
+              <Slider
+                color='secondary'
+                value={sequenceLength}
+                onChange={(e, value) => setSequenceLength(value)}
+                min={1}
+                max={10}
+                valueLabelDisplay="auto"
+                sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
+              />
+              <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
+                <label style={{ fontSize: '1.1rem' }}>{t('labels.selectDegrees')}</label>
+                <Grid container spacing={1} sx={{ marginTop:'4px', paddingLeft:0 }}>
+                  {currentNotes.map((note, index) => (
+                    <Grid item xs={4} key={note.name} sx={{ padding:0 }}>
+                      <Box
+                        onClick={() => handleNoteToggle(index)}
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          cursor: 'pointer',
+                          padding: '4px',
+                          '&:hover': { bgcolor: 'action.hover' },
+                        }}
+                      >
+                        <Checkbox
+                          color='secondary'
+                          checked={note.enable}
+                          tabIndex={-1}
+                          size="small"
+                          sx={{ padding: '2px' }}
+                        />
+                        <Typography variant="body2" sx={{ marginLeft: '4px', fontSize: '1.1rem' }}>
+                          {note.name}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              </div>
             </div>
             <Button
               color='secondary'
@@ -189,7 +219,7 @@ function SequenceTrainerSettings({
           </>
         ) : showStatistics ? (
           <>
-            <h3>音程正确率统计</h3>
+            <h3>{t('sequenceTrainer.accuracyStatistics')}</h3>
             <Bar data={generateChartData()} />
             <Box
               sx={{
@@ -204,7 +234,7 @@ function SequenceTrainerSettings({
               onClick={() => setIsStatOpen(!isStatOpen)}
             >
               <Typography variant="body1" sx={{ textAlign: 'left' }}>
-                统计
+                {t('sequenceTrainer.toggleStatistics')}
               </Typography>
               <Switch
                 checked={isStatOpen}
@@ -219,7 +249,7 @@ function SequenceTrainerSettings({
               onClick={() => setIsDeleteConfirmOpen(true)}
               sx={{ marginTop: 2, marginLeft: 'auto', display: 'block' }}
             >
-              删除本地统计数据
+              {t('sequenceTrainer.deleteStatistics')}
             </Button>
             <Modal
               open={isDeleteConfirmOpen}
@@ -241,18 +271,18 @@ function SequenceTrainerSettings({
                   borderRadius: 2,
                 }}
               >
-                <Typography id="delete-confirmation-title" variant="h6" component="h2">
-                  确认删除
+                <Typography id="delete-confirmation-title" variant="h6" component="h2" sx={{color:(theme)=>theme.palette.text.paper}}>
+                  {t('sequenceTrainer.confirmDeleteTitle')}
                 </Typography>
-                <Typography id="delete-confirmation-description" sx={{ mt: 2 }}>
-                  确定要删除所有本地统计数据吗？此操作不可恢复。
+                <Typography id="delete-confirmation-description" sx={{ mt: 2 ,color:(theme)=>theme.palette.text.paper}}>
+                  {t('sequenceTrainer.confirmDeleteDescription')}
                 </Typography>
                 <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
                   <Button onClick={handleDeleteConfirm} color="secondary" variant="contained">
-                    删除
+                    {t('sequenceTrainer.confirmDelete')}
                   </Button>
                   <Button onClick={() => setIsDeleteConfirmOpen(false)} color="primary" variant="outlined">
-                    取消
+                    {t('sequenceTrainer.cancelDelete')}
                   </Button>
                 </Box>
               </Box>
@@ -260,7 +290,7 @@ function SequenceTrainerSettings({
             <Button
               color='secondary'
               onClick={() => setShowStatistics(false)}
-              sx={{ display: 'flex', justifyContent: 'flex-center', fontSize: '1.2rem', marginLeft: 'auto',marginTop:'1rem' }}
+              sx={{ display: 'flex', justifyContent: 'flex-center', fontSize: '1.2rem', marginLeft: 'auto', marginTop:'1rem' }}
             >
               <HomeIcon/>
             </Button>
@@ -268,12 +298,32 @@ function SequenceTrainerSettings({
         ) : (
           <>
             <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-              <label style={{ fontSize: '1.1rem' }}>Drone Volume</label>
-              <Slider color='secondary' value={droneVolume} valueLabelFormat={(value) => Math.round(value * 100)} onChange={(e, value) => setDroneVolume(value)} min={0} max={1} step={0.01} valueLabelDisplay="auto" sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} />
+              <label style={{ fontSize: '1.1rem' }}>{t('labels.droneVolume')}</label>
+              <Slider 
+                color='secondary' 
+                value={droneVolume} 
+                valueLabelFormat={(value) => Math.round(value * 100)} 
+                onChange={(e, value) => setDroneVolume(value)} 
+                min={0} 
+                max={1} 
+                step={0.01} 
+                valueLabelDisplay="auto" 
+                sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} 
+              />
             </div>
             <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-              <label style={{ fontSize: '1.1rem' }}>Piano Volume </label>
-              <Slider color='secondary' valueLabelFormat={(value) => Math.round(value * 100)} value={pianoVolume} onChange={(e, value) => setPianoVolume(value)} min={0} max={1} step={0.01} valueLabelDisplay="auto" sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} />
+              <label style={{ fontSize: '1.1rem' }}>{t('labels.pianoVolume')}</label>
+              <Slider 
+                color='secondary' 
+                valueLabelFormat={(value) => Math.round(value * 100)} 
+                value={pianoVolume} 
+                onChange={(e, value) => setPianoVolume(value)} 
+                min={0} 
+                max={1} 
+                step={0.01} 
+                valueLabelDisplay="auto" 
+                sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} 
+              />
             </div>
             <Button
               color='secondary'
@@ -288,5 +338,4 @@ function SequenceTrainerSettings({
     </Modal>
   );
 }
-
 export default SequenceTrainerSettings;

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Modal, Box, Typography, Button } from '@mui/material';
-
+import { useTranslation } from 'react-i18next';
 const IntroModal = ({ isOpen, handleClose }) => {
+  const { t } = useTranslation('degreeTrainer');
   return (
     <Modal
       open={isOpen}
@@ -22,14 +23,13 @@ const IntroModal = ({ isOpen, handleClose }) => {
         borderRadius: 2 // 添加圆角
       }}>
         <Typography id="intro-modal-title" variant="h6" component="h2" sx={{ color: (theme) => theme.palette.text.paper }}>
-          欢迎使用音程训练器
+        {t('intro.welcomeMessage')}
         </Typography>
         <Typography id="intro-modal-description" sx={{ mt: 2, color: (theme) => theme.palette.text.paper }}>
-          您将会听到一个低音作为主音，随后会播放另一个音符。您需要根据听到的音符选择相应的音程级数。
-          在右上角的设置中，您可以调节音量和练习内容。
+        {t('intro.introDescription')}
         </Typography>
         <Button onClick={handleClose} variant="contained" color="primary" sx={{ mt: 3 }}>
-          开始练习
+        {t('intro.startPractice')}
         </Button>
       </Box>
     </Modal>

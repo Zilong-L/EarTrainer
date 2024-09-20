@@ -1,0 +1,76 @@
+{
+  "title": "Sequence Trainer",
+  "intro": {
+    "welcomeMessage": "Welcome to the Sequence Trainer",
+    "introDescription": "You will hear a low tone as the root note, followed by a sequence of notes. You need to select the corresponding interval based on what you hear. In the settings at the top right corner, you can adjust the volume and practice content.",
+    "startPractice": "Start Practice"
+  },
+  "home": {
+    "totalAttempts": "Total Attempts: ",
+    "correctCount": "Correct Count: ",
+    "accuracyRate": "Accuracy Rate: ",
+    "title": "Sequence Trainer",
+    "Replay": "Replay",
+    "Settings": "Settings",
+    "SequenceProgress": "Sequence Progress",
+    "OpenSourceMessage": "This is open source. Feel free to visit the GitHub repository to raise feature requests."
+  },
+  "settings": {
+    "Settings": "Settings",
+    "PracticeSettings": "Practice Settings",
+    "Statistics": "Statistics",
+    "VolumeSettings": "Volume Settings",
+    "DeleteData": "Delete Local Statistics Data",
+    "ConfirmDelete": "Confirm Deletion",
+    "DeleteConfirmation": "Are you sure you want to delete all local statistics data? This action cannot be undone.",
+    "Delete": "Delete",
+    "Cancel": "Cancel",
+    "NoteRange": "Note Range",
+    "RootNote": "Root Note",
+    "BPM": "BPM",
+    "SelectDegrees": "Select Degrees to Practice",
+    "DroneVolume": "Drone Volume",
+    "PianoVolume": "Piano Volume",
+    "SequenceLength": "Sequence Length",
+    "Home": "Home"
+  },
+  "sequenceTrainer": {
+    "accuracyStatistics": "Interval Accuracy Statistics",
+    "toggleStatistics": "Show Statistics",
+    "deleteStatistics": "Delete Local Statistics Data",
+    "confirmDeleteTitle": "Confirm Deletion",
+    "confirmDeleteDescription": "Are you sure you want to delete all local statistics data? This action cannot be undone.",
+    "confirmDelete": "Delete",
+    "cancelDelete": "Cancel",
+    "sequenceProgressLabel": "Sequence Progress",
+    "replaySequence": "Replay Sequence",
+    "startSequence": "Start Sequence",
+    "endSequence": "End Sequence"
+  },
+  "buttons": {
+    "startPractice": "Start Practice",
+    "replay": "Replay",
+    "settings": "Settings",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "earTrainer": "Ear Trainer",
+    "chordTrainer": "Chord Trainer"
+  },
+  "labels": {
+    "totalAttempts": "Total Attempts",
+    "correctCount": "Correct Count",
+    "accuracyRate": "Accuracy Rate",
+    "bpm": "BPM",
+    "sequenceLength": "Sequence Length",
+    "droneVolume": "Drone Volume",
+    "pianoVolume": "Piano Volume",
+    "rootNote": "Root Note",
+    "noteRange": "Note Range",
+    "selectDegrees": "Select Degrees to Practice"
+  },
+  "messages": {
+    "welcome": "Welcome to the Sequence Trainer",
+    "introDescription": "You will hear a low tone as the root note, followed by a sequence of notes. You need to select the corresponding interval based on what you hear. In the settings at the top right corner, you can adjust the volume and practice content.",
+    "deleteConfirmation": "Are you sure you want to delete all local statistics data? This action cannot be undone."
+  }
+}

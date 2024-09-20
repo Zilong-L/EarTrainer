@@ -11,12 +11,14 @@ import IntroModal from '@components/EarTrainers/DegreeTrainer/DegreeTrainerIntro
 import useDegreeTrainer from '@components/EarTrainers/DegreeTrainer/useDegreeTrainer';
 import useDegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/useDegreeTrainerSettings';
 import { apps, keyMap, degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
+import { useTranslation } from 'react-i18next';
+
 import * as Tone from 'tone';
 
 let midi = null;
 const EarTrainer = () => {
   const settings = useDegreeTrainerSettings();
-
+  const { t } = useTranslation('degreeTrainer');
   const {
     currentNote,
     disabledNotes,
@@ -31,21 +33,9 @@ const EarTrainer = () => {
   } = useDegreeTrainer(settings);
 
   const {
-    bpm,
-    droneVolume,
-    pianoVolume,
     rootNote,
-    range,
-    currentNotes,
     practiceRecords,
     isHandfree,
-    setBpm,
-    setDroneVolume,
-    setPianoVolume,
-    setRootNote,
-    setRange,
-    setCurrentNotes,
-    setPracticeRecords,
     setIsHandfree,
   } = settings;
 
@@ -149,10 +139,10 @@ const EarTrainer = () => {
 
     return (
       <>
-        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>总尝试: {totalResults.total}</Typography>
-        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>正确数: {totalResults.correct}</Typography>
+        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.totalAttempts')} {totalResults.total}</Typography>
+        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.correctCount')} {totalResults.correct}</Typography>
         <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>
-          正确率: {totalResults.total > 0 ? Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) + '%' : '0%'}
+          {t('home.accuracyRate')} {totalResults.total > 0 ? Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) + '%' : '0%'}
         </Typography>
       </>
     );
@@ -165,10 +155,10 @@ const EarTrainer = () => {
 
           <Typography variant="h5" sx={{ flexGrow: 1, textAlign: 'left', color: (theme) => theme.palette.text.primary }}>
             <Link to="/ear-trainer" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Ear Trainer
+              {t('home.title')}
             </Link>
           </Typography>
-          <Tooltip title="Toggle Handfree Mode">
+          <Tooltip title={isHandfree?t('buttons.handfreeOff'):t('buttons.handfreeOn')}>
             <ToggleButton
               value="check"
               selected={isHandfree}
@@ -186,7 +176,7 @@ const EarTrainer = () => {
               <AllInclusiveIcon />
             </ToggleButton>
           </Tooltip>
-          <Tooltip title="Settings">
+          <Tooltip title={t("buttons.settings")}>
             <Button
               onClick={() => setIsSettingsOpen(!isSettingsOpen)}
               variant="contained"
@@ -215,7 +205,7 @@ const EarTrainer = () => {
                 '@media (min-width:600px)': { display: 'block', boxShadow: 'none', textTransform: 'none' },
               }}
             >
-              {item.name}
+              {t(`buttons.${item.name}`)}
             </Button>
           ))}
         </Toolbar>
