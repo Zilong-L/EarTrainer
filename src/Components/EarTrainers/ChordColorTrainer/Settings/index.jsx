@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Box, Button, Container, Typography } from '@mui/material';
-import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
 import PracticeSettings from './PracticeSettings';
 import VolumeSettings from './VolumeSettings';
 import Statistics from './StatisticsSettings';

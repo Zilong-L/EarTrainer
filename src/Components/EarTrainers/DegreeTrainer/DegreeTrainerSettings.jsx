@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Box, Button, Slider, Container,Checkbox, Typography, Grid ,Switch } from '@mui/material';
-import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
+import { Modal, Box, Button, Slider, Container, Checkbox, Typography, Grid, Switch } from '@mui/material';
+import { getDroneInstance } from '@utils/ToneInstance';
 import HomeIcon from '@mui/icons-material/Home';
 import * as Tone from 'tone';
 import {
@@ -23,33 +23,29 @@ ChartJS.register(
   Legend
 );
 
-function DegreeTrainerSettings({
-  isSettingsOpen,
-  setIsSettingsOpen,
-  bpm,
-  setBpm,
-  droneVolume,
-  setDroneVolume,
-  pianoVolume,
-  setPianoVolume,
-  rootNote,
-  setRootNote,
-  range,
-  setRange,
-  currentNotes,
-  setCurrentNotes,
-  playNote,
-  isStatOpen,
-  setIsStatOpen,
-  practiceRecords,
-  setPracticeRecords
-}) {
+function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, playNote,isStatOpen,setIsStatOpen}) {
+  const {
+    bpm,
+    setBpm,
+    droneVolume,
+    setDroneVolume,
+    pianoVolume,
+    setPianoVolume,
+    rootNote,
+    setRootNote,
+    range,
+    setRange,
+    currentNotes,
+    setCurrentNotes,
+    practiceRecords,
+    setPracticeRecords,
+    saveSettingsToLocalStorage
+  } = settings;
   const [showDegreeSettings, setShowDegreeSettings] = useState(false);
   const [showVolumeSettings, setShowVolumeSettings] = useState(false);
   const [showStatistics, setShowStatistics] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const drone = getDroneInstance();
-  const piano = getPianoInstance();
   let midiMin = drone.rootMin;
   let midiMax = drone.rootMax;
 
@@ -58,7 +54,7 @@ function DegreeTrainerSettings({
     newNotes[index].enable = !newNotes[index].enable;
     setCurrentNotes(newNotes);
   };
-  
+
   const closeSettings = () => {
     setIsSettingsOpen(false);
     setShowDegreeSettings(false);
@@ -96,22 +92,11 @@ function DegreeTrainerSettings({
     setIsDeleteConfirmOpen(false);
   };
 
-  function saveSettingsToLocalStorage() {
-    const settings = {
-      bpm,
-      droneVolume,
-      pianoVolume,
-      rootNote,
-      range,
-      currentNotes,
-    };
-    localStorage.setItem('degreeTrainerSettings', JSON.stringify(settings));
-  }
 
 
 
   return (
-    <Modal open={isSettingsOpen} onClose={closeSettings} sx={{color:(theme)=>theme.palette.text.primary}}>
+    <Modal open={isSettingsOpen} onClose={closeSettings} sx={{ color: (theme) => theme.palette.text.primary }}>
       <Box
         sx={{
           position: 'absolute',
@@ -120,7 +105,7 @@ function DegreeTrainerSettings({
           transform: 'translate(-50%, -50%)',
           width: '80%',
           maxWidth: 500,
-          bgcolor: (theme)=>theme.palette.background.modal,
+          bgcolor: (theme) => theme.palette.background.modal,
           boxShadow: 24,
           p: 4,
           borderRadius: 2,
@@ -128,28 +113,28 @@ function DegreeTrainerSettings({
           overflowY: 'auto',
         }}
       >
-        <Typography variant='h4' sx={{textAlign:'center'}}>设置</Typography>
+        <Typography variant='h4' sx={{ textAlign: 'center' }}>设置</Typography>
 
         {!showDegreeSettings && !showVolumeSettings && !showStatistics ? (
           <>
-            <Container sx={{marginTop:'3rem'}}>
-              <Button  sx={{  color:'text.primary' , display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }}  onClick={() => setShowDegreeSettings(true)}>
+            <Container sx={{ marginTop: '3rem' }}>
+              <Button sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }} onClick={() => setShowDegreeSettings(true)}>
                 练习设置
               </Button>
-              <Button   sx={{ color:'text.primary' ,  display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }}  onClick={() => setShowStatistics(true)}>
+              <Button sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }} onClick={() => setShowStatistics(true)}>
                 统计
               </Button>
-              <Button   sx={{ color:'text.primary' ,  display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left' }}  onClick={() => setShowVolumeSettings(true)}>
+              <Button sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left' }} onClick={() => setShowVolumeSettings(true)}>
                 音量设置
               </Button>
             </Container>
           </>
         ) : showDegreeSettings ? (
           <>
-            
-           
 
-            
+
+
+
             <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
               <label id="note-range-slider" style={{ fontSize: '1.1rem' }}>
                 Note Range
@@ -179,11 +164,11 @@ function DegreeTrainerSettings({
               <label style={{ fontSize: '1.1rem' }}>BPM: </label>
               <Slider color='secondary' value={bpm} onChange={(e, value) => setBpm(value)} min={10} max={200} valueLabelDisplay="auto" sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} />
             </div>
-            <div style={{ padding: '6px 8px',fontSize: '1.1rem' }}>
+            <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
               <label style={{ fontSize: '1.1rem' }}>选择练习级数</label>
-              <Grid container spacing={1}sx={{marginTop:'4px',paddingLeft:0}}>
+              <Grid container spacing={1} sx={{ marginTop: '4px', paddingLeft: 0 }}>
                 {currentNotes.map((note, index) => (
-                  <Grid item xs={4} key={note.name} sx={{padding:0}}>
+                  <Grid item xs={4} key={note.name} sx={{ padding: 0 }}>
                     <Box
                       onClick={() => handleDegreeToggle(index)}
                       sx={{
@@ -214,7 +199,7 @@ function DegreeTrainerSettings({
               onClick={() => setShowDegreeSettings(false)}
               sx={{ display: 'flex', justifyContent: 'flex-center', fontSize: '1.2rem', marginLeft: 'auto' }}
             >
-              <HomeIcon/>
+              <HomeIcon />
             </Button>
           </>
         ) : showStatistics ? (
@@ -289,9 +274,9 @@ function DegreeTrainerSettings({
             <Button
               color='secondary'
               onClick={() => setShowStatistics(false)}
-              sx={{ display: 'flex', justifyContent: 'flex-center', fontSize: '1.2rem', marginLeft: 'auto',marginTop:'1rem' }}
+              sx={{ display: 'flex', justifyContent: 'flex-center', fontSize: '1.2rem', marginLeft: 'auto', marginTop: '1rem' }}
             >
-              <HomeIcon/>
+              <HomeIcon />
             </Button>
           </>
         ) : (
@@ -305,13 +290,13 @@ function DegreeTrainerSettings({
               <label style={{ fontSize: '1.1rem' }}>Piano Volume </label>
               <Slider color='secondary' valueLabelFormat={(value) => Math.round(value * 100)} value={pianoVolume} onChange={(e, value) => setPianoVolume(value)} min={0} max={1} step={0.01} valueLabelDisplay="auto" sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }} />
             </div>
-            
+
             <Button
               color='secondary'
               onClick={() => setShowVolumeSettings(false)}
               sx={{ display: 'flex', justifyContent: 'flex-center', fontSize: '1.2rem', marginLeft: 'auto' }}
             >
-              <HomeIcon/>
+              <HomeIcon />
             </Button>
           </>
         )}

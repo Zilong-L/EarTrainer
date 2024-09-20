@@ -24,7 +24,6 @@ const useChordColorTrainer = (settings) => {
 
   const piano = getPianoInstance();
   const drone = getDroneInstance();
-  const pianoSampler = piano.sampler;
 
   useEffect(() => {
     drone.updateRoot(rootNote);
@@ -71,8 +70,7 @@ const useChordColorTrainer = (settings) => {
     Tone.getTransport().start();
   };
 
-  const playChord = (notes = null, delay = 0) => {
-
+  const playChord = (notes = null, delay = 0.05) => {
     if(!notes){
       notes = currentChord.notes
     }
@@ -80,7 +78,7 @@ const useChordColorTrainer = (settings) => {
     
   };
 
-  const playBrokenChord = (notes = null, delay = 0) => {
+  const playBrokenChord = (notes = null, delay = 0.05) => {
     if(!notes){
       notes = currentChord.notes
     }

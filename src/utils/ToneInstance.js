@@ -14,16 +14,7 @@ function getPianoGainNode() {
 function getPianoInstance() {
   
   if (!pianoSampler) {
-    pianoSampler = new Tone.Sampler({
-      urls: {
-        C4: "C4.mp3",
-        "D#4": "Ds4.mp3",
-        "F#4": "Fs4.mp3",
-        A4: "A4.mp3",
-      },
-      release: 1,
-      baseUrl: "https://tonejs.github.io/audio/salamander/",
-    });
+    pianoSampler = new Tone.PolySynth()
     pianoSampler.connect(getPianoGainNode());
   }
   function setVolume(value) {
@@ -40,40 +31,54 @@ function getDroneInstance() {
   let masterGainNode = null;
   let rootMax = Tone.Frequency("C5").toMidi();
   let rootMin = Tone.Frequency("C2").toMidi();
+  
   if (!droneInstance) {
     const rootOscillator = new Tone.OmniOscillator("C2", "sine");
     const fifthOscillator = new Tone.OmniOscillator("G2", "sine");
+    const octaveOscillator = new Tone.OmniOscillator("C3", "sine");
+    // 创建压缩器
+    const compressor = new Tone.Compressor({
+      threshold: -20, // 阈值，单位为分贝
+      ratio: 4,        // 压缩比例
+      attack: 0.003,  // 攻击时间，单位为秒
+      release: 0.25    // 释放时间，单位为秒
+    })
 
-    const limiter = new Tone.Limiter(-24).toDestination();
-    const rootGain = new Tone.Gain(0.3);
-    const fifthGain = new Tone.Gain(0.1);
+    const rootGain = new Tone.Gain(0.8);
+    const fifthGain = new Tone.Gain(0.3);
+    const octaveGain = new Tone.Gain(0.3);
 
     const reverb = new Tone.Reverb({
       decay: 50,
       preDelay: 0.01
-    })
+    }).toDestination();
 
     // const chorus = new Tone.Chorus(4, 2.5, 1.0).start();
 
     const filter = new Tone.Filter({
-      frequency: 200,
+      frequency: 400,
       type: "lowpass",
-      rolloff: -24
+      rolloff: -12
     });
 
-    masterGainNode = new Tone.Gain(0.35);
+    masterGainNode = new Tone.Gain(1.0)
 
+    // 连接振荡器到各自的增益节点
     rootOscillator.connect(rootGain);
     fifthOscillator.connect(fifthGain);
+    octaveOscillator.connect(octaveGain);
+    // 连接增益节点到压缩器
+    rootGain.connect(compressor);
+    fifthGain.connect(compressor);
+    octaveGain.connect(compressor);
+    // 连接压缩器到主增益节点
+    compressor.connect(masterGainNode);
 
-    rootGain.connect(masterGainNode);
-    fifthGain.connect(masterGainNode);
-
+    // 连接主增益节点到过滤器，然后到混响，最后到压缩器的目的地
     masterGainNode.connect(filter);
     filter.connect(reverb);
-    reverb.connect(limiter)
-    // masterGainNode.connect(reverb);
-    // masterGainNode.toDestination()
+    // 现在直接连接到 destination
+    
 
     const lfo = new Tone.LFO({
       frequency: 0.1,
@@ -86,13 +91,13 @@ function getDroneInstance() {
 
     function start() {
       rootOscillator.start();
-      // octaveOscillator.start();
+      octaveOscillator.start();
       fifthOscillator.start();
     }
 
     function stop() {
       rootOscillator.stop();
-      // octaveOscillator.stop();
+      octaveOscillator.stop();
       fifthOscillator.stop();
     }
 
@@ -103,13 +108,14 @@ function getDroneInstance() {
 
     function updateRoot(rootMidiValue) {
       if(rootMidiValue > rootMax || rootMidiValue < rootMin){
-        return
+        return;
       }
       const rootNote = Tone.Frequency(rootMidiValue, "midi").toNote();
       const fifthNote = Tone.Frequency(rootMidiValue + 7, "midi").toNote();
-
+      const ocataveNote = Tone.Frequency(rootMidiValue + 12, "midi").toNote();
       rootOscillator.frequency.value = rootNote;
       fifthOscillator.frequency.value = fifthNote;
+      octaveOscillator.frequency.value = ocataveNote;
     }
 
     droneInstance = {
@@ -126,7 +132,8 @@ function getDroneInstance() {
 }
 
 
-function playNotes(input, delay = 0, bpm = 60) {
+
+function playNotes(input, delay = 0.05, bpm = 60) {
   // 取消之前的播放
   const activeTransport = Tone.getTransport();
   if (activeTransport) {
@@ -142,12 +149,12 @@ function playNotes(input, delay = 0, bpm = 60) {
 
   notes.forEach((note, index) => {
     activeTransport.schedule((time) => {
-      if (sampler._buffers && sampler._buffers.loaded) {
+      if (sampler.name == "PolySynth"||sampler._buffers && sampler._buffers.loaded) {
         // 检查是否为 MIDI 值
         if (typeof note === 'number') {
-          sampler.triggerAttackRelease(Tone.Frequency(note, 'midi').toNote(), 60 / bpm, time);
+          sampler.triggerAttackRelease([Tone.Frequency(note, 'midi').toNote()], 60 / bpm, time);
         } else {
-          sampler.triggerAttackRelease(note, 60 / bpm, time);
+          sampler.triggerAttackRelease([note], 60 / bpm, time);
         }
       }
     }, `+${index * (60 / bpm) + delay}`);
@@ -157,7 +164,7 @@ function playNotes(input, delay = 0, bpm = 60) {
   return notes.length * (60 / bpm) + delay;
 }
 
-function playNotesTogether(input, delay = 0, bpm = 60) {
+function playNotesTogether(input, delay = 10, bpm = 60) {
   // 取消之前的播放
   const activeTransport = Tone.getTransport();
   if (activeTransport) {
@@ -173,13 +180,13 @@ function playNotesTogether(input, delay = 0, bpm = 60) {
 
   // 播放和弦音符
   activeTransport.schedule((time) => {
-    if (sampler._buffers && sampler._buffers.loaded) {
+    if (sampler.name == "PolySynth"||sampler._buffers && sampler._buffers.loaded) {
       notes.forEach(note => {
         // 检查是否为 MIDI 值
         if (typeof note === 'number') {
-          sampler.triggerAttackRelease(Tone.Frequency(note, 'midi').toNote(), 60 / bpm, time);
+          sampler.triggerAttackRelease([Tone.Frequency(note, 'midi').toNote()], 60 / bpm, time);
         } else {
-          sampler.triggerAttackRelease(note, 60 / bpm, time);
+          sampler.triggerAttackRelease([note], 60 / bpm, time);
         }
       });
     }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
-
+import {getDroneInstance,getPianoInstance,} from '@utils/ToneInstance';
 const useDegreeTrainerSettings = () => {
   const [bpm, setBpm] = useState(40);
   const [droneVolume, setDroneVolume] = useState(0.3);
@@ -11,10 +11,19 @@ const useDegreeTrainerSettings = () => {
   const [practiceRecords, setPracticeRecords] = useState({});
   const [currentNotes, setCurrentNotes] = useState(degrees);
   const [isHandfree, setIsHandfree] = useState(false);
+  const drone = getDroneInstance();
+  const piano = getPianoInstance();
   useEffect(() => {
     const storedRecords = JSON.parse(localStorage.getItem('degreeTrainerRecords')) || {};
     setPracticeRecords(storedRecords);
   }, []);
+  useEffect(() => {
+    drone.updateRoot(rootNote);
+  }, [ rootNote]);
+  useEffect(() => {
+    drone.setVolume(droneVolume);
+    piano.setVolume(pianoVolume);
+  }, [droneVolume, pianoVolume]);
 
   // 新增 useEffect 从 localStorage 加载设置
   useEffect(() => {
@@ -29,6 +38,17 @@ const useDegreeTrainerSettings = () => {
       setCurrentNotes(storedSettings.currentNotes || degrees);
     }
   }, []);
+  function saveSettingsToLocalStorage() {
+    const settings = {
+      bpm,
+      droneVolume,
+      pianoVolume,
+      rootNote,
+      range,
+      currentNotes,
+    };
+    localStorage.setItem('degreeTrainerSettings', JSON.stringify(settings));
+  }
 
   const updatePracticeRecords = (degree, isCorrect) => {
     setPracticeRecords((prevRecords) => {
@@ -62,6 +82,7 @@ const useDegreeTrainerSettings = () => {
     updatePracticeRecords,
     setCurrentNotes,
     setIsHandfree,
+    saveSettingsToLocalStorage
   };
 };
 

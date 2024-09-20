@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
-import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
+import {  getDroneInstance,playNotes } from '@utils/ToneInstance';
 
 const useDegreeTrainer = (settings) => {
   const {
     isHandfree,
     bpm,
-    droneVolume,
-    pianoVolume,
     rootNote,
     range,
     currentNotes,
@@ -23,15 +21,8 @@ const useDegreeTrainer = (settings) => {
   const [activeNote, setActiveNote] = useState(null);
   const [isAdvance, setIsAdvance] = useState(false);
 
-  const piano = getPianoInstance();
   const drone = getDroneInstance();
-  const pianoSampler = piano.sampler;
 
-  useEffect(() => {
-    drone.updateRoot(rootNote);
-    drone.setVolume(droneVolume);
-    piano.setVolume(pianoVolume);
-  }, [droneVolume, pianoVolume, rootNote]);
 
   useEffect(() => {
     const newNotes = currentNotes.filter((obj) => obj.enable);
@@ -95,17 +86,11 @@ const useDegreeTrainer = (settings) => {
     Tone.getTransport().start();
   };
 
-  const playNote = (note = null, delay = 0) => {
-    Tone.getTransport().stop();
-    Tone.getTransport().position = 0;
-    Tone.getTransport().cancel();
+  const playNote = (note = null, delay = 0.05) => {
     if (!note) {
       note = currentNote;
     }
-    if (pianoSampler._buffers && pianoSampler._buffers.loaded) {
-      console.log('play note',note)
-      pianoSampler.triggerAttackRelease(note, 60 / bpm, Tone.now() + delay);
-    }
+    playNotes(note,delay ,bpm)
   };
 
   const generateRandomNoteBasedOnRoot = () => {

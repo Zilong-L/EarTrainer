@@ -235,25 +235,12 @@ const EarTrainer = () => {
           <CssBaseline />
           <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
           <DegreeTrainerSettings
+            settings={settings}
             isSettingsOpen={isSettingsOpen}
             setIsSettingsOpen={setIsSettingsOpen}
-            bpm={bpm}
-            setBpm={setBpm}
-            droneVolume={droneVolume}
-            setDroneVolume={setDroneVolume}
-            pianoVolume={pianoVolume}
-            setPianoVolume={setPianoVolume}
-            rootNote={rootNote}
-            setRootNote={setRootNote}
-            range={range}
-            setRange={setRange}
-            currentNotes={currentNotes}
-            setCurrentNotes={setCurrentNotes}
             playNote={playNote}
             isStatOpen={isStatOpen}
             setIsStatOpen={setIsStatOpen}
-            practiceRecords={practiceRecords}
-            setPracticeRecords={setPracticeRecords}
           />
           <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} />
           {gameStarted && (
@@ -276,10 +263,10 @@ const EarTrainer = () => {
                           height: '4rem',
                           background: disabledNotes.some(disabledNote => noteName.slice(0, -1) === disabledNote.slice(0, -1)) ?
                             (theme) => theme.palette.action.disabled :
-                            isCorrectAnswer&&isAdvance ?
+                            isCorrectAnswer && isAdvance ?
                               (theme) => theme.palette.success.main :
                               'default',
-                          color: isCorrectAnswer&&isAdvance ?
+                          color: isCorrectAnswer && isAdvance ?
                             (theme) => theme.palette.success.contrastText :
                             'default',
                           '&:hover': {
@@ -287,7 +274,7 @@ const EarTrainer = () => {
                               (disabledNote) => noteName.slice(0, -1) === disabledNote.slice(0, -1)
                             )
                               ? (theme) => theme.palette.action.disabled
-                              : isCorrectAnswer&&isAdvance
+                              : isCorrectAnswer && isAdvance
                                 ? (theme) => theme.palette.success.main
                                 : 'default',
                           },
