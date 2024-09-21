@@ -3,6 +3,16 @@ import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import {  getDroneInstance,playNotes } from '@utils/ToneInstance';
 
+const audioCache = {};
+
+const preloadAudio = (degree) => {
+  if (!audioCache[degree]) {
+    console.log(`first load degree: ${degree}`)
+    audioCache[degree] = new Audio(`/answers/${degree}.wav`);
+  }
+  return audioCache[degree];
+};
+
 const useDegreeTrainer = (settings) => {
   const {
     isHandfree,
@@ -66,7 +76,7 @@ const useDegreeTrainer = (settings) => {
       return () => clearTimeout(timer);
     } else if (isHandfree && gameStarted) {
       const degree = calculateDegree(Tone.Frequency(currentNote).toMidi());
-      const answerAudio = new Audio(`/answers/${degree}.wav`);
+      const answerAudio = preloadAudio(degree); // Use preloaded audio
       const timer = setTimeout(() => {
         answerAudio.play(); // Play the answer
         setTimeout(() => {
