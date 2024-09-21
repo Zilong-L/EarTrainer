@@ -11,6 +11,7 @@ const useSequenceTrainerSettings = () => {
   const [practiceRecords, setPracticeRecords] = useState({});
   const [currentNotes, setCurrentNotes] = useState(degrees);
   const [sequenceLength, setSequenceLength] = useState(3);
+  const [isStatOpen, setIsStatOpen] = useState(true);
 
   useEffect(() => {
     const storedRecords = JSON.parse(localStorage.getItem('sequenceTrainerRecords')) || {};
@@ -27,6 +28,7 @@ const useSequenceTrainerSettings = () => {
       setRange(storedSettings.range || [Tone.Frequency('C3').toMidi(), Tone.Frequency('C4').toMidi()]);
       setCurrentNotes(storedSettings.currentNotes || degrees);
       setSequenceLength(storedSettings.sequenceLength || 3);
+      setIsStatOpen(storedSettings.isStatOpen);
     }
   }, []);
 
@@ -52,7 +54,8 @@ const useSequenceTrainerSettings = () => {
       rootNote,
       range,
       currentNotes,
-      sequenceLength
+      sequenceLength,
+      isStatOpen
     };
     localStorage.setItem('sequenceTrainerSettings', JSON.stringify(settings));
   };
@@ -66,6 +69,7 @@ const useSequenceTrainerSettings = () => {
     practiceRecords,
     currentNotes,
     sequenceLength,
+    isStatOpen,
     setBpm,
     setDroneVolume,
     setPianoVolume,
@@ -75,7 +79,8 @@ const useSequenceTrainerSettings = () => {
     updatePracticeRecords,
     setCurrentNotes,
     setSequenceLength,
-    saveSettings
+    saveSettings,
+    setIsStatOpen
   };
 };
 

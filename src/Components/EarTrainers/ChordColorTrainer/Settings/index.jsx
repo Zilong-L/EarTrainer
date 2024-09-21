@@ -14,6 +14,7 @@ function ChordColorTrainerSettings({
   const { t } = useTranslation('chordTrainer');
 
   const {
+    isStatOpen,
     bpm,
     droneVolume,
     pianoVolume,
@@ -49,6 +50,7 @@ function ChordColorTrainerSettings({
       degreeChordTypes,
       preset,
       customPresets,
+      isStatOpen
     };
     localStorage.setItem('ChordColorTrainerSettings', JSON.stringify(settingsToSave));
   }

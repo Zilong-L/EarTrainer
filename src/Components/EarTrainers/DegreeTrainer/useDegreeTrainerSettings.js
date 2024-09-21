@@ -11,7 +11,9 @@ const useDegreeTrainerSettings = () => {
   const [practiceRecords, setPracticeRecords] = useState({});
   const [currentNotes, setCurrentNotes] = useState(degrees);
   const [isHandfree, setIsHandfree] = useState(false);
+  const [isStatOpen, setIsStatOpen] = useState(true);
   const drone = getDroneInstance();
+
   const piano = getPianoInstance();
   useEffect(() => {
     const storedRecords = JSON.parse(localStorage.getItem('degreeTrainerRecords')) || {};
@@ -36,6 +38,7 @@ const useDegreeTrainerSettings = () => {
       setRootNote(storedSettings.rootNote || Tone.Frequency('C3').toMidi());
       setRange(storedSettings.range || [Tone.Frequency('C3').toMidi(), Tone.Frequency('C4').toMidi()]);
       setCurrentNotes(storedSettings.currentNotes || degrees);
+      setIsStatOpen(storedSettings.isStatOpen );
     }
   }, []);
   function saveSettingsToLocalStorage() {
@@ -46,6 +49,7 @@ const useDegreeTrainerSettings = () => {
       rootNote,
       range,
       currentNotes,
+      isStatOpen
     };
     localStorage.setItem('degreeTrainerSettings', JSON.stringify(settings));
   }
@@ -73,6 +77,7 @@ const useDegreeTrainerSettings = () => {
     practiceRecords,
     currentNotes,
     isHandfree,
+    isStatOpen,
     setBpm,
     setDroneVolume,
     setPianoVolume,
@@ -82,7 +87,8 @@ const useDegreeTrainerSettings = () => {
     updatePracticeRecords,
     setCurrentNotes,
     setIsHandfree,
-    saveSettingsToLocalStorage
+    saveSettingsToLocalStorage,
+    setIsStatOpen
   };
 };
 

@@ -11,6 +11,7 @@
     "statistics": {
       "chordAccuracy": "和弦正确率统计",
       "statistics": "统计",
+      "chartLabel":"和弦正确率",
       "deleteLocalData": "删除本地统计数据",
       "confirmDeleteTitle": "确认删除",
       "confirmDeleteDescription": "确定要删除所有本地统计数据吗？此操作不可恢复。",

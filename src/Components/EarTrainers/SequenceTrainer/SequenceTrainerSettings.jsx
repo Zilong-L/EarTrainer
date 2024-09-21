@@ -4,30 +4,32 @@ import HomeIcon from '@mui/icons-material/Home';
 import * as Tone from 'tone';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-function SequenceTrainerSettings({
+function SequenceTrainerSettings({settings,
   isSettingsOpen,
   setIsSettingsOpen,
-  bpm,
-  setBpm,
-  droneVolume,
-  setDroneVolume,
-  pianoVolume,
-  setPianoVolume,
-  rootNote,
-  setRootNote,
-  range,
-  setRange,
-  currentNotes,
-  setCurrentNotes,
   playSequence,
-  isStatOpen,
-  setIsStatOpen,
-  practiceRecords,
-  setPracticeRecords,
-  sequenceLength,
-  setSequenceLength,
-  saveSettings
 }) {
+  const {
+    bpm,
+    currentNotes,
+    practiceRecords,
+    droneVolume,
+    pianoVolume,
+    rootNote,
+    range,
+    sequenceLength,
+    isStatOpen, 
+    setBpm,
+    setDroneVolume,
+    setPianoVolume,
+    setRootNote,
+    setRange,
+    setCurrentNotes,
+    setPracticeRecords,
+    setSequenceLength,
+    saveSettings,
+    setIsStatOpen
+  } = settings;
   const { t } = useTranslation('sequenceTrainer');
   const [showSequenceSettings, setShowSequenceSettings] = useState(false);
   const [showVolumeSettings, setShowVolumeSettings] = useState(false);

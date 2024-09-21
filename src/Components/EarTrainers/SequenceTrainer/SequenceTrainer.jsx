@@ -28,28 +28,13 @@ const SequenceTrainer = () => {
     playSequence,
   } = useSequenceTrainer(settings);
   const {
-    bpm,
-    currentNotes,
     practiceRecords,
-    droneVolume,
-    pianoVolume,
     rootNote,
-    range,
-    sequenceLength,
-    setBpm,
-    setDroneVolume,
-    setPianoVolume,
-    setRootNote,
-    setRange,
-    setCurrentNotes,
-    setPracticeRecords,
-    setSequenceLength,
-    saveSettings
+    isStatOpen, 
   } = settings;
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isStatOpen, setIsStatOpen] = useState(true);
   const [isIntroOpen, setIsIntroOpen] = useState(true);
 
   const handleIntroClose = () => {
@@ -230,28 +215,10 @@ const SequenceTrainer = () => {
           <CssBaseline />
           <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
           <SequenceTrainerSettings
+            settings={settings}
             isSettingsOpen={isSettingsOpen}
             setIsSettingsOpen={setIsSettingsOpen}
-            bpm={bpm}
-            setBpm={setBpm}
-            droneVolume={droneVolume}
-            setDroneVolume={setDroneVolume}
-            pianoVolume={pianoVolume}
-            setPianoVolume={setPianoVolume}
-            rootNote={rootNote}
-            setRootNote={setRootNote}
-            range={range}
-            setRange={setRange}
-            currentNotes={currentNotes}
-            setCurrentNotes={setCurrentNotes}
             playSequence={playSequence}
-            isStatOpen={isStatOpen}
-            setIsStatOpen={setIsStatOpen}
-            practiceRecords={practiceRecords}
-            setPracticeRecords={setPracticeRecords}
-            sequenceLength={sequenceLength}
-            setSequenceLength={setSequenceLength}
-            saveSettings={saveSettings}
           />
           <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} />
           {gameStarted && (

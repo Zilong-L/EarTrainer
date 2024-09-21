@@ -61,17 +61,22 @@ const useDegreeTrainer = (settings) => {
         setCurrentNote(nextNote);
         playNote(nextNote);
         setIsAdvance(false);
-      }, (60/bpm)*1100);
-
+      }, (60/bpm)*2000);
+  
       return () => clearTimeout(timer);
-    }else if(isHandfree && gameStarted){
+    } else if (isHandfree && gameStarted) {
+      const degree = calculateDegree(Tone.Frequency(currentNote).toMidi());
+      const answerAudio = new Audio(`/answers/${degree}.wav`);
       const timer = setTimeout(() => {
-        playNote(currentNote);
-        setIsAdvance(true);
-      }, (60/bpm)*1100);
+        answerAudio.play(); // Play the answer
+        setTimeout(() => {
+          setIsAdvance(true); // Set to advance
+          playNote(currentNote); // Play the note
+        }, 1000); // Adjust delay as needed
+      }, (60/bpm)*2000);
       return () => clearTimeout(timer);
     }
-  }, [isAdvance,gameStarted,isHandfree]);
+  }, [isAdvance, gameStarted, isHandfree]);
 
   const startGame = () => {
     Tone.getTransport().stop();
@@ -119,7 +124,7 @@ const useDegreeTrainer = (settings) => {
     setActiveNote(null);
   };
 
-  const calculateDegree = (guessedNoteMidi, currentNoteMidi) => {
+  const calculateDegree = (guessedNoteMidi) => {
     const interval = (guessedNoteMidi - rootNote) % 12;
     return degrees.find(degree => degree.distance === interval)?.name || "Unknown";
   };

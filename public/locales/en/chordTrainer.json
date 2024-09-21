@@ -11,6 +11,7 @@
     "statistics": {
       "chordAccuracy": "Chord Accuracy Statistics",
       "statistics": "Statistics",
+      "chartLabel":"Chord Accuracy",
       "deleteLocalData": "Delete Local Statistics Data",
       "confirmDeleteTitle": "Confirm Delete",
       "confirmDeleteDescription": "Are you sure you want to delete all local statistics data? This action cannot be undone.",

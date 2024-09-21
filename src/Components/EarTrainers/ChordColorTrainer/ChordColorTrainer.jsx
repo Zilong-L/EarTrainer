@@ -42,11 +42,11 @@ const EarTrainer = () => {
     practiceRecords,
     muteDrone,
     setMuteDrone,
+    isStatOpen
   } = settings;
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isStatOpen, setIsStatOpen] = useState(true);
   const [isIntroOpen, setIsIntroOpen] = useState(true);
 
   const handleIntroClose = () => {

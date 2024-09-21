@@ -16,6 +16,7 @@ const useChordColorTrainerSettings = () => {
   const [preset, setPreset] = useState('major');
   const [customPresets, setCustomPresets] = useState({});
   const [muteDrone, setMuteDrone] = useState(false);
+  const [isStatOpen, setIsStatOpen] = useState(true);
 
   const drone = getDroneInstance();
   // 存储每个级数对应的和弦类型数组
@@ -43,6 +44,7 @@ const useChordColorTrainerSettings = () => {
       setPreset(storedSettings.preset || 'major');
       setCustomPresets(storedSettings.customPresets || {});
       setMuteDrone(storedSettings.muteDrone || false);
+      setIsStatOpen(storedSettings.isStatOpen || false);
     }
   }, []);
   useEffect(() => {
@@ -96,6 +98,8 @@ const useChordColorTrainerSettings = () => {
     setCustomPresets,
     muteDrone,
     setMuteDrone,
+    isStatOpen, 
+    setIsStatOpen
   };
 };
 

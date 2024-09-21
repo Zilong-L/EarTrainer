@@ -33,6 +33,7 @@ const EarTrainer = () => {
   } = useDegreeTrainer(settings);
 
   const {
+    isStatOpen,
     rootNote,
     practiceRecords,
     isHandfree,
@@ -41,7 +42,6 @@ const EarTrainer = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isStatOpen, setIsStatOpen] = useState(true);
   const [isIntroOpen, setIsIntroOpen] = useState(true);
 
   const handleIntroClose = () => {
@@ -229,8 +229,7 @@ const EarTrainer = () => {
             isSettingsOpen={isSettingsOpen}
             setIsSettingsOpen={setIsSettingsOpen}
             playNote={playNote}
-            isStatOpen={isStatOpen}
-            setIsStatOpen={setIsStatOpen}
+
           />
           <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} />
           {gameStarted && (

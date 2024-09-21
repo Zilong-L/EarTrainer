@@ -24,9 +24,11 @@ ChartJS.register(
   Legend
 );
 
-function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, playNote,isStatOpen,setIsStatOpen}) {
+function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, playNote}) {
   const { t } = useTranslation('degreeTrainer');
   const {
+    isStatOpen,
+    setIsStatOpen,
     bpm,
     setBpm,
     droneVolume,
@@ -47,6 +49,7 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
   const [showVolumeSettings, setShowVolumeSettings] = useState(false);
   const [showStatistics, setShowStatistics] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+
   const drone = getDroneInstance();
   let midiMin = drone.rootMin;
   let midiMax = drone.rootMax;
