@@ -74,7 +74,7 @@ const useDegreeTrainer = (settings) => {
         playNote(nextNote);
         setIsAdvance(false);
       }, (60/bpm)*2000);
-  
+      Audio
       return () => clearTimeout(timer);
     } else if (isHandfree && gameStarted) {
       const degree = calculateDegree(Tone.Frequency(currentNote).toMidi());
@@ -140,7 +140,7 @@ const useDegreeTrainer = (settings) => {
   };
 
   const calculateDegree = (guessedNoteMidi) => {
-    const interval = (guessedNoteMidi - rootNote) % 12;
+    const interval = ((guessedNoteMidi - rootNote)%12+12) % 12;
     return degrees.find(degree => degree.distance === interval)?.name || "Unknown";
   };
   const isCorrect = (guessedNote) => {
