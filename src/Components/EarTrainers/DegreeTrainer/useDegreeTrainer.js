@@ -7,8 +7,10 @@ const audioCache = {};
 
 const preloadAudio = (degree) => {
   if (!audioCache[degree]) {
-    console.log(`first load degree: ${degree}`)
-    audioCache[degree] = new Audio(`/answers/${degree}.wav`);
+    console.log(`First load degree: ${degree}`);
+    audioCache[degree] = new Tone.Player(`/answers/${degree}.wav`).toDestination();
+  } else {
+    console.log(`Using cached audio for degree: ${degree}`);
   }
   return audioCache[degree];
 };
@@ -76,9 +78,12 @@ const useDegreeTrainer = (settings) => {
       return () => clearTimeout(timer);
     } else if (isHandfree && gameStarted) {
       const degree = calculateDegree(Tone.Frequency(currentNote).toMidi());
-      const answerAudio = preloadAudio(degree); // Use preloaded audio
+      const player = preloadAudio(degree);
+
       const timer = setTimeout(() => {
-        answerAudio.play(); // Play the answer
+        if(player.loaded){
+          player.start();
+        }
         setTimeout(() => {
           setIsAdvance(true); // Set to advance
           playNote(currentNote); // Play the note
