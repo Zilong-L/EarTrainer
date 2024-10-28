@@ -25,6 +25,7 @@
   "settings": {
     "Settings": "设置",
     "PracticeSettings": "练习设置",
+    "repeatWhenAdvance":"答对后重复当前音",
     "Statistics": "统计",
     "VolumeSettings": "音量设置",
     "DeleteData": "删除本地统计数据",

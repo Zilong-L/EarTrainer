@@ -32,6 +32,7 @@
       "PracticeSettings": "Practice Settings",
       "Statistics": "Statistics",
       "VolumeSettings": "Volume Settings",
+      "repeatWhenAdvance":"Repeat Current Note When Answered Correctly",
       "DeleteData": "Delete Local Statistics Data",
       "ConfirmDelete": "Confirm Deletion",
       "DeleteConfirmation": "Are you sure you want to delete all local statistics data? This action cannot be undone.",

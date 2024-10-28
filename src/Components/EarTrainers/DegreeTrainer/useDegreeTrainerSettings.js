@@ -18,6 +18,7 @@ const useDegreeTrainerSettings = () => {
   const [currentNotes, setCurrentNotes] = useState(degrees);
   const [isHandfree, setIsHandfree] = useState(false);
   const [isStatOpen, setIsStatOpen] = useState(true);
+  const [repeatWhenAdvance, setRepeatWhenAdvance] = useState(true);
   const drone = getDroneInstance();
 
   const piano = getPianoInstance();
@@ -60,6 +61,7 @@ const useDegreeTrainerSettings = () => {
         best: 0,
         notes: "1 7",
       });
+      setRepeatWhenAdvance(storedSettings.repeatWhenAdvance || true);
     }
   }, []);
   function setCurrentNotesBasedOnBooleanArray(boolArray) {
@@ -81,7 +83,8 @@ const useDegreeTrainerSettings = () => {
       currentNotes,
       isStatOpen,
       userProgress,
-      currentLevel
+      currentLevel,
+      repeatWhenAdvance,
     };
     localStorage.setItem('degreeTrainerSettings', JSON.stringify(settings));
   }
@@ -151,6 +154,8 @@ const useDegreeTrainerSettings = () => {
     mode,
     userProgress,
     currentLevel,
+    repeatWhenAdvance,
+    setRepeatWhenAdvance,
     setCurrentLevel,
     setUserProgress,
     setMode,

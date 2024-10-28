@@ -48,7 +48,9 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
     setCurrentPracticeRecords,
     setCurrentLevel,
     userProgress,
-    saveSettingsToLocalStorage
+    saveSettingsToLocalStorage,
+    repeatWhenAdvance,
+    setRepeatWhenAdvance,
   } = settings;
   const [showDegreeSettings, setShowDegreeSettings] = useState(false);
   const [showVolumeSettings, setShowVolumeSettings] = useState(false);
@@ -154,6 +156,27 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
         ) : showDegreeSettings ? (
           <>
             {/* 练习设置内容 */}
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: 2,
+                cursor: 'pointer',
+                padding: '6px 8px',
+              }}
+              onClick={() => setRepeatWhenAdvance(!repeatWhenAdvance)}
+            >
+            <Typography variant="body1" sx={{ textAlign: 'left' }}>
+                {t('settings.repeatWhenAdvance')}
+            </Typography>
+            <Switch
+                checked={repeatWhenAdvance}
+                onChange={() => setRepeatWhenAdvance(!repeatWhenAdvance)}
+                name="repeatWhenAdvance"
+                color="secondary"
+              />
+              </Box>
             <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
               <label id="note-range-slider" style={{ fontSize: '1.1rem' }}>
                 {t('settings.NoteRange')}
@@ -200,6 +223,7 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
                 sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
               />
             </div>
+            
             {mode == 'free' && <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
               <label style={{ fontSize: '1.1rem' }}>{t('settings.SelectDegrees')}</label>
               <Grid container spacing={1} sx={{ marginTop: '4px', paddingLeft: 0 }}>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
-import {  getDroneInstance,playNotes } from '@utils/ToneInstance';
+import { getDroneInstance, playNotes } from '@utils/ToneInstance';
 import toast from 'react-hot-toast';
 const audioCache = {};
 
@@ -23,6 +23,7 @@ const useDegreeTrainer = (settings) => {
     rootNote,
     range,
     currentNotes,
+    repeatWhenAdvance,
     updatePracticeRecords,
     currentPracticeRecords,
     userProgress,
@@ -71,33 +72,56 @@ const useDegreeTrainer = (settings) => {
     if (activeNote && !isAdvance) {
       handleNoteGuess(activeNote);
     }
-  }, [activeNote,isAdvance]);
+  }, [activeNote, isAdvance]);
 
   useEffect(() => {
     if (isAdvance) {
-      const timer = setTimeout(() => {
-        const nextNote = generateRandomNoteBasedOnRoot();
-        setCurrentNote(nextNote);
-        playNote(nextNote);
-        setIsAdvance(false);
-      }, (60/bpm)*2000);
-      return () => clearTimeout(timer);
+      if(repeatWhenAdvance){
+        const timer = setTimeout(() => {
+          const nextNote = generateRandomNoteBasedOnRoot();
+          setCurrentNote(nextNote);
+          playNote(nextNote);
+          setIsAdvance(false);
+        }, (60 / bpm) * 2000);
+        return () => clearTimeout(timer);
+
+      }
+      else{
+        const timer = setTimeout(() => {
+          const nextNote = generateRandomNoteBasedOnRoot();
+          setCurrentNote(nextNote);
+          playNote(nextNote);
+          setIsAdvance(false);
+        }, (60 / bpm) * 1000);
+        return () => clearTimeout(timer);
+      }
     } else if (isHandfree && gameStarted) {
       const degree = calculateDegree(Tone.Frequency(currentNote).toMidi());
       const player = preloadAudio(degree);
-
-      const timer = setTimeout(() => {
-        if(player.loaded){
-          player.start();
-        }
-        setTimeout(() => {
+      if(repeatWhenAdvance){
+        const timer = setTimeout(() => {
+          if (player.loaded ) {
+            player.start();
+          }
+          setTimeout(() => {
+            setIsAdvance(true); // Set to advance
+            playNote(currentNote); // Play the note
+          }, 1000); // Adjust delay as needed
+        }, (60 / bpm) * 2000);
+        return () => clearTimeout(timer);
+      }
+      else{
+        const timer = setTimeout(() => {
+          if (player.loaded ) {
+            player.start();
+          }
           setIsAdvance(true); // Set to advance
-          playNote(currentNote); // Play the note
-        }, 1000); // Adjust delay as needed
-      }, (60/bpm)*2000);
-      return () => clearTimeout(timer);
+        }, (60 / bpm) * 2000);
+        return () => clearTimeout(timer);
+        }
+      }
     }
-  }, [isAdvance, gameStarted, isHandfree]);
+  , [isAdvance, gameStarted, isHandfree]);
 
   const startGame = () => {
     Tone.getTransport().stop();
@@ -117,7 +141,7 @@ const useDegreeTrainer = (settings) => {
     if (!note) {
       note = currentNote;
     }
-    playNotes(note,delay ,bpm)
+    playNotes(note, delay, bpm)
   };
 
   const generateRandomNoteBasedOnRoot = () => {
@@ -134,7 +158,9 @@ const useDegreeTrainer = (settings) => {
     if (isCorrect) {
       setDisabledNotes([]);
       updatePracticeRecords(guessedDegree, isCorrect);
-      playNote(currentNote);
+      if(repeatWhenAdvance){
+        playNote(currentNote);
+      }
       setIsAdvance(true);
     } else {
       if (!disabledNotes.includes(guessedNote)) {
@@ -146,10 +172,10 @@ const useDegreeTrainer = (settings) => {
     setActiveNote(null);
   };
 
-  
+
 
   const calculateDegree = (guessedNoteMidi) => {
-    const interval = ((guessedNoteMidi - rootNote)%12+12) % 12;
+    const interval = ((guessedNoteMidi - rootNote) % 12 + 12) % 12;
     return degrees.find(degree => degree.distance === interval)?.name || "Unknown";
   };
   const isCorrect = (guessedNote) => {
