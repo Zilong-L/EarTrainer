@@ -39,7 +39,7 @@ const keyMap = {
     {
       level: 2,
       degrees: [true, false, false, false, false, false, false, true, false, false, false, true], // 1 5 7
-      unlocked: true,
+      unlocked: false,
       best: 0,
       notes: "1 5 7",
     },
