@@ -3,7 +3,9 @@
     "intro": {
       "welcomeMessage": "Welcome to the Degree Trainer",
       "introDescription": "You will hear a low tone as the root note, followed by another note. You need to select the corresponding degree based on what you hear. In the settings at the top right corner, you can adjust the volume and practice content.",
-      "startPractice": "Start Practice"
+      "startPractice": "Start Practice",
+      "challengeMode": "Challenge Mode",
+      "freeMode": "Free Training"
     },
     "home":{
       "totalAttempts": "Total Attempts: ",

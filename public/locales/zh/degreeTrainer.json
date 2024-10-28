@@ -3,7 +3,9 @@
   "intro": {
     "welcomeMessage": "欢迎使用音程训练",
     "introDescription": "您将会听到一个低音作为主音，随后会播放另一个音符。您需要根据听到的音符选择相应的音程级数。在右上角的设置中，您可以调节音量和练习内容。",
-    "startPractice": "开始练习"
+    "startPractice": "开始练习",
+    "challengeMode": "闯关模式",
+    "freeMode": "自由训练"
   },
   "home":{
       "totalAttempts": "总尝试：",

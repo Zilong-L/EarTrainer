@@ -28,5 +28,151 @@ const keyMap = {
     { name: "VIIb", distance: 10, enable: false },
     { name: "VII", distance: 11, enable: false },
   ];
+  const initialUserProgress = [
+    {
+      level: 1,
+      degrees: [true, false, false, false, false, false, false, false, false, false, false, true], // 1 7
+      unlocked: true,
+      best: 0,
+      notes: "1 7",
+    },
+    {
+      level: 2,
+      degrees: [true, false, false, false, false, false, false, true, false, false, false, true], // 1 5 7
+      unlocked: true,
+      best: 0,
+      notes: "1 5 7",
+    },
+    {
+      level: 3,
+      degrees: [true, false, false, false, true, false, false, true, false, false, false, true], // 1 3 5 7
+      unlocked: false,
+      best: 0,
+      notes: "1 3 5 7",
+    },
+    {
+      level: 4,
+      degrees: [true, false, true, false, true, false, false, true, false, false, false, true], // 1 2 3 5 7
+      unlocked: false,
+      best: 0,
+      notes: "1 2 3 5 7",
+    },
+    {
+      level: 5,
+      degrees: [true, false, true, false, true, false, false, true, false, true, false, true], // Corrected: 1 2 3 5 6 7
+      unlocked: false,
+      best: 0,
+      notes: "1 2 3 5 6 7",
+    },
+    {
+      level: 6,
+      degrees: [true, false, true, false, true, true, false, true, false, true, false, true], // Corrected: 1 2 3 4 5 6 7
+      unlocked: false,
+      best: 0,
+      notes: "1 2 3 4 5 6 7",
+    },
+    {
+      level: 7,
+      degrees: [true, false, true, false, true, true, true, true, false, true, false, true], // Corrected: 1 2 3 4 #4 5 6 7
+      unlocked: false,
+      best: 0,
+      notes: "1 2 3 4 #4 5 6 7",
+    },
+    {
+      level: 8,
+      degrees: [true, false, true, true, false, false, false, false, false, false, false, false], // 1 2 b3
+      unlocked: false,
+      best: 0,
+      notes: "1 2 b3",
+    },
+    {
+      level: 9,
+      degrees: [true, false, true, true, false, false, false, true, false, false, false, false], // Corrected: 1 2 b3 5
+      unlocked: false,
+      best: 0,
+      notes: "1 2 b3 5",
+    },
+    {
+      level: 10,
+      degrees: [true, false, true, true, false, false, false, true, true, false, false, false], // Corrected: 1 2 b3 5 b6
+      unlocked: false,
+      best: 0,
+      notes: "1 2 b3 5 b6",
+    },
+    {
+      level: 11,
+      degrees: [true, false, true, true, false, false, false, true, true, false, true, false], // Corrected: 1 2 b3 5 b6 b7
+      unlocked: false,
+      best: 0,
+      notes: "1 2 b3 5 b6 b7",
+    },
+    {
+      level: 12,
+      degrees: [true, false, true, true, false, true, false, true, true, false, true, false], // Corrected: 1 2 b3 4 5 b6 b7
+      unlocked: false,
+      best: 0,
+      notes: "1 2 b3 4 5 b6 b7",
+    },
+    {
+      level: 13,
+      degrees: [true, true, true, true, false, true, false, true, true, false, true, false], // Corrected: 1 b2 2 b3 4 5 b6 b7
+      unlocked: false,
+      best: 0,
+      notes: "1 b2 2 b3 4 5 b6 b7",
+    },
+    {
+      level: 14,
+      degrees: [true, false, false, false, false, true, false, true, false, false, false, true], // Corrected: 1 4 5 7
+      unlocked: false,
+      best: 0,
+      notes: "1 4 5 7",
+    },
+    {
+      level: 15,
+      degrees: [true, false, false, false, false, true, false, true, false, false, true, true], // Corrected: 1 4 5 b7 7
+      unlocked: false,
+      best: 0,
+      notes: "1 4 5 b7 7",
+    },
+    {
+      level: 16,
+      degrees: [true, false, false, true, true, true, false, true, false, false, true, true], // Corrected: 1 b3 3 4 5 b7 7
+      unlocked: false,
+      best: 0,
+      notes: "1 b3 3 4 5 b7 7",
+    },
+    {
+      level: 17,
+      degrees: [true, true, true, true, true, true, false, true, false, false, true, true], // Corrected: 1 b2 2 b3 3 4 5 b7 7
+      unlocked: false,
+      best: 0,
+      notes: "1 b2 2 b3 3 4 5 b7 7",
+    },
+    {
+      level: 18,
+      degrees: [true, true, true, true, true, true, true, true, false, false, true, true], // Corrected: 1 b2 2 b3 3 4 #4 5 b7 7
+      unlocked: false,
+      best: 0,
+      notes: "1 b2 2 b3 3 4 #4 5 b7 7",
+    },
+    {
+      level: 19,
+      degrees: [true, true, true, true, true, true, true, true, false, false, true, true], // Corrected: 1 b2 2 b3 3 4 #4 b5 5 b7 7
+      unlocked: false,
+      best: 0,
+      notes: "1 b2 2 b3 3 4 #4/b5 5 b7 7",
+    },
+    {
+      level: 20,
+      degrees: [true, true, true, true, true, true, true, true, true, true, true, true], // Corrected: 1 b2 2 b3 3 4 #4 b5 5 b6 6 b7 7
+      unlocked: false,
+      best: 0,
+      notes: "1 b2 2 b3 3 4 #4 b5 5 b6 6 b7 7",
+    },
+  ];
+  
+  
 
-export {apps, keyMap, degrees};
+  
+
+export {apps, keyMap, degrees,initialUserProgress};

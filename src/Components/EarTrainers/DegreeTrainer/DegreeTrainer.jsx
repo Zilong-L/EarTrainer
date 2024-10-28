@@ -36,6 +36,7 @@ const EarTrainer = () => {
     isStatOpen,
     rootNote,
     practiceRecords,
+    setMode,
     isHandfree,
     setIsHandfree,
   } = settings;
@@ -44,7 +45,8 @@ const EarTrainer = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isIntroOpen, setIsIntroOpen] = useState(true);
 
-  const handleIntroClose = () => {
+  const handleIntroClose = (mode) => {
+    setMode(mode);
     setIsIntroOpen(false);
     startGame();
   };

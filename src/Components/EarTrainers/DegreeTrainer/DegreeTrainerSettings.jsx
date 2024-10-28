@@ -14,7 +14,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-
+import LockIcon from '@mui/icons-material/Lock';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -24,10 +25,11 @@ ChartJS.register(
   Legend
 );
 
-function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, playNote}) {
+function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, playNote }) {
   const { t } = useTranslation('degreeTrainer');
   const {
     isStatOpen,
+    mode,
     setIsStatOpen,
     bpm,
     setBpm,
@@ -43,6 +45,9 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
     setCurrentNotes,
     practiceRecords,
     setPracticeRecords,
+    currentLevel,
+    setCurrentLevel,
+    userProgress,
     saveSettingsToLocalStorage
   } = settings;
   const [showDegreeSettings, setShowDegreeSettings] = useState(false);
@@ -129,12 +134,12 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
               >
                 {t('settings.PracticeSettings')}
               </Button>
-              <Button
+              {mode == 'free' && <Button
                 sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }}
                 onClick={() => setShowStatistics(true)}
               >
                 {t('settings.Statistics')}
-              </Button>
+              </Button>}
               <Button
                 sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left' }}
                 onClick={() => setShowVolumeSettings(true)}
@@ -192,7 +197,7 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
                 sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
               />
             </div>
-            <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
+            {mode == 'free' && <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
               <label style={{ fontSize: '1.1rem' }}>{t('settings.SelectDegrees')}</label>
               <Grid container spacing={1} sx={{ marginTop: '4px', paddingLeft: 0 }}>
                 {currentNotes.map((note, index) => (
@@ -221,7 +226,38 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
                   </Grid>
                 ))}
               </Grid>
-            </div>
+            </div>}
+            {mode == 'challenge' && <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {userProgress.map((levelData, index) => (
+                <Button
+                  key={levelData.level}
+                  onClick={() => setCurrentLevel(userProgress[index])}
+                  disabled={!levelData.unlocked}
+                  variant="contained"
+                  sx={{
+                    justifyContent: 'space-between',
+                    backgroundColor: levelData.unlocked ? 'primary.main' : 'grey.500', // 解锁为主色，未解锁为灰色
+                    color: levelData.unlocked ? 'text.primary' : 'text.disabled',
+                    textTransform: 'none', // 保持按钮文本原样，不自动变大写
+                  }}
+                >
+                  {/* 关卡编号和音符 */}
+                  <Typography sx={{ fontWeight: 'bold' }}>
+                    {`Level ${levelData.level}: ${levelData.notes}`}
+                  </Typography>
+
+                  {/* 解锁或锁定图标 */}
+                  {levelData.unlocked ? (
+                    <LockOpenIcon />
+                  ) : (
+                    <LockIcon sx={{ color: 'text.disabled' }} />
+                  )}
+
+                  {/* 完成百分比 */}
+                  <Typography>{`${levelData.best}%`}</Typography>
+                </Button>
+              ))}
+            </Box>}
             <Button
               color='secondary'
               onClick={() => setShowDegreeSettings(false)}
@@ -283,10 +319,10 @@ function DegreeTrainerSettings({settings, isSettingsOpen, setIsSettingsOpen, pla
                   borderRadius: 2,
                 }}
               >
-                <Typography id="delete-confirmation-title" variant="h6" component="h2" sx={{color:(theme)=>theme.palette.text.paper}}>
+                <Typography id="delete-confirmation-title" variant="h6" component="h2" sx={{ color: (theme) => theme.palette.text.paper }}>
                   {t('settings.ConfirmDelete')}
                 </Typography>
-                <Typography id="delete-confirmation-description" sx={{ mt: 2 ,color:(theme)=>theme.palette.text.paper}}>
+                <Typography id="delete-confirmation-description" sx={{ mt: 2, color: (theme) => theme.palette.text.paper }}>
                   {t('settings.DeleteConfirmation')}
                 </Typography>
                 <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
