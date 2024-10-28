@@ -93,7 +93,7 @@ const useDegreeTrainerSettings = () => {
     if(mode=='free'){
       return;
     }
-    if(Math.round(currentPracticeRecords.correct/currentPracticeRecords.total).toFixed(2)*100 >= 90 && currentPracticeRecords.total >= 30){
+    if(Math.round(currentPracticeRecords.correct/currentPracticeRecords.total.toFixed(2)*100) >= 90 && currentPracticeRecords.total >= 30){
       const nextLevel = currentLevel.level+1;
       if(userProgress[nextLevel-1].unlocked){
         return;
@@ -127,9 +127,9 @@ const useDegreeTrainerSettings = () => {
       
       // Set current practice record in state
       setCurrentPracticeRecords(updatedCurrentPracticeRecord);
-      if(updatedCurrentPracticeRecord.total >= 30 && Math.round(updatedCurrentPracticeRecord.correct/updatedCurrentPracticeRecord.total).toFixed(2)*100 > userProgress[currentLevel.level-1].best){
+      if(updatedCurrentPracticeRecord.total >= 30 && Math.round(updatedCurrentPracticeRecord.correct/updatedCurrentPracticeRecord.total.toFixed(2)*100) > userProgress[currentLevel.level-1].best){
         const newUserProgress = [...userProgress];
-        newUserProgress[currentLevel.level-1].best = Math.round(updatedCurrentPracticeRecord.correct/updatedCurrentPracticeRecord.total).toFixed(2)*100;
+        newUserProgress[currentLevel.level-1].best = Math.round(updatedCurrentPracticeRecord.correct/updatedCurrentPracticeRecord.total.toFixed(2)*100);
         setUserProgress(newUserProgress);
         saveSettingsToLocalStorage();
       }
