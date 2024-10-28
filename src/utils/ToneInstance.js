@@ -49,7 +49,7 @@ function getDroneInstance() {
     const octaveGain = new Tone.Gain(0.3);
 
     const reverb = new Tone.Reverb({
-      decay: 50,
+      decay: 1,
       preDelay: 0.01
     }).toDestination();
 

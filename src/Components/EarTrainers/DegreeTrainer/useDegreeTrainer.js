@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import {  getDroneInstance,playNotes } from '@utils/ToneInstance';
-
+import toast from 'react-hot-toast';
 const audioCache = {};
+
 
 const preloadAudio = (degree) => {
   if (!audioCache[degree]) {
@@ -23,6 +24,12 @@ const useDegreeTrainer = (settings) => {
     range,
     currentNotes,
     updatePracticeRecords,
+    currentPracticeRecords,
+    userProgress,
+    setUserProgress,
+    mode,
+    currentLevel,
+    saveSettingsToLocalStorage
   } = settings;
 
   const [currentNote, setCurrentNote] = useState("");
@@ -61,10 +68,10 @@ const useDegreeTrainer = (settings) => {
   }, [rootNote, range, filteredNotes]);
 
   useEffect(() => {
-    if (activeNote) {
+    if (activeNote && !isAdvance) {
       handleNoteGuess(activeNote);
     }
-  }, [activeNote]);
+  }, [activeNote,isAdvance]);
 
   useEffect(() => {
     if (isAdvance) {
@@ -74,7 +81,6 @@ const useDegreeTrainer = (settings) => {
         playNote(nextNote);
         setIsAdvance(false);
       }, (60/bpm)*2000);
-      Audio
       return () => clearTimeout(timer);
     } else if (isHandfree && gameStarted) {
       const degree = calculateDegree(Tone.Frequency(currentNote).toMidi());
@@ -104,6 +110,7 @@ const useDegreeTrainer = (settings) => {
     playNote(note, 1);
     drone.start();
     Tone.getTransport().start();
+    console.log('game started, sound played')
   };
 
   const playNote = (note = null, delay = 0.05) => {
@@ -138,6 +145,8 @@ const useDegreeTrainer = (settings) => {
     }
     setActiveNote(null);
   };
+
+  
 
   const calculateDegree = (guessedNoteMidi) => {
     const interval = ((guessedNoteMidi - rootNote)%12+12) % 12;

@@ -33,7 +33,7 @@ const IntroModal = ({ isOpen, handleClose }) => {
           {t('intro.welcomeMessage')}
         </Typography>
         <Typography id="intro-modal-description" sx={{ mt: 2, color: (theme) => theme.palette.text.paper }}>
-          {t('intro.introDescription')}
+          {mode=='free'?t('intro.introDescription'):t('intro.challengeIntroDescription')}
         </Typography>
 
         {/* 模式选择按钮 */}

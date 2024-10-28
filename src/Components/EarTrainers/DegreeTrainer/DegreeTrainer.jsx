@@ -12,6 +12,7 @@ import useDegreeTrainer from '@components/EarTrainers/DegreeTrainer/useDegreeTra
 import useDegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/useDegreeTrainerSettings';
 import { apps, keyMap, degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { useTranslation } from 'react-i18next';
+import {Toaster} from 'react-hot-toast';
 
 import * as Tone from 'tone';
 
@@ -36,9 +37,12 @@ const EarTrainer = () => {
     isStatOpen,
     rootNote,
     practiceRecords,
+    currentPracticeRecords,
     setMode,
     isHandfree,
     setIsHandfree,
+    mode,
+    currentLevel
   } = settings;
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -48,7 +52,14 @@ const EarTrainer = () => {
   const handleIntroClose = (mode) => {
     setMode(mode);
     setIsIntroOpen(false);
-    startGame();
+    if (mode == 'challenge') {
+      setTimeout(() => {
+        startGame();
+
+      }, 200);
+    } else {
+      startGame();
+    }
   };
   useEffect(() => {
     return () => {
@@ -130,18 +141,12 @@ const EarTrainer = () => {
     }
   }, []);
   const renderRecords = () => {
-    const totalResults = Object.values(practiceRecords).reduce(
-      (acc, record) => {
-        acc.total += record.total;
-        acc.correct += record.correct;
-        return acc;
-      },
-      { total: 0, correct: 0 }
-    );
+    const totalResults = currentPracticeRecords
 
     return (
       <>
-        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.totalAttempts')} {totalResults.total}</Typography>
+        {mode == 'challenge' && <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.level')}: {currentLevel.level}</Typography>}
+        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.totalAttempts')} {totalResults.total}{mode=='challenge'&&' / 30'}</Typography>
         <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.correctCount')} {totalResults.correct}</Typography>
         <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>
           {t('home.accuracyRate')} {totalResults.total > 0 ? Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) + '%' : '0%'}
@@ -160,7 +165,7 @@ const EarTrainer = () => {
               {t('home.title')}
             </Link>
           </Typography>
-          <Tooltip title={isHandfree?t('buttons.handfreeOff'):t('buttons.handfreeOn')}>
+          <Tooltip title={isHandfree ? t('buttons.handfreeOff') : t('buttons.handfreeOn')}>
             <ToggleButton
               value="check"
               selected={isHandfree}
@@ -299,6 +304,7 @@ const EarTrainer = () => {
           )}
         </Container>
       </Paper>
+      <Toaster />
     </>
   );
 };

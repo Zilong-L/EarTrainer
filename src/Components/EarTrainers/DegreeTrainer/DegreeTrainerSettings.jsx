@@ -45,7 +45,7 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
     setCurrentNotes,
     practiceRecords,
     setPracticeRecords,
-    currentLevel,
+    setCurrentPracticeRecords,
     setCurrentLevel,
     userProgress,
     saveSettingsToLocalStorage
@@ -102,7 +102,10 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
     setIsDeleteConfirmOpen(false);
   };
 
-
+  const updateLevel = (index) => {
+    setCurrentLevel(userProgress[index]);
+    setCurrentPracticeRecords({ total: 0, correct: 0 });
+  }
 
 
   return (
@@ -134,12 +137,12 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
               >
                 {t('settings.PracticeSettings')}
               </Button>
-              {mode == 'free' && <Button
+              <Button
                 sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left', marginBottom: '1rem' }}
                 onClick={() => setShowStatistics(true)}
               >
                 {t('settings.Statistics')}
-              </Button>}
+              </Button>
               <Button
                 sx={{ color: 'text.primary', display: 'block', fontSize: '1.5rem', width: '100%', textAlign: 'left' }}
                 onClick={() => setShowVolumeSettings(true)}
@@ -227,37 +230,39 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
                 ))}
               </Grid>
             </div>}
-            {mode == 'challenge' && <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              {userProgress.map((levelData, index) => (
-                <Button
-                  key={levelData.level}
-                  onClick={() => setCurrentLevel(userProgress[index])}
-                  disabled={!levelData.unlocked}
-                  variant="contained"
-                  sx={{
-                    justifyContent: 'space-between',
-                    backgroundColor: levelData.unlocked ? 'primary.main' : 'grey.500', // 解锁为主色，未解锁为灰色
-                    color: levelData.unlocked ? 'text.primary' : 'text.disabled',
-                    textTransform: 'none', // 保持按钮文本原样，不自动变大写
-                  }}
-                >
-                  {/* 关卡编号和音符 */}
-                  <Typography sx={{ fontWeight: 'bold' }}>
-                    {`Level ${levelData.level}: ${levelData.notes}`}
-                  </Typography>
+            {mode == 'challenge' && (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                {userProgress.map((levelData, index) => (
+                  <Button
+                    key={levelData.level}
+                    onClick={() => updateLevel(index)}
+                    disabled={!levelData.unlocked}
+                    variant="contained"
+                    sx={{
+                      justifyContent: 'space-between',
+                      backgroundColor: levelData.unlocked ? 'primary.main' : 'grey.500', // 解锁为主色，未解锁为灰色
+                      color: levelData.unlocked ? 'text.primary' : 'text.disabled',
+                      textTransform: 'none', // 保持按钮文本原样，不自动变大写
+                    }}
+                  >
+                    {/* 关卡编号和音符 */}
+                    <Typography sx={{ fontWeight: 'bold' }}>
+                      {`Level ${levelData.level}: ${levelData.notes}`}
+                    </Typography>
 
-                  {/* 解锁或锁定图标 */}
-                  {levelData.unlocked ? (
-                    <LockOpenIcon />
-                  ) : (
-                    <LockIcon sx={{ color: 'text.disabled' }} />
-                  )}
+                    {/* 根据解锁状态显示不同的内容 */}
+                    {levelData.unlocked ? (
+                      // 仅展示百分比，不再展示LockOpenIcon
+                      <Typography>{`${levelData.best}%`}</Typography>
+                    ) : (
+                      // 未解锁的关卡，展示锁图标代替百分比
+                      <LockIcon sx={{ color: 'text.disabled' }} />
+                    )}
+                  </Button>
+                ))}
+              </Box>
+            )}
 
-                  {/* 完成百分比 */}
-                  <Typography>{`${levelData.best}%`}</Typography>
-                </Button>
-              ))}
-            </Box>}
             <Button
               color='secondary'
               onClick={() => setShowDegreeSettings(false)}
