@@ -61,7 +61,7 @@ const useDegreeTrainerSettings = () => {
         best: 0,
         notes: "1 7",
       });
-      setRepeatWhenAdvance(storedSettings.repeatWhenAdvance || true);
+      setRepeatWhenAdvance(storedSettings.repeatWhenAdvance);
     }
   }, []);
   function setCurrentNotesBasedOnBooleanArray(boolArray) {
