@@ -25,7 +25,8 @@
       "handfreeOn": "Turn on Handfree Mode",
       "handfreeOff": "Turn off Handfree Mode",
       "earTrainer": "Ear Trainer",
-      "chordTrainer": "Chord Trainer"
+      "chordTrainer": "Chord Trainer",
+      "feedback":"💬 Feedback"
     },
     "settings": {
       "Settings": "Settings",

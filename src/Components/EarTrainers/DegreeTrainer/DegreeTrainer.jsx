@@ -12,7 +12,7 @@ import useDegreeTrainer from '@components/EarTrainers/DegreeTrainer/useDegreeTra
 import useDegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/useDegreeTrainerSettings';
 import { apps, keyMap, degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { useTranslation } from 'react-i18next';
-import {Toaster} from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 import * as Tone from 'tone';
 
@@ -146,7 +146,7 @@ const EarTrainer = () => {
     return (
       <>
         {mode == 'challenge' && <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.level')}: {currentLevel.level}</Typography>}
-        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.totalAttempts')} {totalResults.total}{mode=='challenge'&&' / 30'}</Typography>
+        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.totalAttempts')} {totalResults.total}{mode == 'challenge' && ' / 30'}</Typography>
         <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.correctCount')} {totalResults.correct}</Typography>
         <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>
           {t('home.accuracyRate')} {totalResults.total > 0 ? Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) + '%' : '0%'}
@@ -188,20 +188,34 @@ const EarTrainer = () => {
               onClick={() => setIsSettingsOpen(!isSettingsOpen)}
               variant="contained"
               color="primary"
-              sx={{ boxShadow: 'none' }}
+              sx={{ boxShadow: 'none', marginRight: '0.5rem' }}
             >
               <SettingsIcon />
             </Button>
           </Tooltip>
-          <Button
+          {/* <Button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             variant="contained"
             color="primary"
             sx={{ boxShadow: 'none', '@media (min-width:600px)': { display: 'none' } }}
           >
             <MenuIcon />
-          </Button>
-          {apps.map((item) => (
+          </Button> */}
+          <a
+            href="https://www.wjx.cn/vm/r5XqRnO.aspx"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none', '@media (min-width:600px)': { display: 'none' } }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ boxShadow: 'none',    borderWidth: '1 px',borderStyle: 'solid',borderColor: 'currentColor'}}
+            >
+              {t('buttons.feedback')}
+            </Button>
+          </a>
+          {/* {apps.map((item) => (
             <Button
               variant="contained"
               key={item.name}
@@ -214,7 +228,7 @@ const EarTrainer = () => {
             >
               {t(`buttons.${item.name}`)}
             </Button>
-          ))}
+          ))} */}
         </Toolbar>
       </AppBar>
       <Paper sx={{ borderRadius: 0 }}>
