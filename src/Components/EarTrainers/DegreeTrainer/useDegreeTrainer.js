@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance, playNotes } from '@utils/ToneInstance';
-import toast from 'react-hot-toast';
 const audioCache = {};
 
 
@@ -123,19 +122,26 @@ const useDegreeTrainer = (settings) => {
     }
   , [isAdvance, gameStarted, isHandfree]);
 
-  const startGame = () => {
-    Tone.getTransport().stop();
-    Tone.getTransport().position = 0;
-    Tone.getTransport().cancel();
-    setGameStarted(true);
-    setDisabledNotes([]);
-    const note = generateRandomNoteBasedOnRoot();
-    setCurrentNote(note);
-    playNote(note, 1);
-    drone.start();
-    Tone.getTransport().start();
-    console.log('game started, sound played')
-  };
+    useEffect(() => {
+      if(gameStarted){
+        Tone.getTransport().stop();
+        Tone.getTransport().position = 0;
+        Tone.getTransport().cancel();
+        setDisabledNotes([]);
+        const note = generateRandomNoteBasedOnRoot();
+        setCurrentNote(note);
+        playNote(note, 1);
+        drone.start();
+        Tone.getTransport().start();
+        console.log('game started, sound played')
+      }
+    }
+    , [gameStarted]);
+
+    const startGame = () => {
+
+      setGameStarted(true);
+    };
 
   const playNote = (note = null, delay = 0.05) => {
     if (!note) {

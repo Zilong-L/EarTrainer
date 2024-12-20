@@ -205,7 +205,7 @@ const EarTrainer = () => {
             href="https://www.wjx.cn/vm/r5XqRnO.aspx"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ textDecoration: 'none', '@media (min-width:600px)': { display: 'none' } }}
+            style={{ textDecoration: 'none', '@media (minWidth:600px)': { display: 'none' } }}
           >
             <Button
               variant="contained"
