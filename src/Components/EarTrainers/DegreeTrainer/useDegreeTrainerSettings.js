@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { degrees,initialUserProgress } from '@components/EarTrainers/DegreeTrainer/Constants';
 
-import {getDroneInstance,getPianoInstance,} from '@utils/ToneInstance';
+import {getDroneInstance,getSamplerInstance,} from '@utils/ToneInstance';
 import toast from 'react-hot-toast';
 const useDegreeTrainerSettings = () => {
   const [mode, setMode] = useState('free'); // 
   const [currentLevel , setCurrentLevel ] = useState(initialUserProgress[0]);
   const [bpm, setBpm] = useState(40);
   const [droneVolume, setDroneVolume] = useState(0.3);
+  const [selectedInstrument, setSelectedInstrument] = useState('bass-electric'); 
   const [pianoVolume, setPianoVolume] = useState(1.0);
   const [rootNote, setRootNote] = useState(Tone.Frequency('C3').toMidi());
   const [range, setRange] = useState([Tone.Frequency('C3').toMidi(), Tone.Frequency('C4').toMidi()]);
@@ -21,7 +22,7 @@ const useDegreeTrainerSettings = () => {
   const [repeatWhenAdvance, setRepeatWhenAdvance] = useState(true);
   const drone = getDroneInstance();
 
-  const piano = getPianoInstance();
+  const piano = getSamplerInstance();
   useEffect(() => {
     const storedRecords = JSON.parse(localStorage.getItem('degreeTrainerRecords')) || {};
     setPracticeRecords(storedRecords);
@@ -171,7 +172,9 @@ const useDegreeTrainerSettings = () => {
     setCurrentNotes,
     setIsHandfree,
     saveSettingsToLocalStorage,
-    setIsStatOpen
+    setIsStatOpen,
+    selectedInstrument,
+    setSelectedInstrument
   };
 };
 

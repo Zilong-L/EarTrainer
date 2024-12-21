@@ -6,7 +6,7 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from '@components/Sidebar';
-import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/DegreeTrainerSettings';
+import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/Settings';
 import IntroModal from '@components/EarTrainers/DegreeTrainer/DegreeTrainerIntro';
 import useDegreeTrainer from '@components/EarTrainers/DegreeTrainer/useDegreeTrainer';
 import useDegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/useDegreeTrainerSettings';

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { defaultDegreeChordTypes,VoicingDictionary } from '@components/EarTrainers/ChordColorTrainer/Constants';
-import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
+import { getSamplerInstance, getDroneInstance } from '@utils/ToneInstance';
 import {Progression,Chord,Voicing,Interval,Note } from 'tonal';
 import {playNotesTogether,playNotes} from '@utils/ToneInstance'
 const useChordColorTrainer = (settings) => {
@@ -22,7 +22,7 @@ const useChordColorTrainer = (settings) => {
   const [activeChord, setActiveChord] = useState('');
   const [isAdvance, setIsAdvance] = useState(false);
 
-  const piano = getPianoInstance();
+  const piano = getSamplerInstance();
   const drone = getDroneInstance();
 
   useEffect(() => {

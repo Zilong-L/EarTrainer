@@ -1,29 +1,58 @@
 // toneInstance.js
 import { note } from 'tonal';
+import {SampleLibrary} from '@utils/SampleLibrary'; 
 import * as Tone from 'tone';
-let pianoSampler = null;
+let sampler = null;
 let droneInstance = null;
+let samplerChorus = new Tone.Chorus(4, 20, 1);
+let samplerGainNode = new Tone.Gain(0.5)
+let samplerReverb = new Tone.Reverb({
+  decay: 1,
+  preDelay: 0.3,
+  wet: 0.5
+}).toDestination();
 
-let pianoGainNode = null
-function getPianoGainNode() {
-  if (!pianoGainNode) {
-    pianoGainNode = new Tone.Gain(0.5).toDestination(); // Initialize with a default volume (0.5)
+
+function getSamplerInstance() {
+  if (!sampler) {
+    sampler = SampleLibrary.load({
+      instruments: 'piano', // Default instrument
+      baseUrl: '/samples/' // Adjust path to your samples directory
+    });
+    sampler.connect(samplerGainNode);
+    samplerGainNode.connect(samplerChorus);
+    samplerChorus.connect(samplerReverb);
   }
-  return pianoGainNode;
-}
-function getPianoInstance() {
-  
-  if (!pianoSampler) {
-    pianoSampler = new Tone.PolySynth()
-    pianoSampler.connect(getPianoGainNode());
-  }
+
   function setVolume(value) {
     const clampedValue = Math.min(1, Math.max(0, value)); // Clamp between 0 and 1
-    getPianoGainNode().gain.value = clampedValue; // Map to 0-0
+    samplerGainNode.gain.value = clampedValue;
   }
+
+  async function changeSampler(instrumentName) {
+    // Load the new instrument
+    const newSampler = SampleLibrary.load({
+      instruments: instrumentName,
+      baseUrl: '/samples/' // Adjust path to your samples directory
+    });
+
+    // Wait for the new instrument samples to load
+    await Tone.loaded();
+
+    // Disconnect the old sampler and connect the new one
+    sampler.disconnect();
+    newSampler.connect(samplerGainNode);
+    sampler.dispose();
+
+    // Replace the current sampler with the new one
+    sampler = newSampler;
+    console.log(`Sampler changed to: ${instrumentName}`);
+  }
+
   return {
-    sampler: pianoSampler,
-    setVolume
+    sampler: sampler,
+    setVolume,
+    changeSampler
   };
 }
 
@@ -141,7 +170,7 @@ function playNotes(input, delay = 0.05, bpm = 60) {
     activeTransport.cancel();
   }
 
-  const pianoInstance = getPianoInstance();
+  const pianoInstance = getSamplerInstance();
   const { sampler } = pianoInstance;
 
   // 处理 MIDI 输入和音符字符串输入
@@ -172,7 +201,7 @@ function playNotesTogether(input, delay = 10, bpm = 60) {
     activeTransport.cancel();
   }
 
-  const pianoInstance = getPianoInstance();
+  const pianoInstance = getSamplerInstance();
   const { sampler } = pianoInstance;
 
   // 处理 MIDI 输入和音符字符串输入
@@ -206,4 +235,4 @@ function cancelAllSounds() {
   }
 }
 
-export { getPianoInstance, getDroneInstance, playNotes, cancelAllSounds,playNotesTogether };
+export { getSamplerInstance, getDroneInstance, playNotes, cancelAllSounds,playNotesTogether };

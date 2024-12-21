@@ -41,6 +41,29 @@
     "SelectDegrees": "选择练习级数",
     "DroneVolume": "主音音量",
     "PianoVolume": "钢琴音量",
-    "Home": "主页"
-  }
+    "Home": "主页",
+    "SoundSettings": "音色设置",
+    "instruments": {
+      "bass-electric": "电贝斯",
+      "bassoon": "巴松管",
+      "cello": "大提琴",
+      "clarinet": "单簧管",
+      "contrabass": "低音提琴",
+      "flute": "长笛",
+      "french-horn": "圆号",
+      "guitar-acoustic": "原声吉他",
+      "guitar-electric": "电吉他",
+      "guitar-nylon": "尼龙弦吉他",
+      "harmonium": "手风琴",
+      "harp": "竖琴",
+      "organ": "风琴",
+      "piano": "钢琴",
+      "saxophone": "萨克斯",
+      "trombone": "长号",
+      "trumpet": "小号",
+      "tuba": "大号",
+      "violin": "小提琴",
+      "xylophone": "木琴"
+    }
+  } 
 }

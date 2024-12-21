@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Midi, Note } from "tonal";
-import { getPianoInstance } from '@utils/ToneInstance';
+import { getSamplerInstance } from '@utils/ToneInstance';
 import { Typography, Box } from "@mui/material";
 import { detect } from "@tonaljs/chord-detect";
 let notes = [];
@@ -11,7 +11,7 @@ const MIDIInputHandler = ({ chord, setChord }) => {
   const [activeNotes, setActiveNotes] = useState([]);
   const midiMessageHandler = (message) => {
     const [command, note, velocity] = message.data;
-    const pianoSampler = getPianoInstance().sampler;
+    const pianoSampler = getSamplerInstance().sampler;
     console.log(note)
     if (command === 144 && velocity > 0) {
       // Note on

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/SequenceTrainer/Constants';
-import { getPianoInstance, getDroneInstance } from '@utils/ToneInstance';
+import { getSamplerInstance, getDroneInstance } from '@utils/ToneInstance';
 import { playNotes, cancelAllSounds } from '@utils/ToneInstance';
 
 const useSequenceTrainer = (settings) => {
@@ -24,7 +24,7 @@ const useSequenceTrainer = (settings) => {
   const [possibleMidiList, setPossibleMidiList] = useState([]);
   const [activeNote, setActiveNote] = useState(null);
 
-  const piano = getPianoInstance();
+  const piano = getSamplerInstance();
   const drone = getDroneInstance();
   const pianoSampler = piano.sampler;
 
