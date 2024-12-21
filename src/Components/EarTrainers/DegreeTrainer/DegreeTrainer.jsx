@@ -193,14 +193,7 @@ const EarTrainer = () => {
               <SettingsIcon />
             </Button>
           </Tooltip>
-          {/* <Button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            variant="contained"
-            color="primary"
-            sx={{ boxShadow: 'none', '@media (min-width:600px)': { display: 'none' } }}
-          >
-            <MenuIcon />
-          </Button> */}
+
           <a
             href="https://www.wjx.cn/vm/r5XqRnO.aspx"
             target="_blank"
@@ -210,11 +203,26 @@ const EarTrainer = () => {
             <Button
               variant="contained"
               color="primary"
-              sx={{ boxShadow: 'none',    borderWidth: '1 px',borderStyle: 'solid',borderColor: 'currentColor'}}
+              sx={{ boxShadow: 'none',  borderStyle: 'solid', borderColor: 'currentColor' }}
             >
               {t('buttons.feedback')}
             </Button>
           </a>
+          <a
+            href="https://blog.barnman.cc/music/degree-trainer-help"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none', '@media (minWidth:600px)': { display: 'none' } }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ boxShadow: 'none',  borderStyle: 'solid', borderColor: 'currentColor' }}
+            >
+              {t('buttons.help')}
+            </Button>
+          </a>
+
           {/* {apps.map((item) => (
             <Button
               variant="contained"
