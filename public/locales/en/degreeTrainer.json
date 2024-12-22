@@ -75,6 +75,7 @@
       "medium": "medium",
       "high": "high",
       "full": "lossless"
-    }
+    },
+    "qualityLabel": "Audio Quality"
   }
 }
