@@ -64,6 +64,12 @@
       "tuba": "大号",
       "violin": "小提琴",
       "xylophone": "木琴"
+    },
+    "quality":{
+      "low": "流畅",
+      "medium": "中等",
+      "high": "高质量",
+      "full": "无损"
     }
   } 
 }

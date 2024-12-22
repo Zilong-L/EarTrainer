@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CssBaseline, Container,  Paper, Box, Button,  Typography,AppBar,Toolbar,Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-import Sidebar from './Sidebar';
+import Sidebar from '@components/Sidebar';
 import RandomNote from './RandomNote';
 import MenuIcon from '@mui/icons-material/Menu';
 const apps = [{name: 'Ear Trainer', path: '/ear-trainer'}, {name: 'Chord Trainer', path: '/chord-trainer'}]

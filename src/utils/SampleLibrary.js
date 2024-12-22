@@ -29,100 +29,83 @@ var SampleLibrary = {
 
     load: function (arg) {
         var t, rt, i;
-        (arg) ? t = arg: t = {};
+        t = arg || {};
         t.instruments = t.instruments || this.list;
         t.baseUrl = t.baseUrl || this.baseUrl;
         t.onload = t.onload || this.onload;
-
-        // update extensions if arg given
+    
+        // Update extensions if arg given
         if (t.ext) {
-            if (t.ext != this.ext) {
-                this.setExt(t.ext)
+            if (t.ext !== this.ext) {
+                this.setExt(t.ext);
             }
-            t.ext = this.ext
+            t.ext = this.ext;
         }
-
+    
         rt = {};
-
-        // if an array of instruments is passed...
+    
+        // Function to determine minification factor based on quality
+        const getMinBy = (quality) => {
+            switch (quality) {
+                case 'low':
+                    return 6; // Use fewer samples
+                case 'medium':
+                    return 4; // Moderate number of samples
+                case 'high':
+                    return 2; // High-quality, more samples
+                case 'full':
+                default:
+                    return 1; // Load all samples
+            }
+        };
+    
+        const minifySamples = (samples, quality) => {
+            const minBy = getMinBy(quality);
+            // Create a new object with the filtered keys
+            const filteredSamples = Object.keys(samples)
+                .filter((_, index) => index % minBy === 0) // Keep only the required samples
+                .reduce((filtered, key) => {
+                    filtered[key] = samples[key]; // Add filtered keys to the new object
+                    return filtered;
+                }, {});
+        
+            return filteredSamples; // Return the filtered object
+        };
+        
+    
         if (Array.isArray(t.instruments)) {
             for (i = 0; i <= t.instruments.length - 1; i++) {
                 var newT = this[t.instruments[i]];
-                //Minimize the number of samples to load
-                if (this.minify === true || t.minify === true) {
-                    var minBy = 1;
-                    if (Object.keys(newT).length >= 17) {
-                        minBy = 2
-                    }
-                    if (Object.keys(newT).length >= 33) {
-                        minBy = 4
-                    }
-                    if (Object.keys(newT).length >= 49) {
-                        minBy = 6
-                    }
-
-                    var filtered = Object.keys(newT).filter(function (_, i) {
-                        return i % minBy != 0;
-                    })
-                    filtered.forEach(function (f) {
-                        delete newT[f]
-                    })
-
-                }
-
-
-
-
+                // Generate a filtered list of samples based on quality
+                const filteredSamples = t.quality ? minifySamples(newT, t.quality) : newT;
+    
                 rt[t.instruments[i]] = new Tone.Sampler(
-                    newT, {
+                    filteredSamples,
+                    {
                         baseUrl: t.baseUrl + t.instruments[i] + "/",
                         onload: t.onload
                     }
-
-                )
+                );
             }
-
-            return rt
-
-            // if a single instrument name is passed...
+    
+            return rt;
+    
+            // If a single instrument name is passed...
         } else {
-            newT = this[t.instruments];
-
-            //Minimize the number of samples to load
-            if (this.minify === true || t.minify === true) {
-                minBy = 1;
-                if (Object.keys(newT).length >= 17) {
-                    minBy = 2
-                }
-                if (Object.keys(newT).length >= 33) {
-                    minBy = 4
-                }
-                if (Object.keys(newT).length >= 49) {
-                    minBy = 6
-                }
-
-                filtered = Object.keys(newT).filter(function (_, i) {
-                    return i % minBy != 0;
-                })
-                filtered.forEach(function (f) {
-                    delete newT[f]
-                })
-            }
-
-
-
-
-            var s = new Tone.Sampler(
-                newT, {
+            var newT = this[t.instruments];
+            // Generate a filtered list of samples based on quality
+            const filteredSamples = t.quality ? minifySamples(newT, t.quality) : newT;
+    
+            return new Tone.Sampler(
+                filteredSamples,
+                {
                     baseUrl: t.baseUrl + t.instruments + "/",
                     onload: t.onload
                 }
-            )
-
-            return s
+            );
         }
-
     },
+    
 
     'bass-electric': {
         'A#1': 'As1.[mp3|ogg]',

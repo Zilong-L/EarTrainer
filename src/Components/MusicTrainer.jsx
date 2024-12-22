@@ -12,9 +12,9 @@ const trainers = [
   {name:'Chord Color',path:'/ear-trainer/chord-color-trainer'}
 ]
 
-const EarTrainer = () => {
+const MusicTrainer = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { t } = useTranslation('earTrainer'); // 加载 ear_trainer 命名空间
+  const { t } = useTranslation('musicTrainer'); // 加载 ear_trainer 命名空间
   return (
     <>
     <Paper sx={{borderRadius:0,height:'100vh'}}>
@@ -60,4 +60,4 @@ const EarTrainer = () => {
   );
 };
 
-export default EarTrainer;
+export default MusicTrainer;

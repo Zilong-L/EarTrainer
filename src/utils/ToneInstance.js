@@ -16,8 +16,9 @@ let samplerReverb = new Tone.Reverb({
 function getSamplerInstance() {
   if (!sampler) {
     sampler = SampleLibrary.load({
-      instruments: 'piano', // Default instrument
-      baseUrl: '/samples/' // Adjust path to your samples directory
+      instruments: 'bass-electric', // Default instrument
+      baseUrl: '/samples/', // Adjust path to your samples directory,
+      quality: 'medium'
     });
     sampler.connect(samplerGainNode);
     samplerGainNode.connect(samplerChorus);
@@ -29,11 +30,12 @@ function getSamplerInstance() {
     samplerGainNode.gain.value = clampedValue;
   }
 
-  async function changeSampler(instrumentName) {
+  async function changeSampler(instrumentName,quality='low') {
     // Load the new instrument
     const newSampler = SampleLibrary.load({
       instruments: instrumentName,
-      baseUrl: '/samples/' // Adjust path to your samples directory
+      baseUrl: '/samples/', // Adjust path to your samples directory
+      quality: quality
     });
 
     // Wait for the new instrument samples to load

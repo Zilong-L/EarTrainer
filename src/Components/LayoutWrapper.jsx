@@ -2,7 +2,7 @@ import React from 'react';
 import { CssBaseline, Box,  ThemeProvider, createTheme,Button } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import ChordTrainer from './ChordTrainer';
-import EarTrainer from './EarTrainer';
+import MusicTrainer from './MusicTrainer';
 import DegreeTrainer from '@EarTrainers/DegreeTrainer/DegreeTrainer'
 import SequenceTrainer from'@EarTrainers/SequenceTrainer/SequenceTrainer' // 新增的 Sequence Trainer
 import ChordColorTrainer from'@EarTrainers/ChordColorTrainer/ChordColorTrainer'
@@ -54,9 +54,9 @@ const ThemedContent = () => {
         <CssBaseline />
         
           <Routes>
-            <Route path="/" element={<EarTrainer />} />
+            <Route path="/" element={<MusicTrainer />} />
             <Route path="/chord-trainer" element={<ChordTrainer />} />
-            <Route path="/ear-trainer" element={<EarTrainer />} />
+            <Route path="/ear-trainer" element={<MusicTrainer />} />
             <Route path="/ear-trainer/degree-trainer" element={<DegreeTrainer />} />
             <Route path="/ear-trainer/chord-color-trainer" element={<ChordColorTrainer />} />
             <Route path="/ear-trainer/sequence-trainer" element={<SequenceTrainer />} /> {/* 新增的 Sequence Trainer 路由 */}
