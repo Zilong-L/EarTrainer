@@ -1,4 +1,4 @@
-export const settingsElementStyles = {
+const settingsElementStyles = {
   color: 'text.primary',
   display: 'block',
   fontSize: '1.1rem',
@@ -6,3 +6,5 @@ export const settingsElementStyles = {
   textAlign: 'left',
   padding: '16px 6px',
 };
+
+export { settingsElementStyles };

@@ -3,7 +3,7 @@ import { Box, Button, Typography, Modal } from '@mui/material';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import HomeIcon from '@mui/icons-material/Home';
-import settingsElementStyles from '@ui/Styles';
+import {settingsElementStyles} from '@ui/Styles';
 function Statistics({ settings, setCurrentPage }) {
   const { t } = useTranslation('degreeTrainer');
   const { practiceRecords, setPracticeRecords } = settings;

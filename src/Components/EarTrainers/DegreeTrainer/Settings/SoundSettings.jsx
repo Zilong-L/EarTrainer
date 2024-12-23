@@ -3,7 +3,7 @@ import { Grid, Box, Button, Typography, MenuItem, Select, FormControl, InputLabe
 import HomeIcon from '@mui/icons-material/Home';
 import { useTranslation } from 'react-i18next';
 import { getSamplerInstance } from '@utils/ToneInstance'; // Import the sampler instance manager
-import settingsElementStyles from '@ui/Styles'; // Import the styles for the settings elements
+import {settingsElementStyles} from '@ui/Styles'; // Import the styles for the settings elements
 const instrumentsList = [
   'bass-electric',
   'bassoon',
