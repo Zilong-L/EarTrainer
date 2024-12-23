@@ -14,7 +14,8 @@ export default defineConfig({
       "@utils": "/src/utils",
       "@assets": "/src/assets",
       "@themes": "/src/themes",
-      "@hooks": "/src/hooks"
+      "@hooks": "/src/hooks",
+      "@ui": "/src/Components/UI",
 
       // Add more aliases as needed
     },

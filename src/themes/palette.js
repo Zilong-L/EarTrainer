@@ -43,6 +43,7 @@ let earTrainerTheme = createTheme({
       secondary: '#aaaaaa', // Medium grey secondary text color
       disabled: '#BDBDBD', // Light grey disabled text color
       paper: '#634806',
+      modal: '#ffffff'
     },
     divider: '#E0E0E0', // Light grey divider color
     action: {

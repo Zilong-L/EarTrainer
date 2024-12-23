@@ -5,6 +5,7 @@ import VolumeSettings from './VolumeSettings';
 import Statistics from './Statistics';
 import SoundSettings from './SoundSettings'; // Import SoundSettings
 import { useTranslation } from 'react-i18next';
+import { settingsElementStyles } from '@ui/Styles';
 
 function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, playNote }) {
   const { t } = useTranslation('degreeTrainer');
@@ -29,69 +30,79 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
           maxWidth: 500,
           bgcolor: (theme) => theme.palette.background.modal,
           boxShadow: 24,
-          p: 4,
           borderRadius: 2,
           height: '80vh',
           overflowY: 'auto',
         }}
       >
-        <Typography variant="h4" sx={{ textAlign: 'center' }}>
-          {t('settings.Settings')}
-        </Typography>
+
         {currentPage === 'home' && (
-          <Container sx={{ marginTop: '3rem' }}>
-            <Button
+          <Box>
+            <Box
               sx={{
-                color: 'text.primary',
-                display: 'block',
-                fontSize: '1.5rem',
-                width: '100%',
-                textAlign: 'left',
-                marginBottom: '1rem',
+                position: 'sticky', // Keeps the banner fixed at the top during scrolling
+                top: 0,
+                left: 0,
+                width: '100%', // Full width of the screen
+                backdropFilter: 'blur(20px)', // Blur effect for the banner
+                zIndex: 1000, // Ensure it stays above other content
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center', // Center the text
+                padding: '16px 16px',
               }}
-              onClick={() => setCurrentPage('practice')}
             >
+              <Typography
+                variant="h4"
+                sx={{
+                  textAlign: 'center',
+                  fontSize: '1.3rem',
+                  height: '32px',
+                  display: 'flex', // Enable flexbox
+                  alignItems: 'center', // Center items vertically
+                  justifyContent: 'center', // Center items horizontally (optional for single-line text)
+                }}
+              >
+                {t('settings.Settings')}
+              </Typography>
+            </Box>
+            <Box sx={{padding: '22px 32px'}}>
+           
+            <Button
+            sx={settingsElementStyles}
+           
+              onClick={() => setCurrentPage('practice')}
+              >
               {t('settings.PracticeSettings')}
             </Button>
+           
+           
             <Button
-              sx={{
-                color: 'text.primary',
-                display: 'block',
-                fontSize: '1.5rem',
-                width: '100%',
-                textAlign: 'left',
-                marginBottom: '1rem',
-              }}
+            sx={settingsElementStyles}
               onClick={() => setCurrentPage('statistics')}
-            >
+              >
               {t('settings.Statistics')}
             </Button>
+           
+           
             <Button
-              sx={{
-                color: 'text.primary',
-                display: 'block',
-                fontSize: '1.5rem',
-                width: '100%',
-                textAlign: 'left',
-                marginBottom: '1rem',
-              }}
+            sx={settingsElementStyles}
               onClick={() => setCurrentPage('volume')}
-            >
+              >
               {t('settings.VolumeSettings')}
             </Button>
+           
+           
             <Button
-              sx={{
-                color: 'text.primary',
-                display: 'block',
-                fontSize: '1.5rem',
-                width: '100%',
-                textAlign: 'left',
-              }}
+            sx={settingsElementStyles}
               onClick={() => setCurrentPage('sound')}
-            >
+              >
               {t('settings.SoundSettings')}
             </Button>
-          </Container>
+           
+              </Box>
+      </Box>
+
         )}
         {currentPage === 'practice' && (
           <PracticeSettings settings={settings} setCurrentPage={setCurrentPage} />

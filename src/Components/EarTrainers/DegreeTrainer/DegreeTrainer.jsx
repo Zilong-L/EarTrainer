@@ -194,20 +194,7 @@ const EarTrainer = () => {
             </Button>
           </Tooltip>
 
-          <a
-            href="https://www.wjx.cn/vm/r5XqRnO.aspx"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: 'none', '@media (minWidth:600px)': { display: 'none' } }}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ boxShadow: 'none',  borderStyle: 'solid', borderColor: 'currentColor' }}
-            >
-              {t('buttons.feedback')}
-            </Button>
-          </a>
+          
           <a
             href="https://blog.barnman.cc/music/degree-trainer-help"
             target="_blank"
