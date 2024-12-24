@@ -1,0 +1,84 @@
+{
+  "settings": {
+    "home": "Home",
+    "SoundSettings": "Sound Settings",
+    "qualityLabel": "Select Quality",
+    "quality": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "full": "Full"
+    },"chordCategories": {
+    "Triads": "Triads",
+    "Sevenths": "Sevenths"
+  },
+  "diatonic": {
+      "title": "Diatonic Settings",
+      "rootNote": "Root Note",
+      "scaleType": "Scale Type",
+      "major": "Major",
+      "minor": "Minor",
+      "harmonicMinor": "Harmonic Minor",
+      "melodicMinor": "Melodic Minor",
+      "naturalMinor": "Natural Minor"
+    },
+  "title": "Settings",
+  "modes": {
+    "chordpractice": "Chord Practice",
+    "diatonic": "Diatonic",
+    "progression": "Progression",
+    "soundSettings": "Sound Settings"
+  },
+  "chords": {
+    "Major": "Major",
+    "Minor": "Minor",
+    "Diminished": "Diminished",
+    "Augmented": "Augmented",
+    "Major 7th": "Major 7th",
+    "Minor 7th": "Minor 7th",
+    "Dominant 7th": "Dominant 7th",
+    "Half Diminished 7th": "Half Diminished 7th",
+    "Diminished 7th": "Diminished 7th"
+  },
+    "instruments": {
+      "bass-electric": "Electric Bass",
+      "bassoon": "Bassoon",
+      "cello": "Cello",
+      "clarinet": "Clarinet",
+      "contrabass": "Contrabass",
+      "flute": "Flute",
+      "french-horn": "French Horn",
+      "guitar-acoustic": "Acoustic Guitar",
+      "guitar-electric": "Electric Guitar",
+      "guitar-nylon": "Nylon Guitar",
+      "harmonium": "Harmonium",
+      "harp": "Harp",
+      "organ": "Organ",
+      "piano": "Piano",
+      "saxophone": "Saxophone",
+      "trombone": "Trombone",
+      "trumpet": "Trumpet",
+      "tuba": "Tuba",
+      "violin": "Violin",
+      "xylophone": "Xylophone"
+    }
+  },
+  "chordGame": {
+    "chord": "Chord",
+    "notes": "Notes",
+    "midi": {
+      "noAccess": "MIDI Access Not Available",
+      "loaded": "MIDI loaded",
+      "connected": "Connected to MIDI",
+      "chordDetected": "Chord Detected"
+    }
+  },
+  "trainer": {
+    "title": "Chord Trainer",
+    "apps": {
+      "earTrainer": "Ear Trainer",
+      "chordTrainer": "Chord Trainer"
+    },
+    "settings": "Settings"
+  }
+}

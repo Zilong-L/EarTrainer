@@ -115,7 +115,7 @@ function SoundSettings({ settings, setCurrentPage, playNote }) {
       </FormControl>
 
       {/* Instrument Buttons */}
-      <Grid container spacing={2} sx={settingsElementStyles}>
+      <Grid container spacing={2} >
         {instrumentsList.map((instrument) => (
           <Grid item xs={6} key={instrument}>
             <Button

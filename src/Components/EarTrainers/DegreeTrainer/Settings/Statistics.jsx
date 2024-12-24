@@ -76,7 +76,7 @@ function Statistics({ settings, setCurrentPage }) {
       {/* Quality Selector */}
       <Box sx={{ padding: '22px 32px' }}>
         <Bar data={generateChartData()} />
-        <Box sx={...settingsElementStyles,{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Box sx={{ ...settingsElementStyles, display: 'flex', justifyContent: 'flex-end' }}>
           <Button
             color="secondary"
             variant="contained"

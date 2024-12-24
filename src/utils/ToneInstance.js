@@ -12,7 +12,7 @@ let samplerReverb = new Tone.Reverb({
   wet: 0.5
 }).toDestination();
 
-
+Tone.getContext().lookAhead = 0;
 function getSamplerInstance() {
   if (!sampler) {
     sampler = SampleLibrary.load({

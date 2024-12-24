@@ -57,6 +57,7 @@ let earTrainerTheme = createTheme({
 });
 const chordTrainerTheme = createTheme({
   ...base,
+
   palette: {
     primary: { main: '#3F51B5' }, // Primary color: Indigo
     secondary: { main: '#FF4081' }, // Secondary color: Pink
@@ -68,14 +69,33 @@ const chordTrainerTheme = createTheme({
       primary: '#FFFFFF', // White main text color
       secondary: '#BDBDBD', // Light grey secondary text color
       disabled: '#757575', // Medium grey disabled text color
+      selected: '#616161',
+      //dark for selected option
     },
     divider: '#BDBDBD', // Light grey divider color
     action: {
       active: '#FF4081', // Active icon color: Pink
-      hover: '#F8BBD0', // Light pink hover color
-      selected: '#F48FB1', // Light pink selected color
-      selectedHover: '#F06292', // Slightly darker pink for selected hover
+      hover: '#222222', // Light pink hover color
+      selected: '#222222', // Light pink selected color
+      selectedHover: '#222222', // Slightly darker pink for selected hover
       disabled: '#BDBDBD', // Light grey disabled color
+    },
+  },
+  components: {
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          '&.Mui-selected': {
+            backgroundColor: '#757575', // Custom background color for selected state
+            '&:hover': {
+              backgroundColor: '#757575', // Custom background color for hover state when selected
+            },
+          },
+          '&:hover': {
+            backgroundColor: '#757575', // Custom background color for hover state
+          },
+        },
+      },
     },
   },
 });

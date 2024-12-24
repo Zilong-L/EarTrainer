@@ -11,6 +11,7 @@ export default defineConfig({
     alias: {
       "@components": "/src/Components",
       "@EarTrainers": "/src/Components/EarTrainers",
+      "@ChordTrainer": "/src/Components/ChordTrainer",
       "@utils": "/src/utils",
       "@assets": "/src/assets",
       "@themes": "/src/themes",
