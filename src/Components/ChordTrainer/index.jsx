@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next'; // Translation hook
+import { Link } from 'react-router-dom';
 import {
   CssBaseline,
   Container,
@@ -9,15 +11,17 @@ import {
   AppBar,
   Toolbar,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
+
 import Sidebar from '@components/Sidebar'; // App-switching sidebar
 import ChordPracticeGame from '@ChordTrainer/ChordGames/ChordPracticeGame'; // Practice mode component
-import DiatonicGame from '@ChordTrainer/ChordGames//DiatonicGame'; // Diatonic mode component
+import DiatonicGame from '@ChordTrainer/ChordGames/DiatonicGame'; // Diatonic mode component
 // import ProgressionGame from './ProgressionGame'; // Progression mode component
-import MenuIcon from '@mui/icons-material/Menu';
 import Settings from './Settings'; // Settings modal
-import useChordGameSettings from '@ChordTrainer/ChordGames/useChordGameSettings';
-import { useTranslation } from 'react-i18next'; // Translation hook
+
+import useChordGameSettings from '@ChordTrainer/useChordGameSettings';
+import useChordPracticeGame from '@ChordTrainer/ChordGames/ChordPracticeGame/useChordPracticeGame';
+import useDiatonicGame from '@ChordTrainer/ChordGames/DiatonicGame/useDiatonicGame';
 
 const apps = [
   { name: 'earTrainer', path: '/ear-trainer' },
@@ -28,16 +32,20 @@ const ChordTrainer = () => {
   const { t } = useTranslation('chordGame'); // Translation namespace
   const [isAppSidebarOpen, setIsAppSidebarOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
-  const settings = useChordGameSettings();
-  const { mode } = settings; // Access the current mode from settings
+  
+  const globalSettings = useChordGameSettings();
+  const chordPracticeGameSettings = useChordPracticeGame();
+  const diatonicGameSettings = useDiatonicGame();
+  const settings = {globalSettings, chordPracticeGameSettings,diatonicGameSettings}
+  const { mode } = globalSettings; // Access the current mode from globalSettings
 
   const renderGameMode = () => {
     switch (mode) {
       case 'Chord Practice':
-        return <ChordPracticeGame settings={settings} />;
+        return <ChordPracticeGame chordPracticeGameSettings ={chordPracticeGameSettings } />;
       case 'Diatonic':
         {
-        return <DiatonicGame settings={settings} />;
+        return <DiatonicGame diatonicGameSettings={diatonicGameSettings} />;
         }
       case 'Progression':
         return <div>Progression Mode Coming Soon!</div>;

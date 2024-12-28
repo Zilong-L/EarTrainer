@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Midi, Note } from 'tonal';
+import React, { useEffect } from 'react';
+import { Note } from 'tonal';
 import { getSamplerInstance } from '@utils/ToneInstance';
 import { Typography, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { detect } from "@tonaljs/chord-detect";
 
-
-const MIDIInputHandler = ({ chord, setChord }) => {
+const MIDIInputHandler = ({ activeNotes, setActiveNotes,detectedChords }) => {
   const { t } = useTranslation('chordGame');
-  const [activeNotes, setActiveNotes] = useState([]);
   let sustainActive = false;
   let sustainedNotes = new Set();
   let pressingNotes = new Set();
@@ -43,6 +40,7 @@ const MIDIInputHandler = ({ chord, setChord }) => {
 
     setActiveNotes(Array.from(sustainedNotes).sort((a, b) => a - b));
   };
+
   useEffect(() => {
     let inputs = [];
     const setupMIDI = async () => {
@@ -57,9 +55,9 @@ const MIDIInputHandler = ({ chord, setChord }) => {
         input.onmidimessage = (message) => midiMessageHandler(message);
       }
     };
-  
+
     setupMIDI();
-  
+
     return () => {
       // Unsubscribe message handlers when component unmounts
       for (let input of inputs) {
@@ -67,22 +65,11 @@ const MIDIInputHandler = ({ chord, setChord }) => {
       }
     };
   }, []);
-  
-
-  useEffect(() => {
-    const notesString = activeNotes.map((note) => Midi.midiToNoteName(note));
-    const chordResult = detect(notesString, { assumePerfectFifth: true });
-    if (chordResult.length > 0) {
-      setChord(chordResult.join(', '));
-    } else {
-      setChord('');
-    }
-  }, [activeNotes]);
 
   return (
     <Box sx={{ width: '100%' }}>
       <Typography variant="h3" component="h3">
-        {t('chord')}: {chord}
+        {t('detectedChords')}: {detectedChords.join(', ')}
       </Typography>
       <Typography variant="h3" component="h3">
         {t('notes')}: {activeNotes.map((midi) => Note.fromMidi(midi)).join(', ')}

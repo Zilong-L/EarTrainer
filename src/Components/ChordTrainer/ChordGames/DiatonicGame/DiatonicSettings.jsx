@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next';
 
 const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
 
-const DiatonicSettings = ({settings}) => {
+const DiatonicSettings = ({diatonicGameSettings}) => {
   const { t } = useTranslation('chordGame');
-  const { rootNote, setRootNote, scaleType, setScaleType } = settings;
+  
+  const { rootNote, setRootNote, scaleType, setScaleType } = diatonicGameSettings;
   // Convert MIDI to flat notation
 
   const handleRootNoteChange = (event) => {

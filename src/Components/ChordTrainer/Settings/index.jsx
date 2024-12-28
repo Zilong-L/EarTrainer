@@ -14,12 +14,15 @@ import {
 import { Close } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import SoundSettings from './SoundSettings';
-import ChordPracticeSettings from './ChordPracticeSettings';
-import DiatonicSettings from './DiatonicSettings';
+import ChordPracticeSettings from '@ChordTrainer/ChordGames/ChordPracticeGame/ChordPracticeSettings';
+import DiatonicSettings from '@ChordTrainer/ChordGames/DiatonicGame/DiatonicSettings';
 
 const Settings = ({ isOpen, setIsOpen, settings }) => {
   const { t } = useTranslation('chordGame');
-  const { mode, setMode } = settings;
+  const globalSettings = settings.globalSettings;
+  const chordPracticeSettings = settings.chordPracticeGameSettings;
+  const diatonicGameSettings = settings.diatonicGameSettings;
+  const { mode, setMode } = globalSettings;
   const [currentSettings, setCurrentSettings] = useState('Chord Practice'); // Track the current settings page
 
   const listItemStyles = {
@@ -42,12 +45,10 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
 
   const renderModeContent = () => {
     if (currentSettings === 'Chord Practice') {
-      return <ChordPracticeSettings settings={settings} />;
+      return <ChordPracticeSettings chordPracticeSettings={chordPracticeSettings} />;
     } else if (currentSettings === 'Diatonic') {
       return (
-        <DiatonicSettings
-          settings={settings}
-        />
+        <DiatonicSettings diatonicGameSettings={diatonicGameSettings} />
       );
     } else if (currentSettings === 'Progression') {
       return (
@@ -72,8 +73,8 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
         },
       }}
     >
-      <DialogTitle>
-        <Typography variant="h6">{t('settings.title')}</Typography>
+      <DialogTitle >
+        <Typography >{t('settings.title')}</Typography>
         <IconButton
           onClick={() => setIsOpen(false)}
           sx={{ position: 'absolute', top: 8, right: 8 }}
