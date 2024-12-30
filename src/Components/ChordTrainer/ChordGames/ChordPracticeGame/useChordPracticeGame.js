@@ -39,14 +39,36 @@ const useChordPracticeGame = () => {
       detectedChordsForComparison = detectedChordsForComparison.map(ch => ch.split('/')[0]);
       targetChordForComparison = targetChord.split('/')[0];
     }
-    // Get all tonics of detected chords
-    const tonics = detectedChordsForComparison.map(ch => Chord.get(ch).tonic);
-    // Generate all enharmonics for each tonic
-    const enharmonicsList = tonics.map(t => Note.enharmonic(t));
-    const enharmonicsChords = enharmonicsList.map(e => Chord.getChord(chordType.toLocaleLowerCase(), e).symbol);
+    
+    console.log('Detected Chords:', detectedChordsForComparison);
+    console.log('Target Chord:', targetChordForComparison);
+
+    // Get all detected chords with their properties
+    const detectedChordObjects = detectedChordsForComparison.map(ch => Chord.get(ch));
+    // Generate all enharmonics while preserving the original chord type
+    const enharmonicsChords = detectedChordObjects.map(chord => {
+      const enharmonicTonic = Note.enharmonic(chord.tonic);
+      // Use the original chord type instead of current chordType
+      return Chord.getChord(chord.type, enharmonicTonic).symbol;
+    });
     const augmentedChords = [...detectedChordsForComparison, ...enharmonicsChords];
+    
+    console.log('Augmented Chords:', augmentedChords);
+
     // Check if any chord in the augmented list matches the target chord
-    if (augmentedChords.some(ch => Chord.get(ch)?.name === Chord.get(targetChordForComparison)?.name)) {
+    const isMatch = augmentedChords.some(ch => {
+      const match = Chord.get(ch)?.name === Chord.get(targetChordForComparison)?.name;
+      if (!match) {
+        console.log('Mismatch:', {
+          detected: Chord.get(ch),
+          target: Chord.get(targetChordForComparison)
+        });
+      }
+      return match;
+    });
+
+    if (isMatch) {
+      console.log('Match found! Getting next chord...');
       getNextChord();
     }
   }, [detectedChords]);
