@@ -2,6 +2,7 @@
 import { note } from 'tonal';
 import {SampleLibrary} from '@utils/SampleLibrary'; 
 import * as Tone from 'tone';
+import { Note } from 'tonal';
 let sampler = null;
 let droneInstance = null;
 let samplerChorus = new Tone.Chorus(4, 20, 1);
@@ -62,7 +63,6 @@ function getDroneInstance() {
   let masterGainNode = null;
   let rootMax = Tone.Frequency("C5").toMidi();
   let rootMin = Tone.Frequency("C2").toMidi();
-  
   if (!droneInstance) {
     const rootOscillator = new Tone.OmniOscillator("C2", "sine");
     const fifthOscillator = new Tone.OmniOscillator("G2", "sine");
@@ -137,13 +137,13 @@ function getDroneInstance() {
       masterGainNode.gain.value = clampedValue * 0.35;
     }
 
-    function updateRoot(rootMidiValue) {
-      if(rootMidiValue > rootMax || rootMidiValue < rootMin){
-        return;
+    function updateRoot(rootNote) {
+      //convert rootNote from midi to Note if it is midi 
+      if (typeof rootNote === "number") {
+        rootNote = Note.fromMidi(rootNote);
       }
-      const rootNote = Tone.Frequency(rootMidiValue, "midi").toNote();
-      const fifthNote = Tone.Frequency(rootMidiValue + 7, "midi").toNote();
-      const ocataveNote = Tone.Frequency(rootMidiValue + 12, "midi").toNote();
+      const fifthNote = Note.transpose(rootNote, "P5")
+      const ocataveNote = Note.transpose(rootNote, "P8")
       rootOscillator.frequency.value = rootNote;
       fifthOscillator.frequency.value = fifthNote;
       octaveOscillator.frequency.value = ocataveNote;
@@ -177,7 +177,6 @@ function playNotes(input, delay = 0.05, bpm = 60) {
 
   // 处理 MIDI 输入和音符字符串输入
   const notes = Array.isArray(input) ? input : [input];
-
   notes.forEach((note, index) => {
     activeTransport.schedule((time) => {
       if (sampler.name == "PolySynth"||sampler._buffers && sampler._buffers.loaded) {
