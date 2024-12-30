@@ -7,15 +7,14 @@ import SoundSettings from './SoundSettings'; // Import SoundSettings
 import { useTranslation } from 'react-i18next';
 import { settingsElementStyles } from '@ui/Styles';
 
-function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, playNote }) {
+function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, playNote,setGameState }) {
   const { t } = useTranslation('degreeTrainer');
   const [currentPage, setCurrentPage] = useState('home'); // Tracks which sub-page to display
 
   const closeSettings = () => {
     setIsSettingsOpen(false);
     setCurrentPage('home');
-    playNote();
-    settings.saveSettingsToLocalStorage(); // Save settings on close
+    setGameState('playing')
   };
 
   return (

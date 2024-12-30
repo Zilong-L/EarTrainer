@@ -1,0 +1,37 @@
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Modal open state - hide scrollbar and add padding */
+body.modal-open {
+  padding-right: 8px !important; /* Match scrollbar width */
+  overflow: hidden !important;
+}
+
+body.modal-open::-webkit-scrollbar {
+  display: none;
+}

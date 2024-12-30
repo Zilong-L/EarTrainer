@@ -15,19 +15,20 @@ const keyMap = {
     'g': 10
   };
   const degrees = [
-    { name: "I", distance: 0, enable: true },
-    { name: "IIb", distance: 1, enable: false },
-    { name: "II", distance: 2, enable: true },
-    { name: "IIIb", distance: 3, enable: false },
-    { name: "III", distance: 4, enable: true },
-    { name: "IV", distance: 5, enable: false },
-    { name: "Vb", distance: 6, enable: false },
-    { name: "V", distance: 7, enable: false },
-    { name: "VIb", distance: 8, enable: false },
-    { name: "VI", distance: 9, enable: false },
-    { name: "VIIb", distance: 10, enable: false },
-    { name: "VII", distance: 11, enable: false },
+    { name: "I", distance: 0, enable: true, interval: "1P" },   // Perfect Unison
+    { name: "IIb", distance: 1, enable: false, interval: "2m" }, // Minor Second
+    { name: "II", distance: 2, enable: true, interval: "2M" },   // Major Second
+    { name: "IIIb", distance: 3, enable: false, interval: "3m" }, // Minor Third
+    { name: "III", distance: 4, enable: true, interval: "3M" },  // Major Third
+    { name: "IV", distance: 5, enable: false, interval: "4P" },  // Perfect Fourth
+    { name: "Vb", distance: 6, enable: false, interval: "4A" },  // Augmented Fourth (Tritone)
+    { name: "V", distance: 7, enable: false, interval: "5P" },   // Perfect Fifth
+    { name: "VIb", distance: 8, enable: false, interval: "6m" }, // Minor Sixth
+    { name: "VI", distance: 9, enable: false, interval: "6M" },  // Major Sixth
+    { name: "VIIb", distance: 10, enable: false, interval: "7m" }, // Minor Seventh
+    { name: "VII", distance: 11, enable: false, interval: "7M" }, // Major Seventh
   ];
+  
   const initialUserProgress = [
     {
       level: 1,

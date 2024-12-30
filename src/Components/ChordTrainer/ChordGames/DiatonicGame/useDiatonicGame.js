@@ -20,14 +20,12 @@ const useDiatonicGame = () => {
 
   // Generate the chord pool whenever rootNote or scaleType changes
   useEffect(() => {
-    console.log("Generating diatonic chords...");
     let key;
     // Determine the key based on scale type
     if (scaleType === "major") {
       key = Key.majorKey(rootNote);
     } else {
       const minorKey = Key.minorKey(rootNote);
-      console.log("Minor Key:", minorKey);
       if (scaleType === "harmonic") {
         key = minorKey.harmonic;
       } else if (scaleType === "melodic") {
@@ -36,8 +34,6 @@ const useDiatonicGame = () => {
         key = minorKey.natural;
       }
     }
-
-    console.log("Key Details:", key);
     if (!key) return;
 
     setChordPool(key.chords);
@@ -53,7 +49,6 @@ const useDiatonicGame = () => {
   // Pick the next chord from the chord pool
   const getNextChord = () => {
     if (chordPool.length === 0) {
-      console.warn("Chord pool is empty. Ensure rootNote and scaleType are set.");
       return;
     }
     let randomChord;
@@ -61,7 +56,6 @@ const useDiatonicGame = () => {
       randomChord = chordPool[Math.floor(Math.random() * chordPool.length)];
 
     }while(randomChord === targetChord)
-    console.log("Next Chord:", randomChord);
     setTargetChord(randomChord);
   };
 
