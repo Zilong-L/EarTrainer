@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Modal, Box, Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const IntroModal = ({ isOpen, handleClose }) => {
+const IntroModal = ({ isOpen, handleClose ,mode,setMode}) => {
   const { t } = useTranslation('degreeTrainer');
-  const [mode, setMode] = useState('challenge'); // 初始化模式为“自由训练”
 
   const handleModeChange = (selectedMode) => {
     setMode(selectedMode);

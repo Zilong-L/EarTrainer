@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Slider, Grid, Checkbox, Typography, Switch } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-import * as Tone from 'tone';
 import { useTranslation } from 'react-i18next';
 import { getDroneInstance } from '@utils/ToneInstance';
+import { Midi } from "tonal";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,9 +13,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
 import LockIcon from '@mui/icons-material/Lock';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { settingsElementStyles } from '@ui/Styles';
 ChartJS.register(
   CategoryScale,
@@ -29,48 +27,33 @@ ChartJS.register(
 function PracticeSettings({ settings, setCurrentPage }) {
   const { t } = useTranslation('degreeTrainer');
   const {
-    isStatOpen,
     mode,
-    setIsStatOpen,
     bpm,
     setBpm,
-    droneVolume,
-    setDroneVolume,
-    pianoVolume,
-    setPianoVolume,
     rootNote,
     setRootNote,
     range,
     setRange,
-    currentNotes,
-    setCurrentNotes,
-    practiceRecords,
-    setPracticeRecords,
-    setCurrentPracticeRecords,
+    customNotes,
+    setCustomNotes,
     setCurrentLevel,
     userProgress,
-    saveSettingsToLocalStorage,
     repeatWhenAdvance,
     setRepeatWhenAdvance,
+    setCurrentPracticeRecords
   } = settings;
 
-  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
   const drone = getDroneInstance();
   let midiMin = drone.rootMin;
   let midiMax = drone.rootMax;
 
   const handleDegreeToggle = (index) => {
-    const newNotes = [...currentNotes];
+    const newNotes = [...customNotes];
     newNotes[index].enable = !newNotes[index].enable;
-    setCurrentNotes(newNotes);
+    setCustomNotes(newNotes);
   };
 
-  const handleDeleteConfirm = () => {
-    localStorage.removeItem('degreeTrainerRecords');
-    setPracticeRecords({});
-    setIsDeleteConfirmOpen(false);
-  };
 
   const updateLevel = (index) => {
     setCurrentLevel(userProgress[index]);
@@ -79,7 +62,6 @@ function PracticeSettings({ settings, setCurrentPage }) {
 
   const closeSettings = () => {
     setCurrentPage('home'); // Return to home page
-    saveSettingsToLocalStorage(); // Save settings before closing
   };
 
   return (
@@ -157,15 +139,15 @@ function PracticeSettings({ settings, setCurrentPage }) {
           <Slider
             color="secondary"
             value={range}
-            valueLabelFormat={(value) => Tone.Frequency(value, 'midi').toNote()}
+            valueLabelFormat={(value) => Midi.midiToNoteName(value)}
             onChange={(_, newValue) => {
               if (Math.abs(newValue[1] - newValue[0]) >= 11) {
                 setRange(newValue);
               }
             }}
             disableSwap
-            min={Tone.Frequency('C2').toMidi()}
-            max={Tone.Frequency('C6').toMidi()}
+            min={Midi.toMidi('C1')}
+            max={Midi.toMidi('C6')}
             valueLabelDisplay="auto"
             sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
           />
@@ -176,9 +158,9 @@ function PracticeSettings({ settings, setCurrentPage }) {
           <label>{t('settings.RootNote')}</label>
           <Slider
             color="secondary"
-            valueLabelFormat={(value) => Tone.Frequency(value, 'midi').toNote()}
-            value={rootNote}
-            onChange={(e, value) => setRootNote(value)}
+            valueLabelFormat={(value) => Midi.midiToNoteName(value)}
+            value={Midi.toMidi(rootNote)}
+            onChange={(e, value) => setRootNote(Midi.midiToNoteName(value))}
             min={midiMin}
             max={midiMax}
             valueLabelDisplay="auto"
@@ -205,7 +187,7 @@ function PracticeSettings({ settings, setCurrentPage }) {
           <div style={settingsElementStyles} >
             <label>{t('settings.SelectDegrees')}</label>
             <Grid container spacing={1} sx={{ marginTop: '4px', paddingLeft: 0 }}>
-              {currentNotes.map((note, index) => (
+              {customNotes.map((note, index) => (
                 <Grid item xs={4} key={note.name} sx={{ padding: 0 }}>
                   <Box
                     onClick={() => handleDegreeToggle(index)}

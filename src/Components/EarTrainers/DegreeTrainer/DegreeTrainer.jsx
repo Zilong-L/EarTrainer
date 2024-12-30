@@ -23,20 +23,20 @@ const EarTrainer = () => {
   const {
     currentNote,
     disabledNotes,
-    gameStarted,
+    gameState,
     filteredNotes,
     isAdvance,
     isCorrect,
     setActiveNote,
     startGame,
     endGame,
+    setGameState,
     playNote
   } = useDegreeTrainer(settings);
 
   const {
     isStatOpen,
     rootNote,
-    practiceRecords,
     currentPracticeRecords,
     setMode,
     isHandfree,
@@ -49,6 +49,10 @@ const EarTrainer = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isIntroOpen, setIsIntroOpen] = useState(true);
 
+  const openSettings = () => {
+    setIsSettingsOpen(true);
+    setGameState('paused')
+  };
   const handleIntroClose = (mode) => {
     setMode(mode);
     setIsIntroOpen(false);
@@ -103,13 +107,6 @@ const EarTrainer = () => {
       const [command, note, velocity] = message.data;
       if (command === 144 && velocity > 0) {
         const noteName = Tone.Frequency(note, 'midi').toNote(); // 获取当前音符名称
-        const noteWithoutOctave = noteName.slice(0, -1); // 去掉最后一位（八度）
-        // 模拟点击对应的按钮，忽略八度
-        // const buttons = document.querySelectorAll(`button[data-note="${noteWithoutOctave}"]`); // 匹配以音符字母开头的按钮
-
-        // buttons.forEach(button => {
-        //     button.click();
-        // });
         setActiveNote(noteName)
       }
 
@@ -120,10 +117,10 @@ const EarTrainer = () => {
       }
       if (midi == null) {
         midi = await navigator.requestMIDIAccess();
-        console.log("MIDI loaded for degree trainer");
+        
       }
       if (midi) {
-        console.log('midi is already loaded, now register listener')
+        
         const inputs = midi.inputs.values();
         for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
           input.value.onmidimessage = midiMessageHandler
@@ -131,7 +128,7 @@ const EarTrainer = () => {
       }
     })();
     return () => {
-      console.log('midi is not deleted, but delete listener')
+      
       if (midi) {
         const inputs = midi.inputs.values();
         for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
@@ -185,7 +182,7 @@ const EarTrainer = () => {
           </Tooltip>
           <Tooltip title={t("buttons.settings")}>
             <Button
-              onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+              onClick={() => openSettings()}
               variant="contained"
               color="primary"
               sx={{ boxShadow: 'none', marginRight: '0.5rem' }}
@@ -245,16 +242,17 @@ const EarTrainer = () => {
             isSettingsOpen={isSettingsOpen}
             setIsSettingsOpen={setIsSettingsOpen}
             playNote={playNote}
+            setGameState={setGameState}
 
           />
-          <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} />
-          {gameStarted && (
+          <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} mode={mode} setMode={setMode} />
+          {gameState == 'playing' && (
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%', marginBottom: '2rem' }}>
               {isStatOpen && renderRecords()}
               <Box sx={{ flexGrow: 1 }} />
               <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
                 {filteredNotes.map((note) => {
-                  const noteName = Tone.Frequency(rootNote + note.distance, 'midi').toNote();
+                  const noteName = Tone.Frequency(Tone.Frequency(rootNote).toMidi() + note.distance, 'midi').toNote();
                   const isCorrectAnswer = isCorrect(noteName)
                   return (
                     <Grid item xs={4} key={note.name}>

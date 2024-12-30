@@ -4,13 +4,12 @@ import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance, playNotes } from '@utils/ToneInstance';
 const audioCache = {};
 
+import { Note, Range } from 'tonal';
+
 
 const preloadAudio = (degree) => {
   if (!audioCache[degree]) {
-    console.log(`First load degree: ${degree}`);
     audioCache[degree] = new Tone.Player(`/answers/${degree}.wav`).toDestination();
-  } else {
-    console.log(`Using cached audio for degree: ${degree}`);
   }
   return audioCache[degree];
 };
@@ -21,61 +20,90 @@ const useDegreeTrainer = (settings) => {
     bpm,
     rootNote,
     range,
-    currentNotes,
     repeatWhenAdvance,
     updatePracticeRecords,
-    currentPracticeRecords,
-    userProgress,
-    setUserProgress,
     mode,
+    customNotes,
     currentLevel,
-    saveSettingsToLocalStorage
   } = settings;
 
   const [currentNote, setCurrentNote] = useState("");
   const [disabledNotes, setDisabledNotes] = useState([]);
-  const [gameStarted, setGameStarted] = useState(false);
+
+  const [gameState, setGameState] = useState('end');
+  const [currentNotes, setCurrentNotes] = useState(degrees);
   const [filteredNotes, setFilteredNotes] = useState(degrees);
-  const [possibleMidiList, setPossibleMidiList] = useState([]);
+
+  const [possibleNotesInRange, setPossibleNotesInRange] = useState([]);
   const [activeNote, setActiveNote] = useState(null);
   const [isAdvance, setIsAdvance] = useState(false);
 
   const drone = getDroneInstance();
 
-
+  // update currentNotes based on settings
   useEffect(() => {
+    if (mode == 'free') {
+      if (currentNotes.length != customNotes.length || !currentNotes.every((note, index) => note.enable === customNotes[index].enable)) {
+        setCurrentNotes(customNotes);
+      }
+    }
+    else if (mode != 'free' && currentLevel.degrees) {
+      const needsUpdate = currentNotes.some((note, index) => note.enable !== currentLevel.degrees[index]);
+      
+      if (needsUpdate) {
+        const newNotes = currentNotes.map((note, index) => ({
+          ...note,
+          enable: currentLevel.degrees[index],
+        }));
+        setCurrentNotes(newNotes);
+      }
+    }
+  }, [currentLevel, mode, currentNotes]);
+
+  // update filteredNotes based on currentNotes
+  useEffect(() => {
+    // Filter the enabled notes and update the filtered notes state
     const newNotes = currentNotes.filter((obj) => obj.enable);
     setFilteredNotes(newNotes);
   }, [currentNotes]);
 
+  // update if possibleNotesInRange changes
+  useEffect(() => {
+    const newList = getPossibleNotesInRange(rootNote, range, currentNotes)
+    if (newList.length != possibleNotesInRange.length || !newList.every((note, index) => note === possibleNotesInRange[index])) {
+      setPossibleNotesInRange(newList)
+      
+    }
+  }, [rootNote, range, currentNotes]);
+
+  // when possibleNotesInRange changes, generate a new note and play it
   useEffect(() => {
     const newNote = generateRandomNoteBasedOnRoot();
     setCurrentNote(newNote);
-  }, [possibleMidiList]);
+    
+    if (gameState == 'playing') {
+      playNote();
+    }
+  }, [possibleNotesInRange]);
 
+  // when game resumes from pause, play the current note
   useEffect(() => {
-    const expandedIntervals = [];
-    filteredNotes.forEach((note) => {
-      for (let octaveShift = -4; octaveShift <= 4; octaveShift++) {
-        const midiValue = rootNote + note.distance + octaveShift * 12;
-        expandedIntervals.push(midiValue);
-      }
-    });
-    const newIntervalList = expandedIntervals.filter(
-      (midi) => midi >= range[0] && midi <= range[1]
-    );
-    setPossibleMidiList(newIntervalList);
-  }, [rootNote, range, filteredNotes]);
+    if (gameState == 'playing') {
+      playNote();
+    }
+  }, [gameState])
 
+  // handle guesses
   useEffect(() => {
     if (activeNote && !isAdvance) {
       handleNoteGuess(activeNote);
     }
   }, [activeNote, isAdvance]);
 
+
   useEffect(() => {
     if (isAdvance) {
-      if(repeatWhenAdvance){
+      if (repeatWhenAdvance) {
         const timer = setTimeout(() => {
           const nextNote = generateRandomNoteBasedOnRoot();
           setCurrentNote(nextNote);
@@ -83,9 +111,8 @@ const useDegreeTrainer = (settings) => {
           setIsAdvance(false);
         }, (60 / bpm) * 2000);
         return () => clearTimeout(timer);
-
       }
-      else{
+      else {
         const timer = setTimeout(() => {
           const nextNote = generateRandomNoteBasedOnRoot();
           setCurrentNote(nextNote);
@@ -94,12 +121,12 @@ const useDegreeTrainer = (settings) => {
         }, (60 / bpm) * 1000);
         return () => clearTimeout(timer);
       }
-    } else if (isHandfree && gameStarted) {
+    } else if (isHandfree && gameState == 'playing') {
       const degree = calculateDegree(Tone.Frequency(currentNote).toMidi());
       const player = preloadAudio(degree);
-      if(repeatWhenAdvance){
+      if (repeatWhenAdvance) {
         const timer = setTimeout(() => {
-          if (player.loaded ) {
+          if (player.loaded) {
             player.start();
           }
           setTimeout(() => {
@@ -109,39 +136,36 @@ const useDegreeTrainer = (settings) => {
         }, (60 / bpm) * 2000);
         return () => clearTimeout(timer);
       }
-      else{
+      else {
         const timer = setTimeout(() => {
-          if (player.loaded ) {
+          if (player.loaded) {
             player.start();
           }
           setIsAdvance(true); // Set to advance
         }, (60 / bpm) * 2000);
         return () => clearTimeout(timer);
-        }
       }
     }
-  , [isAdvance, gameStarted, isHandfree]);
+  }
+, [isAdvance, gameState, isHandfree]);
 
-    useEffect(() => {
-      if(gameStarted){
-        Tone.getTransport().stop();
-        Tone.getTransport().position = 0;
-        Tone.getTransport().cancel();
-        setDisabledNotes([]);
-        const note = generateRandomNoteBasedOnRoot();
-        setCurrentNote(note);
-        playNote(note, 1);
-        drone.start();
-        Tone.getTransport().start();
-        console.log('game started, sound played')
-      }
+  useEffect(() => {
+    if (gameState == 'start') {
+      Tone.getTransport().stop();
+      Tone.getTransport().position = 0;
+      Tone.getTransport().cancel();
+      setDisabledNotes([]);
+      drone.start();
+      Tone.getTransport().start();
+      setGameState('playing')
+      
     }
-    , [gameStarted]);
+  }
+    , [gameState, currentNote]);
 
-    const startGame = () => {
-
-      setGameStarted(true);
-    };
+  const startGame = () => {
+    setGameState('start');
+  };
 
   const playNote = (note = null, delay = 0.05) => {
     if (!note) {
@@ -150,10 +174,43 @@ const useDegreeTrainer = (settings) => {
     playNotes(note, delay, bpm)
   };
 
+  const getPossibleNotesInRange = (rootNote, range, degrees) => {
+    // Get enabled intervals
+    const enabledIntervals = degrees
+      .filter(degree => degree.enable)
+      .map(degree => degree.interval);
+
+    // Generate the scale notes by transposing the rootNote by each enabled interval
+    const scaleNotes = enabledIntervals
+      .map(interval => Note.transpose(rootNote, interval))
+      .filter(note => note);
+
+    // Create a set of pitch classes (both original and enharmonic) for matching
+    const scaleNoteSet = new Set();
+    scaleNotes.forEach(note => {
+      scaleNoteSet.add(Note.pitchClass(note));
+      scaleNoteSet.add(Note.enharmonic(Note.pitchClass(note)));
+    });
+
+    // Generate all possible notes within the MIDI range
+    const allNotesInRange = Range.chromatic([Note.fromMidi(range[0]), Note.fromMidi(range[1])]);
+
+    // Filter notes based on both original and enharmonic pitch classes
+    const possibleNotesInRange = allNotesInRange.filter(note => {
+      const pitchClass = Note.pitchClass(note);
+      return scaleNoteSet.has(pitchClass) || scaleNoteSet.has(Note.enharmonic(pitchClass));
+    });
+
+    return possibleNotesInRange;
+  };
+
   const generateRandomNoteBasedOnRoot = () => {
-    if (possibleMidiList.length === 0) return null;
-    const nextNoteMidi = possibleMidiList[Math.floor(Math.random() * possibleMidiList.length)];
-    return Tone.Frequency(nextNoteMidi, 'midi').toNote();
+    if (possibleNotesInRange.length === 0) return null;
+    let nextNote = null;
+    do {
+      nextNote = possibleNotesInRange[Math.floor(Math.random() * possibleNotesInRange.length)];
+    } while (nextNote === currentNote && possibleNotesInRange.length !== 1);
+    return nextNote
   };
 
   const handleNoteGuess = (guessedNote) => {
@@ -161,10 +218,11 @@ const useDegreeTrainer = (settings) => {
     const currentNoteMidi = Tone.Frequency(currentNote).toMidi();
     const isCorrect = guessedNoteMidi % 12 === currentNoteMidi % 12;
     const guessedDegree = calculateDegree(guessedNoteMidi, currentNoteMidi);
+    
     if (isCorrect) {
       setDisabledNotes([]);
       updatePracticeRecords(guessedDegree, isCorrect);
-      if(repeatWhenAdvance){
+      if (repeatWhenAdvance) {
         playNote(currentNote);
       }
       setIsAdvance(true);
@@ -181,7 +239,7 @@ const useDegreeTrainer = (settings) => {
 
 
   const calculateDegree = (guessedNoteMidi) => {
-    const interval = ((guessedNoteMidi - rootNote) % 12 + 12) % 12;
+    const interval = ((guessedNoteMidi - Tone.Frequency(rootNote).toMidi()) % 12 + 12) % 12;
     return degrees.find(degree => degree.distance === interval)?.name || "Unknown";
   };
   const isCorrect = (guessedNote) => {
@@ -195,7 +253,7 @@ const useDegreeTrainer = (settings) => {
     Tone.getTransport().stop();
     Tone.getTransport().position = 0;
     Tone.getTransport().cancel();
-    setGameStarted(false);
+    setGameState('end');
     setDisabledNotes([]);
     drone.stop();
   };
@@ -203,16 +261,16 @@ const useDegreeTrainer = (settings) => {
   return {
     currentNote,
     disabledNotes,
-    gameStarted,
+    gameState,
     filteredNotes,
-    possibleMidiList,
     activeNote,
     isAdvance,
     isCorrect,
     setActiveNote,
     startGame,
     playNote,
-    endGame
+    endGame,
+    setGameState
   };
 };
 
