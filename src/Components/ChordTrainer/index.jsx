@@ -1,35 +1,23 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next'; // Translation hook
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import {
-  CssBaseline,
-  Container,
-  Paper,
-  Box,
-  Button,
-  Typography,
-  AppBar,
-  Toolbar,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { Bars3Icon, Cog6ToothIcon } from '@heroicons/react/24/solid';
 
-import Sidebar from '@components/Sidebar'; // App-switching sidebar
-import ChordPracticeGame from '@ChordTrainer/ChordGames/ChordPracticeGame'; // Practice mode component
-import DiatonicGame from '@ChordTrainer/ChordGames/DiatonicGame'; // Diatonic mode component
-// import ProgressionGame from './ProgressionGame'; // Progression mode component
-import Settings from './Settings'; // Settings modal
+import Sidebar from '@components/Sidebar';
+import ChordPracticeGame from '@ChordTrainer/ChordGames/ChordPracticeGame';
+import DiatonicGame from '@ChordTrainer/ChordGames/DiatonicGame';
+import Settings from './Settings';
 
 import useChordGameSettings from '@ChordTrainer/useChordGameSettings';
 import useChordPracticeGame from '@ChordTrainer/ChordGames/ChordPracticeGame/useChordPracticeGame';
 import useDiatonicGame from '@ChordTrainer/ChordGames/DiatonicGame/useDiatonicGame';
 
 const apps = [
-  { name: 'earTrainer', path: '/ear-trainer' },
-  { name: 'chordTrainer', path: '/chord-trainer' },
+  { name: 'earTrainer', path: '/ear-trainer' }
 ];
 
 const ChordTrainer = () => {
-  const { t } = useTranslation('chordGame'); // Translation namespace
+  const { t } = useTranslation('chordGame');
   const [isAppSidebarOpen, setIsAppSidebarOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   
@@ -37,16 +25,14 @@ const ChordTrainer = () => {
   const chordPracticeGameSettings = useChordPracticeGame();
   const diatonicGameSettings = useDiatonicGame();
   const settings = {globalSettings, chordPracticeGameSettings,diatonicGameSettings}
-  const { mode } = globalSettings; // Access the current mode from globalSettings
+  const { mode } = globalSettings;
 
   const renderGameMode = () => {
     switch (mode) {
       case 'Chord Practice':
-        return <ChordPracticeGame chordPracticeGameSettings ={chordPracticeGameSettings } />;
+        return <ChordPracticeGame chordPracticeGameSettings={chordPracticeGameSettings} />;
       case 'Diatonic':
-        {
         return <DiatonicGame diatonicGameSettings={diatonicGameSettings} />;
-        }
       case 'Progression':
         return <div>Progression Mode Coming Soon!</div>;
       default:
@@ -55,69 +41,53 @@ const ChordTrainer = () => {
   };
 
   return (
-    <>
-      <AppBar position="static" sx={{ boxShadow: 0 }}>
-        <Toolbar sx={{ color: (theme) => theme.palette.text.primary }}>
-          <Typography variant="h6" sx={{ marginLeft: '15px', flexGrow: 1 }}>
-            {t('trainer.title')} {/* Translate 'Chord Trainer' */}
-          </Typography>
-          {apps.map((item) => (
-            <Button
-              variant="contained"
-              component={Link}
-              to={item.path}
-              key={item.name}
-              sx={{
-                display: 'none',
-                '@media (min-width:600px)': { display: 'block', boxShadow: 'none', textTransform: 'none' },
-              }}
+    <div className="flex flex-col h-screen">
+      {/* Header */}
+      <header className="w-full bg-white dark:bg-slate-800 shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+            {t('trainer.title')}
+          </h1>
+          
+          <div className="flex items-center space-x-4">
+            <div className="hidden md:flex">
+              {apps.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className="px-4 py-2 rounded-md bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                >
+                  {t(`trainer.apps.${item.name}`)}
+                </Link>
+              ))}
+            </div>
+            <button
+              onClick={() => setIsSettingsModalOpen(true)}
+              className="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400"
             >
-              {t(`trainer.apps.${item.name}`)} {/* Translate app names */}
-            </Button>
-          ))}
-          <Button
-            onClick={() => setIsSettingsModalOpen(true)} // Open settings modal
-            variant="contained"
-            sx={{ ml: 2, boxShadow: 'none' }}
-          >
-            {t('trainer.settings')} {/* Translate 'Settings' */}
-          </Button>
-          <Button
-            onClick={() => setIsAppSidebarOpen(!isAppSidebarOpen)}
-            variant="contained"
-            color="primary"
-            sx={{
-              boxShadow: 'none',
-              '@media (min-width:600px)': { display: 'none' }, // Hide on larger screens
-            }}
-          >
-            <MenuIcon />
-          </Button>
-        </Toolbar>
-      </AppBar>
+              <Cog6ToothIcon className="h-6 w-6" />
+            </button>
+            
+            <button
+              onClick={() => setIsAppSidebarOpen(!isAppSidebarOpen)}
+              className="md:hidden p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400"
+            >
+              <Bars3Icon className="h-6 w-6" />
+            </button>
+          </div>
+        </div>
+      </header>
 
-      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'row' }}>
-        {/* App-Switching Sidebar */}
+      {/* Main Content */}
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar isOpen={isAppSidebarOpen} setIsOpen={setIsAppSidebarOpen} />
-
-        {/* Main Content */}
-        <CssBaseline />
-        <Paper
-          sx={{
-            flexGrow: 1,
-            padding: '100px 20px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            overflow: 'auto',
-            position: 'relative',
-            color: (theme) => theme.palette.text.secondary,
-          }}
-        >
-          <Container maxWidth="lg">{renderGameMode()}</Container> {/* Render appropriate game mode */}
-        </Paper>
-      </Box>
+        
+        <main className="flex-1 p-8 overflow-y-auto bg-slate-50 dark:bg-slate-900">
+          <div className="max-w-6xl mx-auto">
+            {renderGameMode()}
+          </div>
+        </main>
+      </div>
 
       {/* Settings Modal */}
       <Settings
@@ -125,7 +95,7 @@ const ChordTrainer = () => {
         setIsOpen={setIsSettingsModalOpen}
         settings={settings}
       />
-    </>
+    </div>
   );
 };
 

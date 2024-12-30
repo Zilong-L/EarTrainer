@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { Note } from 'tonal';
 import { getSamplerInstance } from '@utils/ToneInstance';
-import { Typography, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const MIDIInputHandler = ({ activeNotes, setActiveNotes,detectedChords }) => {
+const MIDIInputHandler = ({ activeNotes, setActiveNotes, detectedChords }) => {
   const { t } = useTranslation('chordGame');
   let sustainActive = false;
   let sustainedNotes = new Set();
@@ -67,14 +66,18 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes,detectedChords }) => {
   }, []);
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Typography variant="h3" component="h3">
-        {t('detectedChords')}: {detectedChords.join(', ')}
-      </Typography>
-      <Typography variant="h3" component="h3">
-        {t('notes')}: {activeNotes.map((midi) => Note.fromMidi(midi)).join(', ')}
-      </Typography>
-    </Box>
+    <div className="w-full space-y-4">
+      <div className="p-4 rounded-lg bg-slate-100 dark:bg-slate-700">
+        <h3 className="text-lg font-medium text-slate-900 dark:text-slate-100">
+          {t('detectedChords')}: <span className="font-normal">{detectedChords.join(', ')}</span>
+        </h3>
+      </div>
+      <div className="p-4 rounded-lg bg-slate-100 dark:bg-slate-700">
+        <h3 className="text-lg font-medium text-slate-900 dark:text-slate-100">
+          {t('notes')}: <span className="font-normal">{activeNotes.map((midi) => Note.fromMidi(midi)).join(', ')}</span>
+        </h3>
+      </div>
+    </div>
   );
 };
 

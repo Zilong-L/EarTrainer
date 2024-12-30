@@ -62,7 +62,7 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
     <div className="fixed inset-0 z-50">
       <div className="absolute inset-0 bg-black/50" onClick={() => setIsOpen(false)} />
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-      <div className="w-full max-w-4xl h-[80vh] rounded-lg bg-white dark:bg-slate-800 shadow-lg pointer-events-auto flex flex-col">
+      <div className="w-full max-w-5xl h-[80vh] rounded-lg bg-white dark:bg-slate-800 shadow-lg pointer-events-auto flex flex-col">
         {/* Header */}
         <div className="w-full p-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
