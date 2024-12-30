@@ -28,8 +28,6 @@ const EarTrainer = () => {
     isAdvance,
     isCorrect,
     setActiveNote,
-    startGame,
-    endGame,
     setGameState,
     playNote
   } = useDegreeTrainer(settings);
@@ -133,10 +131,12 @@ const EarTrainer = () => {
     return (
       <>
         {mode == 'challenge' && <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.level')}: {currentLevel.level}</Typography>}
-        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.totalAttempts')} {totalResults.total}{mode == 'challenge' && ' / 30'}</Typography>
+        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.totalAttempts')} {totalResults.total}{mode == 'challenge' && ` / ${currentLevel.minTests}`}</Typography>
         <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>{t('home.correctCount')} {totalResults.correct}</Typography>
         <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>
-          {t('home.accuracyRate')} {totalResults.total > 0 ? Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) + '%' : '0%'}
+          {Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) >= 90 ? '⭐⭐⭐' :
+           Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) >= 80 ? '⭐⭐' :
+           Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) >= 70 ? '⭐' : ''}
         </Typography>
       </>
     );

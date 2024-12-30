@@ -36,6 +36,9 @@ const keyMap = {
       unlocked: true,
       best: 0,
       notes: "1 7",
+      minTests: 15, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 2,
@@ -43,6 +46,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 5 7",
+      minTests: 18, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 3,
@@ -50,6 +56,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 3 5 7",
+      minTests: 22, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 4,
@@ -57,6 +66,8 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 2 3 5 7",
+      minTests: 25, // No requirements for the first level
+      stars: 0,
     },
     {
       level: 5,
@@ -64,6 +75,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 2 3 5 6 7",
+      minTests: 28, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 6,
@@ -71,6 +85,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 2 3 4 5 6 7",
+      minTests: 35, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 7,
@@ -78,6 +95,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 2 3 4 #4 5 6 7",
+      minTests: 50, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 8,
@@ -85,6 +105,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 2 b3",
+      minTests: 18, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 9,
@@ -92,6 +115,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 2 b3 5",
+      minTests: 24, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 10,
@@ -99,6 +125,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 2 b3 5 b6",
+      minTests: 28, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 11,
@@ -106,6 +135,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 2 b3 5 b6 b7",
+      minTests: 30, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 12,
@@ -113,6 +145,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 2 b3 4 5 b6 b7",
+      minTests: 34, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 13,
@@ -120,6 +155,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 b2 2 b3 4 5 b6 b7",
+      minTests: 40, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 14,
@@ -127,6 +165,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 4 5 7",
+      minTests: 23, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 15,
@@ -134,6 +175,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 4 5 b7 7",
+      minTests: 28, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 16,
@@ -141,6 +185,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 b3 3 4 5 b7 7",
+      minTests: 42, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 17,
@@ -148,6 +195,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 b2 2 b3 3 4 5 b7 7",
+      minTests: 50, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 18,
@@ -155,6 +205,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 b2 2 b3 3 4 #4 5 b7 7",
+      minTests: 55, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 19,
@@ -162,6 +215,9 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 b2 2 b3 3 4 #4/b5 5 b7 7",
+      minTests: 60, // No requirements for the first level
+      stars: 0,
+      
     },
     {
       level: 20,
@@ -169,6 +225,8 @@ const keyMap = {
       unlocked: false,
       best: 0,
       notes: "1 b2 2 b3 3 4 #4 b5 5 b6 6 b7 7",
+      minTests: 70, // No requirements for the first level
+      stars: 0,
     },
   ];
   

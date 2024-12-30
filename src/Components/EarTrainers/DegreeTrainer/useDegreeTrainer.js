@@ -26,6 +26,7 @@ const useDegreeTrainer = (settings) => {
     mode,
     customNotes,
     currentLevel,
+    setCurrentPracticeRecords
   } = settings;
 
   const [currentNote, setCurrentNote] = useState("");
@@ -110,6 +111,10 @@ const useDegreeTrainer = (settings) => {
   useEffect(() => {
     if (gameState == 'playing') {
       playNote();
+    }
+    else if (gameState == 'end') {
+      setDisabledNotes([]);
+      setCurrentPracticeRecords({ total: 0, correct: 0 })
     }
   }, [gameState])
 
@@ -262,6 +267,7 @@ const useDegreeTrainer = (settings) => {
     startGame,
     playNote,
     endGame,
+
     setGameState
   };
 };

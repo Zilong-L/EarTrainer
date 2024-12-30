@@ -154,7 +154,7 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
             </div>
           )}
           {currentPage === 'practice' && (
-            <PracticeSettings settings={settings} setCurrentPage={setCurrentPage} />
+            <PracticeSettings settings={settings} setCurrentPage={setCurrentPage} setGameState={setGameState}/>
           )}
           {currentPage === 'volume' && (
             <VolumeSettings settings={settings} setCurrentPage={setCurrentPage} />

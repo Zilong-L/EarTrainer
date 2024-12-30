@@ -7,15 +7,8 @@ import {useLocalStorage} from '@uidotdev/usehooks';
 
 const useDegreeTrainerSettings = () => {
   const [mode, setMode] = useLocalStorage('degreeTrainerMode', 'free');
-  const [currentLevel, _setCurrentLevel] = useState(() => {
-    const storedLevel = localStorage.getItem('degreeTrainerCurrentLevel');
-    return storedLevel ? JSON.parse(storedLevel) : initialUserProgress[0];
-  });
+  const [currentLevel, setCurrentLevel] = useState( initialUserProgress[0]);
 
-  const setCurrentLevel = (level) => {
-    localStorage.setItem('degreeTrainerCurrentLevel', JSON.stringify(level));
-    _setCurrentLevel(level);
-  };
   const [customNotes, setCustomNotes] = useState(degrees);
 
   const [isHandfree, setIsHandfree] = useLocalStorage('degreeTrainerIsHandfree', false);
@@ -33,7 +26,44 @@ const useDegreeTrainerSettings = () => {
   const [selectedQuality, setSelectedQuality] = useLocalStorage('degreeTrainerSelectedQuality', 'low');
 
   const [practiceRecords, setPracticeRecords] = useLocalStorage('degreeTrainerPracticeRecords', {});
+  const migrateUserProgress = (oldProgress) => {
+    return oldProgress.map((level, index) => {
+      const newLevel = {
+        ...initialUserProgress[index],
+        best: level.best || 0,
+        unlocked: level.unlocked || false
+      };
+      
+      // Map best percentage to stars
+      if (newLevel.best >= 90) {
+        newLevel.stars = 3;
+      } else if (newLevel.best >= 80) {
+        newLevel.stars = 2;
+      } else if (newLevel.best >= 70) {
+        newLevel.stars = 1;
+      } else {
+        newLevel.stars = 0;
+      }
+      
+      return newLevel;
+    });
+  };
+  const resetUserProgress = () => {
+    setUserProgress(initialUserProgress);
+    setCurrentLevel(initialUserProgress[0]);
+  };
+
+  const [progressVersion, setProgressVersion] = useLocalStorage('degreeTrainerProgressVersion', 0);
   const [userProgress, setUserProgress] = useLocalStorage('degreeTrainerUserProgress', initialUserProgress);
+
+  // Run migration once when component mounts
+  useEffect(() => {
+    if (progressVersion === 0) {
+      const migratedProgress = migrateUserProgress(userProgress);
+      setUserProgress(migratedProgress);
+      setProgressVersion(1);
+    }
+  }, [progressVersion, setProgressVersion, setUserProgress, userProgress]);
 
   const [currentPracticeRecords, setCurrentPracticeRecords] = useState({ total: 0, correct: 0 });
   
@@ -63,19 +93,51 @@ const useDegreeTrainerSettings = () => {
 
 
   const unlockLevel = () => {
-    if (mode == 'free') {
+    if (mode === 'free') {
       return;
     }
-    if (Math.round(currentPracticeRecords.correct / currentPracticeRecords.total.toFixed(2) * 100) >= 90 && currentPracticeRecords.total >= 30) {
-      const nextLevel = currentLevel.level + 1;
-      if (userProgress[nextLevel - 1].unlocked) {
-        return;
+
+    const currentLevelData = userProgress[currentLevel.level - 1];
+    const totalTests = currentPracticeRecords.total;
+    
+    // Only proceed if minimum tests completed
+    if (totalTests >= currentLevelData.minTests) {
+      const correctRate = Math.round((currentPracticeRecords.correct / totalTests) * 100);
+
+      // Update best score if improved
+      if (correctRate > currentLevelData.best) {
+        const newUserProgress = [...userProgress];
+        newUserProgress[currentLevel.level - 1].best = correctRate;
+        setUserProgress(newUserProgress);
       }
 
+      // Unlock next level if 1 star is achieved (70% accuracy)
+      if (correctRate >= 70) {
+        const nextLevel = currentLevel.level + 1;
+        if (nextLevel <= userProgress.length && !userProgress[nextLevel - 1].unlocked) {
+          const newUserProgress = [...userProgress];
+          newUserProgress[nextLevel - 1].unlocked = true;
+          setUserProgress(newUserProgress);
+          toast.success(`🎉 Level ${nextLevel} unlocked!`);
+        }
+      }
+      
+      // Update stars for current level only if new rating is higher
       const newUserProgress = [...userProgress];
-      newUserProgress[nextLevel - 1].unlocked = true;
-      setUserProgress(newUserProgress);
-      toast.success(`🎉 Level ${nextLevel} unlocked!`);
+      const currentStars = newUserProgress[currentLevel.level - 1].stars;
+      
+      if (correctRate >= 90 && currentStars < 3) {
+        newUserProgress[currentLevel.level - 1].stars = 3;
+      } else if (correctRate >= 80 && currentStars < 2) {
+        newUserProgress[currentLevel.level - 1].stars = 2;
+      } else if (correctRate >= 70 && currentStars < 1) {
+        newUserProgress[currentLevel.level - 1].stars = 1;
+      }
+      
+      // Only update if stars actually changed
+      if (newUserProgress[currentLevel.level - 1].stars !== currentStars) {
+        setUserProgress(newUserProgress);
+      }
     }
   }
   useEffect(unlockLevel, [currentPracticeRecords])
@@ -99,16 +161,21 @@ const useDegreeTrainerSettings = () => {
 
       // Set current practice record in state
       setCurrentPracticeRecords(updatedCurrentPracticeRecord);
-      if (updatedCurrentPracticeRecord.total >= 30 && Math.round(updatedCurrentPracticeRecord.correct / updatedCurrentPracticeRecord.total.toFixed(2) * 100) > userProgress[currentLevel.level - 1].best) {
-        const newUserProgress = [...userProgress];
-        newUserProgress[currentLevel.level - 1].best = Math.round(updatedCurrentPracticeRecord.correct / updatedCurrentPracticeRecord.total.toFixed(2) * 100);
-        setUserProgress(newUserProgress);
+      const currentLevelData = userProgress[currentLevel.level - 1];
+      if (updatedCurrentPracticeRecord.total >= currentLevelData.minTests) {
+        const correctRate = Math.round((updatedCurrentPracticeRecord.correct / updatedCurrentPracticeRecord.total) * 100);
+        if (correctRate > currentLevelData.best) {
+          const newUserProgress = [...userProgress];
+          newUserProgress[currentLevel.level - 1].best = correctRate;
+          setUserProgress(newUserProgress);
+        }
       }
 
       // Return both updated records
       return updatedRecords;
     });
   };
+
 
   return {
     bpm,
@@ -132,6 +199,7 @@ const useDegreeTrainerSettings = () => {
     setRepeatWhenAdvance,
     setCurrentLevel,
     setUserProgress,
+    resetUserProgress,
     setMode,
     setBpm,
     setCustomNotes,

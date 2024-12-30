@@ -1,8 +1,10 @@
 import React, { useRef, useCallback, useEffect } from 'react';
+
 import './styles.css';
 import { useTranslation } from 'react-i18next';
 import { Midi } from "tonal";
 import { LockClosedIcon } from '@heroicons/react/24/solid';
+import toast from 'react-hot-toast';
 import { getDroneInstance } from '@utils/ToneInstance';
 import { Bar } from 'react-chartjs-2';
 import {
@@ -23,7 +25,7 @@ ChartJS.register(
   Legend
 );
 
-function PracticeSettings({ settings, setCurrentPage }) {
+function PracticeSettings({ settings, setCurrentPage ,setGameState}) {
   const rangeRef = useRef(null);
   
   const getPercent = useCallback(
@@ -49,7 +51,8 @@ function PracticeSettings({ settings, setCurrentPage }) {
     repeatWhenAdvance,
     setRepeatWhenAdvance,
     setCurrentPracticeRecords,
-    currentLevel
+    currentLevel,
+    resetUserProgress
   } = settings;
 
 
@@ -66,7 +69,7 @@ function PracticeSettings({ settings, setCurrentPage }) {
 
   const updateLevel = (index) => {
     setCurrentLevel(userProgress[index]);
-    setCurrentPracticeRecords({ total: 0, correct: 0 });
+    setGameState('end');
   };
 
   const closeSettings = () => {
@@ -265,12 +268,34 @@ function PracticeSettings({ settings, setCurrentPage }) {
                   Level {levelData.level}: {levelData.notes}
                 </span>
                 {levelData.unlocked ? (
-                  <span>{levelData.best}%</span>
+                  <span>
+                    {levelData.stars >= 1 ? '⭐' : ''}
+                    {levelData.stars >= 2 ? '⭐' : ''}
+                    {levelData.stars >= 3 ? '⭐' : ''}
+                  </span>
                 ) : (
                   <LockClosedIcon className="h-5 w-5" />
                 )}
               </button>
             ))}
+          </div>
+        )}
+
+        {/* Reset Progress Button */}
+        {mode === 'challenge' && (
+          <div className="flex justify-end">
+            <button
+              onClick={() => {
+                if (window.confirm(t('settings.resetConfirmation'))) {
+                  resetUserProgress()
+                  setCurrentPracticeRecords({ total: 0, correct: 0 });
+                  toast.success(t('settings.resetSuccess'));
+                }
+              }}
+              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            >
+              {t('settings.resetProgress')}
+            </button>
           </div>
         )}
       </div>
