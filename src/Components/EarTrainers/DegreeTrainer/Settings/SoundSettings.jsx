@@ -1,45 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Box, Button, Typography, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-
+import { HomeIcon } from '@heroicons/react/24/solid';
+import { getDroneInstance } from '@utils/ToneInstance';
 
 const instrumentsList = [
-  'bass-electric',
-  'bassoon',
-  'cello',
-  'clarinet',
-  'contrabass',
-  'flute',
-  'french-horn',
-  'guitar-acoustic',
-  'guitar-electric',
-  'guitar-nylon',
-  'harmonium',
-  'harp',
-  'organ',
-  'piano',
-  'saxophone',
-  'trombone',
-  'trumpet',
-  'tuba',
-  'violin',
-  'xylophone',
+  'bass-electric', 'bassoon', 'cello', 'clarinet', 'contrabass', 'flute',
+  'french-horn', 'guitar-acoustic', 'guitar-electric', 'guitar-nylon',
+  'harmonium', 'harp', 'organ', 'piano', 'saxophone', 'trombone',
+  'trumpet', 'tuba', 'violin', 'xylophone',
 ];
 
 function SoundSettings({ settings, setCurrentPage, playNote }) {
   const { t } = useTranslation('degreeTrainer');
-  const { selectedInstrument, setSelectedInstrument,isLoadingInstrument, setIsLoadingInstrument,selectedQuality , setSelectedQuality} = settings;
+  const { 
+    selectedInstrument, 
+    setSelectedInstrument,
+    isLoadingInstrument, 
+    selectedQuality, 
+    setSelectedQuality 
+  } = settings;
 
   const handleInstrumentSelect = (instrument) => {
-    setSelectedInstrument(instrument); // Update the selected instrument
+    setSelectedInstrument(instrument);
   };
+
   useEffect(() => {
-    if(!isLoadingInstrument)
-    {
-      playNote()
+    console.log(isLoadingInstrument)
+    if (!isLoadingInstrument) {
+      playNote();
+      console.log('runs')
     }
-  },[isLoadingInstrument])
+  }, [isLoadingInstrument]);
 
   const handleQualityChange = (event) => {
     setSelectedQuality(event.target.value);
@@ -47,85 +38,44 @@ function SoundSettings({ settings, setCurrentPage, playNote }) {
   };
 
   return (
-    <>
-
-      <Box
-        sx={{
-          position: 'sticky', // Keeps the banner fixed at the top during scrolling
-          top: 0,
-          left: 0,
-          width: '100%', // Full width of the screen
-          backdropFilter: 'blur(20px)', // Blur effect for the banner
-          zIndex: 1000, // Ensure it stays above other content
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center', // Center the text
-          padding: '16px 16px',
-        }}
-      >
-        {/* Home Button */}
-        <Button
-          color="secondary"
-          onClick={() => setCurrentPage('home')}
-          sx={{
-            position: 'absolute', // Position it without affecting layout
-            left: '10px', // Offset from the left edge
-            top: '50%', // Vertically align center
-            transform: 'translateY(-50%)', // Adjust for the button's height
-            fontSize: '1.2rem',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <HomeIcon />
-        </Button>
-
-        {/* Centered Text */}
-        <Typography variant="h6" sx={{ textAlign: 'center' }}>
-          {t('settings.SoundSettings')}
-        </Typography>
-      </Box>
+    <div className="p-6 space-y-12">
       {/* Quality Selector */}
-      <Box sx={{ padding: '22px 32px' }}>
-      <FormControl fullWidth sx={{ marginBottom: 2 }}>
-        <InputLabel>{t('settings.qualityLabel')}</InputLabel>
-        <Select
+      <div className="space-y-3">
+        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+          {t('settings.qualityLabel')}
+        </label>
+        <select
           value={selectedQuality}
           onChange={handleQualityChange}
-          disabled={isLoadingInstrument} // Disable when switching instruments
+          disabled={isLoadingInstrument}
+          className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 disabled:opacity-50"
         >
-          <MenuItem value="low" sx={{ color: (theme) => theme.palette.text.paper }}                 >{t('settings.quality.low')}</MenuItem>
-          <MenuItem value="medium" sx={{ color: (theme) => theme.palette.text.paper }}>{t('settings.quality.medium')}</MenuItem>
-          <MenuItem value="high" sx={{ color: (theme) => theme.palette.text.paper }}>{t('settings.quality.high')}</MenuItem>
-          <MenuItem value="full" sx={{ color: (theme) => theme.palette.text.paper }}>{t('settings.quality.full')}</MenuItem>
-        </Select>
-      </FormControl>
+          <option value="low">{t('settings.quality.low')}</option>
+          <option value="medium">{t('settings.quality.medium')}</option>
+          <option value="high">{t('settings.quality.high')}</option>
+          <option value="full">{t('settings.quality.full')}</option>
+        </select>
+      </div>
 
-      {/* Instrument Buttons */}
-      <Grid container spacing={2} >
+      {/* Instrument Grid */}
+      <div className="grid grid-cols-2 gap-3">
         {instrumentsList.map((instrument) => (
-          <Grid item xs={6} key={instrument}>
-            <Button
-              variant={selectedInstrument === instrument ? 'contained' : 'outlined'} // Highlight selected instrument
-              color="secondary"
-              onClick={() => handleInstrumentSelect(instrument)}
-              disabled={isLoadingInstrument} // Disable the button when switching
-              fullWidth
-              sx={{
-                textTransform: 'capitalize', // Keep instrument names readable
-                justifyContent: 'center',
-              }}
-            >
-              {t(`settings.instruments.${instrument}`)} {/* Use i18n to translate instrument names */}
-            </Button>
-          </Grid>
+          <button
+            key={instrument}
+            onClick={() => handleInstrumentSelect(instrument)}
+            disabled={isLoadingInstrument}
+            className={`px-4 py-2 rounded-lg transition-all capitalize
+              ${selectedInstrument === instrument
+                ? 'bg-cyan-700 text-white'
+                : 'bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-600'
+              }
+              disabled:opacity-50 disabled:cursor-not-allowed`}
+          >
+            {t(`settings.instruments.${instrument}`)}
+          </button>
         ))}
-      </Grid>
-        </Box>
-
-
-    </>
+      </div>
+    </div>
   );
 }
 

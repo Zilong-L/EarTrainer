@@ -1,46 +1,20 @@
 import React, { useState } from 'react';
-import {
-  Grid,
-  Box,
-  Button,
-  Typography,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { getSamplerInstance } from '@utils/ToneInstance';
 
 const instrumentsList = [
-  'bass-electric',
-  'bassoon',
-  'cello',
-  'clarinet',
-  'contrabass',
-  'flute',
-  'french-horn',
-  'guitar-acoustic',
-  'guitar-electric',
-  'guitar-nylon',
-  'harmonium',
-  'harp',
-  'organ',
-  'piano',
-  'saxophone',
-  'trombone',
-  'trumpet',
-  'tuba',
-  'violin',
-  'xylophone',
+  'bass-electric', 'bassoon', 'cello', 'clarinet', 'contrabass', 'flute',
+  'french-horn', 'guitar-acoustic', 'guitar-electric', 'guitar-nylon',
+  'harmonium', 'harp', 'organ', 'piano', 'saxophone', 'trombone',
+  'trumpet', 'tuba', 'violin', 'xylophone',
 ];
 
 function SoundSettings({ settings, setCurrentPage }) {
-  const { t } = useTranslation('chordGame'); 
+  const { t } = useTranslation('chordGame');
   const { selectedInstrument, setSelectedInstrument } = settings;
-  const samplerInstance = getSamplerInstance(); // Sampler instance for sound handling
-  const [isSwitching, setIsSwitching] = useState(false); // State to manage button disable state
-  const [selectedQuality, setSelectedQuality] = useState('low'); // Default quality level
+  const samplerInstance = getSamplerInstance();
+  const [isSwitching, setIsSwitching] = useState(false);
+  const [selectedQuality, setSelectedQuality] = useState('low');
 
   const playNote = () => {
     const sampler = samplerInstance.sampler;
@@ -48,23 +22,16 @@ function SoundSettings({ settings, setCurrentPage }) {
   };
 
   const handleInstrumentSelect = async (instrument) => {
-    setIsSwitching(true); // Disable all buttons during switching
+    setIsSwitching(true);
     try {
-      // Change the sampler to the selected instrument and quality
       await samplerInstance.changeSampler(instrument, selectedQuality);
-
-      // Update the selected instrument in settings
       setSelectedInstrument(instrument);
-      console.log(
-        `Sampler successfully changed to: ${instrument} with quality: ${selectedQuality}`
-      );
-
-      // Play a cue sound using playNote
+      console.log(`Sampler successfully changed to: ${instrument} with quality: ${selectedQuality}`);
       playNote();
     } catch (error) {
       console.error(`Error changing sampler to: ${instrument}`, error);
     } finally {
-      setIsSwitching(false); // Re-enable all buttons
+      setIsSwitching(false);
     }
   };
 
@@ -74,69 +41,53 @@ function SoundSettings({ settings, setCurrentPage }) {
   };
 
   return (
-    <>
+    <div className="space-y-6 px-6 pt-6 pb-0">
       {/* Header */}
-      <Box
-        sx={{
-          position: 'sticky',
-          top: 0,
-          left: 0,
-          width: '100%',
-          backdropFilter: 'blur(20px)',
-          zIndex: 1000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '16px',
-        }}
-      >
-        
-        <Typography variant="h6" sx={{ textAlign: 'center' }}>
+      <div className="sticky top-0 left-0 w-full z-50 flex items-center justify-center p-4">
+        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
           {t('settings.SoundSettings')}
-        </Typography>
-      </Box>
+        </h2>
+      </div>
 
       {/* Quality Selector */}
-      <Box sx={{ padding: '22px 32px' }}>
-        <FormControl fullWidth sx={{ marginBottom: 2 }}>
-          <InputLabel>{t('settings.qualityLabel')}</InputLabel>
-          <Select
+      <div className="px-8 py-6">
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+            {t('settings.qualityLabel')}
+          </label>
+          <select
             value={selectedQuality}
             onChange={handleQualityChange}
-            disabled={isSwitching} // Disable during instrument switching
+            disabled={isSwitching}
+            className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 disabled:opacity-50"
           >
-            <MenuItem value="low">{t('settings.quality.low')}</MenuItem>
-            <MenuItem value="medium">{t('settings.quality.medium')}</MenuItem>
-            <MenuItem value="high">{t('settings.quality.high')}</MenuItem>
-            <MenuItem value="full">{t('settings.quality.full')}</MenuItem>
-          </Select>
-        </FormControl>
+            <option value="low">{t('settings.quality.low')}</option>
+            <option value="medium">{t('settings.quality.medium')}</option>
+            <option value="high">{t('settings.quality.high')}</option>
+            <option value="full">{t('settings.quality.full')}</option>
+          </select>
+        </div>
 
         {/* Instrument Buttons */}
-        <Grid container spacing={2}>
+        <div className="grid grid-cols-2 gap-4">
           {instrumentsList.map((instrument) => (
-            <Grid item xs={6} key={instrument}>
-              <Button
-                variant={
-                  selectedInstrument === instrument ? 'contained' : 'outlined'
-                } // Highlight selected instrument
-                color="secondary"
-                onClick={() => handleInstrumentSelect(instrument)}
-                disabled={isSwitching} // Disable the button when switching
-                fullWidth
-                sx={{
-                  textTransform: 'capitalize', // Keep instrument names readable
-                  justifyContent: 'center',
-                }}
-              >
-                {t(`settings.instruments.${instrument}`)}{' '}
-                {/* Use i18n for instrument names */}
-              </Button>
-            </Grid>
+            <button
+              key={instrument}
+              onClick={() => handleInstrumentSelect(instrument)}
+              disabled={isSwitching}
+              className={`px-4 py-2 rounded-lg transition-all capitalize text-center
+                ${selectedInstrument === instrument
+                  ? 'bg-cyan-600 text-white'
+                  : 'bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-600'
+                }
+                disabled:opacity-50 disabled:cursor-not-allowed`}
+            >
+              {t(`settings.instruments.${instrument}`)}
+            </button>
           ))}
-        </Grid>
-      </Box>
-    </>
+        </div>
+      </div>
+    </div>
   );
 }
 

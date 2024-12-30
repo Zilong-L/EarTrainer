@@ -21,7 +21,7 @@ const ChordPracticeSettings = ({ chordPracticeSettings }) => {
   };
 
   return (
-    <div className="space-y-6 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg shadow-sm">
+    <div className="space-y-6 px-6 pt-6 pb-0">
       <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
         {t('settings.title')}
       </h3>

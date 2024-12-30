@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, Slider, Grid, Checkbox, Typography, Switch } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
+import React, { useRef, useCallback,useEffect } from 'react';
+import './styles.css';
 import { useTranslation } from 'react-i18next';
-import { getDroneInstance } from '@utils/ToneInstance';
 import { Midi } from "tonal";
+import { LockClosedIcon } from '@heroicons/react/24/solid';
+import { getDroneInstance } from '@utils/ToneInstance';
+import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,10 +12,8 @@ import {
   BarElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 } from 'chart.js';
-import LockIcon from '@mui/icons-material/Lock';
-import { settingsElementStyles } from '@ui/Styles';
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -25,6 +24,14 @@ ChartJS.register(
 );
 
 function PracticeSettings({ settings, setCurrentPage }) {
+  const rangeRef = useRef(null);
+  
+  const getPercent = useCallback(
+    (value) => Math.round(((value - 0) / (60 - 0)) * 100),
+    []
+  );
+
+ 
   const { t } = useTranslation('degreeTrainer');
   const {
     mode,
@@ -40,7 +47,8 @@ function PracticeSettings({ settings, setCurrentPage }) {
     userProgress,
     repeatWhenAdvance,
     setRepeatWhenAdvance,
-    setCurrentPracticeRecords
+    setCurrentPracticeRecords,
+    currentLevel
   } = settings;
 
 
@@ -66,185 +74,174 @@ function PracticeSettings({ settings, setCurrentPage }) {
 
   return (
     <>
-      {/* Top Banner (Practice Settings + Return Button) */}
-      <Box
-        sx={{
-          position: 'sticky', // Keeps the banner fixed at the top during scrolling
-          top: 0,
-          left: 0,
-          width: '100%', // Full width of the screen
-          backdropFilter: 'blur(20px)', // Blur effect for the banner
-          zIndex: 1000, // Ensure it stays above other content
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center', // Center the text
-          padding: '16px 16px',
-        }}
-      >
-        {/* Home Button */}
-        <Button
-          color="secondary"
-          onClick={closeSettings}
-          sx={{
-            position: 'absolute', // Position it without affecting layout
-            left: '10px', // Offset from the left edge
-            top: '50%', // Vertically align center
-            transform: 'translateY(-50%)', // Adjust for the button's height
-            fontSize: '1.2rem',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <HomeIcon />
-        </Button>
-
-        {/* Centered Text */}
-        <Typography variant="h6" sx={{ textAlign: 'center' }}>
-          {t('settings.PracticeSettings')}
-        </Typography>
-      </Box>
 
 
-      {/* Main Content (Scroll Below the Fixed Banner) */}
-      <Box sx={{padding: '22px 32px' }}> {/* Add margin to avoid overlapping */}
+      <div className="p-6 space-y-12">
         {/* Toggle Repeat Setting */}
-        
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: 2,
-            cursor: 'pointer',
-          }}
+        <div 
+          className="flex items-center justify-between cursor-pointer"
           onClick={() => setRepeatWhenAdvance(!repeatWhenAdvance)}
         >
-          <Typography variant="body1" sx={settingsElementStyles}>
+          <span className="text-slate-700 dark:text-slate-300">
             {t('settings.repeatWhenAdvance')}
-          </Typography>
-          <Switch
-            checked={repeatWhenAdvance}
-            onChange={() => setRepeatWhenAdvance(!repeatWhenAdvance)}
-            name="repeatWhenAdvance"
-            color="secondary"
-          />
-        </Box>
+          </span>
+          <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+            repeatWhenAdvance ? 'bg-cyan-600' : 'bg-slate-200 dark:bg-slate-700'
+          }`}>
+            <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+              repeatWhenAdvance ? 'translate-x-6' : 'translate-x-1'
+            }`} />
+          </div>
+        </div>
 
-        {/* Note Range Slider */}
-        <div style={settingsElementStyles} >
-          <label id="note-range-slider">
-            {t('settings.NoteRange')}
-          </label>
-          <Slider
-            color="secondary"
-            value={range}
-            valueLabelFormat={(value) => Midi.midiToNoteName(value)}
-            onChange={(_, newValue) => {
-              if (Math.abs(newValue[1] - newValue[0]) >= 11) {
-                setRange(newValue);
-              }
-            }}
-            disableSwap
-            min={Midi.toMidi('C1')}
-            max={Midi.toMidi('C6')}
-            valueLabelDisplay="auto"
-            sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
-          />
+        {/* Note Range Dual Slider */}
+        <div className="space-y-3">
+          <div className="flex justify-between items-center mb-4">
+            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              {t('settings.NoteRange')}
+            </label>
+            <div className="text-sm text-slate-600 dark:text-slate-400">
+              {Midi.midiToNoteName(range[0])} - {Midi.midiToNoteName(range[1])}
+            </div>
+          </div>
+          <div className="range-container">
+            <div className="slider">
+              <div className="slider__track dark:bg-slate-700" />
+              <div className="slider__range slider__range--left" style={{ width: `${((range[0] - Midi.toMidi('C1')) / 60) * 100}%` }} />
+              <div className="slider__range slider__range--right" style={{ width: `${((range[1] - range[0]) / 60) * 100}%`, left: `${((range[0] - Midi.toMidi('C1')) / 60) * 100}%` }} />
+              <input
+                type="range"
+                min={0}
+                max={60}
+                value={range[0] - Midi.toMidi('C1')}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  const newValue = value + Midi.toMidi('C1');
+                  const maxAllowed = range[1] - 11;
+                  setRange([Math.min(newValue, maxAllowed), range[1]]);
+                }}
+                className="thumb thumb--left"
+                style={{ zIndex: (range[0] - Midi.toMidi('C1')) > 45 ? "5" : "3" }}
+              />
+              <input
+                type="range"
+                min={0}
+                max={60}
+                value={range[1] - Midi.toMidi('C1')}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  const newValue = value + Midi.toMidi('C1');
+                  const minAllowed = range[0] + 11;
+                  setRange([range[0], Math.max(newValue, minAllowed)]);
+                }}
+                className="thumb thumb--right"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Root Note Slider */}
-        <div style={settingsElementStyles} >
-          <label>{t('settings.RootNote')}</label>
-          <Slider
-            color="secondary"
-            valueLabelFormat={(value) => Midi.midiToNoteName(value)}
-            value={Midi.toMidi(rootNote)}
-            onChange={(e, value) => setRootNote(Midi.midiToNoteName(value))}
-            min={midiMin}
-            max={midiMax}
-            valueLabelDisplay="auto"
-            sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
-          />
+        <div className="space-y-3">
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              {t('settings.RootNote')}
+            </label>
+            <span className="text-sm text-slate-600 dark:text-slate-400">
+              {rootNote}
+            </span>
+          </div>
+          <div className="slider">
+            <div className="slider__track dark:bg-slate-700" />
+            <div className="slider__range" style={{ width: `${((Midi.toMidi(rootNote) - midiMin) / (midiMax - midiMin)) * 100}%` }} />
+            <input
+              type="range"
+              min={midiMin}
+              max={midiMax}
+              value={Midi.toMidi(rootNote)}
+              onChange={(e) => setRootNote(Midi.midiToNoteName(parseInt(e.target.value)))}
+              className="thumb"
+            />
+          </div>
         </div>
 
-        {/* BPM Slider */}
-        <div style={settingsElementStyles} >
-          <label>{t('settings.BPM')}</label>
-          <Slider
-            color="secondary"
-            value={bpm}
-            onChange={(e, value) => setBpm(value)}
-            min={10}
-            max={200}
-            valueLabelDisplay="auto"
-            sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
-          />
+        <div className="mb-12">
+          <div className="flex justify-between items-center mb-4">
+            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              {t('settings.BPM')}
+            </label>
+            <span className="text-sm text-slate-600 dark:text-slate-400">
+              {bpm} BPM
+            </span>
+          </div>
+          <div className="slider">
+            <div className="slider__track dark:bg-slate-700" />
+            <div className="slider__range" style={{ width: `${((bpm - 10) / (200 - 10)) * 100}%` }} />
+            <input
+              type="range"
+              min={10}
+              max={200}
+              value={bpm}
+              onChange={(e) => setBpm(parseInt(e.target.value))}
+              className="thumb"
+            />
+          </div>
         </div>
 
         {/* Degree Selection (Free Mode Only) */}
         {mode === 'free' && (
-          <div style={settingsElementStyles} >
-            <label>{t('settings.SelectDegrees')}</label>
-            <Grid container spacing={1} sx={{ marginTop: '4px', paddingLeft: 0 }}>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+              {t('settings.SelectDegrees')}
+            </label>
+            <div className="grid grid-cols-3 gap-3">
               {customNotes.map((note, index) => (
-                <Grid item xs={4} key={note.name} sx={{ padding: 0 }}>
-                  <Box
-                    onClick={() => handleDegreeToggle(index)}
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      cursor: 'pointer',
-                      padding: '4px',
-                      '&:hover': { bgcolor: 'action.hover' },
-                    }}
-                  >
-                    <Checkbox
-                      color="secondary"
-                      checked={note.enable}
-                      tabIndex={-1}
-                      size="small"
-                      sx={{ padding: '2px' }}
-                    />
-                    <Typography variant="body2" sx={{ marginLeft: '4px', fontSize: '1.1rem' }}>
-                      {note.name}
-                    </Typography>
-                  </Box>
-                </Grid>
+                <div
+                  key={note.name}
+                  onClick={() => handleDegreeToggle(index)}
+                  className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded"
+                >
+                  <input
+                    type="checkbox"
+                    checked={note.enable}
+                    onChange={() => {}}
+                    className="rounded border-slate-300 text-cyan-600 focus:ring-cyan-500"
+                  />
+                  <span className="text-slate-700 dark:text-slate-300">{note.name}</span>
+                </div>
               ))}
-            </Grid>
+            </div>
           </div>
         )}
 
         {/* Challenge Mode Level Selection */}
         {mode === 'challenge' && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <div className="space-y-2">
             {userProgress.map((levelData, index) => (
-              <Button
+              <button
                 key={levelData.level}
                 onClick={() => updateLevel(index)}
                 disabled={!levelData.unlocked}
-                variant="contained"
-                sx={{
-                  justifyContent: 'space-between',
-                  backgroundColor: levelData.unlocked ? 'primary.main' : 'grey.500',
-                  color: levelData.unlocked ? 'text.primary' : 'text.disabled',
-                  textTransform: 'none',
-                }}
+                className={`w-full flex justify-between items-center p-3 rounded-lg ${
+                  levelData.unlocked
+                    ? levelData.level === currentLevel?.level
+                      ? 'bg-cyan-800 text-white' // Selected level
+                      : 'bg-cyan-700 text-white hover:bg-cyan-800' // Unlocked but not selected
+                    : 'bg-slate-200 text-slate-500 dark:bg-slate-700 dark:text-slate-400 cursor-not-allowed' // Locked
+                }`}
               >
-                <Typography sx={{ fontWeight: 'bold' }}>
-                  {`Level ${levelData.level}: ${levelData.notes}`}
-                </Typography>
+                <span className="font-medium">
+                  Level {levelData.level}: {levelData.notes}
+                </span>
                 {levelData.unlocked ? (
-                  <Typography>{`${levelData.best}%`}</Typography>
+                  <span>{levelData.best}%</span>
                 ) : (
-                  <LockIcon sx={{ color: 'text.disabled' }} />
+                  <LockClosedIcon className="h-5 w-5" />
                 )}
-              </Button>
+              </button>
             ))}
-          </Box>
+          </div>
         )}
-      </Box>
+      </div>
     </>
   );
 

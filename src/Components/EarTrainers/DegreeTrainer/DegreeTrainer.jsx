@@ -51,7 +51,13 @@ const EarTrainer = () => {
 
   const openSettings = () => {
     setIsSettingsOpen(true);
-    setGameState('paused')
+    setGameState('paused');
+    document.body.classList.add('modal-open');
+  };
+
+  const closeSettings = () => {
+    setIsSettingsOpen(false);
+    document.body.classList.remove('modal-open');
   };
   const handleIntroClose = (mode) => {
     setMode(mode);
@@ -237,14 +243,15 @@ const EarTrainer = () => {
         >
           <CssBaseline />
           <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-          <DegreeTrainerSettings
-            settings={settings}
-            isSettingsOpen={isSettingsOpen}
-            setIsSettingsOpen={setIsSettingsOpen}
-            playNote={playNote}
-            setGameState={setGameState}
-
-          />
+          <div className="pr-4"> {/* Add right padding for scrollbar placeholder */}
+            <DegreeTrainerSettings
+              settings={settings}
+              isSettingsOpen={isSettingsOpen}
+              setIsSettingsOpen={closeSettings}
+              playNote={playNote}
+              setGameState={setGameState}
+            />
+          </div>
           <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} mode={mode} setMode={setMode} />
           {gameState == 'playing' && (
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%', marginBottom: '2rem' }}>

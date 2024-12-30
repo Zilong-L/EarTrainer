@@ -55,8 +55,21 @@ const useChordPracticeGame = () => {
     getNextChord();
   }, [chordType]);
   function getNextChord() {
-    const symbol = Chord.get(chordType.toLowerCase()).aliases[0];
-    let currentRoot = Chord.get(targetChord).tonic;
+    // Convert chord type names to match Tonal's format
+    const chordTypeMap = {
+      'Major': 'M',
+      'Minor': 'm',
+      'Diminished': 'dim',
+      'Augmented': 'aug',
+      'Major 7th': 'M7',
+      'Minor 7th': 'm7',
+      'Dominant 7th': '7',
+      'Half Diminished 7th': 'm7b5',
+      'Diminished 7th': 'dim7'
+    };
+    
+    const symbol = chordTypeMap[chordType] || chordType;
+    let currentRoot = targetChord ? Chord.get(targetChord).tonic : 'C';
     let newRoot;
 
     switch (drillMode) {

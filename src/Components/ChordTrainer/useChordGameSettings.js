@@ -1,14 +1,26 @@
 import { useState, useEffect } from 'react';
 import { getDroneInstance, getSamplerInstance } from '@utils/ToneInstance';
+import { useLocalStorage } from '@uidotdev/usehooks';
 
 const useChordGameSettings = () => {
-  const [mode, setMode] = useState('Chord Practice'); // Default mode: "Chord Practice"
-  const [bpm, setBpm] = useState(40);
-  const [selectedInstrument, setSelectedInstrument] = useState('bass-electric');
-  const [pianoVolume, setPianoVolume] = useState(1.0);
-
+  const [mode, setMode] = useLocalStorage('ChordTrainer_Mode', 'Chord Practice');
+  const [bpm, setBpm] = useLocalStorage('ChordTrainer_Bpm', 40);
+  const [selectedInstrument, setSelectedInstrument] = useLocalStorage('ChordTrainer_SelectedInstrument', 'bass-electric');
+  const [pianoVolume, setPianoVolume] = useLocalStorage('ChordTrainer_PianoVolume', 1.0);
+  const [selectedQuality, setSelectedQuality] = useLocalStorage('ChordTrainer_SelectedQuality', 'low');
+  const [isLoadingInstrument, setIsLoadingInstrument] = useState(false);
   const drone = getDroneInstance();
   const piano = getSamplerInstance();
+
+
+  useEffect(() => {
+    const loadInstrument = async () => {
+      setIsLoadingInstrument(true);
+      await getSamplerInstance().changeSampler(selectedInstrument, selectedQuality);
+      setIsLoadingInstrument(false);
+    };
+    loadInstrument();
+  }, [selectedInstrument, selectedQuality]);
 
   // Update drone root note
 
@@ -45,6 +57,9 @@ const useChordGameSettings = () => {
     pianoVolume,
     mode,
     selectedInstrument,
+    selectedQuality,
+    setSelectedQuality,
+    isLoadingInstrument,
     setMode,
     setBpm,
     setPianoVolume,

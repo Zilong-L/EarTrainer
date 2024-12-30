@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
-import { Box, Button, Typography, Modal } from '@mui/material';
+import React, { useState,useEffect  } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import HomeIcon from '@mui/icons-material/Home';
-import {settingsElementStyles} from '@ui/Styles';
+import { getDroneInstance } from '@utils/ToneInstance';
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 function Statistics({ settings, setCurrentPage }) {
   const { t } = useTranslation('degreeTrainer');
   const { practiceRecords, setPracticeRecords } = settings;
@@ -25,6 +42,14 @@ function Statistics({ settings, setCurrentPage }) {
           backgroundColor: 'rgba(75, 192, 192, 0.6)',
         },
       ],
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
     };
   };
 
@@ -34,89 +59,51 @@ function Statistics({ settings, setCurrentPage }) {
     setIsDeleteConfirmOpen(false);
   };
 
-  return (
-    <>
-      <Box
-        sx={{
-          position: 'sticky', // Keeps the banner fixed at the top during scrolling
-          top: 0,
-          left: 0,
-          width: '100%', // Full width of the screen
-          backdropFilter: 'blur(20px)', // Blur effect for the banner
-          zIndex: 1000, // Ensure it stays above other content
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center', // Center the text
-          padding: '16px 16px',
-        }}
-      >
-        {/* Home Button */}
-        <Button
-          color="secondary"
-          onClick={() => setCurrentPage('home')}
-          sx={{
-            position: 'absolute', // Position it without affecting layout
-            left: '10px', // Offset from the left edge
-            top: '50%', // Vertically align center
-            transform: 'translateY(-50%)', // Adjust for the button's height
-            fontSize: '1.2rem',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <HomeIcon />
-        </Button>
 
-        {/* Centered Text */}
-        <Typography variant="h6" sx={{ textAlign: 'center' }}>
-          {t('settings.Statistics')}
-        </Typography>
-      </Box>
-      {/* Quality Selector */}
-      <Box sx={{ padding: '22px 32px' }}>
+
+  return (
+    <div className="p-6 space-y-12">
+      <div>
         <Bar data={generateChartData()} />
-        <Box sx={{ ...settingsElementStyles, display: 'flex', justifyContent: 'flex-end' }}>
-          <Button
-            color="secondary"
-            variant="contained"
-            onClick={() => setIsDeleteConfirmOpen(true)}
-            sx={{ marginTop: 2 }}
-          >
-            {t('settings.DeleteData')}
-          </Button>
-        </Box>
-        <Modal
-          open={isDeleteConfirmOpen}
-          onClose={() => setIsDeleteConfirmOpen(false)}
+      </div>
+      <div className="flex justify-end">
+        <button
+          onClick={() => setIsDeleteConfirmOpen(true)}
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
         >
-          <Box
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 300,
-              bgcolor: 'background.paper',
-              p: 4,
-              borderRadius: 2,
-              boxShadow: 24,
-            }}
-          >
-            <Typography variant="h6">{t('settings.ConfirmDelete')}</Typography>
-            <Typography sx={{ mt: 2 }}>{t('settings.DeleteConfirmation')}</Typography>
-            <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
-              <Button onClick={handleDeleteConfirm} color="secondary" variant="contained">
+          {t('settings.DeleteData')}
+        </button>
+      </div>
+
+      {/* Delete Confirmation Modal */}
+      {isDeleteConfirmOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setIsDeleteConfirmOpen(false)} />
+          <div className="relative bg-white dark:bg-slate-800 p-6 rounded-lg shadow-xl w-80">
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2">
+              {t('settings.ConfirmDelete')}
+            </h3>
+            <p className="text-slate-600 dark:text-slate-400 mb-6">
+              {t('settings.DeleteConfirmation')}
+            </p>
+            <div className="flex justify-between">
+              <button
+                onClick={handleDeleteConfirm}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              >
                 {t('settings.Delete')}
-              </Button>
-              <Button onClick={() => setIsDeleteConfirmOpen(false)} color="primary" variant="outlined">
+              </button>
+              <button
+                onClick={() => setIsDeleteConfirmOpen(false)}
+                className="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+              >
                 {t('settings.Cancel')}
-              </Button>
-            </Box>
-          </Box>
-        </Modal>
-      </Box>
-    </>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 

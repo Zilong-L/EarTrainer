@@ -1,0 +1,242 @@
+.thumb,
+.thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.thumb {
+  pointer-events: none;
+  position: absolute;
+  height: 0;
+  width: 100%;
+  outline: none;
+}
+
+.thumb--left {
+  z-index: 5;
+}
+
+.thumb--right {
+  z-index: 4;
+}
+
+.thumb::-webkit-slider-thumb {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+  margin-top: 4px;
+  pointer-events: all;
+  position: relative;
+  z-index: 5;
+}
+
+.thumb::-moz-range-thumb {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+  margin-top: 4px;
+  pointer-events: all;
+  position: relative;
+  z-index: 5;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  input[type="range"] {
+    background: #334155;
+  }
+  
+  input[type="range"]::-webkit-slider-runnable-track {
+    background: #334155;
+  }
+  
+  input[type="range"]::-moz-range-track {
+    background: #334155;
+  }
+}
+
+/* Dual range slider specific styles */
+.range-container {
+  position: relative;
+  width: 100%;
+  height: 0px;
+}
+
+.range-values {
+  background-color: #0e7490;
+  width: auto;
+  max-width: 200px;
+  position: relative;
+  margin: 0 auto 20px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.range-values:before {
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-top: 8px solid #0891b2;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  margin: auto;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+}
+
+.slider__track,
+.slider__range {
+  position: absolute;
+  border-radius: 4px;
+  height: 8px;
+}
+
+.slider__track {
+  background-color: #e2e8f0;
+  width: 100%;
+  z-index: 1;
+}
+
+.slider__range {
+  background-color: rgb(14 116 144);
+  z-index: 2;
+  width: 100%;
+}
+
+/* Specific styles for left and right range portions */
+.slider__range--left {
+  background-color: #e2e8f0;
+  z-index: 3;
+}
+
+.slider__range--right {
+  background-color: rgb(14 116 144);
+  z-index: 2;
+}
+
+/* Dual range slider track and range colors */
+.range-slider {
+  background-color: #e2e8f0;
+}
+
+.range-slider::-webkit-slider-runnable-track {
+  background-color: rgb(14 116 144);
+}
+
+.range-slider::-moz-range-track {
+  background-color: rgb(14 116 144);
+}
+
+/* Scrollbar handling */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Modal scrollbar handling */
+body.modal-open {
+  padding-right: 8px !important; /* Match scrollbar width */
+  overflow: hidden !important;
+}
+
+body.modal-open::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ensure range slider thumb matches other sliders */
+.thumb::-webkit-slider-thumb {
+  background-color: rgb(14 116 144);
+  border: 3px solid #fff;
+}
+
+.thumb::-moz-range-thumb {
+  background-color: rgb(8 145 178);
+  border: 3px solid #fff;
+}
+
+.range-slider {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+  -webkit-appearance: none;
+  z-index: 2;
+  background: transparent;
+}
+
+.range-slider:first-of-type {
+  top: 50%;
+  transform: translateY(-100%);
+}
+
+.range-slider:last-of-type {
+  top: 50%;
+  transform: translateY(0%);
+}
+
+.range-slider::-webkit-slider-thumb {
+  pointer-events: auto;
+  position: relative;
+  z-index: 3;
+}
+
+.range-slider::-moz-range-thumb {
+  pointer-events: auto;
+  position: relative;
+  z-index: 3;
+}
+
+/* Give the second slider's thumb a different z-index */
+.range-slider:nth-of-type(2)::-webkit-slider-thumb {
+  z-index: 4;
+}
+
+.range-slider:nth-of-type(2)::-moz-range-thumb {
+  z-index: 4;
+}
+
+.range-labels {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  bottom: -20px;
+  pointer-events: none;
+}
+
+.range-label {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+@media (prefers-color-scheme: dark) {
+  .range-track {
+    background: #334155;
+  }
+  
+  .range-label {
+    color: #94a3b8;
+  }
+}
