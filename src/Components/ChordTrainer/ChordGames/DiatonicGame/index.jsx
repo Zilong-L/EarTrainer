@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
-import { Typography, Grid } from '@mui/material';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import MIDIInputHandler from '../MIDIInputHandler';
 
 const DiatonicGame = ({diatonicGameSettings}) => {
-  const { targetChord,activeNotes,detectedChords,setActiveNotes } = diatonicGameSettings;
+  const { targetChord, activeNotes, detectedChords, setActiveNotes } = diatonicGameSettings;
+  
   return (
-    <Grid container direction="column" alignItems="center" justifyContent="center" style={{ height: '75vh', paddingLeft: '10%' }}>
-      <Grid item style={{ height: '30vh', width: '100%' }}>
-        <Typography color="inherit" variant="h1" component="h2" gutterBottom align="left">
+    <div className="h-[75vh] pl-[10%] flex flex-col items-center justify-center">
+      <div className="h-[30vh] w-full">
+        <h1 className="text-6xl font-bold text-left mb-4 text-gray-900 dark:text-gray-100">
           {targetChord}
-        </Typography>
-      </Grid>
-      <Grid item sx={{ width: '100%' }}>
-        <MIDIInputHandler activeNotes={activeNotes} setActiveNotes={setActiveNotes} detectedChords={detectedChords} />
-      </Grid>
-    </Grid>
+        </h1>
+      </div>
+      <div className="w-full">
+        <MIDIInputHandler 
+          activeNotes={activeNotes} 
+          setActiveNotes={setActiveNotes} 
+          detectedChords={detectedChords} 
+        />
+      </div>
+    </div>
   );
 };
 

@@ -1,6 +1,4 @@
 import React from 'react';
-import { Box, FormControl, InputLabel, Select, MenuItem, Typography } from '@mui/material';
-import { Midi, Note } from 'tonal';
 import { useTranslation } from 'react-i18next';
 
 const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
@@ -9,43 +7,60 @@ const DiatonicSettings = ({diatonicGameSettings}) => {
   const { t } = useTranslation('chordGame');
   
   const { rootNote, setRootNote, scaleType, setScaleType } = diatonicGameSettings;
-  // Convert MIDI to flat notation
 
-  const handleRootNoteChange = (event) => {
-    const selectedNote = event.target.value;
-    console.log(selectedNote);
-    setRootNote(selectedNote); // Save MIDI value
+  const handleRootNoteChange = (e) => {
+    setRootNote(e.target.value);
+  };
+
+  const handleScaleTypeChange = (e) => {
+    setScaleType(e.target.value);
   };
 
   return (
-    <Box>
-      <Typography variant="subtitle1" sx={{ mb: 2 }}>
+    <div className="space-y-6 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg shadow-sm">
+      <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
         {t('settings.diatonic.title')}
-      </Typography>
+      </h3>
 
       {/* Root Note Selector */}
-      <FormControl fullWidth sx={{ mb: 2 }}>
-        <InputLabel>{t('settings.diatonic.rootNote')}</InputLabel>
-        <Select value={rootNote} onChange={handleRootNoteChange}>
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+          {t('settings.diatonic.rootNote')}
+        </label>
+        <select
+          value={rootNote}
+          onChange={handleRootNoteChange}
+          className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all text-base"
+        >
           {flatNotes.map((note) => (
-            <MenuItem key={note} value={note}>
+            <option 
+              key={note} 
+              value={note}
+              className="bg-white dark:bg-slate-700 py-2 text-base"
+            >
               {note}
-            </MenuItem>
+            </option>
           ))}
-        </Select>
-      </FormControl>
+        </select>
+      </div>
 
       {/* Scale Type Selector */}
-      <FormControl fullWidth>
-        <InputLabel>{t('settings.diatonic.scaleType')}</InputLabel>
-        <Select value={scaleType} onChange={(e) => setScaleType(e.target.value)}>
-          <MenuItem value="major">{t('settings.diatonic.major')}</MenuItem>
-          <MenuItem value="harmonic">{t('settings.diatonic.harmonicMinor')}</MenuItem>
-          <MenuItem value="melodic">{t('settings.diatonic.melodicMinor')}</MenuItem>
-          <MenuItem value="natural">{t('settings.diatonic.naturalMinor')}</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+          {t('settings.diatonic.scaleType')}
+        </label>
+        <select
+          value={scaleType}
+          onChange={handleScaleTypeChange}
+          className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all text-base"
+        >
+          <option value="major" className="bg-white dark:bg-slate-700 py-2 text-base">{t('settings.diatonic.major')}</option>
+          <option value="harmonic" className="bg-white dark:bg-slate-700 py-2 text-base">{t('settings.diatonic.harmonicMinor')}</option>
+          <option value="melodic" className="bg-white dark:bg-slate-700 py-2 text-base">{t('settings.diatonic.melodicMinor')}</option>
+          <option value="natural" className="bg-white dark:bg-slate-700 py-2 text-base">{t('settings.diatonic.naturalMinor')}</option>
+        </select>
+      </div>
+    </div>
   );
 };
 
