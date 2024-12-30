@@ -1,6 +1,14 @@
 {
   "settings": {
     "home": "Home",
+    "drillModes": {
+      "title": "Drill Mode",
+      "random": "Random",
+      "circle_fifths": "Circle of Fifths (Up)",
+      "circle_fourths": "Circle of Fifths (Down)",
+      "semitone_up": "Semitone Up",
+      "semitone_down": "Semitone Down"
+    },
     "SoundSettings": "Sound Settings",
     "qualityLabel": "Select Quality",
     "quality": {
@@ -8,7 +16,10 @@
       "medium": "Medium",
       "high": "High",
       "full": "Full"
-    },"chordCategories": {
+    },
+    "easyMode": "Easy Mode",
+    "proMode": "Pro Mode",
+    "chordCategories": {
     "Triads": "Triads",
     "Sevenths": "Sevenths"
   },
