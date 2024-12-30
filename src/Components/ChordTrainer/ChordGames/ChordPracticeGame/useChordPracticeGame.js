@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import { detect } from "@tonaljs/chord-detect";
-import { Chord,  Midi, Note } from 'tonal';
+import { Chord, Midi, Note } from 'tonal';
+
+const DRILL_MODES = {
+  RANDOM: 'random',
+  CIRCLE_FIFTHS: 'circle_fifths',
+  CIRCLE_FOURTHS: 'circle_fourths',
+  SEMITONE_UP: 'semitone_up',
+  SEMITONE_DOWN: 'semitone_down'
+};
 
 
 
@@ -12,6 +20,8 @@ const useChordPracticeGame = () => {
   const [ignoreTranspose, setIgnoreTranspose] = useState(true);
   const [chordType, setChordType] = useState("Major");
   const [proMode, setProMode] = useState(false);
+  const [drillMode, setDrillMode] = useState(DRILL_MODES.RANDOM);
+  const [drillIndex, setDrillIndex] = useState(0);
 
   const notes = Array(12).fill(0).map((_, i) => Note.transposeFifths("C", i - Math.floor(6)));
   useEffect(() => {
@@ -23,20 +33,24 @@ const useChordPracticeGame = () => {
   }, [activeNotes]);
 
   useEffect(() => {
-    let detectedChordsForComparison = detectedChords
+    let detectedChordsForComparison = detectedChords;
     let targetChordForComparison = targetChord;
-    
-
-    if(ignoreTranspose){
-      detectedChordsForComparison = detectedChordsForComparison.map(ch => ch.split('/')[0])
+    if (ignoreTranspose) {
+      detectedChordsForComparison = detectedChordsForComparison.map(ch => ch.split('/')[0]);
       targetChordForComparison = targetChord.split('/')[0];
     }
-    if(
-      detectedChordsForComparison.some(ch => Chord.get(ch).name === Chord.get(targetChordForComparison).name)
-    ) {
-      getNextChord()
+    // Get all tonics of detected chords
+    const tonics = detectedChordsForComparison.map(ch => Chord.get(ch).tonic);
+    // Generate all enharmonics for each tonic
+    const enharmonicsList = tonics.map(t => Note.enharmonic(t));
+    const enharmonicsChords = enharmonicsList.map(e => Chord.getChord(chordType.toLocaleLowerCase(), e).symbol);
+    const augmentedChords = [...detectedChordsForComparison, ...enharmonicsChords];
+    // Check if any chord in the augmented list matches the target chord
+    if (augmentedChords.some(ch => Chord.get(ch)?.name === Chord.get(targetChordForComparison)?.name)) {
+      getNextChord();
     }
   }, [detectedChords]);
+  
   useEffect(() => {
     getNextChord();
   }, [chordType]);
@@ -44,9 +58,36 @@ const useChordPracticeGame = () => {
     const symbol = Chord.get(chordType.toLowerCase()).aliases[0];
     let currentRoot = Chord.get(targetChord).tonic;
     let newRoot;
-    do {
-    newRoot = notes[Math.floor(Math.random() * notes.length)];
-    } while (currentRoot === newRoot);
+
+    switch (drillMode) {
+      case DRILL_MODES.CIRCLE_FIFTHS:
+        newRoot = Note.simplify(Note.transpose(currentRoot, "P5"));
+        setDrillIndex((drillIndex + 1) % 12);
+        break;
+        
+      case DRILL_MODES.CIRCLE_FOURTHS:
+        newRoot = Note.simplify(Note.transpose(currentRoot, "P4"));
+        setDrillIndex((drillIndex + 11) % 12); // Move backwards in circle
+        break;
+        
+      case DRILL_MODES.SEMITONE_UP:
+        newRoot = Note.simplify(Note.transpose(currentRoot, "m2"));
+        setDrillIndex((drillIndex + 1) % 12);
+        break;
+        
+      case DRILL_MODES.SEMITONE_DOWN:
+        newRoot = Note.simplify(Note.transpose(currentRoot, "-m2"));
+        setDrillIndex((drillIndex + 1) % 12);
+        break;
+        
+      case DRILL_MODES.RANDOM:
+      default:
+        do {
+          newRoot = notes[Math.floor(Math.random() * notes.length)];
+        } while (currentRoot === newRoot);
+        break;
+    }
+    
     setTargetChord(`${newRoot}${symbol}`);
   }
   return {
@@ -60,6 +101,8 @@ const useChordPracticeGame = () => {
     setChordType,
     ignoreTranspose,
     setIgnoreTranspose,
+    drillMode,
+    setDrillMode,
   };
 };
 
