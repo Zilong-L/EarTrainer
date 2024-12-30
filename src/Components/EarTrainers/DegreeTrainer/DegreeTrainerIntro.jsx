@@ -12,7 +12,7 @@ const IntroModal = ({ isOpen, handleClose ,mode,setMode}) => {
   return (
     <Modal
       open={isOpen}
-      onClose={handleClose}
+
       aria-labelledby="intro-modal-title"
       aria-describedby="intro-modal-description"
     >

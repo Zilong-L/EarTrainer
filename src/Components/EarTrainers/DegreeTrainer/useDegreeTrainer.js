@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useMemo } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance, playNotes } from '@utils/ToneInstance';
+
 const audioCache = {};
 
 import { Note, Range } from 'tonal';
@@ -31,49 +32,68 @@ const useDegreeTrainer = (settings) => {
   const [disabledNotes, setDisabledNotes] = useState([]);
 
   const [gameState, setGameState] = useState('end');
-  const [currentNotes, setCurrentNotes] = useState(degrees);
-  const [filteredNotes, setFilteredNotes] = useState(degrees);
 
-  const [possibleNotesInRange, setPossibleNotesInRange] = useState([]);
   const [activeNote, setActiveNote] = useState(null);
   const [isAdvance, setIsAdvance] = useState(false);
 
   const drone = getDroneInstance();
+  const getPossibleNotesInRange = (rootNote, range, degrees) => {
+    // Get enabled intervals
+    console.log('calculating possible notes in range');
+    const enabledIntervals = degrees
+      .filter(degree => degree.enable)
+      .map(degree => degree.interval);
 
+    // Generate the scale notes by transposing the rootNote by each enabled interval
+    const scaleNotes = enabledIntervals
+      .map(interval => Note.transpose(rootNote, interval))
+      .filter(note => note);
+
+    // Create a set of pitch classes (both original and enharmonic) for matching
+    const scaleNoteSet = new Set();
+    scaleNotes.forEach(note => {
+      scaleNoteSet.add(Note.pitchClass(note));
+      scaleNoteSet.add(Note.enharmonic(Note.pitchClass(note)));
+    });
+
+    // Generate all possible notes within the MIDI range
+    const allNotesInRange = Range.chromatic([Note.fromMidi(range[0]), Note.fromMidi(range[1])]);
+
+    // Filter notes based on both original and enharmonic pitch classes
+    const possibleNotesInRange = allNotesInRange.filter(note => {
+      const pitchClass = Note.pitchClass(note);
+      return scaleNoteSet.has(pitchClass) || scaleNoteSet.has(Note.enharmonic(pitchClass));
+    });
+
+    return possibleNotesInRange;
+  };
   // update currentNotes based on settings
-  useEffect(() => {
-    if (mode == 'free') {
-      if (currentNotes.length != customNotes.length || !currentNotes.every((note, index) => note.enable === customNotes[index].enable)) {
-        setCurrentNotes(customNotes);
-      }
+  const currentNotes = useMemo(() => {
+    if (mode === 'free') {
+      // Return customNotes directly in free mode
+      return customNotes;
+    } else if (mode !== 'free' && currentLevel.degrees) {
+      // Map currentNotes based on currentLevel.degrees
+      return degrees.map((note, index) => ({
+        ...note,
+        enable: currentLevel.degrees[index],
+      }));
     }
-    else if (mode != 'free' && currentLevel.degrees) {
-      const needsUpdate = currentNotes.some((note, index) => note.enable !== currentLevel.degrees[index]);
-      
-      if (needsUpdate) {
-        const newNotes = currentNotes.map((note, index) => ({
-          ...note,
-          enable: currentLevel.degrees[index],
-        }));
-        setCurrentNotes(newNotes);
-      }
-    }
-  }, [currentLevel, mode, currentNotes]);
+    return []; // Default fallback if no mode matches
+  }, [mode, customNotes, currentLevel]);
 
-  // update filteredNotes based on currentNotes
-  useEffect(() => {
-    // Filter the enabled notes and update the filtered notes state
-    const newNotes = currentNotes.filter((obj) => obj.enable);
-    setFilteredNotes(newNotes);
+  const filteredNotes = useMemo(() => {
+    if(!currentNotes) {
+      return [];
+      console.log("currentNotes is null")
+    }
+
+    return currentNotes.filter(note => note.enable);
   }, [currentNotes]);
-
-  // update if possibleNotesInRange changes
-  useEffect(() => {
-    const newList = getPossibleNotesInRange(rootNote, range, currentNotes)
-    if (newList.length != possibleNotesInRange.length || !newList.every((note, index) => note === possibleNotesInRange[index])) {
-      setPossibleNotesInRange(newList)
-      
-    }
+  const possibleNotesInRange = useMemo(() => {
+    console.log('updating possible notes in range');
+    const newList = getPossibleNotesInRange(rootNote, range, currentNotes);
+    return newList;
   }, [rootNote, range, currentNotes]);
 
   // when possibleNotesInRange changes, generate a new note and play it
@@ -174,35 +194,7 @@ const useDegreeTrainer = (settings) => {
     playNotes(note, delay, bpm)
   };
 
-  const getPossibleNotesInRange = (rootNote, range, degrees) => {
-    // Get enabled intervals
-    const enabledIntervals = degrees
-      .filter(degree => degree.enable)
-      .map(degree => degree.interval);
-
-    // Generate the scale notes by transposing the rootNote by each enabled interval
-    const scaleNotes = enabledIntervals
-      .map(interval => Note.transpose(rootNote, interval))
-      .filter(note => note);
-
-    // Create a set of pitch classes (both original and enharmonic) for matching
-    const scaleNoteSet = new Set();
-    scaleNotes.forEach(note => {
-      scaleNoteSet.add(Note.pitchClass(note));
-      scaleNoteSet.add(Note.enharmonic(Note.pitchClass(note)));
-    });
-
-    // Generate all possible notes within the MIDI range
-    const allNotesInRange = Range.chromatic([Note.fromMidi(range[0]), Note.fromMidi(range[1])]);
-
-    // Filter notes based on both original and enharmonic pitch classes
-    const possibleNotesInRange = allNotesInRange.filter(note => {
-      const pitchClass = Note.pitchClass(note);
-      return scaleNoteSet.has(pitchClass) || scaleNoteSet.has(Note.enharmonic(pitchClass));
-    });
-
-    return possibleNotesInRange;
-  };
+  
 
   const generateRandomNoteBasedOnRoot = () => {
     if (possibleNotesInRange.length === 0) return null;
@@ -260,9 +252,9 @@ const useDegreeTrainer = (settings) => {
 
   return {
     currentNote,
+    filteredNotes,
     disabledNotes,
     gameState,
-    filteredNotes,
     activeNote,
     isAdvance,
     isCorrect,

@@ -1,33 +1,31 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { degrees, initialUserProgress } from '@components/EarTrainers/DegreeTrainer/Constants';
-
-import { getDroneInstance, getSamplerInstance, } from '@utils/ToneInstance';
+import { getDroneInstance, getSamplerInstance } from '@utils/ToneInstance';
 import toast from 'react-hot-toast';
-import { useLocalStorage } from '@uidotdev/usehooks'; 
+import {useLocalStorage} from '@uidotdev/usehooks';
 
 const useDegreeTrainerSettings = () => {
-  const [mode, setMode] = useLocalStorage('DegreeTrainer_mode', 'free'); // 
-  const [currentLevel, setCurrentLevel] = useLocalStorage('DegreeTrainer_currentLevel', initialUserProgress[0]);
-  const [customNotes, setCustomNotes] = useLocalStorage('DegreeTrainer_customNotes1', degrees);
+  const [mode, setMode] = useLocalStorage('degreeTrainerMode', 'free');
+  const [currentLevel, setCurrentLevel] = useLocalStorage('degreeTrainerCurrentLevel', initialUserProgress[0]);
+  const [customNotes, setCustomNotes] = useState(degrees);
 
-  const [isHandfree, setIsHandfree] = useLocalStorage('DegreeTrainer_isHandfree', false);
-  const [isStatOpen, setIsStatOpen] = useLocalStorage('DegreeTrainer_isStatOpen', true);
-  const [repeatWhenAdvance, setRepeatWhenAdvance] = useLocalStorage('DegreeTrainer_repeatWhenAdvance', true);
-  
+  const [isHandfree, setIsHandfree] = useLocalStorage('degreeTrainerIsHandfree', false);
+  const [isStatOpen, setIsStatOpen] = useLocalStorage('degreeTrainerIsStatOpen', true);
+  const [repeatWhenAdvance, setRepeatWhenAdvance] = useLocalStorage('degreeTrainerRepeatWhenAdvance', true);
 
-  const [bpm, setBpm] = useLocalStorage('DegreeTrainer_bpm', 40);
-  const [droneVolume, setDroneVolume] = useLocalStorage('DegreeTrainer_droneVolume', 0.5);
-  const [pianoVolume, setPianoVolume] = useLocalStorage('DegreeTrainer_pianoVolume', 1.0);
+  const [bpm, setBpm] = useLocalStorage('degreeTrainerBpm', 40);
+  const [droneVolume, setDroneVolume] = useLocalStorage('degreeTrainerDroneVolume', 0.5);
+  const [pianoVolume, setPianoVolume] = useLocalStorage('degreeTrainerPianoVolume', 1.0);
 
-  const [range, setRange] = useLocalStorage('DegreeTrainer_range', [Tone.Frequency('C3').toMidi(), Tone.Frequency('C4').toMidi()]);
-  const [rootNote, setRootNote] = useLocalStorage('DegreeTrainer_rootNote1', 'C3');
+  const [range, setRange] = useState([Tone.Frequency('C3').toMidi(), Tone.Frequency('C4').toMidi()]);
+  const [rootNote, setRootNote] = useState('C3');
 
-  const [selectedInstrument, setSelectedInstrument] = useLocalStorage('DegreeTrainer_selectedInstrument', 'bass-electric');
-  const [selectedQuality, setSelectedQuality] = useLocalStorage('DegreeTrainer_selectedQuality', 'low');
+  const [selectedInstrument, setSelectedInstrument] = useLocalStorage('degreeTrainerSelectedInstrument', 'bass-electric');
+  const [selectedQuality, setSelectedQuality] = useLocalStorage('degreeTrainerSelectedQuality', 'low');
 
-  const [practiceRecords, setPracticeRecords] = useLocalStorage('DegreeTrainer_practiceRecords', {});
-  const [userProgress, setUserProgress] = useLocalStorage('DegreeTrainer_userProgress', initialUserProgress);
+  const [practiceRecords, setPracticeRecords] = useLocalStorage('degreeTrainerPracticeRecords', {});
+  const [userProgress, setUserProgress] = useLocalStorage('degreeTrainerUserProgress', initialUserProgress);
 
   const [currentPracticeRecords, setCurrentPracticeRecords] = useState({ total: 0, correct: 0 });
   
