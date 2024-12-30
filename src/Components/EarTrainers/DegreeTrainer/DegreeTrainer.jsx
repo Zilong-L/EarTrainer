@@ -7,12 +7,12 @@ import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from '@components/Sidebar';
 import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/Settings';
-import IntroModal from '@components/EarTrainers/DegreeTrainer/DegreeTrainerIntro';
 import useDegreeTrainer from '@components/EarTrainers/DegreeTrainer/useDegreeTrainer';
 import useDegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/useDegreeTrainerSettings';
 import { apps, keyMap, degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { useTranslation } from 'react-i18next';
 import { Toaster } from 'react-hot-toast';
+import {Note}from 'tonal';
 
 import * as Tone from 'tone';
 
@@ -47,8 +47,6 @@ const EarTrainer = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isIntroOpen, setIsIntroOpen] = useState(true);
-
   const openSettings = () => {
     setIsSettingsOpen(true);
     setGameState('paused');
@@ -59,23 +57,9 @@ const EarTrainer = () => {
     setIsSettingsOpen(false);
     document.body.classList.remove('modal-open');
   };
-  const handleIntroClose = (mode) => {
-    setMode(mode);
-    setIsIntroOpen(false);
-    if (mode == 'challenge') {
-      setTimeout(() => {
-        startGame();
 
-      }, 200);
-    } else {
-      startGame();
-    }
-  };
-  useEffect(() => {
-    return () => {
-      endGame();
-    }
-  }, []);
+  // Start game based on mode when component mounts
+
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -90,15 +74,15 @@ const EarTrainer = () => {
         degreeIndex = keyMap[key];
       }
       if (degreeIndex !== undefined) {
-        const selectedDegree = degrees[degreeIndex];
-        const noteName = Tone.Frequency(rootNote + selectedDegree.distance, 'midi').toNote().slice(0, -1); // 获取对应的音符名称
+        const noteName = Note.pitchClass(Note.transpose(rootNote, degrees[degreeIndex].interval)); // 获取对应的音符名称
         // 模拟点击对应的按钮
+        console.log('noteName', noteName);
         const button = document.querySelector(`button[data-note="${noteName}"]`);
         if (button) {
           button.click();
         }
       }
-
+      console.log('key', key);
       // Hit the replay button if R or space is pressed
 
     };
@@ -252,8 +236,6 @@ const EarTrainer = () => {
               setGameState={setGameState}
             />
           </div>
-          <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} mode={mode} setMode={setMode} />
-          {gameState == 'playing' && (
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%', marginBottom: '2rem' }}>
               {isStatOpen && renderRecords()}
               <Box sx={{ flexGrow: 1 }} />
@@ -301,7 +283,13 @@ const EarTrainer = () => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => playNote(currentNote)}
+                onClick={() => {
+                  if (gameState === 'end') {
+                    setGameState('start');
+                  } else {
+                    playNote(currentNote);
+                  }
+                }}
                 fullWidth
                 sx={{
                   textTransform: 'none',
@@ -312,10 +300,16 @@ const EarTrainer = () => {
                   marginTop: 'auto',
                 }}
               >
-                <ReplayIcon sx={{ fontSize: '3rem' }} />
+                {gameState === 'end' ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-12 h-12">
+                    <path fillRule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
+                  </svg>
+                ) : (
+                  <ReplayIcon sx={{ fontSize: '3rem' }} />
+                )}
               </Button>
             </Box>
-          )}
+          
         </Container>
       </Paper>
       <Toaster />

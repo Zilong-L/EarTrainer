@@ -7,11 +7,10 @@ import { useTranslation } from 'react-i18next';
 
 function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, playNote, setGameState }) {
   const { t } = useTranslation('degreeTrainer');
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState('practice');
 
   const closeSettings = () => {
     setIsSettingsOpen(false);
-    setCurrentPage('home');
     setGameState('playing');
     document.body.classList.remove('modal-open');
   };
@@ -60,14 +59,14 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
         {/* Content container with navigation and content area */}
         <div className="flex h-[calc(100%-4rem)]">
           {/* Navigation Sidebar - Hidden on mobile */}
-          <div className="w-48 border-r border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 h-full">
-          <nav className="p-4 space-y-2 hidden md:block bg-slate-50 dark:bg-slate-800">
+          <div className="w-48 border-r border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 h-full hidden md:block">
+          <nav className="p-4 space-y-2 bg-slate-50 dark:bg-slate-800">
             <button
               onClick={() => setCurrentPage('practice')}
               className={`w-full px-4 py-3 text-left rounded-lg ${
                 currentPage === 'practice' 
                   ? 'bg-cyan-600 text-white'
-                  : 'text-slate-900 dark:text-slate-100'
+                  : 'text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700'
               }`}
             >
               {t('settings.PracticeSettings')}
@@ -117,7 +116,7 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
               <div className="grid grid-cols-1 gap-4">
                 <button
                   onClick={() => setCurrentPage('practice')}
-                  className={`w-full px-4 py-3 text-left rounded-lg ${
+                  className={`p-6 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors ${
                     currentPage === 'practice' 
                       ? 'bg-cyan-700 text-white'
                       : 'text-slate-900 dark:text-slate-100'

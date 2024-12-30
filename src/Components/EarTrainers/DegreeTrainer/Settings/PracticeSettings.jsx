@@ -1,4 +1,4 @@
-import React, { useRef, useCallback,useEffect } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import './styles.css';
 import { useTranslation } from 'react-i18next';
 import { Midi } from "tonal";
@@ -35,6 +35,7 @@ function PracticeSettings({ settings, setCurrentPage }) {
   const { t } = useTranslation('degreeTrainer');
   const {
     mode,
+    setMode,
     bpm,
     setBpm,
     rootNote,
@@ -77,6 +78,37 @@ function PracticeSettings({ settings, setCurrentPage }) {
 
 
       <div className="p-6 space-y-12">
+        {/* Mode Selection */}
+        <div className="flex gap-2">
+          <button
+            onClick={() => {
+              setMode('free');
+              setCurrentPracticeRecords({ total: 0, correct: 0 });
+            }}
+            className={`flex-1 py-2 rounded-lg transition-colors ${
+              mode === 'free'
+                ? 'bg-cyan-600 text-white'
+                : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'
+            }`}
+          >
+            {t('intro.freeMode')}
+          </button>
+          <button
+            onClick={() => {
+              setMode('challenge');
+              setCurrentPracticeRecords({ total: 0, correct: 0 });
+              setCurrentLevel(userProgress[0]);
+            }}
+            className={`flex-1 py-2 rounded-lg transition-colors ${
+              mode === 'challenge'
+                ? 'bg-cyan-600 text-white'
+                : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'
+            }`}
+          >
+            {t('intro.challengeMode')}
+          </button>
+        </div>
+
         {/* Toggle Repeat Setting */}
         <div 
           className="flex items-center justify-between cursor-pointer"

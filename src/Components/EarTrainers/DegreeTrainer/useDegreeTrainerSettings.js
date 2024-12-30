@@ -7,7 +7,15 @@ import {useLocalStorage} from '@uidotdev/usehooks';
 
 const useDegreeTrainerSettings = () => {
   const [mode, setMode] = useLocalStorage('degreeTrainerMode', 'free');
-  const [currentLevel, setCurrentLevel] = useLocalStorage('degreeTrainerCurrentLevel', initialUserProgress[0]);
+  const [currentLevel, _setCurrentLevel] = useState(() => {
+    const storedLevel = localStorage.getItem('degreeTrainerCurrentLevel');
+    return storedLevel ? JSON.parse(storedLevel) : initialUserProgress[0];
+  });
+
+  const setCurrentLevel = (level) => {
+    localStorage.setItem('degreeTrainerCurrentLevel', JSON.stringify(level));
+    _setCurrentLevel(level);
+  };
   const [customNotes, setCustomNotes] = useState(degrees);
 
   const [isHandfree, setIsHandfree] = useLocalStorage('degreeTrainerIsHandfree', false);
