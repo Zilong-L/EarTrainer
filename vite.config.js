@@ -17,7 +17,7 @@ export default defineConfig({
       "@themes": "/src/themes",
       "@hooks": "/src/hooks",
       "@ui": "/src/Components/UI",
-
+      "@styles": "/src/styles",
       // Add more aliases as needed
     },
   },
