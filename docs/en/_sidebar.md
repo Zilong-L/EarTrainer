@@ -1,3 +1,6 @@
 * [Home](README.md)
 * [Installation](installation.md)
 * [Usage](usage.md)
+* [Practice Guide](practice-guide.md)
+  * [Shortcuts](shortcuts.md)
+  * [Practice Theory](practice-theory.md)
