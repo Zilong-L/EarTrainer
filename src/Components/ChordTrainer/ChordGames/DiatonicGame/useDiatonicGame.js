@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Chord, ChordType, Key, Midi, Note } from "tonal";
+import { Chord, Key, Midi, Note,Progression } from "tonal";
 import { detect } from "@tonaljs/chord-detect";
 const useDiatonicGame = () => {
   const [targetChord, setTargetChord] = useState("");
@@ -10,6 +10,8 @@ const useDiatonicGame = () => {
   const [rootNote, setRootNote] = useState("C");
   const [scaleType, setScaleType] = useState("major");
   const [ignoreTranspose, setIgnoreTranspose] = useState(true);
+  const [chordType, setChordType] = useState('triads');
+  const [showDegree, setShowDegree] = useState(false);
 
   useEffect(() => {
     if(!activeNotes) return;
@@ -22,6 +24,7 @@ const useDiatonicGame = () => {
   useEffect(() => {
     let key;
     // Determine the key based on scale type
+    console.log(scaleType)
     if (scaleType === "major") {
       key = Key.majorKey(rootNote);
     } else {
@@ -35,10 +38,21 @@ const useDiatonicGame = () => {
       }
     }
     if (!key) return;
-
-    setChordPool(key.chords);
+    console.log(key);
+    let chords = [];
+    // Get chords based on chord type selection
+    if (chordType === 'triads') {
+      chords = key.triads;
+    } else if (chordType === 'sevenths') {
+      chords = key.chords;
+    } else if (chordType === 'mixed') {
+      // Combine triads and seventh chords, removing duplicates
+      chords = [...new Set([...key.triads, ...key.chords])];
+    }
     
-  }, [rootNote, scaleType]);
+    setChordPool(chords);
+    
+  }, [rootNote, scaleType, chordType]);
 
   useEffect(() => {
     if (chordPool.length > 0) {
@@ -69,9 +83,31 @@ const useDiatonicGame = () => {
       detectedChordsForComparison = detectedChordsForComparison.map(ch => ch.split('/')[0])
       targetChordForComparison = targetChord.split('/')[0];
     }
-    if(
-      detectedChordsForComparison.some(ch => Chord.get(ch).name === Chord.get(targetChordForComparison).name)
-    ) {
+    // Get all detected chords with their properties
+    const detectedChordObjects = detectedChordsForComparison.map(ch => Chord.get(ch));
+    // Generate all enharmonics while preserving the original chord type
+    const enharmonicsChords = detectedChordObjects.map(chord => {
+      const enharmonicTonic = Note.enharmonic(chord.tonic);
+      // Use the original chord type instead of current chordType
+      return Chord.getChord(chord.type, enharmonicTonic).symbol;
+    });
+    const augmentedChords = [...detectedChordsForComparison, ...enharmonicsChords];
+    
+    // Get target chord properties
+    const targetChordObj = Chord.get(targetChordForComparison);
+    // Generate target chord enharmonic
+    const targetEnharmonicTonic = Note.enharmonic(targetChordObj.tonic);
+    const targetEnharmonicChord = Chord.getChord(targetChordObj.type, targetEnharmonicTonic).symbol;
+    
+    // Check if any chord in the augmented list matches the target chord or its enharmonic
+    const isMatch = augmentedChords.some(ch => {
+      const detectedChord = Chord.get(ch);
+      const match = detectedChord?.name === targetChordObj?.name || 
+                    detectedChord?.name === Chord.get(targetEnharmonicChord)?.name;
+      return match;
+    });
+
+    if (isMatch) {
       getNextChord();
     }
   }, [detectedChords, targetChord, ignoreTranspose]);
@@ -90,6 +126,10 @@ const useDiatonicGame = () => {
     setRootNote, // Function to update rootNote
     setScaleType, // Function to update scaleType
     setIgnoreTranspose, // Function to update ignoreTranspose
+    chordType, // The type of chords to practice (triads, sevenths, mixed)
+    setChordType, // Function to update chordType
+    showDegree, // Whether to show chord degrees
+    setShowDegree, // Function to update showDegree
   };
 };
 

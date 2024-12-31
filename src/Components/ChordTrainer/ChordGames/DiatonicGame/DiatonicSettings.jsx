@@ -1,12 +1,24 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import CustomListbox from '@shared/Listbox';
 
 const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+const chordTypes = ['triads', 'sevenths', 'mixed'];
+const scaleTypes = ['major', 'harmonic', 'melodic', 'natural'];
 
 const DiatonicSettings = ({diatonicGameSettings}) => {
   const { t } = useTranslation('chordGame');
   
-  const { rootNote, setRootNote, scaleType, setScaleType } = diatonicGameSettings;
+  const { 
+    rootNote, 
+    setRootNote, 
+    scaleType, 
+    setScaleType,
+    chordType,
+    setChordType,
+    showDegree,
+    setShowDegree
+  } = diatonicGameSettings;
 
   const handleRootNoteChange = (e) => {
     setRootNote(e.target.value);
@@ -23,42 +35,51 @@ const DiatonicSettings = ({diatonicGameSettings}) => {
       </h3>
 
       {/* Root Note Selector */}
-      <div className="space-y-2">
-        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
-          {t('settings.diatonic.rootNote')}
-        </label>
-        <select
-          value={rootNote}
-          onChange={handleRootNoteChange}
-          className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all text-base"
-        >
-          {flatNotes.map((note) => (
-            <option 
-              key={note} 
-              value={note}
-              className="bg-white dark:bg-slate-700 py-2 text-base"
-            >
-              {note}
-            </option>
-          ))}
-        </select>
-      </div>
+      <CustomListbox
+        value={rootNote}
+        onChange={setRootNote}
+        options={flatNotes}
+        label={t('settings.diatonic.rootNote')}
+        t={t}
+      />
 
       {/* Scale Type Selector */}
-      <div className="space-y-2">
-        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
-          {t('settings.diatonic.scaleType')}
+      <CustomListbox
+        value={scaleType}
+        onChange={setScaleType}
+        options={scaleTypes}
+        label={t('settings.diatonic.scaleType')}
+        t={t}
+        translationPath="settings.diatonic"
+      />
+
+      {/* Chord Type Selector */}
+      <CustomListbox
+        value={chordType}
+        onChange={setChordType}
+        options={chordTypes}
+        label={t('settings.diatonic.chordType')}
+        t={t}
+        translationPath="settings.diatonic"
+      />
+
+      {/* Show Degrees Toggle */}
+      <div className="flex items-center justify-between">
+        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+          {t('settings.diatonic.showDegrees')}
         </label>
-        <select
-          value={scaleType}
-          onChange={handleScaleTypeChange}
-          className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all text-base"
+        <button
+          onClick={() => setShowDegree(!showDegree)}
+          className={`${
+            showDegree ? 'bg-cyan-500' : 'bg-slate-300 dark:bg-slate-600'
+          } relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
         >
-          <option value="major" className="bg-white dark:bg-slate-700 py-2 text-base">{t('settings.diatonic.major')}</option>
-          <option value="harmonic" className="bg-white dark:bg-slate-700 py-2 text-base">{t('settings.diatonic.harmonicMinor')}</option>
-          <option value="melodic" className="bg-white dark:bg-slate-700 py-2 text-base">{t('settings.diatonic.melodicMinor')}</option>
-          <option value="natural" className="bg-white dark:bg-slate-700 py-2 text-base">{t('settings.diatonic.naturalMinor')}</option>
-        </select>
+          <span
+            className={`${
+              showDegree ? 'translate-x-6' : 'translate-x-1'
+            } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+          />
+        </button>
       </div>
     </div>
   );

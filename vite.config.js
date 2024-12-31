@@ -10,6 +10,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@components": "/src/Components",
+      "@shared": "/src/Components/SharedComponents",
       "@EarTrainers": "/src/Components/EarTrainers",
       "@ChordTrainer": "/src/Components/ChordTrainer",
       "@utils": "/src/utils",

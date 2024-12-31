@@ -20,9 +20,24 @@
     "easyMode": "Easy Mode",
     "proMode": "Pro Mode",
     "chordCategories": {
-    "Triads": "Triads",
-    "Sevenths": "Sevenths"
-  },
+      "Triads": "Triads",
+      "Sevenths": "Sevenths",
+      "mixed": "Mixed"
+    },
+    "diatonic": {
+      "title": "Diatonic Chord Settings",
+      "rootNote": "Root Note",
+      "scaleType": "Scale Type",
+      "major": "Major",
+      "harmonic": "Harmonic Minor",
+      "melodic": "Melodic Minor", 
+      "natural": "Natural Minor",
+      "chordType": "Chord Type",
+      "triads": "Triads",
+      "sevenths": "Sevenths",
+      "mixed": "Mixed",
+      "showDegrees": "Show Degrees Instead of Chord Names"
+    },
   "title": "Settings",
   "modes": {
     "chordpractice": "Chord Practice",

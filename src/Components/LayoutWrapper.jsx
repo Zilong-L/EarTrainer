@@ -45,7 +45,7 @@ const LanguageSwitcher = () => {
 
 const ThemedContent = () => {
   const location = useLocation();
-  const {t} = useTranslation('earTrainer')
+  const {t} = useTranslation('musicTrainer')
   const currentTheme = themes[location.pathname] || themes['/'];
   console.log(location.pathname)
   return (

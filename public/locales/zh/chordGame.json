@@ -21,17 +21,22 @@
     "proMode": "专业模式",
     "chordCategories": {
       "Triads": "三和弦",
-      "Sevenths": "七和弦"
+      "Sevenths": "七和弦",
+      "mixed": "混合"
     },
     "diatonic": {
       "title": "调内和弦设置",
       "rootNote": "根音",
       "scaleType": "音阶类型",
       "major": "大调",
-      "minor": "小调",
-      "harmonicMinor": "和声小调",
-      "melodicMinor": "旋律小调",
-      "naturalMinor": "自然小调"
+      "harmonic": "和声小调",
+      "melodic": "旋律小调",
+      "natural": "自然小调",
+      "chordType": "和弦类型",
+      "triads": "三和弦",
+      "sevenths": "七和弦",
+      "mixed": "混合",
+      "showDegrees": "显示级数而非和弦名称"
     },
     "title": "设置",
     "modes": {
