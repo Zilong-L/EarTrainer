@@ -8,10 +8,10 @@
 [x] Sound settings management
 [x] Instrument selection
 [ ] Chord progression visualization
-[ ] Chord inversion training
+[ ] Chord inversion training *
 [ ] Rhythm training integration
-[ ] Chord recognition challenges
-[ ] Progress tracking and statistics
+[ ] Chord recognition challenges *
+[ ] Progress tracking and statistics ***
 
 ### Ear Trainer
 #### Chord Color Trainer
@@ -50,14 +50,14 @@
 [ ] Improved MIDI handling abstraction
 
 ## User Experience
-[ ] Tutorial system
-[ ] Progress visualization
-[ ] Adaptive difficulty system
-[ ] Gamification elements
+[ ] Tutorial system *
+[ ] Progress visualization *
+[x] Adaptive difficulty system 
+[ ] Gamification elements *
 [ ] Practice session tracking
-[ ] Music theory explanations
+[ ] Music theory explanations*
 [ ] Interactive lessons
-[ ] Reference materials
+[ ] Reference materials*
 
 ## Audio Features
 [x] Basic audio playback

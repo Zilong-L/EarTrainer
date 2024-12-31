@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 function VolumeSettings({ settings }) {
+
+  // Keep Tone.js volumes in sync with settings
+
   const { t } = useTranslation('degreeTrainer');
-  const { droneVolume, setDroneVolume, pianoVolume, setPianoVolume } = settings;
+  const { volume: { droneVolume, setDroneVolume, pianoVolume, setPianoVolume } } = settings;
 
   return (
     <div className="p-6 space-y-12">

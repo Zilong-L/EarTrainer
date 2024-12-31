@@ -3,6 +3,7 @@ import { note } from 'tonal';
 import {SampleLibrary} from '@utils/SampleLibrary'; 
 import * as Tone from 'tone';
 import { Note } from 'tonal';
+const audioCache = {};
 let sampler = null;
 let droneInstance = null;
 let samplerChorus = new Tone.Chorus(4, 20, 1);
@@ -163,7 +164,12 @@ function getDroneInstance() {
 }
 
 
-
+const preloadAudio = (degree) => {
+  if (!audioCache[degree]) {
+    audioCache[degree] = new Tone.Player(`/answers/${degree}.wav`).toDestination();
+  }
+  return audioCache[degree];
+};
 function playNotes(input, delay = 0.05, bpm = 60) {
   // 取消之前的播放
   const activeTransport = Tone.getTransport();
@@ -236,4 +242,4 @@ function cancelAllSounds() {
   }
 }
 
-export { getSamplerInstance, getDroneInstance, playNotes, cancelAllSounds,playNotesTogether };
+export { getSamplerInstance, getDroneInstance,preloadAudio, playNotes, cancelAllSounds,playNotesTogether };

@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { HomeIcon } from '@heroicons/react/24/solid';
-import { getDroneInstance } from '@utils/ToneInstance';
 
 const instrumentsList = [
   'bass-electric', 'bassoon', 'cello', 'clarinet', 'contrabass', 'flute',
@@ -10,14 +8,16 @@ const instrumentsList = [
   'trumpet', 'tuba', 'violin', 'xylophone',
 ];
 
-function SoundSettings({ settings, setCurrentPage, playNote }) {
+function SoundSettings({ settings, playNote }) {
   const { t } = useTranslation('degreeTrainer');
   const { 
-    selectedInstrument, 
-    setSelectedInstrument,
-    isLoadingInstrument, 
-    selectedQuality, 
-    setSelectedQuality 
+    sound: {
+      selectedInstrument, 
+      setSelectedInstrument,
+      isLoadingInstrument, 
+      selectedQuality, 
+      setSelectedQuality 
+    }
   } = settings;
 
   const handleInstrumentSelect = (instrument) => {

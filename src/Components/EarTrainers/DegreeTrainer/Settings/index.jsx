@@ -3,7 +3,9 @@ import PracticeSettings from './PracticeSettings';
 import VolumeSettings from './VolumeSettings';
 import Statistics from './Statistics';
 import SoundSettings from './SoundSettings';
+import GameSettings from './GameSettings';
 import { useTranslation } from 'react-i18next';
+import './styles.css';
 
 function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, playNote, setGameState }) {
   const { t } = useTranslation('degreeTrainer');
@@ -11,7 +13,8 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
 
   const closeSettings = () => {
     setIsSettingsOpen(false);
-    setGameState('playing');
+    
+    setGameState((pre)=>pre!='end'?'playing':'end');
     document.body.classList.remove('modal-open');
   };
 
@@ -61,6 +64,16 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
           {/* Navigation Sidebar - Hidden on mobile */}
           <div className="w-48 border-r border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 h-full hidden md:block">
           <nav className="p-4 space-y-2 bg-slate-50 dark:bg-slate-800">
+            <button
+              onClick={() => setCurrentPage('game')}
+              className={`w-full px-4 py-3 text-left rounded-lg ${
+                currentPage === 'game' 
+                  ? 'bg-cyan-600 text-white'
+                  : 'text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700'
+              }`}
+            >
+              {t('settings.GameSettings')}
+            </button>
             <button
               onClick={() => setCurrentPage('practice')}
               className={`w-full px-4 py-3 text-left rounded-lg ${
@@ -153,17 +166,20 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
               </div>
             </div>
           )}
+          {currentPage === 'game' && (
+            <GameSettings settings={settings}  />
+          )}
           {currentPage === 'practice' && (
-            <PracticeSettings settings={settings} setCurrentPage={setCurrentPage} setGameState={setGameState}/>
+            <PracticeSettings settings={settings}  />
           )}
           {currentPage === 'volume' && (
-            <VolumeSettings settings={settings} setCurrentPage={setCurrentPage} />
+            <VolumeSettings settings={settings}  />
           )}
           {currentPage === 'statistics' && (
-            <Statistics settings={settings} setCurrentPage={setCurrentPage} />
+            <Statistics settings={settings}  />
           )}
           {currentPage === 'sound' && (
-            <SoundSettings settings={settings} setCurrentPage={setCurrentPage} playNote={playNote} />
+            <SoundSettings settings={settings}  playNote={playNote} />
           )}
           </div>
         </div>

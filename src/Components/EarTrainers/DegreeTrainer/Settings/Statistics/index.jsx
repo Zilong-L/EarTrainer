@@ -1,4 +1,4 @@
-import React, { useState,useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { getDroneInstance } from '@utils/ToneInstance';
@@ -21,11 +21,11 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-function Statistics({ settings, setCurrentPage }) {
+function Statistics({ settings  }) {
   const { t } = useTranslation('degreeTrainer');
-  const { practiceRecords, setPracticeRecords } = settings;
+  const { stats: { practiceRecords, setPracticeRecords } } = settings;
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
-
+  console.log('practiceRecords:', practiceRecords);
   const calculateAccuracy = (record) => {
     return record.total > 0 ? (record.correct / record.total) * 100 : 0;
   };
