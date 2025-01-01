@@ -71,7 +71,7 @@ const useChordPracticeGame = () => {
       console.log('Match found! Getting next chord...');
       getNextChord();
     }
-  }, [detectedChords]);
+  }, [detectedChords,ignoreTranspose]);
   
   useEffect(() => {
     getNextChord();

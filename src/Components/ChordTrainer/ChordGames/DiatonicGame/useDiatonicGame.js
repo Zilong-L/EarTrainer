@@ -110,7 +110,7 @@ const useDiatonicGame = () => {
     if (isMatch) {
       getNextChord();
     }
-  }, [detectedChords, targetChord, ignoreTranspose]);
+  }, [detectedChords,  ignoreTranspose]);
 
   return {
     targetChord,
