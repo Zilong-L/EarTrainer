@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Chord, Key, Midi, Note, Progression } from "tonal";
 import { detect } from "@tonaljs/chord-detect";
-import { compareChords } from '../../../utils/chordUtils';
+import { compareChords } from '@ChordTrainer/utils/GameLogics';
 const useDiatonicGame = () => {
   const [targetChord, setTargetChord] = useState("");
   const [detectedChords, setDetectedChords] = useState([]);

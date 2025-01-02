@@ -20,7 +20,8 @@ import * as Tone from 'tone';
 let midi = null;
 const EarTrainer = () => {
   const globalSettings = useDegreeTrainerSettings();
-  const { t } = useTranslation('degreeTrainer');
+  const { t,i18n  } = useTranslation('degreeTrainer');
+  
   const {
       isHandfree,
     setIsHandfree,
@@ -174,7 +175,7 @@ const EarTrainer = () => {
 
           
           <a
-            href="https://barnman.cc/music/degree-trainer-help"
+            href={`https://barnman.cc/music/degree-trainer-help-${i18n.language}`}
             target="_blank"
             rel="noopener noreferrer"
             style={{ textDecoration: 'none', '@media (minWidth:600px)': { display: 'none' } }}

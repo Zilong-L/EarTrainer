@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { detect } from "@tonaljs/chord-detect";
 import { Chord, Midi, Note } from 'tonal';
-import { compareChords } from '../../../utils/chordUtils';
+import { compareChords } from '@ChordTrainer/utils/GameLogics';
 
 const DRILL_MODES = {
   RANDOM: 'random',
