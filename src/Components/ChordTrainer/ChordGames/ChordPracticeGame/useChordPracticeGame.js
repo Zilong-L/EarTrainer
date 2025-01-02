@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useLocalStorage } from "@uidotdev/usehooks";
 import { detect } from "@tonaljs/chord-detect";
 import { Chord, Midi, Note ,ChordType} from 'tonal';
 import { compareChords,getInversion } from '@ChordTrainer/utils/GameLogics';
@@ -18,11 +19,10 @@ const useChordPracticeGame = () => {
   const [targetChord, setTargetChord] = useState("");
   const [detectedChords, setDetectedChords] = useState([]);
   const [activeNotes, setActiveNotes] = useState([]);
-  const [ignoreTranspose, setIgnoreTranspose] = useState(true);
-  const [selectedInversion, setSelectedInversion] = useState("random"); // "root", "first", "second", "third", "random"
-  const [chordType, setChordType] = useState("M");
-  const [proMode, setProMode] = useState(false);
-  const [drillMode, setDrillMode] = useState(DRILL_MODES.RANDOM);
+  const [selectedInversion, setSelectedInversion] = useLocalStorage('chordPractice.selectedInversion', "random");
+  const [chordType, setChordType] = useLocalStorage('chordPractice.chordType', "M");
+  const [proMode, setProMode] = useLocalStorage('chordPractice.proMode', false);
+  const [drillMode, setDrillMode] = useLocalStorage('chordPractice.drillMode', DRILL_MODES.RANDOM);
   const [drillIndex, setDrillIndex] = useState(0);
 
   const notes = Array(12).fill(0).map((_, i) => Note.transposeFifths("C", i - Math.floor(6)));
@@ -39,14 +39,14 @@ const useChordPracticeGame = () => {
     if (isMatch) {
       getNextChord();
     }
-  }, [detectedChords,ignoreTranspose]);
+  }, [detectedChords]);
   
   useEffect(() => {
     getNextChord();
   }, [chordType]);
   
 
-  function getNextChord() {
+  const getNextChord = useCallback(() => {
     // Convert chord type names to match Tonal's format
 
     const chordtype = chordType;
@@ -111,7 +111,7 @@ const useChordPracticeGame = () => {
 
     
     setTargetChord(nextTargetChord);
-  }
+  }, [drillMode, selectedInversion, chordType, targetChord]);
   return {
     targetChord,
     detectedChords,
@@ -121,8 +121,6 @@ const useChordPracticeGame = () => {
     setActiveNotes,
     chordType,
     setChordType,
-    ignoreTranspose,
-    setIgnoreTranspose,
     selectedInversion,
     setSelectedInversion,
     drillMode,

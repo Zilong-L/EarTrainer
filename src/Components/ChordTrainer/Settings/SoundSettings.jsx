@@ -42,8 +42,8 @@ function SoundSettings({ settings }) {
 
   return (
     <div className="space-y-6 px-6 pt-6 pb-0">
-      {/* Header */}
-      <div className="sticky top-0 left-0 w-full z-50 flex items-center justify-center p-4">
+      {/* Header - Only visible on mobile */}
+      <div className="md:hidden sticky top-0 left-0 w-full z-50 flex items-center justify-center p-4">
         <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
           {t('settings.SoundSettings')}
         </h2>

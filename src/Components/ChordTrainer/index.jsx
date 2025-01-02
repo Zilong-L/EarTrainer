@@ -82,7 +82,7 @@ const ChordTrainer = () => {
       <div className="flex flex-1 overflow-hidden">
         <Sidebar isOpen={isAppSidebarOpen} setIsOpen={setIsAppSidebarOpen} />
         
-        <main className="flex-1 p-8 overflow-y-auto bg-slate-50 dark:bg-slate-900">
+        <main className="flex-1 px-8 pb-8 overflow-y-auto bg-slate-50 dark:bg-slate-900">
           <div className="max-w-6xl mx-auto">
             {renderGameMode()}
           </div>

@@ -29,8 +29,8 @@ const DiatonicSettings = ({diatonicGameSettings}) => {
   };
 
   return (
-    <div className="space-y-6 px-6 pt-6 pb-0">
-      <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
+    <div className="space-y-6 px-6 pt-6 bg-white dark:bg-slate-800">
+      <h3 className="md:hidden text-xl font-semibold text-slate-900 dark:text-slate-100">
         {t('settings.diatonic.title')}
       </h3>
 
@@ -81,6 +81,7 @@ const DiatonicSettings = ({diatonicGameSettings}) => {
           />
         </button>
       </div>
+      <div className="h-20 flex-shrink-0"></div>
     </div>
   );
 };

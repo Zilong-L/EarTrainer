@@ -115,8 +115,9 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
           </div>
 
           {/* Content Area */}
-          <div className="flex-1 overflow-y-auto">
-            <div className="px-6 pt-6 pb-0 overflow-y-auto h-full box-border scrollbar-hide bg-white dark:bg-slate-800" style={{ 
+          <div className="flex-1 flex flex-col pb-6 bg-white dark:bg-slate-800">
+            <div className="p-6 overflow-y-auto h-full box-border scrollbar-hide bg-white dark:bg-slate-800" style={{ 
+              paddingBottom: '0',
               scrollbarGutter: 'stable'
             }}>
               {renderModeContent()}
