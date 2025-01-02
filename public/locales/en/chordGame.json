@@ -20,9 +20,17 @@
     "easyMode": "Easy Mode",
     "proMode": "Pro Mode",
     "chordCategories": {
-      "Triads": "Triads",
+      "Triads": "Triads", 
       "Sevenths": "Sevenths",
       "mixed": "Mixed"
+    },
+    "inversions": {
+      "title": "Inversion Mode",
+      "random": "Random",
+      "root": "Root Position",
+      "first": "First Inversion",
+      "second": "Second Inversion",
+      "third": "Third Inversion"
     },
     "diatonic": {
       "title": "Diatonic Chord Settings",
@@ -50,11 +58,11 @@
     "Minor": "Minor",
     "Diminished": "Diminished",
     "Augmented": "Augmented",
-    "Major 7th": "Major 7th",
-    "Minor 7th": "Minor 7th",
-    "Dominant 7th": "Dominant 7th",
-    "Half Diminished 7th": "Half Diminished 7th",
-    "Diminished 7th": "Diminished 7th"
+    "Major seventh": "Major Seventh",
+    "Minor seventh": "Minor Seventh", 
+    "Dominant seventh": "Dominant Seventh",
+    "Half-Diminished": "Half-Diminished Seventh",
+    "Diminished seventh": "Diminished Seventh"
   },
     "instruments": {
       "bass-electric": "Electric Bass",

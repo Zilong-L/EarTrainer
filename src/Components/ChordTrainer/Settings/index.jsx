@@ -9,6 +9,7 @@ import {getSamplerInstance} from '@utils/ToneInstance';
 const Settings = ({ isOpen, setIsOpen, settings }) => {
   const { t } = useTranslation('chordGame');
   const globalSettings = settings.globalSettings;
+  
   const chordPracticeSettings = settings.chordPracticeGameSettings;
   const diatonicGameSettings = settings.diatonicGameSettings;
   const { mode, setMode } = globalSettings;

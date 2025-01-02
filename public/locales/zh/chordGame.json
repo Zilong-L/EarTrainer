@@ -24,6 +24,14 @@
       "Sevenths": "七和弦",
       "mixed": "混合"
     },
+    "inversions": {
+      "title": "转位模式",
+      "random": "随机",
+      "root": "原位",
+      "first": "第一转位",
+      "second": "第二转位",
+      "third": "第三转位"
+    },
     "diatonic": {
       "title": "调内和弦设置",
       "rootNote": "根音",
@@ -50,11 +58,11 @@
       "Minor": "小三和弦",
       "Diminished": "减三和弦",
       "Augmented": "增三和弦",
-      "Major 7th": "大七和弦",
-      "Minor 7th": "小七和弦",
-      "Dominant 7th": "属七和弦",
-      "Half Diminished 7th": "半减七和弦",
-      "Diminished 7th": "减七和弦"
+      "Major seventh": "大七和弦",
+      "Minor seventh": "小七和弦",
+      "Dominant seventh": "属七和弦",
+      "Half-Diminished": "半减七和弦",
+      "Diminished seventh": "减七和弦"
     },
     "instruments": {
       "bass-electric": "电贝斯",

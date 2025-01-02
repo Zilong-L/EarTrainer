@@ -1,39 +1,63 @@
 import { Chord, Note } from 'tonal';
 
-const compareChords = (detectedChords, targetChord, ignoreTranspose = true) => {
+const compareChords = (detectedChords, targetChord, ignoreTranspose = false) => {
   let detectedChordsForComparison = detectedChords;
   let targetChordForComparison = targetChord;
   
-  if (ignoreTranspose) {
+
+
+
+  if(ignoreTranspose) {
     detectedChordsForComparison = detectedChordsForComparison.map(ch => ch.split('/')[0]);
-    targetChordForComparison = targetChord.split('/')[0];
+    targetChordForComparison = targetChordForComparison.split('/')[0];
   }
 
-  // Get all detected chords with their properties
-  const detectedChordObjects = detectedChordsForComparison.map(ch => Chord.get(ch));
-  
-  // Generate all enharmonics while preserving the original chord type
-  const enharmonicsChords = detectedChordObjects.map(chord => {
-    const enharmonicTonic = Note.enharmonic(chord.tonic);
-    // Use the original chord type instead of current chordType
-    return Chord.getChord(chord.type, enharmonicTonic).symbol;
-  });
 
-  const augmentedChords = [...detectedChordsForComparison, ...enharmonicsChords];
-
-  // Get target chord properties
-  const targetChordObj = Chord.get(targetChordForComparison);
-  
-  // Generate target chord enharmonic
-  const targetEnharmonicTonic = Note.enharmonic(targetChordObj.tonic);
-  const targetEnharmonicChord = Chord.getChord(targetChordObj.type, targetEnharmonicTonic).symbol;
-
-  // Check if any chord in the augmented list matches the target chord or its enharmonic
-  return augmentedChords.some(ch => {
-    const detectedChord = Chord.get(ch);
-    return detectedChord?.name === targetChordObj?.name || 
-           detectedChord?.name === Chord.get(targetEnharmonicChord)?.name;
+  return detectedChordsForComparison.some(ch => {
+    const chordObject = Chord.get(ch);
+    const targetChordObject = Chord.get(targetChordForComparison);
+    const chordBass = chordObject.bass
+    const targetChordBass = targetChordObject.bass
+    const chordRoot = chordObject.tonic
+    const targetChordRoot = targetChordObject.tonic
+    const chordType = chordObject.type
+    const targetChordType = targetChordObject.type
+    if (targetChordBass){
+      return isSameNote(chordBass, targetChordBass) && isSameNote(chordRoot, targetChordRoot) && chordType === targetChordType;
+    }
+    else{
+      return isSameNote(chordRoot, targetChordRoot) && chordType === targetChordType;
+    }
   });
 };
 
-export { compareChords };
+// function to get a inversion of a chord
+// it is possible to return a chord in root position.
+function getInversion(root, symbol, position = -1) {
+  const chord = Chord.get(`${root}${symbol}`);
+  if (!chord.notes || chord.notes.length === 0) return [`${root}${symbol}`];
+  
+  const inversions = [];
+  // Add root position
+  inversions.push(`${root}${symbol}`);
+  
+  // Generate inversions
+  for (let i = 1; i < chord.notes.length; i++) {
+    const bassNote = chord.notes[i];
+    inversions.push(`${root}${symbol}/${bassNote}`);
+  }
+  if(position > -1) {
+    return inversions[position];
+  }
+  return inversions[Math.random() * inversions.length | 0];
+}
+
+const isSameNote = (note1, note2) => {
+  if(!note1 || !note2) return false;
+  const SimplifiedNote1 = Note.simplify(note1);
+  const SimplifiedNote2 = Note.simplify(note2);
+
+  const enharmonicNote1 = Note.enharmonic(SimplifiedNote1);
+  return SimplifiedNote1 === SimplifiedNote2 || enharmonicNote1 === SimplifiedNote2;
+};
+export { compareChords,getInversion };

@@ -10,6 +10,7 @@ const instrumentsList = [
 
 function SoundSettings({ settings, playNote }) {
   const { t } = useTranslation('degreeTrainer');
+  console.log(settings)
   const { 
     sound: {
       selectedInstrument, 

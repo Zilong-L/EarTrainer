@@ -9,7 +9,7 @@ const instrumentsList = [
   'trumpet', 'tuba', 'violin', 'xylophone',
 ];
 
-function SoundSettings({ settings, setCurrentPage }) {
+function SoundSettings({ settings }) {
   const { t } = useTranslation('chordGame');
   const { selectedInstrument, setSelectedInstrument } = settings;
   const samplerInstance = getSamplerInstance();

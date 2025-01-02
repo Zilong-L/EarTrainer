@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { detect } from "@tonaljs/chord-detect";
-import { Chord, Midi, Note } from 'tonal';
-import { compareChords } from '@ChordTrainer/utils/GameLogics';
+import { Chord, Midi, Note ,ChordType} from 'tonal';
+import { compareChords,getInversion } from '@ChordTrainer/utils/GameLogics';
 
 const DRILL_MODES = {
   RANDOM: 'random',
@@ -19,7 +19,8 @@ const useChordPracticeGame = () => {
   const [detectedChords, setDetectedChords] = useState([]);
   const [activeNotes, setActiveNotes] = useState([]);
   const [ignoreTranspose, setIgnoreTranspose] = useState(true);
-  const [chordType, setChordType] = useState("Major");
+  const [selectedInversion, setSelectedInversion] = useState("random"); // "root", "first", "second", "third", "random"
+  const [chordType, setChordType] = useState("M");
   const [proMode, setProMode] = useState(false);
   const [drillMode, setDrillMode] = useState(DRILL_MODES.RANDOM);
   const [drillIndex, setDrillIndex] = useState(0);
@@ -34,7 +35,7 @@ const useChordPracticeGame = () => {
   }, [activeNotes]);
 
   useEffect(() => {
-    const isMatch = compareChords(detectedChords, targetChord, ignoreTranspose);
+    const isMatch = compareChords(detectedChords, targetChord, selectedInversion === "root");
     if (isMatch) {
       getNextChord();
     }
@@ -43,21 +44,12 @@ const useChordPracticeGame = () => {
   useEffect(() => {
     getNextChord();
   }, [chordType]);
+  
+
   function getNextChord() {
     // Convert chord type names to match Tonal's format
-    const chordTypeMap = {
-      'Major': 'M',
-      'Minor': 'm',
-      'Diminished': 'dim',
-      'Augmented': 'aug',
-      'Major 7th': 'M7',
-      'Minor 7th': 'm7',
-      'Dominant 7th': '7',
-      'Half Diminished 7th': 'm7b5',
-      'Diminished 7th': 'dim7'
-    };
-    
-    const symbol = chordTypeMap[chordType] || chordType;
+
+    const chordtype = chordType;
     let currentRoot = targetChord ? Chord.get(targetChord).tonic : 'C';
     let newRoot;
 
@@ -90,7 +82,35 @@ const useChordPracticeGame = () => {
         break;
     }
     
-    setTargetChord(`${newRoot}${symbol}`);
+    // Handle inversions based on selection
+    let nextTargetChord;
+    const maxInversion = chordtype.includes('7') ? 3 : 2;
+    
+    let position;
+    switch(selectedInversion) {
+      case "root":
+        position = 0;
+        break;
+      case "first":
+        position = 1;
+        break;
+      case "second":
+        position = 2;
+        break;
+      case "third":
+        position = 3;
+        break;
+      case "random":
+        position = Math.floor(Math.random() * (maxInversion + 1));
+        break;
+      default:
+        position = 0;
+    }
+    
+    nextTargetChord = getInversion(newRoot, chordtype, position);
+
+    
+    setTargetChord(nextTargetChord);
   }
   return {
     targetChord,
@@ -103,6 +123,8 @@ const useChordPracticeGame = () => {
     setChordType,
     ignoreTranspose,
     setIgnoreTranspose,
+    selectedInversion,
+    setSelectedInversion,
     drillMode,
     setDrillMode,
   };
