@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { detect } from "@tonaljs/chord-detect";
 import { Chord, Midi, Note ,ChordType} from 'tonal';
-import { compareChords,getInversion } from '@ChordTrainer/utils/GameLogics';
+import { compareChords,getInversion,sortChordsByCommonality} from '@utils/ChordTrainer/GameLogics';
+import {strangeChrods} from '@utils/ChordTrainer/Constants'
 
 const DRILL_MODES = {
   RANDOM: 'random',
@@ -27,10 +28,18 @@ const useChordPracticeGame = () => {
 
   const notes = Array(12).fill(0).map((_, i) => Note.transposeFifths("C", i - Math.floor(6)));
   useEffect(() => {
-
     if(!activeNotes) return;
     const notesString = activeNotes.map((note) => Midi.midiToNoteName(note));
-    const chordResult = detect(notesString, { assumePerfectFifth: true });
+    let chordResult = detect(notesString, { assumePerfectFifth: true });
+    if(!chordResult) {
+      setDetectedChords([]);
+      return;
+    }
+    //sort to show common chords first
+    let chordResultObjects = chordResult.map(chord => Chord.get(chord));
+    chordResultObjects = chordResultObjects.filter((chord)=>!strangeChrods.includes(chord.type))
+    
+    chordResult = sortChordsByCommonality(chordResultObjects)
     setDetectedChords(chordResult);
   }, [activeNotes]);
 

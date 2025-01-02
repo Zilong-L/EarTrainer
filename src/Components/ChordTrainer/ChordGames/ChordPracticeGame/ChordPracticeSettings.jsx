@@ -13,6 +13,7 @@ const drillModes = ['random', 'circle_fifths', 'circle_fourths', 'semitone_up', 
 
 const ChordPracticeSettings = ({ chordPracticeSettings }) => {
   const chordTypesAll = ChordType.names();
+  console.log(ChordType.names())
   const { t } = useTranslation('chordGame');
   const { chordType, setChordType, proMode, setProMode, drillMode, setDrillMode, selectedInversion, setSelectedInversion } = chordPracticeSettings;
 
@@ -22,8 +23,7 @@ const ChordPracticeSettings = ({ chordPracticeSettings }) => {
   };
 
   return (
-   <div className="flex flex-col h-[calc(100vh-8rem)]">
-     <div className="space-y-6 px-6 pt-6 flex-shrink-0">
+    <div className="space-y-6 px-6  ">
       <h3 className="md:hidden text-xl font-semibold text-slate-900 dark:text-slate-100">
         {t('settings.title')}
       </h3>
@@ -68,7 +68,7 @@ const ChordPracticeSettings = ({ chordPracticeSettings }) => {
         </label>
       </div>
       {/* Chord Selector */}
-      <div className="space-y-4 overflow-y-auto flex-grow">
+      <div className="space-y-4">
         {proMode
           ? chordTypesAll.map((chord) => (
               <button
@@ -107,8 +107,6 @@ const ChordPracticeSettings = ({ chordPracticeSettings }) => {
             ))}
       </div>
     </div>
-    <div className="h-20 flex-shrink-0"></div>
-   </div>
   );
 };
 

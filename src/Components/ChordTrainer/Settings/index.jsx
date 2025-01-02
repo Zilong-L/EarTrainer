@@ -80,7 +80,7 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
         {/* Content Container */}
         <div className="flex flex-1 overflow-hidden">
           {/* Navigation Sidebar */}
-          <div className="w-48 border-r border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 h-full">
+          <div className="pt-2 w-48 border-r border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 h-full">
           
           {/* Navigation Items */}
           <nav className="p-2 space-y-1">
@@ -116,7 +116,7 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
 
           {/* Content Area */}
           <div className="flex-1 flex flex-col pb-6 bg-white dark:bg-slate-800">
-            <div className="p-6 overflow-y-auto h-full box-border scrollbar-hide bg-white dark:bg-slate-800" style={{ 
+            <div className="px-6 overflow-y-auto h-full box-border scrollbar-hide bg-white dark:bg-slate-800" style={{ 
               paddingBottom: '0',
               scrollbarGutter: 'stable'
             }}>
