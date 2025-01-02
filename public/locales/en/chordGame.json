@@ -17,8 +17,8 @@
       "high": "High",
       "full": "Full"
     },
-    "easyMode": "Easy Mode",
-    "proMode": "Pro Mode",
+    "basicChords": "Basic Chords",
+    "moreChords": "More Chords",
     "chordCategories": {
       "Triads": "Triads", 
       "Sevenths": "Sevenths",

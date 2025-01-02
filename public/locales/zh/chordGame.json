@@ -17,8 +17,8 @@
       "high": "高质量",
       "full": "无损"
     },
-    "easyMode": "简单模式",
-    "proMode": "专业模式",
+    "basicChords": "基础和弦",
+    "moreChords": "更多和弦",
     "chordCategories": {
       "Triads": "三和弦",
       "Sevenths": "七和弦",
