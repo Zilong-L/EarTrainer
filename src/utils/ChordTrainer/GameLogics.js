@@ -60,7 +60,10 @@ const isSameNote = (note1, note2) => {
 const getNiceChordName = (chords) => {
   return chords.map((chord) => {
     const chordObject = Chord.get(chord)
-    const bass = chordObject.bass
+    const bass = Note.simplify(chordObject.bass)
+    if(!chordObject.type){
+      return '';
+    }
     if (bass) {
       return `${chordObject.tonic}${niceChordNames[chordObject.type]} / ${bass}`
     } else {
