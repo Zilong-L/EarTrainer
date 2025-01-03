@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import FreeMode from '@components/EarTrainers/DegreeTrainer/Games/Free';
 import ChallengeMode from '@components/EarTrainers/DegreeTrainer/Games/Challenge';
-import { CssBaseline, Paper, Box, Button, Typography, ToggleButton, AppBar, Tooltip, Toolbar, Container, Grid } from '@mui/material';
+import { CssBaseline, Paper, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
-import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
-import SettingsIcon from '@mui/icons-material/Settings';
+import { Cog6ToothIcon } from '@heroicons/react/24/solid';
+import Header from '@components/SharedComponents/Header';
+import HeaderTitle from '@components/SharedComponents/HeaderTitle';
+import HeaderButtons from '@components/SharedComponents/HeaderButtons';
+import HeaderButton from '@components/SharedComponents/HeaderButton';
 import Sidebar from '@components/Sidebar';
 import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/Settings';
 import useFreeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer';
@@ -136,61 +139,34 @@ const EarTrainer = () => {
 
   return (
     <>
-      <AppBar position="static" sx={{ boxShadow: 0, paddingX: '0.5rem' }}>
-        <Toolbar sx={{ height: '64px', color: (theme) => theme.palette.text.primary }}>
-
-          <Typography variant="h5" sx={{ flexGrow: 1, textAlign: 'left', color: (theme) => theme.palette.text.primary }}>
-            <Link to="/ear-trainer" style={{ textDecoration: 'none', color: 'inherit' }}>
-              {t('home.title')}
-            </Link>
-          </Typography>
-          <Tooltip title={isHandfree ? t('buttons.handfreeOff') : t('buttons.handfreeOn')}>
-            <ToggleButton
-              value="check"
-              selected={isHandfree}
-              onChange={() => setIsHandfree(!isHandfree)}
-              sx={{
-                marginRight: '0.5rem', boxShadow: 'none',
-                "&.Mui-selected, &.Mui-selected:hover": {
-                  color: (theme) => theme.palette.text.paper,
-                  backgroundColor: (theme) => theme.palette.background.paper
-                },
-                color: (theme) => theme.palette.text.primary,
-                border: 'none'
-              }}
-            >
-              <AllInclusiveIcon />
-            </ToggleButton>
-          </Tooltip>
-          <Tooltip title={t("buttons.settings")}>
-            <Button
-              onClick={() => openSettings()}
-              variant="contained"
-              color="primary"
-              sx={{ boxShadow: 'none', marginRight: '0.5rem' }}
-            >
-              <SettingsIcon />
-            </Button>
-          </Tooltip>
-
-          
-          <a
-            href={`https://barnman.cc/music/degree-trainer-help-${i18n.language}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: 'none', '@media (minWidth:600px)': { display: 'none' } }}
+      <Header>
+        <HeaderTitle>
+          <Link to="/ear-trainer" className="text-inherit no-underline">
+            {t('home.title')}
+          </Link>
+        </HeaderTitle>
+        <HeaderButtons>
+          <HeaderButton 
+            onClick={() => setIsHandfree(!isHandfree)}
+            title={isHandfree ? t('buttons.handfreeOff') : t('buttons.handfreeOn')}
           >
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ boxShadow: 'none',  borderStyle: 'solid', borderColor: 'currentColor' }}
+            <span className="material-icons">all_inclusive</span>
+          </HeaderButton>
+          <HeaderButton onClick={() => openSettings()}>
+            <Cog6ToothIcon className="h-6 w-6" />
+          </HeaderButton>
+          <HeaderButton>
+            <a
+              href={`https://barnman.cc/music/degree-trainer-help-${i18n.language}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-inherit no-underline"
             >
               {t('buttons.help')}
-            </Button>
-          </a>
-
-        </Toolbar>
-      </AppBar>
+            </a>
+          </HeaderButton>
+        </HeaderButtons>
+      </Header>
       <Paper sx={{ borderRadius: 0 }}>
         <Container
           maxWidth="sm"
