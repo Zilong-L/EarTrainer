@@ -12,9 +12,9 @@ const Button = ({
   const baseStyles = 'rounded-lg font-medium transition-all duration-200 focus:outline-none';
   
   const variants = {
-    primary: 'bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-cyan-600 dark:text-white dark:hover:bg-cyan-700',
-    secondary: 'bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-600 dark:text-white dark:hover:bg-slate-700',
-    outline: 'border border-slate-300 text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700'
+    primary: 'bg-slate-200 text-slate-900 hover:bg-slate-200 dark:bg-cyan-600 dark:text-white dark:hover:bg-cyan-700',
+    secondary: 'bg-slate-200 text-slate-900 hover:bg-slate-200 dark:bg-slate-600 dark:text-white dark:hover:bg-slate-700',
+    outline: 'border border-slate-200 text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700'
   };
 
   const sizes = {

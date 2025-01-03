@@ -31,7 +31,7 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2}}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2}} >
       <Button sx={{ backgroundColor: 'transparent'}} variant="contained" onClick={() => changeLanguage('zh')}>
         中文
       </Button>
@@ -50,7 +50,7 @@ const ThemedContent = () => {
   console.log(location.pathname)
   return (
     <ThemeProvider theme={currentTheme}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}class="font-jazz">
         <CssBaseline />
         
           <Routes>

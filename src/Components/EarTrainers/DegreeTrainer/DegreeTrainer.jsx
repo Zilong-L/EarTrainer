@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FreeMode from '@components/EarTrainers/DegreeTrainer/Games/Free';
 import ChallengeMode from '@components/EarTrainers/DegreeTrainer/Games/Challenge';
-import Button from '@components/SharedComponents/Button';
 import { Link } from 'react-router-dom';
 import { Cog6ToothIcon } from '@heroicons/react/24/solid';
 import Header from '@components/SharedComponents/Header';

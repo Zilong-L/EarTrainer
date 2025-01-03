@@ -56,7 +56,7 @@ const ChallengeMode = ({ChallengeTrainerSettings}) => {
               onClick={() => setActiveNote(noteName)}
               className={`h-16 text-2xl ${
                 isCorrectAnswer && isAdvance
-                  ? 'bg-green-600 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700'
+                  ? 'bg-green-200 hover:bg-green-200 dark:bg-green-200 dark:hover:bg-green-200'
                   : ''
               }`}
               disabled={disabledNotes.some(disabledNote => 
