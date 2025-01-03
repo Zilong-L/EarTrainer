@@ -171,7 +171,7 @@ const EarTrainer = () => {
           </HeaderButton>
         </HeaderButtons>
       </Header>
-      <div className="h-[calc(100svh-64px)] bg-white dark:bg-slate-800">
+      <div className="h-[calc(100svh-64px)] bg-slate-50 dark:bg-slate-900">
         <div className="max-w-2xl mx-auto h-full flex flex-col justify-between py-4 px-6">
           <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
           <div className="pr-4"> {/* Add right padding for scrollbar placeholder */}
