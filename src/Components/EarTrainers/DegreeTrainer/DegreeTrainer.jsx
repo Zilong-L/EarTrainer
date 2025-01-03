@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FreeMode from '@components/EarTrainers/DegreeTrainer/Games/Free';
 import ChallengeMode from '@components/EarTrainers/DegreeTrainer/Games/Challenge';
-import { CssBaseline, Paper, Container } from '@mui/material';
+import Button from '@components/SharedComponents/Button';
 import { Link } from 'react-router-dom';
 import { Cog6ToothIcon } from '@heroicons/react/24/solid';
 import Header from '@components/SharedComponents/Header';
@@ -171,19 +171,8 @@ const EarTrainer = () => {
           </HeaderButton>
         </HeaderButtons>
       </Header>
-      <Paper sx={{ borderRadius: 0 }}>
-        <Container
-          maxWidth="sm"
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            height: 'calc(100svh - 64px)',
-            paddingY: '1rem',
-            paddingX: '1.5rem',
-          }}
-        >
-          <CssBaseline />
+      <div className="h-[calc(100svh-64px)] bg-white dark:bg-slate-800">
+        <div className="max-w-2xl mx-auto h-full flex flex-col justify-between py-4 px-6">
           <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
           <div className="pr-4"> {/* Add right padding for scrollbar placeholder */}
             <DegreeTrainerSettings
@@ -204,8 +193,8 @@ const EarTrainer = () => {
               />
             )}
           
-        </Container>
-      </Paper>
+        </div>
+      </div>
       <Toaster />
     </>
   );
