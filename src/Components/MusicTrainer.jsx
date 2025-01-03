@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Bars3Icon } from '@heroicons/react/24/solid';
+import Header from '@components/SharedComponents/Header';
+import HeaderTitle from '@components/SharedComponents/HeaderTitle';
+import HeaderButtons from '@components/SharedComponents/HeaderButtons';
 import Sidebar from '@components/Sidebar';
 
 const apps = [{name: 'Chord Trainer', path: '/chord-trainer'}]
@@ -17,14 +20,9 @@ const MusicTrainer = () => {
   
   return (
     <div className="flex flex-col h-screen font-jazz">
-      {/* Header */}
-      <header className="w-full bg-white dark:bg-slate-800 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-            {t('Ear Trainer')}
-          </h1>
-          
-          <div className="flex items-center space-x-4">
+      <Header>
+        <HeaderTitle>{t('Ear Trainer')}</HeaderTitle>
+        <HeaderButtons>
             <div className="hidden md:flex space-x-4">
               {apps.map((item) => (
                 <Link
@@ -43,9 +41,8 @@ const MusicTrainer = () => {
             >
               <Bars3Icon className="h-5 w-5" />
             </button>
-          </div>
-        </div>
-      </header>
+        </HeaderButtons>
+      </Header>
 
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
