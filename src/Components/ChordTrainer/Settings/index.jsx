@@ -14,6 +14,10 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
   const diatonicGameSettings = settings.diatonicGameSettings;
   const { mode, setMode } = globalSettings;
   const [currentSettings, setCurrentSettings] = useState('Chord Practice');
+  useEffect(() => {
+    console.log('haha ')
+    setCurrentSettings(mode);
+  }, [mode]);
   const playNote = () =>{
     getSamplerInstance().sampler.triggerAttackRelease('C4', '2n');
     console.log('play')

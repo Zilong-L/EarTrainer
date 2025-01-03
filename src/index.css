@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+  
+@font-face {
+    font-family: 'Chilanka-Regular';
+    src: url('/fonts/Chilanka-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+

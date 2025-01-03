@@ -5,7 +5,10 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: { 
+      fontFamily: {
+      jazz: ['Chilanka-Regular', 'sans-serif'], // 'jazz' is the utility class name
+    },},
   },
   plugins: [],
 }
