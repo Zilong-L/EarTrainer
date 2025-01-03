@@ -4,17 +4,17 @@ const Button = ({
   onClick, 
   children, 
   className = '', 
-  variant = 'primary', // primary, secondary, outline
-  size = 'md', // sm, md, lg
+  variant = 'primary',
+  size = 'md',
   disabled = false,
   type = 'button'
 }) => {
-  const baseStyles = 'rounded-md font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+  const baseStyles = 'rounded-lg font-medium transition-all duration-200 focus:outline-none';
   
   const variants = {
-    primary: 'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500',
-    secondary: 'bg-slate-600 text-white hover:bg-slate-700 focus:ring-slate-500',
-    outline: 'border border-slate-300 text-slate-700 hover:bg-slate-50 focus:ring-slate-500'
+    primary: 'bg-cyan-600 text-white hover:bg-cyan-700 dark:bg-cyan-600 dark:hover:bg-cyan-700',
+    secondary: 'bg-slate-600 text-white hover:bg-slate-700 dark:bg-slate-600 dark:hover:bg-slate-700',
+    outline: 'border border-slate-300 text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700'
   };
 
   const sizes = {
@@ -23,7 +23,7 @@ const Button = ({
     lg: 'px-6 py-3 text-lg'
   };
 
-  const disabledStyles = disabled ? 'opacity-50 cursor-not-allowed' : '';
+  const disabledStyles = disabled ? 'opacity-50 cursor-not-allowed' : 'shadow-sm hover:shadow';
 
   return (
     <button
