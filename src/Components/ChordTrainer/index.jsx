@@ -57,13 +57,14 @@ const ChordTrainer = () => {
             </HeaderButton>
             <div className="hidden md:flex">
               {apps.map((item) => (
+                <HeaderButton>
                 <Link
                   key={item.name}
                   to={item.path}
-                  className="px-4 py-2 rounded-md bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
                 >
                   {t(`trainer.apps.${item.name}`)}
                 </Link>
+                </HeaderButton>
               ))}
             </div>
             
