@@ -5,6 +5,7 @@ import { Bars3Icon, Cog6ToothIcon } from '@heroicons/react/24/solid';
 import Header from '@components/SharedComponents/Header';
 import HeaderTitle from '@components/SharedComponents/HeaderTitle';
 import HeaderButtons from '@components/SharedComponents/HeaderButtons';
+import HeaderButton from '@components/SharedComponents/HeaderButton';
 
 import Sidebar from '@components/Sidebar';
 import ChordPracticeGame from '@ChordTrainer/ChordGames/ChordPracticeGame';
@@ -48,18 +49,12 @@ const ChordTrainer = () => {
       <Header>
         <HeaderTitle>{t('trainer.title')}</HeaderTitle>
         <HeaderButtons>
-            <button
-              onClick={() => setIsSettingsModalOpen(true)}
-              className="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400"
-            >
+            <HeaderButton onClick={() => setIsSettingsModalOpen(true)}>
               <Cog6ToothIcon className="h-6 w-6" />
-            </button>
-            <button
-              onClick={() => setIsAppSidebarOpen(!isAppSidebarOpen)}
-              className="md:hidden p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400"
-            >
+            </HeaderButton>
+            <HeaderButton onClick={() => setIsAppSidebarOpen(!isAppSidebarOpen)} className="md:hidden">
               <Bars3Icon className="h-6 w-6" />
-            </button>
+            </HeaderButton>
             <div className="hidden md:flex">
               {apps.map((item) => (
                 <Link
