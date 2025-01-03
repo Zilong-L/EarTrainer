@@ -7,7 +7,8 @@ const Button = ({
   variant = 'primary',
   size = 'md',
   disabled = false,
-  type = 'button'
+  type = 'button',
+  ...props
 }) => {
   const baseStyles = 'rounded-lg font-medium transition-all duration-200 focus:outline-none';
   
@@ -31,6 +32,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${disabledStyles} ${className}`}
+      {...props}
     >
       {children}
     </button>
