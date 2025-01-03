@@ -31,6 +31,7 @@
   },
   "settings": {
     "Settings": "Settings",
+    "GameSettings": "Game Settings",
     "PracticeSettings": "Practice Settings",
     "Statistics": "Statistics",
     "VolumeSettings": "Volume Settings",
