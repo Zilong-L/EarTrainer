@@ -2,7 +2,7 @@ import React from 'react';
 import { CssBaseline, Box,  ThemeProvider, createTheme,Button } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import ChordTrainer from './ChordTrainer';
-import MusicTrainer from './MusicTrainer';
+import MusicTrainer from './EarTrainers/MusicTrainer';
 import DegreeTrainer from '@EarTrainers/DegreeTrainer/DegreeTrainer'
 import SequenceTrainer from'@EarTrainers/SequenceTrainer/SequenceTrainer' // 新增的 Sequence Trainer
 import ChordColorTrainer from'@EarTrainers/ChordColorTrainer/ChordColorTrainer'
@@ -11,7 +11,7 @@ import themes from '@themes/palette.js'
 import { useTranslation } from 'react-i18next'; // 引入 useTranslation 钩子
 // Define themes for each trainer
 
-const LayoutWrapper = () => {
+const WebRoutes = () => {
   return (
     <Router>
       <ThemedContent />
@@ -71,4 +71,4 @@ const ThemedContent = () => {
   );
 };
 
-export default LayoutWrapper;
+export default WebRoutes;
