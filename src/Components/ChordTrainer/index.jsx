@@ -41,7 +41,7 @@ const ChordTrainer = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen font-jazz">
+    <div className="flex flex-col h-[100vh] font-jazz">
       {/* Header */}
       <header className="w-full bg-white dark:bg-slate-800 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -50,6 +50,18 @@ const ChordTrainer = () => {
           </h1>
           
           <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setIsSettingsModalOpen(true)}
+              className="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400"
+            >
+              <Cog6ToothIcon className="h-6 w-6" />
+            </button>
+            <button
+              onClick={() => setIsAppSidebarOpen(!isAppSidebarOpen)}
+              className="md:hidden p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400"
+            >
+              <Bars3Icon className="h-6 w-6" />
+            </button>
             <div className="hidden md:flex">
               {apps.map((item) => (
                 <Link
@@ -61,19 +73,7 @@ const ChordTrainer = () => {
                 </Link>
               ))}
             </div>
-            <button
-              onClick={() => setIsSettingsModalOpen(true)}
-              className="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400"
-            >
-              <Cog6ToothIcon className="h-6 w-6" />
-            </button>
             
-            <button
-              onClick={() => setIsAppSidebarOpen(!isAppSidebarOpen)}
-              className="md:hidden p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400"
-            >
-              <Bars3Icon className="h-6 w-6" />
-            </button>
           </div>
         </div>
       </header>

@@ -120,10 +120,7 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
 
           {/* Content Area */}
           <div className="flex-1 flex flex-col pb-6 bg-white dark:bg-slate-800">
-            <div className="px-6 overflow-y-auto h-full box-border scrollbar-hide bg-white dark:bg-slate-800" style={{ 
-              paddingBottom: '0',
-              scrollbarGutter: 'stable'
-            }}>
+            <div className="px-6 overflow-y-auto h-full box-border  bg-white dark:bg-slate-800" >
               {renderModeContent()}
             </div>
           </div>

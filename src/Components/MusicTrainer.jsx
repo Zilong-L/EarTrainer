@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { CssBaseline, Grid, Container, Paper, Box, Button, Typography, AppBar, Toolbar } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next'; // 引入 useTranslation 钩子
+import { useTranslation } from 'react-i18next';
+import { Bars3Icon } from '@heroicons/react/24/solid';
 import Sidebar from '@components/Sidebar';
-import MenuIcon from '@mui/icons-material/Menu';
 
-const apps = [{name: 'Ear Trainer', path: '/ear-trainer'}, {name: 'Chord Trainer', path: '/chord-trainer'}]
+const apps = [{name: 'Chord Trainer', path: '/chord-trainer'}]
 const trainers = [
   {name:'Degree',path:'/ear-trainer/degree-trainer'},
   {name:'Sequence',path:'/ear-trainer/sequence-trainer'},
@@ -14,49 +13,63 @@ const trainers = [
 
 const MusicTrainer = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { t } = useTranslation('musicTrainer'); // 加载 ear_trainer 命名空间
+  const { t } = useTranslation('musicTrainer');
+  
   return (
-    <>
-    <Paper sx={{borderRadius:0,height:'100vh'}}>
-      <AppBar position="static" sx={{ boxShadow: 0 ,paddingX:'0.5rem' }}>
-        <Toolbar sx={{ color: (theme) => theme.palette.text.primary,height:'64px'}}>
-          <Typography variant="h5" sx={{  flexGrow: 1,color:'white' }} component={Link} to='/ear-trainer'>
-            {t('Ear Trainer')}  {/* 使用翻译 */}
-          </Typography>
+    <div className="flex flex-col h-screen font-jazz">
+      {/* Header */}
+      <header className="w-full bg-white dark:bg-slate-800 shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+            {t('Ear Trainer')}
+          </h1>
+          
+          <div className="flex items-center space-x-4">
+            <div className="hidden md:flex space-x-4">
+              {apps.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className="px-4 py-2 rounded-md bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                >
+                  {t(item.name)}
+                </Link>
+              ))}
+            </div>
+            
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="md:hidden p-1.5 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400"
+            >
+              <Bars3Icon className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      </header>
 
-          <Button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            variant="contained"
-            color="primary"
-            sx={{ boxShadow: 'none', '@media (min-width:600px)': { display: 'none' } }}
-          >
-            <MenuIcon />
-          </Button>
-
-          {apps.map((item)=>(<Button variant="contained" key={item.name} component={Link} to={item.path} sx={{
-            display: 'none',
-            '@media (min-width:600px)': { display: 'block', boxShadow: 'none', textTransform: 'none' }
-          }}>{t(item.name)}</Button>))}  {/* 遍历翻译 */}
-        </Toolbar>
-      </AppBar>
-      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-          <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-          <Container maxWidth="lg" sx={{paddingTop:'20px',
-            '@media (min-width:600px)': {paddingTop:'4rem'},
-          }}>
-              <Grid container spacing={2}>
-                {trainers.map((item) => (
-                  <Grid item xs={12} sm={6} md={4} key={item.name}>
-                    <Button variant="contained" fullWidth LinkComponent={Link} sx={{ height:'12rem',textTransform: 'none' }} to={item.path}>
-                      <Typography variant="h3">{t(item.name)}</Typography>  {/* 使用翻译 */}
-                    </Button>
-                  </Grid>
-                ))}
-              </Grid>
-          </Container>
-      </Box>
-    </Paper>
-    </>
+      {/* Main Content */}
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+        
+        <main className="flex-1 pt-8 overflow-y-auto bg-slate-50 dark:bg-slate-900">
+          <div className="max-w-6xl mx-auto px-2">
+            <div className="grid grid-cols-2 mx-2 md:grid-cols-3 gap-3">
+              {trainers.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className="aspect-[4/3] sm:aspect-square bg-white dark:bg-slate-800 shadow-sm hover:shadow-md dark:shadow-slate-700/20 rounded-lg flex items-center justify-center group transition-all"
+                >
+                  <span className="text-2xl text-slate-700 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                    {t(item.name)}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
   );
 };
 

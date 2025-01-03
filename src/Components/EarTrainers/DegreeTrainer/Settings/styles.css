@@ -158,7 +158,6 @@
 
 /* Modal scrollbar handling */
 body.modal-open {
-  padding-right: 8px !important; /* Match scrollbar width */
   overflow: hidden !important;
 }
 
