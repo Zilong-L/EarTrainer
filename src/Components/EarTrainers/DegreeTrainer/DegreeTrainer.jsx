@@ -9,6 +9,9 @@ import HeaderTitle from '@components/SharedComponents/HeaderTitle';
 import HeaderButtons from '@components/SharedComponents/HeaderButtons';
 import HeaderButton from '@components/SharedComponents/HeaderButton';
 import Sidebar from '@components/Sidebar';
+import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
+
+
 import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/Settings';
 import useFreeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer';
 import useChallengeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer';
@@ -149,8 +152,9 @@ const EarTrainer = () => {
           <HeaderButton 
             onClick={() => setIsHandfree(!isHandfree)}
             title={isHandfree ? t('buttons.handfreeOff') : t('buttons.handfreeOn')}
+            className={isHandfree ? 'bg-slate-400 text-white' : ''}
           >
-            <span className="material-icons">all_inclusive</span>
+            <span className="material-icons"><AllInclusiveIcon></AllInclusiveIcon></span>
           </HeaderButton>
           <HeaderButton onClick={() => openSettings()}>
             <Cog6ToothIcon className="h-6 w-6" />
