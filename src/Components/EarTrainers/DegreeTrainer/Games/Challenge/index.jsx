@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Grid, Button, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
+import Button from '@components/SharedComponents/Button';
 import * as Tone from 'tone';
 import { useTranslation } from 'react-i18next';
 import ReplayIcon from '@mui/icons-material/Replay';
@@ -49,31 +50,16 @@ const ChallengeMode = ({ChallengeTrainerSettings}) => {
           return (
             <Grid item xs={4} key={note.name}>
               <Button
-                variant="contained"
+                variant="primary"
                 onClick={() => setActiveNote(noteName)}
-                fullWidth
-                sx={{
-                  textTransform: 'none',
-                  fontSize: '1.5rem',
-                  height: '4rem',
-                  background: disabledNotes.some(disabledNote => noteName.slice(0, -1) === disabledNote.slice(0, -1)) ?
-                    (theme) => theme.palette.action.disabled :
-                    isCorrectAnswer && isAdvance ?
-                      (theme) => theme.palette.success.main :
-                      'default',
-                  color: isCorrectAnswer && isAdvance ?
-                    (theme) => theme.palette.success.contrastText :
-                    'default',
-                  '&:hover': {
-                    background: disabledNotes.some(
-                      (disabledNote) => noteName.slice(0, -1) === disabledNote.slice(0, -1)
-                    )
-                      ? (theme) => theme.palette.action.disabled
-                      : isCorrectAnswer && isAdvance
-                        ? (theme) => theme.palette.success.main
-                        : 'default',
-                  },
-                }}
+                className={`w-full h-16 text-2xl ${
+                  disabledNotes.some(disabledNote => noteName.slice(0, -1) === disabledNote.slice(0, -1))
+                    ? 'opacity-50 cursor-not-allowed'
+                    : isCorrectAnswer && isAdvance
+                    ? 'bg-green-600 hover:bg-green-700'
+                    : ''
+                }`}
+                disabled={disabledNotes.some(disabledNote => noteName.slice(0, -1) === disabledNote.slice(0, -1))}
                 data-note={noteName.slice(0, -1)}
               >
                 {note.name}
@@ -83,8 +69,7 @@ const ChallengeMode = ({ChallengeTrainerSettings}) => {
         })}
       </Grid>
       <Button
-        variant="contained"
-        color="primary"
+        variant="primary"
         onClick={() => {
           if (gameState === 'end') {
             setGameState('start');
@@ -92,15 +77,7 @@ const ChallengeMode = ({ChallengeTrainerSettings}) => {
             playNote(currentNote);
           }
         }}
-        fullWidth
-        sx={{
-          textTransform: 'none',
-          padding: '1rem',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 'auto',
-        }}
+        className="w-full p-4 flex justify-center items-center mt-auto"
       >
         {gameState === 'end' ? (
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-12 h-12">
