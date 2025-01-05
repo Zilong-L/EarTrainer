@@ -110,7 +110,6 @@ const handleNoteGuess = (activeNote,currentNote,rootNote,disabledNotes,setDisabl
       const degree = calculateDegree(Tone.Frequency(currentNote).toMidi(), rootNote);
       const player = preloadAudio(degree);
       if (player.loaded) {
-        player.volume.value = Math.log10(settings.volume.answerVolume) * 20;
         player.start();
       }
       setIsAdvance('Next'); // Set to advance

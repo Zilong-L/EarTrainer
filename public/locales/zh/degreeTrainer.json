@@ -73,7 +73,7 @@
       "full": "无损"
     },
     "qualityLabel": "音质",
-    "autoAdvance": "答对后自动前进",
-    "AnswerVolume": "答案音量"
+    "autoAdvance": "自动下一个",
+    "AnswerVolume": "播报答案音量"
   } 
 }
