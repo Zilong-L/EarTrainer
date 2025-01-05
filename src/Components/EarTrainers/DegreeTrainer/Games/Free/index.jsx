@@ -12,6 +12,7 @@ const FreeMode = ({FreeTrainerSettings}) => {
     isAdvance,
     setActiveNote,
     playNote,
+    bpm,
     gameState,
     setGameState,
     rootNote
@@ -31,11 +32,14 @@ const FreeMode = ({FreeTrainerSettings}) => {
               key={note.name}
               variant="primary"
               onClick={() => setActiveNote(noteName)}
-              className={`h-16 text-2xl md:h-24 md:text-3xl ${
-                isCorrectAnswer && isAdvance
-                  ? 'bg-green-200 hover:bg-green-200 dark:bg-green-200 dark:hover:bg-green-200'
-                  : ''
+              className={`h-16 text-2xl md:h-24 md:text-3xl relative ${
+                isCorrectAnswer && isAdvance ? 'correct-answer' : ''
               }`}
+              style={isCorrectAnswer && isAdvance ? {
+                '--x': `${Math.random() * 100}%`,
+                '--y': `${Math.random() * 100}%`,
+                '--animation-duration': `${(60 / bpm) * 1.5}s`
+              } : {}}
               disabled={disabledNotes.some(disabledNote => 
                 noteName.slice(0, -1) === disabledNote.slice(0, -1)
               )}

@@ -16,6 +16,7 @@ import useFreeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Free/use
 import useChallengeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer';
 import useDegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import { useTranslation } from 'react-i18next';
+import '@components/EarTrainers/DegreeTrainer/Games/styles.css';
 import { Toaster } from 'react-hot-toast';
 import { keyMap,degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import {Note } from 'tonal';

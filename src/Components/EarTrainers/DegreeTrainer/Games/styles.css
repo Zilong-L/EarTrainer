@@ -1,0 +1,33 @@
+@keyframes circularFill {
+  0% {
+    transform: scale(0);
+    opacity: 0.7;
+  }
+  30% {
+    transform: scale(3);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0.7;
+  }
+}
+
+.correct-answer {
+  position: relative;
+  overflow: hidden;
+}
+
+.correct-answer::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(216 180 254); /* Tailwind purple-300 */
+  border-radius: 50%;
+  width: 100%;
+  padding-bottom: 100%;
+  animation: circularFill calc(var(--animation-duration) * 0.5) ease-out forwards;
+  z-index: 0;
+}

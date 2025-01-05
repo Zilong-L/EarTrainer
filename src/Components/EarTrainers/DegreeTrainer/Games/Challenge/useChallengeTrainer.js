@@ -294,6 +294,7 @@ const useChallengeTrainer = (settings) => {
     disabledNotes,
     gameState,
     activeNote,
+    bpm,
     isAdvance,
     setActiveNote,
     currentPracticeRecords,

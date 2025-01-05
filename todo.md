@@ -20,10 +20,8 @@
 [x] Multiple chord types support
 [x] Practice statistics tracking
 [x] Volume and settings management
-[ ] Chord quality recognition
-[ ] Advanced chord types (9th, 11th, 13th)
-[ ] Chord voicing recognition
-[ ] Chord progression ear training
+
+
 
 #### Degree Trainer
 [x] Interval recognition training
@@ -31,10 +29,9 @@
 [x] Practice modes (free/structured)
 [x] Progress tracking
 [x] MIDI input support
-[ ] Interval singing exercises
-[ ] Relative pitch training
-[ ] Melodic dictation exercises
-[ ] Harmonic interval recognition
+[x] modify style of free mode
+[ ] challenge mode add three levels
+[ ] change changellenge mode to attempts remain.
 
 ## Technical Implementation
 [x] React architecture
@@ -45,23 +42,18 @@
 [x] MIDI input support
 [x] Material-UI components
 [x] Internationalization support
-[ ] Unified game state management
-[ ] Centralized audio management
-[ ] Improved MIDI handling abstraction
+
 
 ## User Experience
 [ ] Tutorial system *
 [ ] Progress visualization *
 [x] Adaptive difficulty system 
-[ ] Gamification elements *
 [ ] Practice session tracking
 [ ] Music theory explanations*
-[ ] Interactive lessons
 [ ] Reference materials*
 
 ## Audio Features
 [x] Basic audio playback
 [ ] Customizable metronome
-[ ] Audio recording/playback
-[ ] Multiple instrument support
+[x] Multiple instrument support
 [ ] Audio effects (reverb, delay)

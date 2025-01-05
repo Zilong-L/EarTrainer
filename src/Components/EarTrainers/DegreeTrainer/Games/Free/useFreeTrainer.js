@@ -207,6 +207,7 @@ const useFreeTrainer = (settings) => {
     handleDegreeToggle,
     customNotes,
     isAdvance,
+    bpm,
     setActiveNote,
     startGame,
     playNote,
