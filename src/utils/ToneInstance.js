@@ -7,7 +7,8 @@ const audioCache = {};
 let sampler = null;
 let droneInstance = null;
 let samplerChorus = new Tone.Chorus(4, 20, 1);
-let samplerGainNode = new Tone.Gain(0.5)
+let samplerGainNode = new Tone.Gain(0.5);
+let answerGainNode = new Tone.Gain(0.5);
 let samplerReverb = new Tone.Reverb({
   decay: 1,
   preDelay: 0.3,
@@ -166,9 +167,14 @@ function getDroneInstance() {
 
 const preloadAudio = (degree) => {
   if (!audioCache[degree]) {
-    audioCache[degree] = new Tone.Player(`/answers/${degree}.wav`).toDestination();
+    audioCache[degree] = new Tone.Player(`/answers/${degree}.wav`).connect(answerGainNode);
+    answerGainNode.toDestination();
   }
   return audioCache[degree];
+};
+
+const getAnswerGainNode = () => {
+  return answerGainNode;
 };
 function playNotes(input, delay = 0.05, bpm = 60) {
   // 取消之前的播放
@@ -242,4 +248,4 @@ function cancelAllSounds() {
   }
 }
 
-export { getSamplerInstance, getDroneInstance,preloadAudio, playNotes, cancelAllSounds,playNotesTogether };
+export { getSamplerInstance, getDroneInstance, preloadAudio, playNotes, cancelAllSounds, playNotesTogether, getAnswerGainNode };
