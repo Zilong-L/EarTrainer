@@ -11,7 +11,6 @@ const useFreeTrainer = (settings) => {
       bpm,
       rootNote,
       range,
-      repeatWhenAdvance,
       autoAdvance
     }
   } = settings;
@@ -20,7 +19,7 @@ const useFreeTrainer = (settings) => {
   const [disabledNotes, setDisabledNotes] = useState([]);
   const [gameState, setGameState] = useState('end');
   const [activeNote, setActiveNote] = useState(null);
-  const [isAdvance, setIsAdvance] = useState(false);
+  const [isAdvance, setIsAdvance] = useState('No');
   const [customNotes, setCustomNotes] = useState(degrees);
 
 
@@ -55,7 +54,7 @@ const useFreeTrainer = (settings) => {
   // handle guesses
   useEffect(() => {
     if (!activeNote) return;
-    handleNoteGuess(activeNote, currentNote, rootNote, disabledNotes, setDisabledNotes, isAdvance, setIsAdvance, settings.stats.updatePracticeRecords, playNote, setActiveNote);
+    handleNoteGuess(activeNote, currentNote, rootNote, disabledNotes, setDisabledNotes, isAdvance, setIsAdvance, settings.stats.updatePracticeRecords, playNote, setActiveNote,autoAdvance);
   }, [activeNote]);
 
   useEffect(() => {
@@ -70,8 +69,8 @@ const useFreeTrainer = (settings) => {
       setCurrentNote,
       playNote,
       setDisabledNotes,
+      isAdvance,
       setIsAdvance,
-      repeatWhenAdvance,
       autoAdvance
     });
   }, [isAdvance, gameState, isHandfree]);
@@ -149,6 +148,7 @@ const useFreeTrainer = (settings) => {
     handleDegreeToggle,
     customNotes,
     isAdvance,
+    setIsAdvance,
     bpm,
     setActiveNote,
     startGame,

@@ -13,10 +13,11 @@ function PracticeSettings({ settings }) {
       setBpm,
       rootNote,
       setRootNote,
+      autoAdvance,
+      setAutoAdvance,
       range,
       setRange,
-      repeatWhenAdvance,
-      setRepeatWhenAdvance
+
     }
   } = settings;
 
@@ -44,24 +45,9 @@ function PracticeSettings({ settings }) {
             }`} />
           </div>
         </div>
-
-        {/* Repeat When Advance Setting */}
-        <div 
-          className="flex items-center justify-between cursor-pointer"
-          onClick={() => setRepeatWhenAdvance(!repeatWhenAdvance)}
-        >
-          <span className="text-slate-700 dark:text-slate-300">
-            {t('settings.repeatWhenAdvance')}
-          </span>
-          <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-            repeatWhenAdvance ? 'bg-cyan-600' : 'bg-slate-200 dark:bg-slate-700'
-          }`}>
-            <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-              repeatWhenAdvance ? 'translate-x-6' : 'translate-x-1'
-            }`} />
-          </div>
         </div>
-      </div>
+
+
 
         {/* Note Range Dual Slider */}
         <div className="space-y-3">

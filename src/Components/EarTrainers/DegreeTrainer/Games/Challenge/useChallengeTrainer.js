@@ -13,6 +13,7 @@ const useChallengeTrainer = (settings) => {
       bpm,
       rootNote,
       range,
+      autoAdvance
     },
     stats: {
       updatePracticeRecords,
@@ -23,7 +24,7 @@ const useChallengeTrainer = (settings) => {
 
   const [currentLevel, setCurrentLevel] = useState(initialUserProgress[0]);
   const [userProgress, setUserProgress] = useLocalStorage('degreeTrainerUserProgress', initialUserProgress);
-
+  
   const [progressVersion, setProgressVersion] = useLocalStorage('degreeTrainerProgressVersion', 0);
 
   const updateLevel = (index) => {
@@ -119,7 +120,7 @@ const useChallengeTrainer = (settings) => {
   const [disabledNotes, setDisabledNotes] = useState([]);
   const [gameState, setGameState] = useState('end');
   const [activeNote, setActiveNote] = useState(null);
-  const [isAdvance, setIsAdvance] = useState(false);
+  const [isAdvance, setIsAdvance] = useState('No');
 
   const drone = getDroneInstance();
 
@@ -143,8 +144,8 @@ const useChallengeTrainer = (settings) => {
       playNote,
       setDisabledNotes,
       setIsAdvance,
+      
     });
-    
   }
     , [isAdvance, gameState, isHandfree]);
 
@@ -210,7 +211,7 @@ const useChallengeTrainer = (settings) => {
 
   useEffect(() => {
     if (!activeNote) return;
-    handleNoteGuess(activeNote, currentNote, rootNote, disabledNotes,setDisabledNotes, isAdvance,setIsAdvance, updatePracticeRecords, playNote, setActiveNote);
+    handleNoteGuess(activeNote, currentNote, rootNote, disabledNotes,setDisabledNotes, isAdvance,setIsAdvance, updatePracticeRecords, playNote, setActiveNote,autoAdvance);
   }, [activeNote]);
 
 
@@ -233,6 +234,7 @@ const useChallengeTrainer = (settings) => {
     activeNote,
     bpm,
     isAdvance,
+    setIsAdvance ,
     setActiveNote,
     currentPracticeRecords,
     setCurrentPracticeRecords,

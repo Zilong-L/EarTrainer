@@ -62,40 +62,49 @@ const getPossibleNotesInRange = (rootNote, range, degrees) => {
     return possibleNotesInRange;
 };
 
-const handleNoteGuess = (guessedNote,currentNote,rootNote,disabledNotes,setDisabledNotes,isAdvance,setIsAdvance,updatePracticeRecords,playNote,setActiveNote) => {
-    if(isAdvance){
+const handleNoteGuess = (activeNote,currentNote,rootNote,disabledNotes,setDisabledNotes,isAdvance,setIsAdvance,updatePracticeRecords,playNote,setActiveNote,autoAdvance) => {
+    if(isAdvance == 'Ready'){
         // only play notes because user has made a correct guess
         playNote(activeNote);
         setActiveNote(null);
         return;
     }
-    const correct = isCorrect(guessedNote, currentNote);
-    const guessedDegree = calculateDegree(guessedNote, rootNote);
+    
+    const correct = isCorrect(activeNote, currentNote);
+    const guessedDegree = calculateDegree(activeNote, rootNote);
     if (correct) {
+      console.log('correct')
       setDisabledNotes([]);
       updatePracticeRecords(guessedDegree, correct);
       playNote(currentNote);
-      setIsAdvance(true);
+      if(autoAdvance){
+        setIsAdvance('Next');
+      }else{
+        console.log('setting advance to ready')
+        setIsAdvance('Ready');
+      }
     } else {
-      if (!disabledNotes.includes(guessedNote)) {
-        setDisabledNotes((prev) => [...prev, guessedNote]);
+      if (!disabledNotes.includes(activeNote)) {
+        setDisabledNotes((prev) => [...prev, activeNote]);
         updatePracticeRecords(guessedDegree, correct);
       }
-      playNote(guessedNote);
+      playNote(activeNote);
     }
     setActiveNote(null);
   };
 
-  function handleGameLogic({ isAdvance, isHandfree, gameState, bpm, currentNote, rootNote, possibleNotesInRange, setCurrentNote, playNote, setDisabledNotes, setIsAdvance, autoAdvance }) {
+  const advanceGame = (possibleNotesInRange,currentNote,setCurrentNote,playNote,setDisabledNotes,setIsAdvance) => {
+    const nextNote = generateRandomNoteBasedOnRoot(possibleNotesInRange, currentNote);
+    setCurrentNote(nextNote);
+    playNote(nextNote);
+    setDisabledNotes([]);
+    setIsAdvance('No');
+  };
+
+  function handleGameLogic({ isAdvance, isHandfree, gameState, bpm, currentNote, rootNote, possibleNotesInRange, setCurrentNote, playNote, setDisabledNotes, setIsAdvance,autoAdvance }) {
     const timerDuration = (60 / bpm) * 2000;
-  
-    const advanceGame = () => {
-      const nextNote = generateRandomNoteBasedOnRoot(possibleNotesInRange, currentNote);
-      setCurrentNote(nextNote);
-      playNote(nextNote);
-      setDisabledNotes([]);
-      setIsAdvance(false);
-    };
+    console.log(autoAdvance)
+
   
     const handfreeGame = () => {
       const degree = calculateDegree(Tone.Frequency(currentNote).toMidi(), rootNote);
@@ -103,16 +112,20 @@ const handleNoteGuess = (guessedNote,currentNote,rootNote,disabledNotes,setDisab
       if (player.loaded) {
         player.start();
       }
-      setIsAdvance(true); // Set to advance
+      setIsAdvance('Ready'); // Set to advance
     };
-  
-    if (isAdvance && autoAdvance) {
-      const timer = setTimeout(advanceGame, timerDuration);
+
+    if (isAdvance == 'Next' ) {
+      const timer = setTimeout(()=>advanceGame(possibleNotesInRange,currentNote,setCurrentNote,playNote,setDisabledNotes,setIsAdvance), timerDuration);
       return () => clearTimeout(timer);
-    } else if (isHandfree && gameState === 'playing') {
+    }
+    if(isAdvance == 'Now'){
+      advanceGame(possibleNotesInRange,currentNote,setCurrentNote,playNote,setDisabledNotes,setIsAdvance)
+    }
+    else if (isHandfree && gameState === 'playing') {
       const timer = setTimeout(handfreeGame, timerDuration);
       return () => clearTimeout(timer);
     }
   }
   
-export { generateRandomNoteBasedOnRoot, isCorrect, calculateDegree, getPossibleNotesInRange,handleNoteGuess,handleGameLogic };
+export { generateRandomNoteBasedOnRoot, isCorrect, calculateDegree, getPossibleNotesInRange,handleNoteGuess,handleGameLogic,advanceGame };
