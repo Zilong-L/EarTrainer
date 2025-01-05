@@ -8,6 +8,7 @@ const usePracticeSettings = () => {
   const [rootNote, setRootNote] = useLocalStorage('degreeTrainerRootNote', 'C4');
   const [range, setRange] = useState([48,72])
   const [repeatWhenAdvance, setRepeatWhenAdvance] = useLocalStorage('degreeTrainerRepeatWhenAdvance', true);
+  const [autoAdvance, setAutoAdvance] = useLocalStorage('degreeTrainerAutoAdvance', true);
 
   useEffect(() => {
     localStorage.setItem('degreeTrainerRange', JSON.stringify(range));
@@ -24,7 +25,9 @@ const usePracticeSettings = () => {
     range,
     setRange,
     repeatWhenAdvance,
-    setRepeatWhenAdvance
+    setRepeatWhenAdvance,
+    autoAdvance,
+    setAutoAdvance
   };
 };
 

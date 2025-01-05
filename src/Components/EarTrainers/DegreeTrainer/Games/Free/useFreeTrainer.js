@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance, playNotes, preloadAudio } from '@utils/ToneInstance';
-import { generateRandomNoteBasedOnRoot, isCorrect, calculateDegree, getPossibleNotesInRange } from '@utils/GameLogics';
+import { generateRandomNoteBasedOnRoot, isCorrect, calculateDegree, getPossibleNotesInRange, handleNoteGuess, handleGameLogic } from '@utils/GameLogics';
 
 const useFreeTrainer = (settings) => {
   const {
@@ -11,7 +11,8 @@ const useFreeTrainer = (settings) => {
       bpm,
       rootNote,
       range,
-      repeatWhenAdvance
+      repeatWhenAdvance,
+      autoAdvance
     }
   } = settings;
 
@@ -22,12 +23,7 @@ const useFreeTrainer = (settings) => {
   const [isAdvance, setIsAdvance] = useState(false);
   const [customNotes, setCustomNotes] = useState(degrees);
 
-  useEffect(() => {
-    if (!activeNote) {
-      return;
-    }
-    handleNoteGuess(activeNote);
-  }, [activeNote]);
+
   const handleDegreeToggle = (index) => {
     const newCustomNotes = [...customNotes];
     newCustomNotes[index].enable = !newCustomNotes[index].enable;
@@ -58,61 +54,27 @@ const useFreeTrainer = (settings) => {
 
   // handle guesses
   useEffect(() => {
-    if (activeNote && !isAdvance) {
-      handleNoteGuess(activeNote);
-    }
-  }, [activeNote, isAdvance]);
-
+    if (!activeNote) return;
+    handleNoteGuess(activeNote, currentNote, rootNote, disabledNotes, setDisabledNotes, isAdvance, setIsAdvance, settings.stats.updatePracticeRecords, playNote, setActiveNote);
+  }, [activeNote]);
 
   useEffect(() => {
-    if (isAdvance) {
-      if (repeatWhenAdvance) {
-        const timer = setTimeout(() => {
-          const nextNote = generateRandomNoteBasedOnRoot(possibleNotesInRange, currentNote);
-          setCurrentNote(nextNote);
-          playNote(nextNote);
-          setIsAdvance(false);
-        }, (60 / bpm) * 2000);
-        return () => clearTimeout(timer);
-      }
-      else {
-        const timer = setTimeout(() => {
-          const nextNote = generateRandomNoteBasedOnRoot(possibleNotesInRange, currentNote);
-          setCurrentNote(nextNote);
-          playNote(nextNote);
-          setIsAdvance(false);
-        }, (60 / bpm) * 1000);
-        return () => clearTimeout(timer);
-      }
-    } else if (isHandfree && gameState == 'playing') {
-
-      const degree = calculateDegree(Tone.Frequency(currentNote).toMidi(), rootNote);
-      console.log(degree)
-      const player = preloadAudio(degree);
-      if (repeatWhenAdvance) {
-        const timer = setTimeout(() => {
-          if (player.loaded) {
-            player.start();
-          }
-          setTimeout(() => {
-            setIsAdvance(true); // Set to advance
-            playNote(currentNote); // Play the note
-          }, 1000); // Adjust delay as needed
-        }, (60 / bpm) * 2000);
-        return () => clearTimeout(timer);
-      }
-      else {
-        const timer = setTimeout(() => {
-          if (player.loaded) {
-            player.start();
-          }
-          setIsAdvance(true); // Set to advance
-        }, (60 / bpm) * 2000);
-        return () => clearTimeout(timer);
-      }
-    }
-  }
-    , [isAdvance, gameState, isHandfree]);
+    handleGameLogic({
+      isAdvance,
+      isHandfree,
+      gameState,
+      bpm,
+      currentNote,
+      rootNote,
+      possibleNotesInRange,
+      setCurrentNote,
+      playNote,
+      setDisabledNotes,
+      setIsAdvance,
+      repeatWhenAdvance,
+      autoAdvance
+    });
+  }, [isAdvance, gameState, isHandfree]);
 
 
 
@@ -146,26 +108,6 @@ const useFreeTrainer = (settings) => {
   };
 
 
-  const handleNoteGuess = (guessedNote) => {
-    const correct = isCorrect(guessedNote, currentNote);
-    const guessedDegree = calculateDegree(guessedNote, rootNote);
-    
-    if (correct) {
-      setDisabledNotes([]);
-      settings.stats.updatePracticeRecords(guessedDegree, correct);
-      if (repeatWhenAdvance) {
-        playNote(currentNote);
-      }
-      setIsAdvance(true);
-    } else {
-      if (!disabledNotes.includes(guessedNote)) {
-        setDisabledNotes((prev) => [...prev, guessedNote]);
-        settings.stats.updatePracticeRecords(guessedDegree, correct);
-      }
-      playNote(guessedNote);
-    }
-    setActiveNote(null);
-  };
 
   useEffect(() => {
 

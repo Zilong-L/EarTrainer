@@ -26,20 +26,40 @@ function PracticeSettings({ settings }) {
 
   return (
     <div className="p-6 space-y-12">
-      {/* Toggle Repeat Setting */}
-      <div 
-        className="flex items-center justify-between cursor-pointer"
-        onClick={() => setRepeatWhenAdvance(!repeatWhenAdvance)}
-      >
-        <span className="text-slate-700 dark:text-slate-300">
-          {t('settings.repeatWhenAdvance')}
-        </span>
-        <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-          repeatWhenAdvance ? 'bg-cyan-600' : 'bg-slate-200 dark:bg-slate-700'
-        }`}>
-          <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-            repeatWhenAdvance ? 'translate-x-6' : 'translate-x-1'
-          }`} />
+      {/* Toggle Settings */}
+      <div className="space-y-4">
+        {/* Auto Advance Setting */}
+        <div 
+          className="flex items-center justify-between cursor-pointer"
+          onClick={() => setAutoAdvance(!autoAdvance)}
+        >
+          <span className="text-slate-700 dark:text-slate-300">
+            {t('settings.autoAdvance')}
+          </span>
+          <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+            autoAdvance ? 'bg-cyan-600' : 'bg-slate-200 dark:bg-slate-700'
+          }`}>
+            <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+              autoAdvance ? 'translate-x-6' : 'translate-x-1'
+            }`} />
+          </div>
+        </div>
+
+        {/* Repeat When Advance Setting */}
+        <div 
+          className="flex items-center justify-between cursor-pointer"
+          onClick={() => setRepeatWhenAdvance(!repeatWhenAdvance)}
+        >
+          <span className="text-slate-700 dark:text-slate-300">
+            {t('settings.repeatWhenAdvance')}
+          </span>
+          <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+            repeatWhenAdvance ? 'bg-cyan-600' : 'bg-slate-200 dark:bg-slate-700'
+          }`}>
+            <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+              repeatWhenAdvance ? 'translate-x-6' : 'translate-x-1'
+            }`} />
+          </div>
         </div>
       </div>
 

@@ -1,6 +1,8 @@
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { Note, Range } from 'tonal';
+import { preloadAudio } from '@utils/ToneInstance';
+
 const generateRandomNoteBasedOnRoot = (possibleNotesInRange, currentNote) => {
     if (possibleNotesInRange.length === 0) return null;
     let nextNote = null;
@@ -60,5 +62,57 @@ const getPossibleNotesInRange = (rootNote, range, degrees) => {
     return possibleNotesInRange;
 };
 
+const handleNoteGuess = (guessedNote,currentNote,rootNote,disabledNotes,setDisabledNotes,isAdvance,setIsAdvance,updatePracticeRecords,playNote,setActiveNote) => {
+    if(isAdvance){
+        // only play notes because user has made a correct guess
+        playNote(activeNote);
+        setActiveNote(null);
+        return;
+    }
+    const correct = isCorrect(guessedNote, currentNote);
+    const guessedDegree = calculateDegree(guessedNote, rootNote);
+    if (correct) {
+      setDisabledNotes([]);
+      updatePracticeRecords(guessedDegree, correct);
+      playNote(currentNote);
+      setIsAdvance(true);
+    } else {
+      if (!disabledNotes.includes(guessedNote)) {
+        setDisabledNotes((prev) => [...prev, guessedNote]);
+        updatePracticeRecords(guessedDegree, correct);
+      }
+      playNote(guessedNote);
+    }
+    setActiveNote(null);
+  };
 
-export { generateRandomNoteBasedOnRoot, isCorrect, calculateDegree, getPossibleNotesInRange };
+  function handleGameLogic({ isAdvance, isHandfree, gameState, bpm, currentNote, rootNote, possibleNotesInRange, setCurrentNote, playNote, setDisabledNotes, setIsAdvance, autoAdvance }) {
+    const timerDuration = (60 / bpm) * 2000;
+  
+    const advanceGame = () => {
+      const nextNote = generateRandomNoteBasedOnRoot(possibleNotesInRange, currentNote);
+      setCurrentNote(nextNote);
+      playNote(nextNote);
+      setDisabledNotes([]);
+      setIsAdvance(false);
+    };
+  
+    const handfreeGame = () => {
+      const degree = calculateDegree(Tone.Frequency(currentNote).toMidi(), rootNote);
+      const player = preloadAudio(degree);
+      if (player.loaded) {
+        player.start();
+      }
+      setIsAdvance(true); // Set to advance
+    };
+  
+    if (isAdvance && autoAdvance) {
+      const timer = setTimeout(advanceGame, timerDuration);
+      return () => clearTimeout(timer);
+    } else if (isHandfree && gameState === 'playing') {
+      const timer = setTimeout(handfreeGame, timerDuration);
+      return () => clearTimeout(timer);
+    }
+  }
+  
+export { generateRandomNoteBasedOnRoot, isCorrect, calculateDegree, getPossibleNotesInRange,handleNoteGuess,handleGameLogic };
