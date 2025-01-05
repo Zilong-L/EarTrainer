@@ -63,7 +63,7 @@ const getPossibleNotesInRange = (rootNote, range, degrees) => {
 };
 
 const handleNoteGuess = (activeNote,currentNote,rootNote,disabledNotes,setDisabledNotes,isAdvance,setIsAdvance,updatePracticeRecords,playNote,setActiveNote,autoAdvance) => {
-    if(isAdvance == 'Ready'){
+    if(isAdvance == 'Ready' || isAdvance == 'Next'){
         // only play notes because user has made a correct guess
         playNote(activeNote);
         setActiveNote(null);
@@ -96,7 +96,7 @@ const handleNoteGuess = (activeNote,currentNote,rootNote,disabledNotes,setDisabl
   const advanceGame = (possibleNotesInRange,currentNote,setCurrentNote,playNote,setDisabledNotes,setIsAdvance) => {
     const nextNote = generateRandomNoteBasedOnRoot(possibleNotesInRange, currentNote);
     setCurrentNote(nextNote);
-    playNote(nextNote);
+    playNote(nextNote,0.05,3);
     setDisabledNotes([]);
     setIsAdvance('No');
   };
@@ -112,7 +112,7 @@ const handleNoteGuess = (activeNote,currentNote,rootNote,disabledNotes,setDisabl
       if (player.loaded) {
         player.start();
       }
-      setIsAdvance('Ready'); // Set to advance
+      setIsAdvance('Next'); // Set to advance
     };
 
     if (isAdvance == 'Next' ) {

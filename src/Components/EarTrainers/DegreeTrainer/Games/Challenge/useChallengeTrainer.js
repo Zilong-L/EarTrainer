@@ -201,11 +201,11 @@ const useChallengeTrainer = (settings) => {
     setGameState('start');
   };
 
-  const playNote = (note = null, delay = 0.05) => {
+  const playNote = (note = null, delay = 0.05,time=1) => {
     if (!note) {
       note = currentNote;
     }
-    playNotes(note, delay, bpm);
+    playNotes(note, delay, bpm/time);
   };
 
 

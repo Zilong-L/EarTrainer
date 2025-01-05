@@ -30,8 +30,7 @@
 [x] Progress tracking
 [x] MIDI input support
 [x] modify style of free mode
-[ ] challenge mode add three levels
-[ ] change changellenge mode to attempts remain.
+[x] add auto advanced option.
 
 ## Technical Implementation
 [x] React architecture

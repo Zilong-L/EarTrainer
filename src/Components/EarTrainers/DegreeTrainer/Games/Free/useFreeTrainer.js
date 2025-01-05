@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
-import { getDroneInstance, playNotes, preloadAudio } from '@utils/ToneInstance';
+import { getDroneInstance, playNotes } from '@utils/ToneInstance';
 import { generateRandomNoteBasedOnRoot, isCorrect, calculateDegree, getPossibleNotesInRange, handleNoteGuess, handleGameLogic } from '@utils/GameLogics';
 
 const useFreeTrainer = (settings) => {
@@ -99,11 +99,12 @@ const useFreeTrainer = (settings) => {
     setGameState('start');
   };
 
-  const playNote = (note = null, delay = 0.05) => {
+  const playNote = (note = null, delay = 0.05,time = 1) => {
     if (!note) {
       note = currentNote;
     }
-    playNotes(note, delay, bpm);
+      playNotes(note, delay, bpm/time);
+
   };
 
 
