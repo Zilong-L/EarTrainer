@@ -20,20 +20,21 @@ const useFreeTrainer = (settings) => {
   const [gameState, setGameState] = useState('end');
   const [activeNote, setActiveNote] = useState(null);
   const [isAdvance, setIsAdvance] = useState('No');
-  const [customNotes, setCustomNotes] = useState(degrees);
+  const [customNotes, _setCustomNotes] = useState(degrees);
 
-
+  const setCustomNotes = (notes) => {
+    _setCustomNotes(notes);
+    localStorage.setItem('degreeTrainerCustomNotes', JSON.stringify(notes));
+  };
   const handleDegreeToggle = (index) => {
     const newCustomNotes = [...customNotes];
     newCustomNotes[index].enable = !newCustomNotes[index].enable;
     setCustomNotes(newCustomNotes);
   };
-  useEffect(() => {
-    localStorage.setItem('degreeTrainerCustomNotes', JSON.stringify(customNotes));
-  }, [customNotes]);
+
   useEffect(() => {
     const customNotes = JSON.parse(localStorage.getItem('degreeTrainerCustomNotes'));
-    setCurrentNote(customNotes);
+    setCustomNotes(customNotes);
   }, []);
 
 
