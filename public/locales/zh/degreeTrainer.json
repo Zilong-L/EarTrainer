@@ -72,6 +72,8 @@
       "high": "高质量",
       "full": "无损"
     },
-    "qualityLabel": "音质"
+    "qualityLabel": "音质",
+    "autoAdvance": "答对后自动前进",
+    "AnswerVolume": "答案音量"
   } 
 }

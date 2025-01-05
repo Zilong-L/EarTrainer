@@ -77,6 +77,8 @@
       "high": "high",
       "full": "lossless"
     },
-    "qualityLabel": "Audio Quality"
+    "qualityLabel": "Audio Quality",
+    "autoAdvance": "Auto Advance When Correct",
+    "AnswerVolume": "Answer Volume"
   }
 }
