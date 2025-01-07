@@ -2,7 +2,7 @@ import React from 'react';
 import MIDIInputHandler from '../MIDIInputHandler';
 import {getNiceChordName} from '@utils/ChordTrainer/GameLogics';
 const ChordPracticeGame = ({chordPracticeGameSettings}) => {
-  const { targetChord, detectedChords, activeNotes, setActiveNotes } = chordPracticeGameSettings;
+  const { targetChord, detectedChords, activeNotes, setActiveNotes,sustainedNotes,setSustainedNotes } = chordPracticeGameSettings;
   
   return (
     <div className="h-[65vh] pl-[10%] flex flex-col justify-center">
@@ -14,8 +14,11 @@ const ChordPracticeGame = ({chordPracticeGameSettings}) => {
       <div className="w-full">
         <MIDIInputHandler 
           activeNotes={activeNotes} 
+          targetChord={targetChord}
           setActiveNotes={setActiveNotes} 
           detectedChords={detectedChords} 
+          sustainedNotes={sustainedNotes}
+          setSustainedNotes={setSustainedNotes}
         />
       </div>
     </div>

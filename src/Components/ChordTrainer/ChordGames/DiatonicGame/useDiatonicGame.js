@@ -6,6 +6,7 @@ const useDiatonicGame = () => {
   const [targetChord, setTargetChord] = useState("");
   const [detectedChords, setDetectedChords] = useState([]);
   const [activeNotes, setActiveNotes] = useState([]);
+  const [sustainedNotes, setSustainedNotes] = useState([]);
 
   const [chordPool, setChordPool] = useState([]);
   const [rootNote, setRootNote] = useState("C");
@@ -93,6 +94,8 @@ const useDiatonicGame = () => {
     ignoreTranspose, // Whether to ignore transposition when comparing chords
     setTargetChord, // Function to update targetChord
     setActiveNotes, // Function to update activeNotes
+    sustainedNotes,
+    setSustainedNotes,
     setRootNote, // Function to update rootNote
     setScaleType, // Function to update scaleType
     setIgnoreTranspose, // Function to update ignoreTranspose

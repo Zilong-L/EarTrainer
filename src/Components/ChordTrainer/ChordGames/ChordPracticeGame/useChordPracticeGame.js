@@ -20,6 +20,8 @@ const useChordPracticeGame = () => {
   const [targetChord, setTargetChord] = useState("");
   const [detectedChords, setDetectedChords] = useState([]);
   const [activeNotes, setActiveNotes] = useState([]);
+  const [sustainedNotes, setSustainedNotes] = useState([]);
+
   const [selectedInversion, setSelectedInversion] = useLocalStorage('chordPractice.selectedInversion', "random");
   const [chordType, setChordType] = useLocalStorage('chordPractice.chordType', "M");
   const [proMode, setProMode] = useLocalStorage('chordPractice.proMode', false);
@@ -128,6 +130,8 @@ const useChordPracticeGame = () => {
     setProMode,
     activeNotes,
     setActiveNotes,
+    sustainedNotes,
+    setSustainedNotes,
     chordType,
     setChordType,
     selectedInversion,

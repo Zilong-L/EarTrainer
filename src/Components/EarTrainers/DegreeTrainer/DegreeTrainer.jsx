@@ -152,7 +152,7 @@ const EarTrainer = () => {
           <HeaderButton 
             onClick={() => setIsHandfree(!isHandfree)}
             title={isHandfree ? t('buttons.handfreeOff') : t('buttons.handfreeOn')}
-            className={isHandfree ? 'bg-bg-accent text-white' : 'bg-bg-main '}
+            className={isHandfree ? 'bg-bg-main ' : 'bg-bg-common '}
           >
             <span className="material-icons"><AllInclusiveIcon></AllInclusiveIcon></span>
           </HeaderButton>

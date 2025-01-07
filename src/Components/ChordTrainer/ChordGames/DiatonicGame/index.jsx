@@ -10,7 +10,9 @@ const DiatonicGame = ({diatonicGameSettings}) => {
     detectedChords, 
     setActiveNotes,
     showDegree,
-    rootNote
+    rootNote,
+    sustainedNotes,
+    setSustainedNotes
   } = diatonicGameSettings;
   
   return (
@@ -33,8 +35,11 @@ const DiatonicGame = ({diatonicGameSettings}) => {
       <div className="w-full">
         <MIDIInputHandler 
           activeNotes={activeNotes} 
+          targetChord={targetChord}
           setActiveNotes={setActiveNotes} 
           detectedChords={detectedChords} 
+          sustainedNotes={sustainedNotes}
+          setSustainedNotes={setSustainedNotes}
         />
       </div>
     </div>
