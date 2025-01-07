@@ -29,7 +29,7 @@ const ChallengeMode = ({ChallengeTrainerSettings}) => {
       : 0;
 
     return (
-      <div className="space-y-3 text-slate-700 dark:text-slate-300 md:space-y-4">
+      <div className="space-y-3 text-text-primary md:space-y-4">
         <p className="text-lg md:text-2xl">{t('home.level')}: {currentLevel.level}</p>
         <p className="text-lg md:text-2xl">{t('home.totalAttempts')} {totalResults.total} / {currentLevel.minTests}</p>
         <p className="text-lg md:text-2xl">{t('home.correctCount')} {totalResults.correct}</p>

@@ -1,6 +1,6 @@
 import React, { useRef, useCallback } from 'react';
-
 import { useTranslation } from 'react-i18next';
+import Slider from '@components/SharedComponents/Slider';
 import { Midi } from "tonal";
 import { getDroneInstance } from '@utils/ToneInstance';
 
@@ -34,13 +34,13 @@ function PracticeSettings({ settings }) {
           className="flex items-center justify-between cursor-pointer"
           onClick={() => setAutoAdvance(!autoAdvance)}
         >
-          <span className="text-slate-700 dark:text-slate-300">
+          <span className="text-text-primary">
             {t('settings.autoAdvance')}
           </span>
           <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-            autoAdvance ? 'bg-cyan-600' : 'bg-slate-200 dark:bg-slate-700'
+            autoAdvance ? 'bg-notification-bg' : 'bg-bg-accent'
           }`}>
-            <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+            <span className={`inline-block h-4 w-4 transform rounded-full bg-bg-common transition-transform ${
               autoAdvance ? 'translate-x-6' : 'translate-x-1'
             }`} />
           </div>
@@ -52,18 +52,18 @@ function PracticeSettings({ settings }) {
         {/* Note Range Dual Slider */}
         <div className="space-y-3">
           <div className="flex justify-between items-center mb-4">
-            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+            <label className="text-sm font-medium text-text-primary">
               {t('settings.NoteRange')}
             </label>
-            <div className="text-sm text-slate-600 dark:text-slate-400">
+            <div className="text-sm text-text-secondary">
               {Midi.midiToNoteName(range[0])} - {Midi.midiToNoteName(range[1])}
             </div>
           </div>
           <div className="range-container">
             <div className="slider">
-              <div className="slider__track dark:bg-slate-700" />
-              <div className="slider__range slider__range--left" style={{ width: `${((range[0] - Midi.toMidi('C1')) / 60) * 100}%` }} />
-              <div className="slider__range slider__range--right" style={{ width: `${((range[1] - range[0]) / 60) * 100}%`, left: `${((range[0] - Midi.toMidi('C1')) / 60) * 100}%` }} />
+              <div className="slider__track bg-bg-common" />
+              <div className="slider__range bg-bg-accent" style={{ width: `${((range[0] - Midi.toMidi('C1')) / 60) * 100}%` }} />
+              <div className="slider__range bg-notification-bg" style={{ width: `${((range[1] - range[0]) / 60) * 100}%`, left: `${((range[0] - Midi.toMidi('C1')) / 60) * 100}%` }} />
               <input
                 type="range"
                 min={0}
@@ -96,51 +96,25 @@ function PracticeSettings({ settings }) {
         </div>
 
         {/* Root Note Slider */}
-        <div className="space-y-3">
-          <div className="flex justify-between items-center mb-2">
-            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-              {t('settings.RootNote')}
-            </label>
-            <span className="text-sm text-slate-600 dark:text-slate-400">
-              {rootNote}
-            </span>
-          </div>
-          <div className="slider">
-            <div className="slider__track dark:bg-slate-700" />
-            <div className="slider__range" style={{ width: `${((Midi.toMidi(rootNote) - midiMin) / (midiMax - midiMin)) * 100}%` }} />
-            <input
-              type="range"
-              min={midiMin}
-              max={midiMax}
-              value={Midi.toMidi(rootNote)}
-              onChange={(e) => setRootNote(Midi.midiToNoteName(parseInt(e.target.value)))}
-              className="thumb"
-            />
-          </div>
-        </div>
+        <Slider
+          label={t('settings.RootNote')}
+          value={Midi.toMidi(rootNote)}
+          onChange={(e) => setRootNote(Midi.midiToNoteName(parseInt(e.target.value)))}
+          min={midiMin}
+          max={midiMax}
+          step={1}
+          displayValue={rootNote}
+        />
 
-        <div className="mb-12">
-          <div className="flex justify-between items-center mb-4">
-            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-              {t('settings.BPM')}
-            </label>
-            <span className="text-sm text-slate-600 dark:text-slate-400">
-              {bpm} BPM
-            </span>
-          </div>
-          <div className="slider">
-            <div className="slider__track dark:bg-slate-700" />
-            <div className="slider__range" style={{ width: `${((bpm - 10) / (200 - 10)) * 100}%` }} />
-            <input
-              type="range"
-              min={10}
-              max={200}
-              value={bpm}
-              onChange={(e) => setBpm(parseInt(e.target.value))}
-              className="thumb"
-            />
-          </div>
-        </div>
+        <Slider
+          label={t('settings.BPM')}
+          value={bpm}
+          onChange={(e) => setBpm(parseInt(e.target.value))}
+          min={10}
+          max={200}
+          step={1}
+          displayValue={`${bpm} BPM`}
+        />
 
 
 

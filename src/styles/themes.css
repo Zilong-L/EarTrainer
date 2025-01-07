@@ -1,0 +1,41 @@
+/* 生成的语义化变量 */
+
+.light {
+  --bg-main: #fffefb;
+  --bg-common: #f5f4f1;
+  --bg-accent: #cccbc8;
+  --text-primary: #1d1c1c;
+  --text-secondary: #313d44;
+  --showcase-bg: #d4eaf7;
+  --showcase-separator: #b6ccd8;
+  --showcase-text: #3b3c3d;
+  --notification-text: #71c4ef;
+  --notification-bg: #00668c;
+}
+
+.dark {
+  --bg-main: #1A1A1A;
+  --bg-common: #292929;
+  --bg-accent: #404040;
+  --text-primary: #eeeeee;
+  --text-secondary: #e0e0e0;
+  --showcase-bg: #333333;
+  --showcase-separator: #5c5c5c;
+  --showcase-text: #b9b9b9;
+  --notification-text: #444444;
+  --notification-bg: #d7d7d7;
+}
+
+:root {
+  --bg-main: #fffefb;
+  --bg-common: #f5f4f1;
+  --bg-accent: #cccbc8;
+  --text-primary: #1d1c1c;
+  --text-secondary: #313d44;
+  --showcase-bg: #d4eaf7;
+  --showcase-separator: #b6ccd8;
+  --showcase-text: #3b3c3d;
+  --notification-text: #71c4ef;
+  --notification-bg: #00668c;
+}
+

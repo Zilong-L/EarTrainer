@@ -28,32 +28,32 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/50" onClick={closeSettings} />
-      <div className="relative w-[90%] max-w-4xl h-[80vh] bg-slate-50 dark:bg-slate-800 rounded-lg shadow-xl overflow-hidden">
+      <div className="relative w-[90%] max-w-4xl h-[80vh] bg-bg-common rounded-lg shadow-xl overflow-hidden">
         {/* Header with Settings label and close button */}
-        <div className="flex items-center p-4 border-b border-slate-200 dark:border-slate-700">
+        <div className="flex items-center p-4 border-b border-bg-accent">
           {/* Mobile back button - always takes space but hidden when not needed */}
           <div className="w-8 md:hidden">
             {currentPage !== 'home' && (
               <button
                 onClick={() => setCurrentPage('home')}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full"
+                className="p-2 hover:bg-bg-hover rounded-full"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-slate-500 dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
             )}
           </div>
           
-          <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 flex-1 text-center md:text-left">
+          <h2 className="text-xl font-semibold text-text-primary flex-1 text-center md:text-left">
             {t('settings.Settings')}
           </h2>
           
           <button
             onClick={closeSettings}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full"
+            className="p-2 hover:bg-bg-hover rounded-full"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-slate-500 dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -62,14 +62,14 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
         {/* Content container with navigation and content area */}
         <div className="flex h-[calc(100%-4rem)]">
           {/* Navigation Sidebar - Hidden on mobile */}
-          <div className="w-48 border-r border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 h-full hidden md:block">
-          <nav className="p-4 space-y-2 bg-slate-50 dark:bg-slate-800">
+          <div className="w-48 border-r border-bg-accent bg-bg-common h-full hidden md:block">
+          <nav className="p-4 space-y-2 bg-bg-common">
             <button
               onClick={() => setCurrentPage('game')}
               className={`w-full px-4 py-3 text-left rounded-lg ${
                 currentPage === 'game' 
-                  ? 'bg-cyan-600 text-white'
-                  : 'text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700'
+                  ? 'bg-notification-bg text-notification-text'
+                  : 'text-text-primary hover:bg-bg-hover'
               }`}
             >
               {t('settings.GameSettings')}
@@ -78,8 +78,8 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
               onClick={() => setCurrentPage('practice')}
               className={`w-full px-4 py-3 text-left rounded-lg ${
                 currentPage === 'practice' 
-                  ? 'bg-cyan-600 text-white'
-                  : 'text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700'
+                  ? 'bg-notification-bg text-notification-text'
+                  : 'text-text-primary hover:bg-bg-hover'
               }`}
             >
               {t('settings.PracticeSettings')}
@@ -88,8 +88,8 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
               onClick={() => setCurrentPage('statistics')}
               className={`w-full px-4 py-3 text-left rounded-lg ${
                 currentPage === 'statistics'
-                  ? 'bg-cyan-600 text-white'
-                  : 'text-slate-900 dark:text-slate-100'
+                  ? 'bg-notification-bg text-notification-text'
+                  : 'text-text-primary'
               }`}
             >
               {t('settings.Statistics')}
@@ -98,8 +98,8 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
               onClick={() => setCurrentPage('volume')}
               className={`w-full px-4 py-3 text-left rounded-lg ${
                 currentPage === 'volume'
-                  ? 'bg-cyan-600 text-white'
-                  : 'text-slate-900 dark:text-slate-100'
+                  ? 'bg-notification-bg text-notification-text'
+                  : 'text-text-primary'
               }`}
             >
               {t('settings.VolumeSettings')}
@@ -108,8 +108,8 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
               onClick={() => setCurrentPage('sound')}
               className={`w-full px-4 py-3 text-left rounded-lg ${
                 currentPage === 'sound'
-                  ? 'bg-cyan-600 text-white'
-                  : 'text-slate-900 dark:text-slate-100'
+                  ? 'bg-notification-bg text-notification-text'
+                  : 'text-text-primary'
               }`}
             >
               {t('settings.SoundSettings')}
@@ -118,8 +118,8 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
         </div>
         
         {/* Content Area */}
-        <div className="flex-1 flex flex-col pb-6 bg-white dark:bg-slate-800"> {/* Add bottom padding to container */}
-          <div className="p-6 overflow-y-auto h-full box-border scrollbar-hide bg-white dark:bg-slate-800" style={{ 
+        <div className="flex-1 flex flex-col pb-6 bg-bg-common"> {/* Add bottom padding to container */}
+          <div className="p-6 overflow-y-auto h-full box-border scrollbar-hide bg-bg-common" style={{ 
             paddingBottom: '0',
             scrollbarGutter: 'stable' // Reserve space for scrollbar
           }}>
@@ -131,45 +131,45 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
               onClick={() => setCurrentPage('game')}
               className={`w-full px-4 py-3 text-left rounded-lg ${
                 currentPage === 'game' 
-                  ? 'bg-cyan-600 text-white'
-                  : 'text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700'
+                  ? 'bg-notification-bg text-notification-text'
+                  : 'text-text-primary hover:bg-bg-hover'
               }`}
             >
               {t('settings.GameSettings')}
             </button>
                 <button
                   onClick={() => setCurrentPage('practice')}
-                  className={`p-6 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors ${
+                  className={`p-6 bg-bg-common rounded-lg hover:bg-bg-hover transition-colors ${
                     currentPage === 'practice' 
-                      ? 'bg-cyan-700 text-white'
-                      : 'text-slate-900 dark:text-slate-100'
+                      ? 'bg-notification-bg text-notification-text'
+                      : 'text-text-primary'
                   }`}
                 >
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                  <h3 className="text-lg font-semibold text-text-primary">
                     {t('settings.PracticeSettings')}
                   </h3>
                 </button>
                 <button
                   onClick={() => setCurrentPage('statistics')}
-                  className="p-6 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                  className="p-6 bg-bg-common rounded-lg hover:bg-bg-hover transition-colors"
                 >
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                  <h3 className="text-lg font-semibold text-text-primary">
                     {t('settings.Statistics')}
                   </h3>
                 </button>
                 <button
                   onClick={() => setCurrentPage('volume')}
-                  className="p-6 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                  className="p-6 bg-bg-common rounded-lg hover:bg-bg-hover transition-colors"
                 >
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                  <h3 className="text-lg font-semibold text-text-primary">
                     {t('settings.VolumeSettings')}
                   </h3>
                 </button>
                 <button
                   onClick={() => setCurrentPage('sound')}
-                  className="p-6 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                  className="p-6 bg-bg-common rounded-lg hover:bg-bg-hover transition-colors"
                 >
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                  <h3 className="text-lg font-semibold text-text-primary">
                     {t('settings.SoundSettings')}
                   </h3>
                 </button>

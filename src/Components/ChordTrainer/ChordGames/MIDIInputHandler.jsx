@@ -67,13 +67,13 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes, detectedChords }) => {
 
   return (
     <div className="w-full space-y-4">
-      <div className="p-4 rounded-lg bg-slate-100 dark:bg-slate-700">
-        <h3 className="text-lg font-medium text-slate-900 dark:text-slate-100">
+      <div className="p-4 rounded-lg bg-bg-common">
+        <h3 className="text-lg font-medium text-text-primary">
           {t('detectedChords')}: <span>{getNiceChordName(detectedChords).join(', ')}</span>
         </h3>
       </div>
-      <div className="p-4 rounded-lg bg-slate-100 dark:bg-slate-700">
-        <h3 className="text-lg font-medium text-slate-900 dark:text-slate-100">
+      <div className="p-4 rounded-lg bg-bg-common">
+        <h3 className="text-lg font-medium text-text-primary">
           {t('notes')}: <span>{activeNotes.map((midi) => Note.fromMidi(midi)).join(', ')}</span>
         </h3>
       </div>

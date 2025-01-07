@@ -1,8 +1,3 @@
-.thumb,
-.thumb::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  -webkit-tap-highlight-color: transparent;
-}
 
 .thumb {
   pointer-events: none;
@@ -21,14 +16,13 @@
 }
 
 .thumb::-webkit-slider-thumb {
-  background-color: #ffffff;
-  border: none;
+  background-color: var(--color-bg-common);
+  border: solid 2px black;
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  height: 24px;
-  width: 24px;
-  margin-top: 4px;
+  height: 16px;
+  width: 16px;
+  margin-top: 8px;
   pointer-events: all;
   position: relative;
   z-index: 5;
@@ -42,7 +36,7 @@
   cursor: pointer;
   height: 24px;
   width: 24px;
-  margin-top: 4px;
+  margin-top: 8px;
   pointer-events: all;
   position: relative;
   z-index: 5;
@@ -51,15 +45,15 @@
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   input[type="range"] {
-    background: #334155;
+    background: var(--color-bg-common);
   }
   
   input[type="range"]::-webkit-slider-runnable-track {
-    background: #334155;
+    background: var(--color-bg-common);
   }
   
   input[type="range"]::-moz-range-track {
-    background: #334155;
+    background: var(--color-bg-common);
   }
 }
 
@@ -111,27 +105,18 @@
 }
 
 .slider__track {
-  background-color: #e2e8f0;
+  background-color: var(--color-bg-common);
   width: 100%;
   z-index: 1;
 }
 
 .slider__range {
-  background-color: rgb(14 116 144);
+  background-color: var(--color-notification-bg);
   z-index: 2;
   width: 100%;
 }
 
 /* Specific styles for left and right range portions */
-.slider__range--left {
-  background-color: #e2e8f0;
-  z-index: 3;
-}
-
-.slider__range--right {
-  background-color: rgb(14 116 144);
-  z-index: 2;
-}
 
 /* Dual range slider track and range colors */
 .range-slider {
@@ -167,13 +152,13 @@ body.modal-open::-webkit-scrollbar {
 
 /* Ensure range slider thumb matches other sliders */
 .thumb::-webkit-slider-thumb {
-  background-color: rgb(14 116 144);
-  border: 3px solid #fff;
+  background-color: var(--color-notification-bg);
+  border: none;
 }
 
 .thumb::-moz-range-thumb {
-  background-color: rgb(8 145 178);
-  border: 3px solid #fff;
+  background-color: var(--color-notification-bg);
+  border: none;
 }
 
 .range-slider {
@@ -227,7 +212,7 @@ body.modal-open::-webkit-scrollbar {
 
 .range-label {
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -236,6 +221,6 @@ body.modal-open::-webkit-scrollbar {
   }
   
   .range-label {
-    color: #94a3b8;
+    color: var(--color-text-secondary);
   }
 }

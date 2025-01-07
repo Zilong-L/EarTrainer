@@ -27,8 +27,8 @@ function GameSettings({ settings }) {
           }}
           className={`flex-1 py-2 rounded-lg transition-colors ${
             mode === 'free'
-              ? 'bg-cyan-600 text-white'
-              : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'
+              ? 'bg-notification-bg text-notification-text'
+              : 'bg-bg-main text-text-primary hover:bg-bg-hover'
           }`}
         >
           {t('intro.freeMode')}
@@ -41,8 +41,8 @@ function GameSettings({ settings }) {
           }}
           className={`flex-1 py-2 rounded-lg transition-colors ${
             mode === 'challenge'
-              ? 'bg-cyan-600 text-white'
-              : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'
+              ? 'bg-notification-bg text-notification-text'
+              : 'bg-bg-main text-text-primary hover:bg-bg-hover'
           }`}
         >
           {t('intro.challengeMode')}

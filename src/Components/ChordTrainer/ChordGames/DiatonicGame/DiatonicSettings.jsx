@@ -29,8 +29,8 @@ const DiatonicSettings = ({diatonicGameSettings}) => {
   };
 
   return (
-    <div className="space-y-6 px-6 pb-6 bg-white dark:bg-slate-800">
-      <h3 className="md:hidden text-xl font-semibold text-slate-900 dark:text-slate-100">
+    <div className="space-y-6 px-6 pb-6 bg-bg-main">
+      <h3 className="md:hidden text-xl font-semibold text-text-primary">
         {t('settings.diatonic.title')}
       </h3>
 
@@ -71,7 +71,7 @@ const DiatonicSettings = ({diatonicGameSettings}) => {
         <button
           onClick={() => setShowDegree(!showDegree)}
           className={`${
-            showDegree ? 'bg-cyan-500' : 'bg-slate-300 dark:bg-slate-600'
+            showDegree ? 'bg-notification-bg' : 'bg-bg-accent'
           } relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
         >
           <span

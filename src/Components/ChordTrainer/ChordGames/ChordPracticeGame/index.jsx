@@ -7,7 +7,7 @@ const ChordPracticeGame = ({chordPracticeGameSettings}) => {
   return (
     <div className="h-[65vh] pl-[10%] flex flex-col justify-center">
       <div className="h-[30vh] w-full">
-        <h1 className="text-6xl font-bold text-left mb-4 text-gray-900 dark:text-gray-100 font-jazz">
+        <h1 className="text-6xl font-bold text-left mb-4 text-text-primary font-jazz">
           {getNiceChordName([targetChord])}
         </h1>
       </div>

@@ -67,15 +67,15 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
     <div className="fixed inset-0 z-50">
       <div className="absolute inset-0 bg-black/50" onClick={() => setIsOpen(false)} />
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-      <div className="w-full max-w-5xl h-[80vh] rounded-lg bg-white dark:bg-slate-800 shadow-lg pointer-events-auto flex flex-col">
+      <div className="w-full max-w-5xl h-[80vh] rounded-lg bg-bg-main shadow-lg pointer-events-auto flex flex-col">
         {/* Header */}
-        <div className="w-full p-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+        <div className="w-full p-4 border-b border-bg-accent bg-bg-common flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-text-primary">
             {t('settings.title')}
           </h2>
           <button
             onClick={() => setIsOpen(false)}
-            className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400"
+            className="p-1 rounded-md hover:bg-bg-accent text-text-secondary"
           >
             <XMarkIcon className="h-5 w-5" />
           </button>
@@ -84,7 +84,7 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
         {/* Content Container */}
         <div className="flex flex-1 overflow-hidden">
           {/* Navigation Sidebar */}
-          <div className="pt-2 w-48 border-r border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 h-full">
+          <div className="pt-2 w-48 border-r border-bg-accent bg-bg-common h-full">
           
           {/* Navigation Items */}
           <nav className="p-2 space-y-1">
@@ -95,8 +95,8 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
                 className={`w-full px-3 py-2 text-left rounded-md transition-colors
                   ${
                     currentSettings === m
-                      ? 'bg-cyan-600 text-white'
-                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                      ? 'bg-notification-bg text-notification-text'
+                      : 'text-text-primary hover:bg-bg-accent'
                   }`}
               >
                 {t(`settings.modes.${m.toLowerCase().replace(' ', '')}`)}
@@ -109,8 +109,8 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
               className={`w-full px-3 py-2 text-left rounded-md transition-colors
                 ${
                   currentSettings === 'Sound Settings'
-                    ? 'bg-cyan-600 text-white'
-                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                    ? 'bg-notification-bg text-notification-text'
+                    : 'text-text-primary bg-bg-common'
                 }`}
             >
               {t('settings.modes.soundSettings')}
@@ -119,8 +119,8 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
           </div>
 
           {/* Content Area */}
-          <div className="flex-1 flex flex-col pb-6 bg-white dark:bg-slate-800">
-            <div className="px-6 overflow-y-auto h-full box-border  bg-white dark:bg-slate-800" >
+          <div className="flex-1 flex flex-col pb-6 bg-bg-main">
+            <div className="px-6 overflow-y-auto h-full box-border bg-bg-main" >
               {renderModeContent()}
             </div>
           </div>

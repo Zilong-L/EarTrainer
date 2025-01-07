@@ -31,6 +31,7 @@
 [x] MIDI input support
 [x] modify style of free mode
 [x] add auto advanced option.
+[ ] add timing records!
 
 ## Technical Implementation
 [x] React architecture

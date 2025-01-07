@@ -16,7 +16,7 @@ const DiatonicGame = ({diatonicGameSettings}) => {
   return (
     <div className="h-[75vh] pl-[10%] flex flex-col justify-center">
       <div className="h-[30vh] w-full">
-        <h1 className="text-6xl font-bold text-left mb-4 text-gray-900 dark:text-gray-100">
+        <h1 className="text-6xl font-bold text-left mb-4 text-text-primary">
           {showDegree ? (
             <div className="relative group">
               <span className="cursor-pointer">

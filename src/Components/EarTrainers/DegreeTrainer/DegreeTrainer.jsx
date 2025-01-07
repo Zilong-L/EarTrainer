@@ -152,7 +152,7 @@ const EarTrainer = () => {
           <HeaderButton 
             onClick={() => setIsHandfree(!isHandfree)}
             title={isHandfree ? t('buttons.handfreeOff') : t('buttons.handfreeOn')}
-            className={isHandfree ? 'bg-slate-400 text-white' : ''}
+            className={isHandfree ? 'bg-bg-accent text-white' : 'bg-bg-main '}
           >
             <span className="material-icons"><AllInclusiveIcon></AllInclusiveIcon></span>
           </HeaderButton>
@@ -164,14 +164,14 @@ const EarTrainer = () => {
               href={`https://barnman.cc/music/degree-trainer-help-${i18n.language}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-inherit no-underline"
+              className="text-inherit no-underline block mt-[4px]"
             >
               {t('buttons.help')}
             </a>
           </HeaderButton>
         </HeaderButtons>
       </Header>
-      <div className="h-[calc(100svh-64px)] bg-slate-50 dark:bg-slate-900">
+      <div className="h-[calc(100svh-64px)] bg-bg-main">
         <div className="max-w-2xl mx-auto h-full flex flex-col justify-between py-4 px-6">
           <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
           <div className="pr-4"> {/* Add right padding for scrollbar placeholder */}

@@ -15,7 +15,7 @@ function ChallengeSettings({ChallengeTrainerSettings}) {
   };
   console.log('ChallengeSettings:', ChallengeTrainerSettings);
   return (
-    <div className="space-y-2">
+    <div className="flex flex-col gap-4 p-4 bg-bg-main rounded-lg">
       {userProgress.map((levelData, index) => (
         <button
           key={levelData.level}
@@ -24,9 +24,9 @@ function ChallengeSettings({ChallengeTrainerSettings}) {
           className={`w-full flex justify-between items-center p-3 rounded-lg ${
             levelData.unlocked
               ? levelData.level === currentLevel?.level
-                ? 'bg-cyan-800 text-white' // Selected level
-                : 'bg-cyan-700 text-white hover:bg-cyan-800' // Unlocked but not selected
-              : 'bg-slate-200 text-slate-500 dark:bg-slate-700 dark:text-slate-400 cursor-not-allowed' // Locked
+                ? 'bg-showcase-bg text-text-primary' // Selected level
+                : 'bg-bg-main text-text-primary hover:bg-showcase-bg' // Unlocked but not selected
+              : 'bg-bg-accent cursor-not-allowed' // Locked
           }`}
         >
           <span className="font-medium">

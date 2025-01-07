@@ -55,12 +55,13 @@ const ChordTrainer = () => {
             <HeaderButton onClick={() => setIsAppSidebarOpen(!isAppSidebarOpen)} className="md:hidden">
               <Bars3Icon className="h-6 w-6" />
             </HeaderButton>
-            <div className="hidden md:flex">
+            <div className="hidden md:flex  ">
               {apps.map((item) => (
-                <HeaderButton>
+                <HeaderButton className='px-0 py-0 '>
                 <Link
                   key={item.name}
                   to={item.path}
+                  className=' p-2 px-4 block mt-[4px]'
                 >
                   {t(`trainer.apps.${item.name}`)}
                 </Link>
@@ -75,7 +76,7 @@ const ChordTrainer = () => {
       <div className="flex flex-1 overflow-hidden">
         <Sidebar isOpen={isAppSidebarOpen} setIsOpen={setIsAppSidebarOpen} />
         
-        <main className="flex-1 pt-20 overflow-y-auto bg-slate-50 dark:bg-slate-900">
+        <main className="flex-1 pt-20 overflow-y-auto bg-bg-main">
           <div className="max-w-6xl mx-auto">
             {renderGameMode()}
           </div>

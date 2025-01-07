@@ -4,7 +4,7 @@ const HeaderButton = ({ onClick, children, className = '' }) => {
   return (
     <button
       onClick={onClick}
-      className={`p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 ${className}`}
+      className={`p-2 rounded-md bg-bg-common text-text-secondary hover:shadow-md ${className}`}
     >
       {children}
     </button>

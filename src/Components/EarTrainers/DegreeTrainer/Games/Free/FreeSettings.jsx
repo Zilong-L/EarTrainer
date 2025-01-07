@@ -7,7 +7,7 @@ function FreeSettings({FreeTrainerSettings}) {
 
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+      <label className="block text-sm font-medium text-text-primary ">
         {t('settings.SelectDegrees')}
       </label>
       <div className="grid grid-cols-3 gap-3">
@@ -15,15 +15,15 @@ function FreeSettings({FreeTrainerSettings}) {
           <div
             key={note.name}
             onClick={() => handleDegreeToggle(index)}
-            className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded"
+            className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-bg-main  rounded"
           >
             <input
               type="checkbox"
               checked={note.enable}
               onChange={() => {}}
-              className="rounded border-slate-300 text-cyan-600 focus:ring-cyan-500"
+              className="rounded "
             />
-            <span className="text-slate-700 dark:text-slate-300">{note.name}</span>
+            <span className="text-text-secondary ">{note.name}</span>
           </div>
         ))}
       </div>

@@ -69,7 +69,7 @@ function Statistics({ settings  }) {
       <div className="flex justify-end">
         <button
           onClick={() => setIsDeleteConfirmOpen(true)}
-          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+          className="px-4 py-2 bg-error-bg text-error-text rounded-lg"
         >
           {t('settings.DeleteData')}
         </button>
@@ -79,23 +79,23 @@ function Statistics({ settings  }) {
       {isDeleteConfirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/50" onClick={() => setIsDeleteConfirmOpen(false)} />
-          <div className="relative bg-white dark:bg-slate-800 p-6 rounded-lg shadow-xl w-80">
-            <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2">
+          <div className="relative bg-bg-common p-6 rounded-lg shadow-xl w-80">
+            <h3 className="text-lg font-semibold text-text-primary mb-2">
               {t('settings.ConfirmDelete')}
             </h3>
-            <p className="text-slate-600 dark:text-slate-400 mb-6">
+            <p className="text-text-secondary mb-6">
               {t('settings.DeleteConfirmation')}
             </p>
             <div className="flex justify-between">
               <button
                 onClick={handleDeleteConfirm}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                className="px-4 py-2 bg-error-bg text-error-text rounded-lg"
               >
                 {t('settings.Delete')}
               </button>
               <button
                 onClick={() => setIsDeleteConfirmOpen(false)}
-                className="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                className="px-4 py-2 border border-bg-accent rounded-lg bg-bg-common text-text-primary"
               >
                 {t('settings.Cancel')}
               </button>
