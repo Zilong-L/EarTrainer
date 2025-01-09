@@ -73,7 +73,6 @@ const handleNoteGuess = (activeNote,currentNote,rootNote,disabledNotes,setDisabl
     const correct = isCorrect(activeNote, currentNote);
     const guessedDegree = calculateDegree(activeNote, rootNote);
     if (correct) {
-      console.log('correct')
       setDisabledNotes([]);
       updatePracticeRecords(guessedDegree, correct);
       playNote(currentNote);
@@ -103,7 +102,6 @@ const handleNoteGuess = (activeNote,currentNote,rootNote,disabledNotes,setDisabl
 
   function handleGameLogic({ isAdvance, isHandfree, gameState, bpm, currentNote, rootNote, possibleNotesInRange, setCurrentNote, playNote, setDisabledNotes, setIsAdvance,autoAdvance }) {
     const timerDuration = (60 / bpm) * 2000;
-    console.log(autoAdvance)
 
   
     const handfreeGame = () => {

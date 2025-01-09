@@ -13,7 +13,8 @@ const useChallengeTrainer = (settings) => {
       bpm,
       rootNote,
       range,
-      autoAdvance
+      autoAdvance,
+      useSolfege
     },
     stats: {
       updatePracticeRecords,
@@ -164,7 +165,6 @@ const useChallengeTrainer = (settings) => {
     , [gameState, currentNote]);
 
     useEffect(() => {
-      console.log('running')
       return () => {
         endGame();
       }
@@ -246,8 +246,8 @@ const useChallengeTrainer = (settings) => {
     currentLevel,
     setCurrentLevel,
     resetUserProgress,
-    updateLevel
-
+    updateLevel,
+    useSolfege
     
   };
 };

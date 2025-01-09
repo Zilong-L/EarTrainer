@@ -4,6 +4,8 @@ import * as Tone from 'tone';
 import { useTranslation } from 'react-i18next';
 import { isCorrect } from '@utils/GameLogics';
 import { ArrowPathIcon, ForwardIcon } from '@heroicons/react/24/solid';
+import { SolfegeMapping } from '@components/EarTrainers/DegreeTrainer/Constants';
+
 const ChallengeMode = ({ChallengeTrainerSettings}) => {
   const { 
     currentNote,
@@ -19,6 +21,7 @@ const ChallengeMode = ({ChallengeTrainerSettings}) => {
     currentLevel,
     bpm,
     setIsAdvance,
+    useSolfege,
   } = ChallengeTrainerSettings;
   const { t } = useTranslation('degreeTrainer');
 
@@ -50,7 +53,6 @@ const ChallengeMode = ({ChallengeTrainerSettings}) => {
         {filteredNotes.map((note) => {
           const noteName = Tone.Frequency(Tone.Frequency(rootNote).toMidi() + note.distance, 'midi').toNote();
           const isCorrectAnswer = isCorrect(noteName, currentNote) && isAdvance !=='No';
-          console.log('isAdvance',isAdvance)
           
           return (
             <Button
@@ -70,7 +72,7 @@ const ChallengeMode = ({ChallengeTrainerSettings}) => {
               )}
               data-note={noteName.slice(0, -1)}
             >
-              {note.name}
+              {useSolfege ? SolfegeMapping[note.name] || note.name : note.name}
             </Button>
           );
         })}

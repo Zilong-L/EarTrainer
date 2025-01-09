@@ -8,6 +8,7 @@ const usePracticeSettings = () => {
   const [rootNote, setRootNote] = useLocalStorage('degreeTrainerRootNote', 'C4');
   const [range, setRange] = useState([48,72])
   const [autoAdvance, setAutoAdvance] = useLocalStorage('degreeTrainerAutoAdvance', true);
+  const [useSolfege, setUseSolfege] = useLocalStorage('degreeTrainerUseSolfege', false);
 
   useEffect(() => {
     localStorage.setItem('degreeTrainerRange', JSON.stringify(range));
@@ -24,7 +25,11 @@ const usePracticeSettings = () => {
     range,
     setRange,
     autoAdvance,
-    setAutoAdvance
+    setAutoAdvance,
+    useSolfege,
+    setUseSolfege,
+    useSolfege,
+    setUseSolfege
   };
 };
 

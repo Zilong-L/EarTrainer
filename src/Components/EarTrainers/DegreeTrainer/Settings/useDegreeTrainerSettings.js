@@ -12,7 +12,6 @@ const useDegreeTrainerSettings = () => {
   const volume = useVolumeSettings();
   const practice = usePracticeSettings();
   const stats = useStatistics();
-  console.log("rerun")
 
   return {
     mode,

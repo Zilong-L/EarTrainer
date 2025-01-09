@@ -4,7 +4,6 @@ import FreeSettings from '@components/EarTrainers/DegreeTrainer/Games/Free/FreeS
 import ChallengeSettings from '@components/EarTrainers/DegreeTrainer/Games/Challenge/ChallengeSettings';
 
 function GameSettings({ settings }) {
-  console.log('gamesettings', settings)
   const {
       mode,
     setMode,

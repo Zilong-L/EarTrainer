@@ -17,6 +17,8 @@ function PracticeSettings({ settings }) {
       setAutoAdvance,
       range,
       setRange,
+      useSolfege,
+      setUseSolfege,
 
     }
   } = settings;
@@ -42,6 +44,23 @@ function PracticeSettings({ settings }) {
           }`}>
             <span className={`inline-block h-4 w-4 transform rounded-full bg-bg-common transition-transform ${
               autoAdvance ? 'translate-x-6' : 'translate-x-1'
+            }`} />
+          </div>
+        </div>
+
+        {/* Solfege/Degree Toggle */}
+        <div 
+          className="flex items-center justify-between cursor-pointer"
+          onClick={() => setUseSolfege(!useSolfege)}
+        >
+          <span className="text-text-primary">
+            {t('settings.useSolfege')}
+          </span>
+          <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+            useSolfege ? 'bg-notification-bg' : 'bg-bg-accent'
+          }`}>
+            <span className={`inline-block h-4 w-4 transform rounded-full bg-bg-common transition-transform ${
+              useSolfege ? 'translate-x-6' : 'translate-x-1'
             }`} />
           </div>
         </div>

@@ -10,7 +10,6 @@ const instrumentsList = [
 
 function SoundSettings({ settings, playNote }) {
   const { t } = useTranslation('degreeTrainer');
-  console.log(settings)
   const { 
     sound: {
       selectedInstrument, 
@@ -29,7 +28,6 @@ function SoundSettings({ settings, playNote }) {
     console.log(isLoadingInstrument)
     if (!isLoadingInstrument) {
       playNote();
-      console.log('runs')
     }
   }, [isLoadingInstrument]);
 

@@ -153,12 +153,23 @@ function getDroneInstance() {
       if (typeof rootNote === "number") {
         rootNote = Note.fromMidi(rootNote);
       }
+      
+      // Release any currently playing notes
+      if (rootPlaying) {
+        droneSampler.triggerRelease([currentRoot, currentFifth, currentOctave], Tone.now() + 0.1);
+      }
+      
       currentRoot = rootNote;
       currentFifth = Note.transpose(rootNote, "P5");
       currentOctave = Note.transpose(rootNote, "P8");
       
+      // Immediately play the new root note
+      if (droneSampler.loaded) {
+        droneSampler.triggerAttack(currentRoot, Tone.now() + 0.15);
+      }
+      
       // If the loop is running, it will automatically use the new notes
-      // on its next iteration. No need to manually trigger notes.
+      // on its next iteration.
     }
 
     droneInstance = {

@@ -4,7 +4,7 @@ import * as Tone from 'tone';
 import { useTranslation } from 'react-i18next';
 import { isCorrect } from '@utils/GameLogics';
 import { ArrowPathIcon, ForwardIcon } from '@heroicons/react/24/solid';
-
+import { SolfegeMapping } from '@components/EarTrainers/DegreeTrainer/Constants';
 const FreeMode = ({FreeTrainerSettings}) => {
   const { 
     currentNote,
@@ -17,7 +17,8 @@ const FreeMode = ({FreeTrainerSettings}) => {
     bpm,
     gameState,
     setGameState,
-    rootNote
+    rootNote,
+    useSolfege
   } = FreeTrainerSettings;
   const { t } = useTranslation('degreeTrainer');
 
@@ -47,7 +48,7 @@ const FreeMode = ({FreeTrainerSettings}) => {
               )}
               data-note={noteName.slice(0, -1)}
             >
-              {note.name}
+              {useSolfege ? SolfegeMapping[note.name] || note.name : note.name}
             </Button>
           );
         })}

@@ -11,7 +11,8 @@ const useFreeTrainer = (settings) => {
       bpm,
       rootNote,
       range,
-      autoAdvance
+      autoAdvance,
+      useSolfege
     }
   } = settings;
 
@@ -125,7 +126,6 @@ const useFreeTrainer = (settings) => {
   }
     , [gameState, currentNote]);
     useEffect(() => {
-      console.log('running')
       return () => {
         endGame();
       }
@@ -156,7 +156,8 @@ const useFreeTrainer = (settings) => {
     startGame,
     playNote,
     endGame,
-    setGameState
+    setGameState,
+    useSolfege
   };
 };
 

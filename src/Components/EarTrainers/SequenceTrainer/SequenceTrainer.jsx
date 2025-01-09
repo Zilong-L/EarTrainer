@@ -43,7 +43,6 @@ const SequenceTrainer = () => {
   };
 
   const handleReplay = () => {
-    console.log(sequenceIndex)
     playSequence(currentSequence.slice(sequenceIndex));
   };
 

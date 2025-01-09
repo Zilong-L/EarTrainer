@@ -13,7 +13,6 @@ function ChallengeSettings({ChallengeTrainerSettings}) {
       setIsConfirmOpen(false);
     }
   };
-  console.log('ChallengeSettings:', ChallengeTrainerSettings);
   return (
     <div className="flex flex-col gap-4 p-4 bg-bg-main rounded-lg">
       {userProgress.map((levelData, index) => (
