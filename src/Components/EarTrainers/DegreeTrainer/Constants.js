@@ -15,7 +15,7 @@ const keyMap = {
     'g': 10
   };
   const degrees = [
-    { name: "I", distance: 0, enable: true, interval: "1P" },   // Perfect Unison
+    { name: "Do", distance: 0, enable: true, interval: "1P" },   // Perfect Unison
     { name: "IIb", distance: 1, enable: false, interval: "2m" }, // Minor Second
     { name: "II", distance: 2, enable: true, interval: "2M" },   // Major Second
     { name: "IIIb", distance: 3, enable: false, interval: "3m" }, // Minor Third
@@ -28,6 +28,20 @@ const keyMap = {
     { name: "VIIb", distance: 10, enable: false, interval: "7m" }, // Minor Seventh
     { name: "VII", distance: 11, enable: false, interval: "7M" }, // Major Seventh
   ];
+  SolfegeMapping={
+    "I":"Do",
+    "II":"Re",
+    "III":"Mi",
+    "IV":"Fa",
+    "V":"Sol",
+    "VI":"La",
+    "VII":"Ti",
+    "IIb":"Ra",
+    "IIIb":"Me",
+    "Vb":"Se",
+    "VIb":"Le",
+    "VIIb":"Te"
+  }
   
   const initialUserProgress = [
     {

@@ -11,9 +11,13 @@ let samplerGainNode = new Tone.Gain(0.5);
 let answerGainNode = new Tone.Gain(0.5);
 let samplerReverb = new Tone.Reverb({
   decay: 1,
-  preDelay: 0.3,
-  wet: 0.5
+  wet: 1,
 }).toDestination();
+let samplerFilter = new Tone.Filter({
+  type: "bandpass",
+
+});
+
 
 Tone.getContext().lookAhead = 0;
 function getSamplerInstance() {
@@ -26,6 +30,7 @@ function getSamplerInstance() {
     sampler.connect(samplerGainNode);
     samplerGainNode.connect(samplerChorus);
     samplerChorus.connect(samplerReverb);
+    sampler.chain(samplerFilter,samplerReverb);
   }
 
   function setVolume(value) {
@@ -66,27 +71,23 @@ function getDroneInstance() {
   let rootMax = Tone.Frequency("C5").toMidi();
   let rootMin = Tone.Frequency("C2").toMidi();
   if (!droneInstance) {
-    const rootOscillator = new Tone.OmniOscillator("C2", "sine");
-    const fifthOscillator = new Tone.OmniOscillator("G2", "sine");
-    const octaveOscillator = new Tone.OmniOscillator("C3", "sine");
-    // 创建压缩器
-    const compressor = new Tone.Compressor({
-      threshold: -20, // 阈值，单位为分贝
-      ratio: 4,        // 压缩比例
-      attack: 0.003,  // 攻击时间，单位为秒
-      release: 0.25    // 释放时间，单位为秒
-    })
+    const droneSampler = SampleLibrary.load({
+      instruments: 'contrabass', // Default instrument
+      baseUrl: '/samples/',
+      quality: 'medium'
+    });
 
-    const rootGain = new Tone.Gain(0.8);
-    const fifthGain = new Tone.Gain(0.3);
-    const octaveGain = new Tone.Gain(0.3);
+    const compressor = new Tone.Compressor({
+      threshold: -20,
+      ratio: 4,
+      attack: 0.003,
+      release: 0.25
+    });
 
     const reverb = new Tone.Reverb({
-      decay: 1,
+      decay: 2,
       preDelay: 0.01
     }).toDestination();
-
-    // const chorus = new Tone.Chorus(4, 2.5, 1.0).start();
 
     const filter = new Tone.Filter({
       frequency: 400,
@@ -94,44 +95,49 @@ function getDroneInstance() {
       rolloff: -12
     });
 
-    masterGainNode = new Tone.Gain(1.0)
+    masterGainNode = new Tone.Gain(0.8);
 
-    // 连接振荡器到各自的增益节点
-    rootOscillator.connect(rootGain);
-    fifthOscillator.connect(fifthGain);
-    octaveOscillator.connect(octaveGain);
-    // 连接增益节点到压缩器
-    rootGain.connect(compressor);
-    fifthGain.connect(compressor);
-    octaveGain.connect(compressor);
-    // 连接压缩器到主增益节点
-    compressor.connect(masterGainNode);
+    // Connect the effects chain
+    droneSampler.chain(masterGainNode,samplerFilter,samplerReverb)
 
-    // 连接主增益节点到过滤器，然后到混响，最后到压缩器的目的地
-    masterGainNode.connect(filter);
-    filter.connect(reverb);
-    // 现在直接连接到 destination
-    
-
-    const lfo = new Tone.LFO({
-      frequency: 0.1,
-      min: -5,
-      max: 5
-    }).start();
-
-    lfo.connect(rootOscillator.detune);
-    lfo.connect(fifthOscillator.detune);
+    let intervalId = null;
+    let rootPlaying = false;
 
     function start() {
-      rootOscillator.start();
-      octaveOscillator.start();
-      fifthOscillator.start();
+      if (droneSampler.loaded) {
+        // Play root continuously
+        rootPlaying = true;
+        
+        // Create interval with random timing between 5-10 seconds
+        const playNextNote = () => {
+          const now = Tone.now();
+          droneSampler.triggerAttack(currentRoot, now);
+          
+          // Schedule next note with random delay
+          const nextInterval = Math.random() * 2000 + 3000; // 5000-10000ms (5-10 seconds)
+          intervalId = setTimeout(playNextNote, nextInterval);
+        };
+        
+        // Start the first note
+        playNextNote();
+      }
     }
 
     function stop() {
-      rootOscillator.stop();
-      octaveOscillator.stop();
-      fifthOscillator.stop();
+      if (droneSampler.loaded) {
+        // Clear the timeout
+        if (intervalId) {
+          clearTimeout(intervalId);
+          intervalId = null;
+        }
+        
+        // Release the root note
+        if (rootPlaying) {
+          droneSampler.triggerRelease(currentRoot, Tone.now() + 0.5);
+
+          rootPlaying = false;
+        }
+      }
     }
 
     function setVolume(value) {
@@ -139,16 +145,20 @@ function getDroneInstance() {
       masterGainNode.gain.value = clampedValue * 0.35;
     }
 
+    let currentRoot = "C2";
+    let currentFifth = "G2";
+    let currentOctave = "C3";
+
     function updateRoot(rootNote) {
-      //convert rootNote from midi to Note if it is midi 
       if (typeof rootNote === "number") {
         rootNote = Note.fromMidi(rootNote);
       }
-      const fifthNote = Note.transpose(rootNote, "P5")
-      const ocataveNote = Note.transpose(rootNote, "P8")
-      rootOscillator.frequency.value = rootNote;
-      fifthOscillator.frequency.value = fifthNote;
-      octaveOscillator.frequency.value = ocataveNote;
+      currentRoot = rootNote;
+      currentFifth = Note.transpose(rootNote, "P5");
+      currentOctave = Note.transpose(rootNote, "P8");
+      
+      // If the loop is running, it will automatically use the new notes
+      // on its next iteration. No need to manually trigger notes.
     }
 
     droneInstance = {
