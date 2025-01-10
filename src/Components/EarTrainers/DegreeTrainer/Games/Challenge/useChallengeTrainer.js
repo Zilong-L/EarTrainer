@@ -5,7 +5,9 @@ import { getDroneInstance, playNotes } from '@utils/ToneInstance';
 import toast from 'react-hot-toast';
 import { useLocalStorage } from '@uidotdev/usehooks';
 import { generateRandomNoteBasedOnRoot,    getPossibleNotesInRange,handleNoteGuess,handleGameLogic } from '@utils/GameLogics';
-const useChallengeTrainer = (settings) => {
+import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
+
+const useChallengeTrainer = () => {
   const {
     isHandfree,
     mode,
@@ -21,7 +23,7 @@ const useChallengeTrainer = (settings) => {
       currentPracticeRecords,
       setCurrentPracticeRecords
     }
-  } = settings;
+  } = useDegreeTrainerSettings();
 
   const [currentLevel, setCurrentLevel] = useState(initialUserProgress[0]);
   const [userProgress, setUserProgress] = useLocalStorage('degreeTrainerUserProgress', initialUserProgress);
@@ -145,7 +147,7 @@ const useChallengeTrainer = (settings) => {
       playNote,
       setDisabledNotes,
       setIsAdvance,
-      
+      useSolfege
     });
   }
     , [isAdvance, gameState, isHandfree]);

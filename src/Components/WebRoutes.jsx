@@ -6,6 +6,7 @@ import MusicTrainer from './EarTrainers/MusicTrainer';
 import DegreeTrainer from '@EarTrainers/DegreeTrainer/DegreeTrainer'
 import SequenceTrainer from'@EarTrainers/SequenceTrainer/SequenceTrainer' // 新增的 Sequence Trainer
 import ChordColorTrainer from'@EarTrainers/ChordColorTrainer/ChordColorTrainer'
+import {DegreeTrainerSettingsProvider,} from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings'
 import themes from '@themes/palette.js'
 // Import additional trainers here
 import { useTranslation } from 'react-i18next'; // 引入 useTranslation 钩子
@@ -57,7 +58,11 @@ const ThemedContent = () => {
             <Route path="/" element={<MusicTrainer />} />
             <Route path="/chord-trainer" element={<ChordTrainer />} />
             <Route path="/ear-trainer" element={<MusicTrainer />} />
-            <Route path="/ear-trainer/degree-trainer" element={<DegreeTrainer />} />
+            <Route path="/ear-trainer/degree-trainer" element={
+            <DegreeTrainerSettingsProvider>
+              <DegreeTrainer />
+              </DegreeTrainerSettingsProvider>} />
+            
             <Route path="/ear-trainer/chord-color-trainer" element={<ChordColorTrainer />} />
             <Route path="/ear-trainer/sequence-trainer" element={<SequenceTrainer />} /> {/* 新增的 Sequence Trainer 路由 */}
           </Routes>

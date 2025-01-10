@@ -5,14 +5,21 @@ import { Sampler } from 'tone';
 
 const usePracticeSettings = () => {
   const [bpm, setBpm] = useLocalStorage('degreeTrainerBPM', 60);
-  const [rootNote, setRootNote] = useLocalStorage('degreeTrainerRootNote', 'C4');
-  const [range, setRange] = useState([48,72])
+  const [rootNote, setRootNote] = useLocalStorage('degreeTrainerRootNote', 'C2');
+  const [range, _setRange] = useState([36,48])
   const [autoAdvance, setAutoAdvance] = useLocalStorage('degreeTrainerAutoAdvance', true);
   const [useSolfege, setUseSolfege] = useLocalStorage('degreeTrainerUseSolfege', false);
 
+  const setRange = (newRange) => {
+    _setRange(newRange);
+    localStorage.setItem('degreeTrainerRange', JSON.stringify(newRange));
+  }
   useEffect(() => {
-    localStorage.setItem('degreeTrainerRange', JSON.stringify(range));
-  }, [range]);
+    const storedRange = localStorage.getItem('degreeTrainerRange');
+    if (storedRange) {
+      _setRange(JSON.parse(storedRange));
+    }
+  }, []);
   useEffect(() => {
     getDroneInstance().updateRoot(rootNote);
   }, [rootNote]);

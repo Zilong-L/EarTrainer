@@ -14,7 +14,8 @@ import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
 import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/Settings';
 import useFreeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer';
 import useChallengeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer';
-import useDegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
+
+import {useDegreeTrainerSettings} from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import { useTranslation } from 'react-i18next';
 import '@components/EarTrainers/DegreeTrainer/Games/styles.css';
 import { Toaster } from 'react-hot-toast';
@@ -29,13 +30,13 @@ const EarTrainer = () => {
   const { t,i18n  } = useTranslation('degreeTrainer');
   
   const {
-      isHandfree,
+    isHandfree,
     setIsHandfree,
     mode,
   } = globalSettings;
 
-  const FreeTrainerSettings = useFreeTrainer(globalSettings);
-  const ChallengeTrainerSettings = useChallengeTrainer(globalSettings);
+  const FreeTrainerSettings = useFreeTrainer();
+  const ChallengeTrainerSettings = useChallengeTrainer();
 
   const settings = {...globalSettings, FreeTrainerSettings, ChallengeTrainerSettings};
   const currentGameSettings = mode === 'free' ? FreeTrainerSettings : ChallengeTrainerSettings;

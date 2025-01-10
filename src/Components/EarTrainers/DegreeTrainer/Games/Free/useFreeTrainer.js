@@ -3,8 +3,8 @@ import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance, playNotes } from '@utils/ToneInstance';
 import { generateRandomNoteBasedOnRoot, isCorrect, calculateDegree, getPossibleNotesInRange, handleNoteGuess, handleGameLogic } from '@utils/GameLogics';
-
-const useFreeTrainer = (settings) => {
+import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
+const useFreeTrainer = () => {
   const {
     isHandfree,
     practice: {
@@ -13,8 +13,9 @@ const useFreeTrainer = (settings) => {
       range,
       autoAdvance,
       useSolfege
-    }
-  } = settings;
+    },
+    stats:{updatePracticeRecords}
+  } = useDegreeTrainerSettings();
 
   const [currentNote, setCurrentNote] = useState("");
   const [disabledNotes, setDisabledNotes] = useState([]);
@@ -34,6 +35,9 @@ const useFreeTrainer = (settings) => {
   };
 
   useEffect(() => {
+    if(!localStorage.getItem('degreeTrainerCustomNotes')) {
+      return;
+    }
     const customNotes = JSON.parse(localStorage.getItem('degreeTrainerCustomNotes'));
     setCustomNotes(customNotes);
   }, []);
@@ -46,6 +50,7 @@ const useFreeTrainer = (settings) => {
   const currentNotes = useMemo(() => customNotes, [customNotes]);
 
   const filteredNotes = useMemo(() => {
+    if(!currentNotes) return [];
     return currentNotes.filter(note => note.enable);
   }, [currentNotes]);
 
@@ -56,7 +61,7 @@ const useFreeTrainer = (settings) => {
   // handle guesses
   useEffect(() => {
     if (!activeNote) return;
-    handleNoteGuess(activeNote, currentNote, rootNote, disabledNotes, setDisabledNotes, isAdvance, setIsAdvance, settings.stats.updatePracticeRecords, playNote, setActiveNote,autoAdvance);
+    handleNoteGuess(activeNote, currentNote, rootNote, disabledNotes, setDisabledNotes, isAdvance, setIsAdvance, updatePracticeRecords, playNote, setActiveNote,autoAdvance);
   }, [activeNote]);
 
   useEffect(() => {
@@ -73,7 +78,8 @@ const useFreeTrainer = (settings) => {
       setDisabledNotes,
       isAdvance,
       setIsAdvance,
-      autoAdvance
+      autoAdvance,
+      useSolfege
     });
   }, [isAdvance, gameState, isHandfree]);
 
