@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { Note, Range } from 'tonal';
-import { preloadAudio } from '@utils/ToneInstance';
+import { preloadAudio,shiftPicthAndPlay } from '@utils/ToneInstance';
 
 const generateRandomNoteBasedOnRoot = (possibleNotesInRange, currentNote) => {
     if (possibleNotesInRange.length === 0) return null;
@@ -23,6 +23,18 @@ const calculateDegree = (guessedNote, targetNote) => {
     const interval = ((guessedNoteMidi - Tone.Frequency(targetNote).toMidi()) % 12 + 12) % 12;
     return degrees.find(degree => degree.distance === interval)?.name || "Unknown";
 };
+const calculateInterval = (guessedNote, targetNote) => {
+  let guessedNoteMidi;
+  if (!Tone.isNumber(guessedNote)
+  ) {
+      guessedNoteMidi = Tone.Frequency(guessedNote).toMidi();
+  }
+  else {
+      guessedNoteMidi = guessedNote;
+  }
+  const interval = ((guessedNoteMidi - Tone.Frequency(targetNote).toMidi()) % 12 + 12) % 12;
+  return interval;
+};
 
 
 const isCorrect = (guessedNote, currentNote) => {
@@ -31,6 +43,7 @@ const isCorrect = (guessedNote, currentNote) => {
     return guessedNoteMidi % 12 === currentNoteMidi % 12;
 };
 const getPossibleNotesInRange = (rootNote, range, degrees) => {
+  if(!rootNote || !range || !degrees) return [];
     console.log('heavy calculation');
     // Get enabled intervals
     console.log('calculating possible notes in range');
@@ -100,15 +113,27 @@ const handleNoteGuess = (activeNote,currentNote,rootNote,disabledNotes,setDisabl
     setIsAdvance('No');
   };
 
-  function handleGameLogic({ isAdvance, isHandfree, gameState, bpm, currentNote, rootNote, possibleNotesInRange, setCurrentNote, playNote, setDisabledNotes, setIsAdvance,autoAdvance }) {
+  function handleGameLogic({ isAdvance, isHandfree, gameState, bpm, currentNote, rootNote, possibleNotesInRange, setCurrentNote, playNote, setDisabledNotes, setIsAdvance,useSolfege }) {
     const timerDuration = (60 / bpm) * 2000;
 
   
     const handfreeGame = () => {
       const degree = calculateDegree(Tone.Frequency(currentNote).toMidi(), rootNote);
-      const player = preloadAudio(degree);
+      const player = preloadAudio(degree,useSolfege);
+
       if (player.loaded) {
-        player.start();
+        console.log('loaded')
+        const offset = calculateOffset(currentNote,rootNote);
+        player.start(Tone.now(),offset,1.0);
+
+        // if(useSolfege){
+        // shiftPicthAndPlay(player, calculateShift(currentNote));
+        // }
+        // else{
+        //   player.start(Tone.now()+0.5);
+        //   console.log(player)
+        //   player.stop(Tone.now()+1.0)
+        // }
       }
       setIsAdvance('Next'); // Set to advance
     };
@@ -126,4 +151,20 @@ const handleNoteGuess = (activeNote,currentNote,rootNote,disabledNotes,setDisabl
     }
   }
   
+  const calculateShift = (note)=>{
+    const C3Midi = Note.midi('C2');
+    const noteMidi = Note.midi(note);
+    return noteMidi - C3Midi;
+  }
+  const calculateOffset = (currentNote,rootNote)=>{
+    console.log(currentNote,rootNote);
+    const degree = calculateInterval(currentNote,rootNote);
+    const degreeName = calculateDegree(currentNote,rootNote);
+    const pitchShift = calculateShift(currentNote);
+    const soundLengthOfEachDegree = 49;
+
+    const soundOffset = soundLengthOfEachDegree * degree + pitchShift;
+    console.log(soundOffset,degree,pitchShift,degreeName);
+    return soundOffset;
+  }
 export { generateRandomNoteBasedOnRoot, isCorrect, calculateDegree, getPossibleNotesInRange,handleNoteGuess,handleGameLogic,advanceGame };

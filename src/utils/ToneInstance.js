@@ -3,16 +3,27 @@ import { note } from 'tonal';
 import {SampleLibrary} from '@utils/SampleLibrary'; 
 import * as Tone from 'tone';
 import { Note } from 'tonal';
-const audioCache = {};
+import {SolfegeMapping} from '@EarTrainers/DegreeTrainer/Constants'
+let audioCache = null
+const audioCacheSolfege = {};
 let sampler = null;
 let droneInstance = null;
 let samplerChorus = new Tone.Chorus(4, 20, 1);
 let samplerGainNode = new Tone.Gain(0.5);
-let answerGainNode = new Tone.Gain(0.5);
+let answerGainNode = new Tone.Gain(0.5).toDestination();
 let samplerReverb = new Tone.Reverb({
   decay: 1,
   wet: 1,
 }).toDestination();
+
+let pitchShifter = new Tone.PitchShift(0).connect(answerGainNode);
+
+const shiftPicthAndPlay = (player,steps)=>{
+  console.log('shiftPicthAndPlay',steps)
+  pitchShifter.pitch = steps;
+  player.start();
+}
+
 let samplerFilter = new Tone.Filter({
   type: "bandpass",
 
@@ -186,12 +197,24 @@ function getDroneInstance() {
 }
 
 
-const preloadAudio = (degree) => {
-  if (!audioCache[degree]) {
-    audioCache[degree] = new Tone.Player(`/answers/${degree}.wav`).connect(answerGainNode);
-    answerGainNode.toDestination();
+const preloadAudio = (degree,useSolfege) => {
+  // if(useSolfege){
+  //   if (!audioCache[degree]) {
+  //     console.log('get',degree)
+  //     audioCache[degree] = new Tone.Player(`/answers/Solfege/${SolfegeMapping[degree]}.wav`).connect(pitchShifter)
+  //   }
+  //   return audioCache[degree];
+  // }
+  // else{
+  //   if (!audioCacheSolfege[degree]) {
+  //     audioCacheSolfege[degree] = new Tone.Player(`/answers/${degree}.wav`).connect(answerGainNode)
+  //   }
+  //   return audioCacheSolfege[degree];
+  // }
+  if(!audioCache){
+    audioCache = new Tone.Player('/answers/Solfege.mp3').connect(pitchShifter)
   }
-  return audioCache[degree];
+  return audioCache;
 };
 
 const getAnswerGainNode = () => {
@@ -269,4 +292,4 @@ function cancelAllSounds() {
   }
 }
 
-export { getSamplerInstance, getDroneInstance, preloadAudio, playNotes, cancelAllSounds, playNotesTogether, getAnswerGainNode };
+export { getSamplerInstance, getDroneInstance, preloadAudio, playNotes, cancelAllSounds, playNotesTogether, getAnswerGainNode,shiftPicthAndPlay };
