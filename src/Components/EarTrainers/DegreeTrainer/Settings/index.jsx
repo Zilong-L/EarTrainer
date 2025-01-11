@@ -123,9 +123,11 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
             paddingBottom: '0',
             scrollbarGutter: 'stable' // Reserve space for scrollbar
           }}>
-          {/* Mobile navigation - Only show grid on mobile */}
+          {/* Home content - Different for mobile and desktop */}
           {currentPage === 'home' && (
-            <div className="p-6 md:hidden">
+            <div className="p-6">
+              {/* Mobile navigation */}
+              <div className="md:hidden">
               <div className="grid grid-cols-1 gap-4">
               <button
               onClick={() => setCurrentPage('game')}
@@ -175,6 +177,14 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
                     {t('settings.SoundSettings')}
                   </h3>
                 </button>
+              </div>
+              
+              {/* Desktop placeholder */}
+              <div className="hidden md:flex items-center justify-center h-full">
+                <div className="text-center text-text-secondary">
+                  <p className="text-lg">{t('settings.selectSetting')}</p>
+                  <p className="text-sm mt-2">← {t('settings.clickLeft')}</p>
+                </div>
               </div>
             </div>
           )}
