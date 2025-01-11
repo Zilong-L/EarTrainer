@@ -8,7 +8,7 @@ const usePracticeSettings = () => {
   const [rootNote, setRootNote] = useLocalStorage('degreeTrainerRootNote', 'C2');
   const [range, _setRange] = useState([36,48])
   const [autoAdvance, setAutoAdvance] = useLocalStorage('degreeTrainerAutoAdvance', true);
-  const [useSolfege, setUseSolfege] = useLocalStorage('degreeTrainerUseSolfege', false);
+  const [useSolfege, setUseSolfege] = useLocalStorage('degreeTrainerUseSolfege', true);
   const [autoChangeRoot, setAutoChangeRoot] = useLocalStorage('degreeTrainerAutoChangeRoot', false);
   const [changeInterval, setChangeInterval] = useLocalStorage('degreeTrainerChangeInterval', 120); // in seconds
 
