@@ -87,6 +87,8 @@
     },
     "autoChangeRoot": "自动更换主音",
     "changeInterval": "更换间隔",
-    "minutes": "分钟"
+    "minutes": "分钟",
+    "selectSetting": "从左侧选择一个设置",
+    "clickLeft": "点击左侧的设置开始"
   } 
 }

@@ -92,6 +92,8 @@
     },
     "autoChangeRoot": "Auto Change Root Note",
     "changeInterval": "Change Interval",
-    "minutes": "minutes"
+    "minutes": "minutes",
+    "selectSetting": "Select a setting from the left",
+    "clickLeft": "Click on a setting to the left to get started"
   }
 }
