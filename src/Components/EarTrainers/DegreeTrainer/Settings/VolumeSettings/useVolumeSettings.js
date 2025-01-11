@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 const useVolumeSettings = () => {
   const [droneVolume, setDroneVolume] = useLocalStorage('degreeTrainerDroneVolume', 0.5);
   const [pianoVolume, setPianoVolume] = useLocalStorage('degreeTrainerPianoVolume', 0.5);
-  const [answerVolume, setAnswerVolume] = useLocalStorage('degreeTrainerAnswerVolume', 0.5);
+  const [answerVolume, setAnswerVolume] = useLocalStorage('degreeTrainerAnswerVolume', 0.2);
 
   const drone = getDroneInstance();
   const sampler = getSamplerInstance();

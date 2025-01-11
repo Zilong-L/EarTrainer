@@ -9,6 +9,7 @@ This is a simple sight-singing and ear-training tool to help improve musical per
    - Practice Statistics: Practice data is stored locally, allowing you to track your progress at any time.
    - Keyboard and MIDI Input Support: Practice using either a keyboard or MIDI device.
    - Handfree Mode: Practice without looking at the screen. Answer is given after a set time.
+   - Instrument sounds: Choose any instruments you like.
 - [Chord Training](https://musictrainer.barnman.cc/chord-trainer)
    - Chord Selection and Practice: Select a chord type and play it using a MIDI device. After correctly playing it, the next chord will be generated.
    - Random Chord Generation: Generate various chords for practice to improve playing speed.

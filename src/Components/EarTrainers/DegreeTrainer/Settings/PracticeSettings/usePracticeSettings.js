@@ -6,7 +6,7 @@ import {Note} from 'tonal';
 const usePracticeSettings = () => {
   const [bpm, setBpm] = useLocalStorage('degreeTrainerBPM', 60);
   const [rootNote, setRootNote] = useLocalStorage('degreeTrainerRootNote', 'C2');
-  const [range, _setRange] = useState([36,48])
+  const [range, _setRange] = useState([24,36])
   const [autoAdvance, setAutoAdvance] = useLocalStorage('degreeTrainerAutoAdvance', true);
   const [useSolfege, setUseSolfege] = useLocalStorage('degreeTrainerUseSolfege', false);
   const [autoChangeRoot, setAutoChangeRoot] = useLocalStorage('degreeTrainerAutoChangeRoot', false);
