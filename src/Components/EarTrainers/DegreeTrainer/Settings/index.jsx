@@ -9,7 +9,7 @@ import './styles.css';
 
 function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, playNote, setGameState }) {
   const { t } = useTranslation('degreeTrainer');
-  const [currentPage, setCurrentPage] = useState('practice');
+  const [currentPage, setCurrentPage] = useState('home');
 
   const closeSettings = () => {
     setIsSettingsOpen(false);
@@ -129,13 +129,15 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
               <div className="grid grid-cols-1 gap-4">
               <button
               onClick={() => setCurrentPage('game')}
-              className={`w-full px-4 py-3 text-left rounded-lg ${
+              className={`p-6 bg-bg-common rounded-lg hover:bg-bg-hover transition-colors ${
                 currentPage === 'game' 
                   ? 'bg-notification-bg text-notification-text'
                   : 'text-text-primary hover:bg-bg-hover'
               }`}
             >
+              <h3 className="text-lg font-semibold text-text-primary">
               {t('settings.GameSettings')}
+              </h3>
             </button>
                 <button
                   onClick={() => setCurrentPage('practice')}
