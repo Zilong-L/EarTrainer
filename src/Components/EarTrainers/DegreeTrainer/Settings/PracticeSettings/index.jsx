@@ -19,6 +19,10 @@ function PracticeSettings({ settings }) {
       setRange,
       useSolfege,
       setUseSolfege,
+      autoChangeRoot,
+      setAutoChangeRoot,
+      changeInterval,
+      setChangeInterval,
 
     }
   } = settings;
@@ -134,6 +138,37 @@ function PracticeSettings({ settings }) {
           step={1}
           displayValue={`${bpm} BPM`}
         />
+
+        {/* Auto Change Root Settings */}
+        <div className="space-y-4">
+          <div 
+            className="flex items-center justify-between cursor-pointer"
+            onClick={() => setAutoChangeRoot(!autoChangeRoot)}
+          >
+            <span className="text-text-primary">
+              {t('settings.autoChangeRoot')}
+            </span>
+            <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+              autoChangeRoot ? 'bg-notification-bg' : 'bg-bg-accent'
+            }`}>
+              <span className={`inline-block h-4 w-4 transform rounded-full bg-bg-common transition-transform ${
+                autoChangeRoot ? 'translate-x-6' : 'translate-x-1'
+              }`} />
+            </div>
+          </div>
+
+          {autoChangeRoot && (
+            <Slider
+              label={t('settings.changeInterval')}
+              value={changeInterval}
+              onChange={(e) => setChangeInterval(parseInt(e.target.value))}
+              min={120} // 2 minutes
+              max={600} // 10 minutes
+              step={60} // 1 minute increments
+              displayValue={`${Math.floor(changeInterval/60)} ${t('settings.minutes')}`}
+            />
+          )}
+        </div>
 
 
 
