@@ -163,7 +163,7 @@ const handleNoteGuess = (activeNote,currentNote,rootNote,disabledNotes,setDisabl
     const pitchShift = calculateShift(currentNote);
     const soundLengthOfEachDegree = 49;
 
-    const soundOffset = soundLengthOfEachDegree * degree + pitchShift;
+    const soundOffset = soundLengthOfEachDegree * degree +12+ pitchShift;
     console.log(soundOffset,degree,pitchShift,degreeName);
     return soundOffset;
   }

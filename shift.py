@@ -14,8 +14,8 @@ input_files = [
     "public/answers/Solfege/Fa.wav",
     "public/answers/Solfege/Se.wav",
     "public/answers/Solfege/Sol.wav",
-    "public/answers/Solfege/La.wav",
     "public/answers/Solfege/Le.wav",
+    "public/answers/Solfege/La.wav",
     "public/answers/Solfege/Te.wav",
     "public/answers/Solfege/Ti.wav"
 ]
