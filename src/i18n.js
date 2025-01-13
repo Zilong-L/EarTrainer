@@ -9,18 +9,18 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: 'en', // 默认语言为英语
+    fallbackLng: 'zh', // 默认语言为英语
     ns: ['degreeTrainer','sequenceTrainer','chordTrainer'], // 列出所有命名空间
     defaultNS: 'degreeTrainer', // 设置默认命名空间
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json', // 保持不变
     },
     detection: {
-      order: ['localStorage', 'cookie', 'navigator', 'htmlTag', 'path', 'subdomain'],
-      caches: ['localStorage', 'cookie'],
+      order: ['cookie'],
+      caches: ['cookie'],
     },
     react: {
-      useSuspense: false, // 根据需要设置
+      useSuspense: true, // 根据需要设置
     },
   });
 

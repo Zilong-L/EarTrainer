@@ -180,12 +180,13 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
               </div>
               
               {/* Desktop placeholder */}
-              <div className="hidden md:flex items-center justify-center h-full">
-                <div className="text-center text-text-secondary">
-                  <p className="text-lg">{t('settings.selectSetting')}</p>
-                  <p className="text-sm mt-2">← {t('settings.clickLeft')}</p>
-                </div>
-              </div>
+              
+            </div>
+            </div> 
+          )}
+          {currentPage === 'home' && (
+            <div className="hidden md:block text-center text-text-secondary">
+              <p className="text-2xl">{t('settings.selectSetting')}</p>
             </div>
           )}
           {currentPage === 'game' && (
