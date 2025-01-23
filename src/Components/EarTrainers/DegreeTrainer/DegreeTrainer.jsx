@@ -84,8 +84,17 @@ const EarTrainer = () => {
 
 
         // 模拟点击对应的按钮
+        const div1 = document.querySelector(`div[data-note="${noteName}"]`);
+        const div2 = document.querySelector(`div[data-note="${enharmonicNote}"]`);
+
         const button1 = document.querySelector(`button[data-note="${noteName}"]`);
         const button2 = document.querySelector(`button[data-note="${enharmonicNote}"]`);
+        if(div1){
+          div1.click();
+        }
+        if(div2){
+          div2.click();
+        }
         if (button1) {
           button1.click();
         }

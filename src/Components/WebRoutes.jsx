@@ -1,10 +1,10 @@
-import React from 'react';
+import {useState} from 'react';
 import { CssBaseline, Box,  ThemeProvider, createTheme,Button } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import ChordTrainer from './ChordTrainer';
 import MusicTrainer from './EarTrainers/MusicTrainer';
+import Intro from './EarTrainers/Intro';
 import DegreeTrainer from '@EarTrainers/DegreeTrainer/DegreeTrainer'
-import SequenceTrainer from'@EarTrainers/SequenceTrainer/SequenceTrainer' // 新增的 Sequence Trainer
 import ChordColorTrainer from'@EarTrainers/ChordColorTrainer/ChordColorTrainer'
 import {DegreeTrainerSettingsProvider,} from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings'
 import themes from '@themes/palette.js'
@@ -49,22 +49,27 @@ const ThemedContent = () => {
   const {t} = useTranslation('musicTrainer')
   const currentTheme = themes[location.pathname] || themes['/'];
   console.log(location.pathname)
+  const [isDark, setIsDark] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDark((prev) => !prev);
+    document.body.classList.toggle('dark', !isDark); // Toggle dark mode on the body
+  };
   return (
     <ThemeProvider theme={currentTheme}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}class="font-jazz">
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}class="font-chewy">
         <CssBaseline />
         
           <Routes>
-            <Route path="/" element={<MusicTrainer />} />
+            <Route path="/" element={<Intro />} />
             <Route path="/chord-trainer" element={<ChordTrainer />} />
-            <Route path="/ear-trainer" element={<MusicTrainer />} />
+            <Route path="/ear-trainer" element={<Intro />} />
             <Route path="/ear-trainer/degree-trainer" element={
             <DegreeTrainerSettingsProvider>
               <DegreeTrainer />
               </DegreeTrainerSettingsProvider>} />
             
             <Route path="/ear-trainer/chord-color-trainer" element={<ChordColorTrainer />} />
-            <Route path="/ear-trainer/sequence-trainer" element={<SequenceTrainer />} /> {/* 新增的 Sequence Trainer 路由 */}
           </Routes>
         
         <Box sx={{ textAlign: 'center', padding: 2 }}>
@@ -72,6 +77,22 @@ const ThemedContent = () => {
           <LanguageSwitcher/>
         </Box>
       </Box>
+
+      {location.pathname !== '/' && location.pathname!=='/ear-trainer' && (
+        <button
+        onClick={toggleTheme}
+        style={{
+          position: 'absolute',
+          bottom: '10px',
+          right: '10px',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: '24px',
+        }}
+      >
+        {isDark ? '🌙' : '☀️'}
+      </button>)}
     </ThemeProvider>
   );
 };

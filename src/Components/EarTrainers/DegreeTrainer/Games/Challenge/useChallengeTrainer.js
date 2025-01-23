@@ -249,7 +249,8 @@ const useChallengeTrainer = () => {
     setCurrentLevel,
     resetUserProgress,
     updateLevel,
-    useSolfege
+    useSolfege,
+    isHandfree
     
   };
 };

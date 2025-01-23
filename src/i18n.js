@@ -20,7 +20,7 @@ i18n
       caches: ['cookie'],
     },
     react: {
-      useSuspense: true, // 根据需要设置
+      useSuspense: false, // 根据需要设置
     },
   });
 

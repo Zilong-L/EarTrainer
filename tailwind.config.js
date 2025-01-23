@@ -20,8 +20,10 @@ export default {
         'notification-bg': 'var(--notification-bg)',
       },
       fontFamily: {
-      jazz: ['Chilanka-Regular', 'sans-serif'], // 'jazz' is the utility class name
-    },},
+        jazz: ['Chilanka-Regular', 'sans-serif'], // 'jazz' is the utility class name
+        chewy: ['Chewy-Regular', 'cursive'], // 'chewy' is the utility class name
+      },
+    },
   },
   plugins: [],
 }

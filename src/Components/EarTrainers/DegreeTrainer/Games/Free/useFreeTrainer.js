@@ -156,6 +156,7 @@ const useFreeTrainer = () => {
     handleDegreeToggle,
     customNotes,
     isAdvance,
+    isHandfree,
     setIsAdvance,
     bpm,
     setActiveNote,

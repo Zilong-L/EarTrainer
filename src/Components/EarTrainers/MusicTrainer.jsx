@@ -8,11 +8,10 @@ import HeaderButtons from '@components/SharedComponents/HeaderButtons';
 import HeaderButton from '@components/SharedComponents/HeaderButton';
 import Sidebar from '@components/Sidebar';
 
-const apps = [{name: 'Chord Trainer', path: '/chord-trainer'}]
 const trainers = [
   {name:'Degree',path:'/ear-trainer/degree-trainer'},
-  {name:'Sequence',path:'/ear-trainer/sequence-trainer'},
-  {name:'Chord Color',path:'/ear-trainer/chord-color-trainer'}
+  {name:'Chord Color',path:'/ear-trainer/chord-color-trainer'},
+  {name:'Chord Trainer',path:'/chord-trainer'}
 ]
 
 const MusicTrainer = () => {
@@ -24,26 +23,9 @@ const MusicTrainer = () => {
       <Header>
         <HeaderTitle>{t('Ear Trainer')}</HeaderTitle>
         <HeaderButtons>
-            <div className="hidden md:flex ">
-              {apps.map((item) => (
-                <HeaderButton className='px-0 py-0 '>
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className=' p-2 px-4 block  mt-[4px]'
-                >
-                  {t(item.name)}
-                </Link>
-                </HeaderButton>
-              ))}
-            </div>
+           
             
-            <button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="md:hidden p-1.5 rounded-md hover:bg-bg-common text-text-secondary"
-            >
-              <Bars3Icon className="h-5 w-5" />
-            </button>
+            
         </HeaderButtons>
       </Header>
 

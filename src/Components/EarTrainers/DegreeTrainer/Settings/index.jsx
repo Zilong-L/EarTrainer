@@ -26,7 +26,7 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
   if (!isSettingsOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center">
       <div className="absolute inset-0 bg-black/50" onClick={closeSettings} />
       <div className="relative w-[90%] max-w-4xl h-[80vh] bg-bg-common rounded-lg shadow-xl overflow-hidden">
         {/* Header with Settings label and close button */}
