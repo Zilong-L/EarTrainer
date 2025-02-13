@@ -21,8 +21,7 @@ import { Toaster } from 'react-hot-toast';
 import { keyMap,degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import {Note } from 'tonal';
 import * as Tone from 'tone';
-
-
+import HeaderListButton from '@components/SharedComponents/HeaderListButton';
 let midi = null;
 const EarTrainer = () => {
   const globalSettings = useDegreeTrainerSettings();
@@ -149,7 +148,7 @@ const EarTrainer = () => {
 
 
   return (
-    <>
+    <div className='relative'>
       <Header>
         <HeaderTitle>
           <Link to="/ear-trainer" className="text-inherit no-underline">
@@ -157,10 +156,11 @@ const EarTrainer = () => {
           </Link>
         </HeaderTitle>
         <HeaderButtons>
+        <LanguageSwitcher />
           <HeaderButton 
             onClick={() => setIsHandfree(!isHandfree)}
             title={isHandfree ? t('buttons.handfreeOff') : t('buttons.handfreeOn')}
-            className={isHandfree ? 'bg-bg-main ' : 'bg-bg-common '}
+            className={isHandfree ? 'bg-bg-common' : 'bg-text-main text-text-main'}
           >
             <span className="material-icons"><AllInclusiveIcon></AllInclusiveIcon></span>
           </HeaderButton>
@@ -203,8 +203,35 @@ const EarTrainer = () => {
         </div>
       </div>
       <Toaster />
-    </>
+    </div>
   );
 };
 
+const LanguageSwitcher = () => {
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    console.log("切换前的当前语言:", i18n.language);
+    i18n
+      .changeLanguage(lng)
+      .then(() => {
+        console.log("切换后的当前语言:", i18n.language);
+      })
+      .catch((err) => {
+        console.error("语言切换失败:", err);
+      });
+  };
+
+  const languageOptions = [
+    { label: '中文', onClick: () => changeLanguage('zh') },
+    { label: 'English', onClick: () => changeLanguage('en') },
+  ];
+
+  return (
+    <HeaderListButton
+      buttonLabel="Language" // You can customize the button label as needed
+      items={languageOptions}
+    />
+  );
+};
 export default EarTrainer;

@@ -142,13 +142,7 @@
 }
 
 /* Modal scrollbar handling */
-body.modal-open {
-  overflow: hidden !important;
-}
 
-body.modal-open::-webkit-scrollbar {
-  display: none;
-}
 
 /* Ensure range slider thumb matches other sliders */
 .thumb::-webkit-slider-thumb {

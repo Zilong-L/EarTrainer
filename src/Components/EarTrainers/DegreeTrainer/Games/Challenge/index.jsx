@@ -56,6 +56,7 @@ const ChallengeMode = ({ ChallengeTrainerSettings }) => {
   }
   return (
  <div className="flex flex-col justify-end h-full mb-8">
+    {renderRecords()}
     <div className="flex-grow" />
   <CardStack
       currentNote={currentNote}

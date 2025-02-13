@@ -19,7 +19,7 @@ const MusicTrainer = () => {
   const { t } = useTranslation('musicTrainer');
   
   return (
-    <div className="flex flex-col h-screen ">
+    <div className="flex flex-col h-screen relative ">
       <Header>
         <HeaderTitle>{t('Ear Trainer')}</HeaderTitle>
         <HeaderButtons>
