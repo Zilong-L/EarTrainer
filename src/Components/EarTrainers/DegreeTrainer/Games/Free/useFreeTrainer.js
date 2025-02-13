@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState,useRef, useEffect, useMemo } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance, playNotes } from '@utils/ToneInstance';
@@ -18,12 +18,14 @@ const useFreeTrainer = () => {
   } = useDegreeTrainerSettings();
 
   const [currentNote, setCurrentNote] = useState("");
+  const [isPlayingSound, setIsPlayingSound] = useState(false);
   const [disabledNotes, setDisabledNotes] = useState([]);
   const [gameState, setGameState] = useState('end');
   const [activeNote, setActiveNote] = useState(null);
   const [isAdvance, setIsAdvance] = useState('No');
   const [customNotes, _setCustomNotes] = useState(degrees);
 
+  const playNoteTimeoutRef = useRef(null);
   const setCustomNotes = (notes) => {
     _setCustomNotes(notes);
     localStorage.setItem('degreeTrainerCustomNotes', JSON.stringify(notes));
@@ -111,8 +113,18 @@ const useFreeTrainer = () => {
     if (!note) {
       note = currentNote;
     }
-      playNotes(note, delay, bpm/time);
+    // 取消之前的 timeout（如果存在）
+    if (playNoteTimeoutRef.current) {
+      clearTimeout(playNoteTimeoutRef.current);
+    }
+    playNotes(note, delay, bpm / time);
+    setIsPlayingSound(true);
 
+    playNoteTimeoutRef.current = setTimeout(() => {
+      setIsPlayingSound(false);
+      console.log('set false');
+      playNoteTimeoutRef.current = null; // 清除引用
+    }, (60 / (bpm / time)) * 1000);
   };
 
 
@@ -164,7 +176,8 @@ const useFreeTrainer = () => {
     playNote,
     endGame,
     setGameState,
-    useSolfege
+    useSolfege,
+    isPlayingSound
   };
 };
 

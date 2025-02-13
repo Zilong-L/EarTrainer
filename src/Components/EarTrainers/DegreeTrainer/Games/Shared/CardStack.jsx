@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import * as Tone from 'tone';
 import { isCorrect } from '@utils/GameLogics';
-import { SolfegeMapping } from '@components/EarTrainers/DegreeTrainer/Constants';
+import { SolfegeMapping,shortcuts } from '@components/EarTrainers/DegreeTrainer/Constants';
 import Button from '@components/SharedComponents/Button';
+import { calculateDegree, } from '../../../../../utils/GameLogics';
 const CardStack = ({ 
   currentNote,
   disabledNotes,
@@ -14,6 +15,7 @@ const CardStack = ({
   useSolfege,
   renderHeader,
   bpm,
+  gameState
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [time, setTime] = useState(Date.now());
@@ -55,7 +57,7 @@ const CardStack = ({
 
   return (
     <div>
-      <div className="hidden lg:flex items-center justify-center h-64 mb-4 relative">
+      <div className={`hidden lg:${gameState=='end'?'hidden':''} lg:flex items-center justify-center h-64 mb-4 relative`}>
         <div className="flex h-full items-center" style={{ width: `${Math.min(filteredNotes.length, 12) * 15}%` }}>
           {filteredNotes.slice(0, 12).map((note, index) => {
             const noteName = Tone.Frequency(Tone.Frequency(rootNote).toMidi() + note.distance, 'midi').toNote();
@@ -98,7 +100,7 @@ const CardStack = ({
             if (isHandfree && isCorrectAnswer && index !== hoveredIndex) {
               setHoveredIndex(index);
             }
-
+            
             return (
               <div
                 key={note.name}
@@ -107,10 +109,10 @@ const CardStack = ({
                 className={`
                   absolute h-32 w-24  md:h-[14rem] md:w-[10rem] rounded-xl shadow-[4px_1px_0px_rgba(0,0,0,0.6),0_2px_4px_-2px_rgba(0,0,0,0.2)]
                   flex flex-col items-center justify-between py-4 text-2xl md:text-3xl font-bold
-                  transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]  
+                  transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]  
                   ${hoveredIndex === index ? `shadow-[8px_10px_1px_rgba(0,0,0,0.7)] z-50` :''}
                   z-[${cardZIndex}]
-                  ${isCorrectAnswer && isAdvance !=='No'? 'bg-gradient-to-b from-green-600 to-green-400' : 'bg-gradient-to-b from-blue-500 to-blue-600'}
+                  ${isCorrectAnswer && isAdvance !=='No'? 'bg-gradient-to-b from-green-600 to-green-400' : 'bg-bg-accent text-text-primary'}
                   ${isDisabled ? 'opacity-50 pointer-events-none' : ''}
                 `}
                 style={{
@@ -131,14 +133,14 @@ const CardStack = ({
                   {useSolfege ? SolfegeMapping[note.name] || note.name : note.name}
                 </span>
                 <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm font-medium">
-                  {index + 1}
+                  {shortcuts[note.name]}
                 </div>
               </div>
             );
           })}
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-4 mb-4 lg:hidden">
+      <div className={`grid grid-cols-3 gap-4 mb-4 lg:hidden ${gameState=='end'?'hidden':''}`}>
         {filteredNotes.map((note) => {
           const noteName = Tone.Frequency(Tone.Frequency(rootNote).toMidi() + note.distance, 'midi').toNote();
           const isCorrectAnswer = isCorrect(noteName, currentNote) && isAdvance !== 'No';

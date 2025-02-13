@@ -14,6 +14,20 @@ const keyMap = {
   'f': 8,
   'g': 10
 };
+const shortcuts = {
+  'I':1,
+  'II':2,
+  'III':3,
+  'IV':4,
+  'V':5,
+  'VI':6,
+  'VII':7,
+  'IIb':'a',
+  'IIIb':'s',
+  'Vb':'d',
+  'VIb':'f',
+  'VIIb':'g'
+}
 const degrees = [
   { name: "I", distance: 0, enable: true, interval: "1P" },   // Perfect Unison
   { name: "IIb", distance: 1, enable: false, interval: "2m" }, // Minor Second
@@ -248,4 +262,4 @@ const SolfegeMapping = {
   "VIb": "Le",
   "VIIb": "Te"
 }
-export { apps, keyMap, degrees, initialUserProgress, SolfegeMapping };
+export { apps, keyMap, degrees, initialUserProgress, SolfegeMapping,shortcuts };

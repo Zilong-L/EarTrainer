@@ -105,7 +105,7 @@ const handleNoteGuess = (activeNote,currentNote,rootNote,disabledNotes,setDisabl
     setActiveNote(null);
   };
 
-  const advanceGame = (possibleNotesInRange,currentNote,setCurrentNote,playNote,setDisabledNotes,setIsAdvance,jCutMode=true,bpm) => {
+  const advanceGame = (possibleNotesInRange,currentNote,setCurrentNote,playNote,setDisabledNotes,setIsAdvance,jCutMode=false,bpm) => {
     const nextNote = generateRandomNoteBasedOnRoot(possibleNotesInRange, currentNote);
     setCurrentNote(nextNote);
     if(jCutMode){
@@ -144,11 +144,11 @@ const handleNoteGuess = (activeNote,currentNote,rootNote,disabledNotes,setDisabl
     };
 
     if (isAdvance == 'Next' ) {
-      const timer = setTimeout(()=>advanceGame(possibleNotesInRange,currentNote,setCurrentNote,playNote,setDisabledNotes,setIsAdvance,true,bpm), timerDuration);
+      const timer = setTimeout(()=>advanceGame(possibleNotesInRange,currentNote,setCurrentNote,playNote,setDisabledNotes,setIsAdvance,false,bpm), timerDuration);
       return () => clearTimeout(timer);
     }
     if(isAdvance == 'Now'){
-      advanceGame(possibleNotesInRange,currentNote,setCurrentNote,playNote,setDisabledNotes,setIsAdvance,true,bpm)
+      advanceGame(possibleNotesInRange,currentNote,setCurrentNote,playNote,setDisabledNotes,setIsAdvance,false,bpm)
     }
     else if (isHandfree && gameState === 'playing') {
       const timer = setTimeout(handfreeGame, timerDuration);

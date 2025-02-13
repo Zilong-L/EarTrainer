@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo,useRef } from 'react';
 import * as Tone from 'tone';
 import { degrees, initialUserProgress } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance, playNotes } from '@utils/ToneInstance';
@@ -29,7 +29,8 @@ const useChallengeTrainer = () => {
   const [userProgress, setUserProgress] = useLocalStorage('degreeTrainerUserProgress', initialUserProgress);
   
   const [progressVersion, setProgressVersion] = useLocalStorage('degreeTrainerProgressVersion', 0);
-
+  const [isPlayingSound, setIsPlayingSound] = useState(false);
+  const playNoteTimeoutRef = useRef(null);
   const updateLevel = (index) => {
     setCurrentLevel(userProgress[index]);
     setCurrentPracticeRecords({ total: 0, correct: 0 });
@@ -203,11 +204,22 @@ const useChallengeTrainer = () => {
     setGameState('start');
   };
 
-  const playNote = (note = null, delay = 0.05,time=1) => {
+  const playNote = (note = null, delay = 0.05,time = 1) => {
     if (!note) {
       note = currentNote;
     }
-    playNotes(note, delay, bpm/time);
+    // 取消之前的 timeout（如果存在）
+    if (playNoteTimeoutRef.current) {
+      clearTimeout(playNoteTimeoutRef.current);
+    }
+    playNotes(note, delay, bpm / time);
+    setIsPlayingSound(true);
+
+    playNoteTimeoutRef.current = setTimeout(() => {
+      setIsPlayingSound(false);
+      console.log('set false');
+      playNoteTimeoutRef.current = null; // 清除引用
+    }, (60 / (bpm / time)) * 1000);
   };
 
 
@@ -250,7 +262,8 @@ const useChallengeTrainer = () => {
     resetUserProgress,
     updateLevel,
     useSolfege,
-    isHandfree
+    isHandfree,
+    isPlayingSound
     
   };
 };

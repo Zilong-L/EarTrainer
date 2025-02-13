@@ -7,7 +7,6 @@ import Header from '@components/SharedComponents/Header';
 import HeaderTitle from '@components/SharedComponents/HeaderTitle';
 import HeaderButtons from '@components/SharedComponents/HeaderButtons';
 import HeaderButton from '@components/SharedComponents/HeaderButton';
-import Sidebar from '@components/Sidebar';
 import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
 
 
@@ -49,7 +48,6 @@ const EarTrainer = () => {
     currentNote,
   } = currentGameSettings;
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const openSettings = () => {
@@ -183,7 +181,6 @@ const EarTrainer = () => {
       </Header>
       <div className="h-[calc(100svh-64px)] bg-bg-main">
         <div className="max-w-2xl mx-auto h-full flex flex-col justify-between py-4 px-6">
-          <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
           <div className="pr-4"> {/* Add right padding for scrollbar placeholder */}
             <DegreeTrainerSettings
               settings={settings}

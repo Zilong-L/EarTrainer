@@ -21,6 +21,7 @@
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@uidotdev/usehooks": "^2.4.1",
     "chart.js": "^4.4.4",
+    "framer-motion": "^12.4.2",
     "i18next": "^23.15.1",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-http-backend": "^2.6.1",
