@@ -7,26 +7,6 @@ export default {
   darkMode: 'class',
   theme: {
     extend: { 
-      animation: {
-        floatCard: 'floatCard 4s ease-in-out infinite',
-        hoverCard: 'hoverCard 2s ease-in-out  forwards', // New hover animation
-        hoverCardReverse: 'hoverCardReverse 2s ease-in-out  forwards', // New hover animation
-      },
-      keyframes: {
-        floatCard: {
-          '0%': { transform: 'rotateZ(var(--z-rotate, 0deg)) translateY(var(--base-translateY, 0%))  rotateY(0deg)' },
-          '50%': { transform: 'rotateZ(var(--z-rotate, 0deg)) translateY(calc(var(--base-translateY, 0%) ))  rotateY(-15deg)' },
-          '100%': { transform: 'rotateZ(var(--z-rotate, 0deg)) translateY(var(--base-translateY, 0%))  rotateY(0deg)' }
-        },
-        hoverCard: {
-          '0%': { transform: 'rotateZ(var(--z-rotate)) translateY(var(--base-translateY)) scale(1)' },
-          '100%': { transform: 'translateY(4rem) rotateX(var(--hover-rotateX, 10deg)) rotateY(var(--hover-rotateY, 10deg)) translateX(var(--hover-offsetX, 0%)) scale(1.3)' },
-        },
-        hoverCardReverse: {
-          '0%': { transform: 'translateY(4rem) rotateX(var(--hover-rotateX, 10deg)) rotateY(var(--hover-rotateY, 10deg)) translateX(var(--hover-offsetX, 0%)) scale(1.3)' },
-          '100%': { transform: 'rotateZ(var(--z-rotate)) translateY(var(--base-translateY)) scale(1)' }, // Back to normal
-        },
-      },
       colors: {
         'bg-main': 'var(--bg-main)',
         'bg-common': 'var(--bg-common)',
