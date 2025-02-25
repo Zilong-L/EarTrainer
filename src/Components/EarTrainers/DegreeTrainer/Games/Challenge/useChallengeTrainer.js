@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo,useRef } from 'react';
 import * as Tone from 'tone';
-import { degrees, initialUserProgress } from '@components/EarTrainers/DegreeTrainer/Constants';
+import { degrees, initialUserProgress,DEGREES_MAP } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance, playNotes } from '@utils/ToneInstance';
 import toast from 'react-hot-toast';
 import { useLocalStorage } from '@uidotdev/usehooks';
@@ -25,14 +25,14 @@ const useChallengeTrainer = () => {
     }
   } = useDegreeTrainerSettings();
 
-  const [currentLevel, setCurrentLevel] = useState(initialUserProgress[0]);
+  const [currentLevel, setCurrentLevel] = useLocalStorage('degreeTrainerCurrentLevel', 1);
   const [userProgress, setUserProgress] = useLocalStorage('degreeTrainerUserProgress', initialUserProgress);
   
   const [progressVersion, setProgressVersion] = useLocalStorage('degreeTrainerProgressVersion', 0);
   const [isPlayingSound, setIsPlayingSound] = useState(false);
   const playNoteTimeoutRef = useRef(null);
   const updateLevel = (index) => {
-    setCurrentLevel(userProgress[index]);
+    setCurrentLevel(index);
     setCurrentPracticeRecords({ total: 0, correct: 0 });
   };
 
@@ -61,7 +61,7 @@ const useChallengeTrainer = () => {
 
   const resetUserProgress = () => {
     setUserProgress(initialUserProgress);
-    setCurrentLevel(initialUserProgress[0]);
+    setCurrentLevel(0);
   };
 
   // Run migration once when component mounts
@@ -75,45 +75,45 @@ const useChallengeTrainer = () => {
 
   const unlockLevel = () => {
     if(mode !== 'challenge') return;
-    const currentLevelData = userProgress[currentLevel.level - 1];
+    const currentLevelData = userProgress[currentLevel];
     const totalTests = currentPracticeRecords.total;
-
+    console.log(currentLevelData)
     // Only proceed if minimum tests completed
     if (totalTests >= currentLevelData.minTests) {
       const correctRate = Math.round((currentPracticeRecords.correct / totalTests) * 100);
-
+      console.log(correctRate)
       // Update best score if improved
       if (correctRate > currentLevelData.best) {
         const newUserProgress = [...userProgress];
-        newUserProgress[currentLevel.level - 1].best = correctRate;
+        newUserProgress[currentLevel].best = correctRate;
         setUserProgress(newUserProgress);
       }
 
       // Unlock next level if 1 star is achieved (70% accuracy)
       if (correctRate >= 70) {
-        const nextLevel = currentLevel.level + 1;
-        if (nextLevel <= userProgress.length && !userProgress[nextLevel - 1].unlocked) {
+        const nextLevel = currentLevel + 1;
+        if (nextLevel <= userProgress.length && !userProgress[nextLevel].unlocked) {
           const newUserProgress = [...userProgress];
-          newUserProgress[nextLevel - 1].unlocked = true;
+          newUserProgress[nextLevel].unlocked = true;
           setUserProgress(newUserProgress);
-          toast.success(`🎉 Level ${nextLevel} unlocked!`);
+          toast.success(`🎉 Level ${nextLevel+1} unlocked!`);
         }
       }
 
       // Update stars for current level only if new rating is higher
       const newUserProgress = [...userProgress];
-      const currentStars = newUserProgress[currentLevel.level - 1].stars;
+      const currentStars = newUserProgress[currentLevel].stars;
 
       if (correctRate >= 90 && currentStars < 3) {
-        newUserProgress[currentLevel.level - 1].stars = 3;
+        newUserProgress[currentLevel].stars = 3;
       } else if (correctRate >= 80 && currentStars < 2) {
-        newUserProgress[currentLevel.level - 1].stars = 2;
+        newUserProgress[currentLevel].stars = 2;
       } else if (correctRate >= 70 && currentStars < 1) {
-        newUserProgress[currentLevel.level - 1].stars = 1;
+        newUserProgress[currentLevel].stars = 1;
       }
 
       // Only update if stars actually changed
-      if (newUserProgress[currentLevel.level - 1].stars !== currentStars) {
+      if (newUserProgress[currentLevel].stars !== currentStars) {
         setUserProgress(newUserProgress);
       }
     }
@@ -130,9 +130,10 @@ const useChallengeTrainer = () => {
 
 
   const currentNotes = useMemo(() => {
+    console.log('LEVEL_'+(currentLevel+1))
     return degrees.map((note, index) => ({
       ...note,
-      enable: currentLevel.degrees[index],
+      enable: DEGREES_MAP['LEVEL_'+(currentLevel+1)][index],
     }));
   }, [currentLevel]);
   useEffect(() => {

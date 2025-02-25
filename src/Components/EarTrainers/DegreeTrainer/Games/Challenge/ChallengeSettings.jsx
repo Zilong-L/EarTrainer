@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
 import toast from 'react-hot-toast';
+import { NOTES_MAP } from '../../Constants';
 
 function ChallengeSettings({ChallengeTrainerSettings}) {
   const { userProgress, currentLevel, updateLevel, resetUserProgress } = ChallengeTrainerSettings;
@@ -22,14 +23,14 @@ function ChallengeSettings({ChallengeTrainerSettings}) {
           disabled={!levelData.unlocked}
           className={`w-full flex justify-between items-center p-3 rounded-lg ${
             levelData.unlocked
-              ? levelData.level === currentLevel?.level
+              ? levelData.level === currentLevel+1
                 ? 'bg-showcase-bg text-text-primary' // Selected level
                 : 'bg-bg-main text-text-primary hover:bg-showcase-bg' // Unlocked but not selected
               : 'bg-bg-accent cursor-not-allowed' // Locked
           }`}
         >
           <span className="font-medium">
-            Level {levelData.level}: {levelData.notes}
+            Level {levelData.level}: {NOTES_MAP['LEVEL_'+levelData.level]}
           </span>
           {levelData.unlocked ? (
             <span>

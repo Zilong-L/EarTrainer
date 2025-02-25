@@ -98,20 +98,7 @@ function getDroneInstance() {
 
     let rootPlaying = false;
     let currentRoot = "C2"; // 初始音符
-    let pannerValue = 0
-    let direction = 1;
-    setInterval(()=>{
-      pannerValue = pannerValue + 0.05 * direction
-      if(pannerValue > 0.5){
-        pannerValue = 0.5
-        direction = -1
-      }
-      if(pannerValue < -0.5){
-        pannerValue = -0.5
-        direction = 1
-      }
-      sampler.setPan(pannerValue)
-    }, 100)
+
     function start() {
       if (!rootPlaying) {
         rootPlaying = true;

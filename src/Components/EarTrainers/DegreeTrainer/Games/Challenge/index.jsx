@@ -16,6 +16,7 @@ const ChallengeMode = ({ ChallengeTrainerSettings }) => {
     rootNote,
     currentPracticeRecords,
     currentLevel,
+    userProgress,
     bpm,
     setIsAdvance,
     useSolfege,
@@ -32,8 +33,8 @@ const ChallengeMode = ({ ChallengeTrainerSettings }) => {
 
     return (
       <div className="space-y-3 text-text-primary md:space-y-4">
-        <p className="text-lg md:text-2xl">{t('home.level')}: {currentLevel.level}</p>
-        <p className="text-lg md:text-2xl">{t('home.totalAttempts')} {totalResults.total} / {currentLevel.minTests}</p>
+        <p className="text-lg md:text-2xl">{t('home.level')}: {currentLevel+1}</p>
+        <p className="text-lg md:text-2xl">{t('home.totalAttempts')} {totalResults.total} / {userProgress[currentLevel].minTests}</p>
         <p className="text-lg md:text-2xl">{t('home.correctCount')} {totalResults.correct}</p>
         <p className="text-2xl md:text-4xl">
           {accuracy >= 90 ? '⭐⭐⭐' :

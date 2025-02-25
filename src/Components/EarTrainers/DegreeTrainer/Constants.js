@@ -47,203 +47,207 @@ const degrees = [
 const initialUserProgress = [
   {
     level: 1,
-    degrees: [true, false, false, false, false, false, false, false, false, false, false, true], // 1 7
     unlocked: true,
     best: 0,
-    notes: "1 7",
     minTests: 15, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 2,
-    degrees: [true, false, false, false, false, false, false, true, false, false, false, true], // 1 5 7
     unlocked: false,
     best: 0,
-    notes: "1 5 7",
     minTests: 18, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 3,
-    degrees: [true, false, false, false, true, false, false, true, false, false, false, true], // 1 3 5 7
     unlocked: false,
     best: 0,
-    notes: "1 3 5 7",
     minTests: 22, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 4,
-    degrees: [true, false, true, false, true, false, false, true, false, false, false, true], // 1 2 3 5 7
     unlocked: false,
     best: 0,
-    notes: "1 2 3 5 7",
     minTests: 25, // No requirements for the first level
     stars: 0,
   },
   {
     level: 5,
-    degrees: [true, false, true, false, true, false, false, true, false, true, false, true], // Corrected: 1 2 3 5 6 7
     unlocked: false,
     best: 0,
-    notes: "1 2 3 5 6 7",
     minTests: 28, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 6,
-    degrees: [true, false, true, false, true, true, false, true, false, true, false, true], // Corrected: 1 2 3 4 5 6 7
     unlocked: false,
     best: 0,
-    notes: "1 2 3 4 5 6 7",
     minTests: 35, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 7,
-    degrees: [true, false, true, false, true, true, true, true, false, true, false, true], // Corrected: 1 2 3 4 #4 5 6 7
     unlocked: false,
     best: 0,
-    notes: "1 2 3 4 #4 5 6 7",
     minTests: 50, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 8,
-    degrees: [true, false, true, true, false, false, false, false, false, false, false, false], // 1 2 b3
     unlocked: false,
     best: 0,
-    notes: "1 2 b3",
     minTests: 18, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 9,
-    degrees: [true, false, true, true, false, false, false, true, false, false, false, false], // Corrected: 1 2 b3 5
     unlocked: false,
     best: 0,
-    notes: "1 2 b3 5",
     minTests: 24, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 10,
-    degrees: [true, false, true, true, false, false, false, true, true, false, false, false], // Corrected: 1 2 b3 5 b6
     unlocked: false,
     best: 0,
-    notes: "1 2 b3 5 b6",
     minTests: 28, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 11,
-    degrees: [true, false, true, true, false, false, false, true, true, false, true, false], // Corrected: 1 2 b3 5 b6 b7
     unlocked: false,
     best: 0,
-    notes: "1 2 b3 5 b6 b7",
     minTests: 30, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 12,
-    degrees: [true, false, true, true, false, true, false, true, true, false, true, false], // Corrected: 1 2 b3 4 5 b6 b7
     unlocked: false,
     best: 0,
-    notes: "1 2 b3 4 5 b6 b7",
     minTests: 34, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 13,
-    degrees: [true, true, true, true, false, true, false, true, true, false, true, false], // Corrected: 1 b2 2 b3 4 5 b6 b7
     unlocked: false,
     best: 0,
-    notes: "1 b2 2 b3 4 5 b6 b7",
     minTests: 40, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 14,
-    degrees: [true, false, false, false, false, true, false, true, false, false, false, true], // Corrected: 1 4 5 7
     unlocked: false,
     best: 0,
-    notes: "1 4 5 7",
     minTests: 23, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 15,
-    degrees: [true, false, false, false, false, true, false, true, false, false, true, true], // Corrected: 1 4 5 b7 7
     unlocked: false,
     best: 0,
-    notes: "1 4 5 b7 7",
     minTests: 28, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 16,
-    degrees: [true, false, false, true, true, true, false, true, false, false, true, true], // Corrected: 1 b3 3 4 5 b7 7
     unlocked: false,
     best: 0,
-    notes: "1 b3 3 4 5 b7 7",
     minTests: 42, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 17,
-    degrees: [true, true, true, true, true, true, false, true, false, false, true, true], // Corrected: 1 b2 2 b3 3 4 5 b7 7
     unlocked: false,
     best: 0,
-    notes: "1 b2 2 b3 3 4 5 b7 7",
     minTests: 50, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 18,
-    degrees: [true, true, true, true, true, true, true, true, false, false, true, true], // Corrected: 1 b2 2 b3 3 4 #4 5 b7 7
     unlocked: false,
     best: 0,
-    notes: "1 b2 2 b3 3 4 #4 5 b7 7",
     minTests: 55, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 19,
-    degrees: [true, true, true, true, true, true, true, true, false, false, true, true], // Corrected: 1 b2 2 b3 3 4 #4 b5 5 b7 7
     unlocked: false,
     best: 0,
-    notes: "1 b2 2 b3 3 4 #4/b5 5 b7 7",
     minTests: 60, // No requirements for the first level
     stars: 0,
 
   },
   {
     level: 20,
-    degrees: [true, true, true, true, true, true, true, true, true, true, true, true], // Corrected: 1 b2 2 b3 3 4 #4 b5 5 b6 6 b7 7
     unlocked: false,
     best: 0,
-    notes: "1 b2 2 b3 3 4 #4 b5 5 b6 6 b7 7",
     minTests: 70, // No requirements for the first level
     stars: 0,
   },
 ];
+const DEGREES_MAP = {
+  LEVEL_1:  [true, false, false, false, false, false, false, false, false, false, false, true], // 1 7
+  LEVEL_2:  [true, false, false, false, false, false, false, true, false, false, false, true], // 1 5 7
+  LEVEL_3:  [true, false, false, false, true, false, false, true, false, false, false, true], // 1 3 5 7
+  LEVEL_4:  [true, false, true, false, true, false, false, true, false, false, false, true], // 1 2 3 5 7
+  LEVEL_5:  [true, false, true, false, true, false, false, true, false, true, false, true], // 1 2 3 5 6 7
+  LEVEL_6:  [true, false, true, false, true, true, false, true, false, true, false, true], // 1 2 3 4 5 6 7
+  LEVEL_7:  [true, false, true, false, true, true, true, true, false, true, false, true], // 1 2 3 4 #4 5 6 7
+  LEVEL_8:  [true, false, true, true, false, false, false, false, false, false, false, false], // 1 2 b3
+  LEVEL_9:  [true, false, true, true, false, false, false, true, false, false, false, false], // 1 2 b3 5
+  LEVEL_10: [true, false, true, true, false, false, false, true, true, false, false, false], // 1 2 b3 5 b6
+  LEVEL_11: [true, false, true, true, false, false, false, true, true, false, true, false], // 1 2 b3 5 b6 b7
+  LEVEL_12: [true, false, true, true, false, true, false, true, true, false, true, false], // 1 2 b3 4 5 b6 b7
+  LEVEL_13: [true, true, true, true, false, true, false, true, true, false, true, false], // 1 b2 2 b3 4 5 b6 b7
+  LEVEL_14: [true, false, false, false, false, true, false, true, false, false, false, true], // 1 4 5 7
+  LEVEL_15: [true, false, false, false, false, true, false, true, false, false, true, true], // 1 4 5 b7 7
+  LEVEL_16: [true, false, false, true, true, true, false, true, false, false, true, true], // 1 b3 3 4 5 b7 7
+  LEVEL_17: [true, true, true, true, true, true, false, true, false, false, true, true], // 1 b2 2 b3 3 4 5 b7 7
+  LEVEL_18: [true, true, true, true, true, true, true, true, false, false, true, true], // 1 b2 2 b3 3 4 #4 5 b7 7
+  LEVEL_19: [true, true, true, true, true, true, true, true, false, false, true, true], // 1 b2 2 b3 3 4 #4/b5 5 b7 7
+  LEVEL_20: [true, true, true, true, true, true, true, true, true, true, true, true], // 1 b2 2 b3 3 4 #4 b5 5 b6 6 b7 7
+};
+const NOTES_MAP = {
+  LEVEL_1: "1 7",
+  LEVEL_2: "1 5 7",
+  LEVEL_3: "1 3 5 7",
+  LEVEL_4: "1 2 3 5 7",
+  LEVEL_5: "1 2 3 5 6 7",
+  LEVEL_6: "1 2 3 4 5 6 7",
+  LEVEL_7: "1 2 3 4 #4 5 6 7",
+  LEVEL_8: "1 2 b3",
+  LEVEL_9: "1 2 b3 5",
+  LEVEL_10: "1 2 b3 5 b6",
+  LEVEL_11: "1 2 b3 5 b6 b7",
+  LEVEL_12: "1 2 b3 4 5 b6 b7",
+  LEVEL_13: "1 b2 2 b3 4 5 b6 b7",
+  LEVEL_14: "1 4 5 7",
+  LEVEL_15: "1 4 5 b7 7",
+  LEVEL_16: "1 b3 3 4 5 b7 7",
+  LEVEL_17: "1 b2 2 b3 3 4 5 b7 7",
+  LEVEL_18: "1 b2 2 b3 3 4 #4 5 b7 7",
+  LEVEL_19: "1 b2 2 b3 3 4 #4/b5 5 b7 7",
+  LEVEL_20: "1 b2 2 b3 3 4 #4 b5 5 b6 6 b7 7",
+};
 
 
 const DegreeToDistance = {
@@ -275,4 +279,4 @@ const SolfegeMapping = {
   "VIb": "Le",
   "VIIb": "Te"
 }
-export { apps, keyMap, degrees, initialUserProgress, SolfegeMapping,shortcuts ,DegreeToDistance };
+export { apps, keyMap, degrees, initialUserProgress, SolfegeMapping,shortcuts ,DegreeToDistance,DEGREES_MAP,  NOTES_MAP };
