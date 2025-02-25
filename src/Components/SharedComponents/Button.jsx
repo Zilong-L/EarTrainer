@@ -10,10 +10,10 @@ const Button = ({
   type = 'button',
   ...props
 }) => {
-  const baseStyles = 'rounded-lg font-medium transition-all duration-200 focus:outline-none';
+  const baseStyles = 'rounded-lg font-medium transition-all duration-200 focus:outline-none shadow-sm hover:shadow-md';
   
   const variants = {
-    primary: 'bg-bg-accent text-text-primary shadow-md hover:shadow-none',
+    primary: 'bg-bg-accent text-text-primary ',
     secondary: 'bg-bg-accent text-text-primary',
     outline: 'border border-bg-accent text-text-primary'
   };

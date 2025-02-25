@@ -3,7 +3,7 @@ import * as Tone from 'tone';
 import { isCorrect } from '@utils/GameLogics';
 import { SolfegeMapping, shortcuts } from '@components/EarTrainers/DegreeTrainer/Constants';
 import Button from '@components/SharedComponents/Button';
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 
 

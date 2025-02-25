@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { AudioBars } from './AudioWave';
 import { ArrowPathIcon, ForwardIcon } from '@heroicons/react/24/solid';
 import Button from '@components/SharedComponents/Button';
@@ -17,6 +17,10 @@ const DesktopStartButton = ({ gameState, isAdvance, onClick, isPlayingSound }) =
 
   return (
     <motion.button
+    key="start-button"
+      initial={{ scale:0 }}
+      animate = {{ x:0,scale: 1,transition:{duration:0.5,bounce:0.3,type:'spring' } }}
+      exit={{ scale:0 }}
       whileHover={{ scale: 1.05,duration: 0.5 }}
       whileTap={{ scale: 0.95 }}
       drag

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 // 新增：桌面端按钮组件
 
   // 新增：使用 Framer Motion 做柱状动画
