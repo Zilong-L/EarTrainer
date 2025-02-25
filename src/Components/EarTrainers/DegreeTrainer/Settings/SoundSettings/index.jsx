@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import IOSInput from '@components/SharedComponents/IOSInput';
-
+import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 const instrumentsList = [
   'bass-electric', 'bassoon', 'cello', 'clarinet', 'contrabass', 'flute',
   'french-horn', 'guitar-acoustic', 'guitar-electric', 'guitar-nylon',
@@ -23,7 +23,7 @@ function SoundSettings({ settings, playNote }) {
       droneFilter,
       setDroneFilter
     }
-  } = settings;
+  } = useDegreeTrainerSettings();
 
   const handleInstrumentSelect = (instrument) => {
     setSelectedInstrument(instrument);

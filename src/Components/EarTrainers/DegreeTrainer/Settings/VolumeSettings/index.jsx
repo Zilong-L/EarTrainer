@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Slider from '@components/SharedComponents/Slider';
+import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 
-function VolumeSettings({ settings }) {
+function VolumeSettings() {
 
   // Keep Tone.js volumes in sync with settings
 
   const { t } = useTranslation('degreeTrainer');
-  const { volume: { droneVolume, setDroneVolume, pianoVolume, setPianoVolume,answerVolume ,setAnswerVolume } } = settings;
+  const { volume: { droneVolume, setDroneVolume, pianoVolume, setPianoVolume,answerVolume ,setAnswerVolume } } = useDegreeTrainerSettings();
 
   return (
     <div className="p-6 space-y-12">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { getDroneInstance } from '@utils/ToneInstance';
+import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 
 import {
   Chart as ChartJS,
@@ -21,9 +22,9 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-function Statistics({ settings  }) {
+function Statistics() {
   const { t } = useTranslation('degreeTrainer');
-  const { stats: { practiceRecords, setPracticeRecords } } = settings;
+  const { stats: { practiceRecords, setPracticeRecords } } = useDegreeTrainerSettings();
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   console.log('practiceRecords:', practiceRecords);
   const calculateAccuracy = (record) => {

@@ -2,15 +2,16 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import FreeSettings from '@components/EarTrainers/DegreeTrainer/Games/Free/FreeSettings';
 import ChallengeSettings from '@components/EarTrainers/DegreeTrainer/Games/Challenge/ChallengeSettings';
+import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 
-function GameSettings({ settings }) {
+function GameSettings({ currentGameSettings }) {
   const {
       mode,
     setMode,
     stats:{
       setCurrentPracticeRecords,
     }
-  } = settings
+  } = useDegreeTrainerSettings()
 
 
   const { t } = useTranslation('degreeTrainer');
@@ -50,13 +51,13 @@ function GameSettings({ settings }) {
 
       {mode === 'free' && (
         <FreeSettings 
-        FreeTrainerSettings={settings.FreeTrainerSettings}
+        FreeTrainerSettings={currentGameSettings}
         />
       )}
 
       {mode === 'challenge' && (
         <ChallengeSettings 
-        ChallengeTrainerSettings={settings.ChallengeTrainerSettings}
+        ChallengeTrainerSettings={currentGameSettings}
         />
       )}
     </div>

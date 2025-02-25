@@ -187,6 +187,7 @@ const EarTrainer = () => {
               isSettingsOpen={isSettingsOpen}
               setIsSettingsOpen={closeSettings}
               playNote={playNote}
+              currentGameSettings={currentGameSettings}
               setGameState={setGameState}
             />
           </div>

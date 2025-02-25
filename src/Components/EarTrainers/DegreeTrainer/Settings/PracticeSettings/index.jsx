@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Slider from '@components/SharedComponents/Slider';
 import { Midi } from "tonal";
 import { getDroneInstance } from '@utils/ToneInstance';
+import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 
 function PracticeSettings({ settings }) {
 
@@ -25,7 +26,7 @@ function PracticeSettings({ settings }) {
       setChangeInterval,
 
     }
-  } = settings;
+  } = useDegreeTrainerSettings();
 
   const drone = getDroneInstance();
   let midiMin = drone.rootMin;

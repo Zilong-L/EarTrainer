@@ -7,7 +7,7 @@ import GameSettings from './GameSettings';
 import { useTranslation } from 'react-i18next';
 import './styles.css';
 
-function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, playNote, setGameState }) {
+function DegreeTrainerSettings({  isSettingsOpen, setIsSettingsOpen, playNote, setGameState,currentGameSettings }) {
   const { t } = useTranslation('degreeTrainer');
   const [currentPage, setCurrentPage] = useState('home');
 
@@ -190,19 +190,19 @@ function DegreeTrainerSettings({ settings, isSettingsOpen, setIsSettingsOpen, pl
             </div>
           )}
           {currentPage === 'game' && (
-            <GameSettings settings={settings}  />
+            <GameSettings currentGameSettings={currentGameSettings}  />
           )}
           {currentPage === 'practice' && (
-            <PracticeSettings settings={settings}  />
+            <PracticeSettings   />
           )}
           {currentPage === 'volume' && (
-            <VolumeSettings settings={settings}  />
+            <VolumeSettings   />
           )}
           {currentPage === 'statistics' && (
-            <Statistics settings={settings}  />
+            <Statistics   />
           )}
           {currentPage === 'sound' && (
-            <SoundSettings settings={settings}  playNote={playNote} />
+            <SoundSettings   playNote={playNote} />
           )}
           </div>
         </div>
