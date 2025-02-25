@@ -50,7 +50,7 @@ const PianoVisualizer = ({ targetChord,activeNotes }) => {
     .filter(midiNote => isBlackKey(midiNote));
 
   return (
-    <div className="w-full overflow-x-auto p-4">
+    <div className="w-full overflow-x-auto">
       <div className="relative h-48 flex" style={{ minWidth: '600px' }}>
         {/* White keys */}
         <div className="absolute top-0 left-0 right-0 bottom-0 flex">

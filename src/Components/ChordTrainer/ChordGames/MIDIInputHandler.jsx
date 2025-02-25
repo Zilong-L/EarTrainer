@@ -68,7 +68,7 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord,detectedCho
   }, []);
 
   return (
-    <div className="w-full space-y-4 p-4">
+    <div className="w-full space-y-4 ">
       <div className="p-4 rounded-lg bg-bg-common">
         <h3 className="text-lg font-medium text-text-primary">
           {t('detectedChords')}: <span>{getNiceChordName(detectedChords).join(', ')}</span>
