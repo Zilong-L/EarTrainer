@@ -82,6 +82,8 @@
       "full": "lossless"
     },
     "qualityLabel": "Audio Quality",
+    "dronePan": "Drone Pan",
+    "droneFilter": "Drone Filter",
     "autoAdvance": "Auto Advance When Correct",
     "AnswerVolume": "Answer Volume",
     "useSolfege": "Use Solfege (Do Re Mi)",

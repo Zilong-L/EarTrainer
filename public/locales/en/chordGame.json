@@ -84,7 +84,11 @@
       "trumpet": "Trumpet",
       "tuba": "Tuba",
       "violin": "Violin",
-      "xylophone": "Xylophone"
+      "xylophone": "Xylophone",
+      "triangle": "Triangle",
+      "square": "Square",
+      "sawtooth": "Sawtooth",
+      "pad": "Pad"
     }
   },
   "chordGame": {

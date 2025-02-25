@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import IOSInput from '@components/SharedComponents/IOSInput';
 
 const instrumentsList = [
   'bass-electric', 'bassoon', 'cello', 'clarinet', 'contrabass', 'flute',
   'french-horn', 'guitar-acoustic', 'guitar-electric', 'guitar-nylon',
   'harmonium', 'harp', 'organ', 'piano', 'saxophone', 'trombone',
-  'trumpet', 'tuba', 'violin', 'xylophone',
+  'trumpet', 'tuba', 'violin', 'xylophone','triangle', 'square', 'sawtooth', 'pad'
 ];
 
 function SoundSettings({ settings, playNote }) {
@@ -16,7 +17,11 @@ function SoundSettings({ settings, playNote }) {
       setSelectedInstrument,
       isLoadingInstrument, 
       selectedQuality, 
-      setSelectedQuality 
+      setSelectedQuality,
+      dronePan,
+      setDronePan,
+      droneFilter,
+      setDroneFilter
     }
   } = settings;
 
@@ -37,7 +42,7 @@ function SoundSettings({ settings, playNote }) {
   };
 
   return (
-    <div className="p-6 space-y-12">
+    <div className="p-6 space-y-12 max-w-[800px] mx-auto">
       {/* Quality Selector */}
       <div className="space-y-3">
         <label className="block text-sm font-medium text-text-primary mb-2">
@@ -54,6 +59,51 @@ function SoundSettings({ settings, playNote }) {
           <option value="high">{t('settings.quality.high')}</option>
           <option value="full">{t('settings.quality.full')}</option>
         </select>
+      </div>
+
+      {/* Drone Effects */}
+      <div className="space-y-6">
+        <div className="space-y-3">
+          <label className="block text-sm font-medium text-text-primary mb-2">
+            {t('settings.dronePan')}
+          </label>
+          <div className="flex items-center gap-4">
+            <div className="flex-1">
+              <IOSInput
+                value={dronePan}
+                setValue={setDronePan}
+                min={-1}
+                max={1}
+                width={60}
+                height={120}
+              />
+            </div>
+            <span className="w-16 text-center text-text-primary">
+              {dronePan.toFixed(2)}
+            </span>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <label className="block text-sm font-medium text-text-primary mb-2">
+            {t('settings.droneFilter')}
+          </label>
+          <div className="flex items-center gap-4">
+            <div className="flex-1">
+              <IOSInput
+                value={droneFilter}
+                setValue={setDroneFilter}
+                min={20}
+                max={2000}
+                width={60}
+                height={120}
+              />
+            </div>
+            <span className="w-16 text-center text-text-primary">
+              {droneFilter.toFixed(0)} Hz
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Instrument Grid */}

@@ -7,6 +7,7 @@ const instrumentsList = [
   'french-horn', 'guitar-acoustic', 'guitar-electric', 'guitar-nylon',
   'harmonium', 'harp', 'organ', 'piano', 'saxophone', 'trombone',
   'trumpet', 'tuba', 'violin', 'xylophone',
+  'triangle', 'square', 'sawtooth', 'pad'
 ];
 
 function SoundSettings({ settings }) {

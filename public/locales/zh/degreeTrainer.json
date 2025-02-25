@@ -77,6 +77,8 @@
       "full": "无损"
     },
     "qualityLabel": "音质",
+    "dronePan": "主音声像",
+    "droneFilter": "主音滤波器",
     "autoAdvance": "自动下一个",
     "AnswerVolume": "播报答案音量",
     "useSolfege": "使用唱名 (Do Re Mi)",
