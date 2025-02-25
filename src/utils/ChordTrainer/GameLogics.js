@@ -78,4 +78,4 @@ const sortChordsByCommonality = (chordResultObjects) => {
   })
   return sortedChordResultObjects.map(chord => chord.symbol)
 }
-export { compareChords, getInversion, getNiceChordName,sortChordsByCommonality};
+export { compareChords, getInversion, getNiceChordName,sortChordsByCommonality,isSameNote};

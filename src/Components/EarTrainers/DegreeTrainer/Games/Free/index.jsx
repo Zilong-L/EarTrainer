@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CardStack from '../Shared/CardStack';
 import {DesktopStartButton,PhoneStartButton} from '../Shared/StartButtons';
+import AudioPitchDetector from '../Shared/AudioPitchDetector';
 const FreeMode = ({ FreeTrainerSettings }) => {
   const {
     currentNote,
@@ -33,6 +34,18 @@ const FreeMode = ({ FreeTrainerSettings }) => {
   }
   return (
     <div className="flex flex-col justify-end h-full mb-8">
+      <AudioPitchDetector
+        currentNote={currentNote}
+        disabledNotes={disabledNotes}
+        filteredNotes={filteredNotes}
+        isAdvance={isAdvance}
+        setActiveNote={setActiveNote}
+        rootNote={rootNote}
+        isHandfree={isHandfree}
+        useSolfege={useSolfege}
+        bpm={bpm}
+        gameState={gameState}
+      />
     <div className="flex-grow" />
   <CardStack
       currentNote={currentNote}

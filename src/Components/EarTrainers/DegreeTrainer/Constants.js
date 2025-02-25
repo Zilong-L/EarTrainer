@@ -246,7 +246,20 @@ const initialUserProgress = [
 ];
 
 
-
+const DegreeToDistance = {
+  "I": 0,
+  "II": 2,
+  "III": 4,
+  "IV": 5,
+  "V": 7,
+  "VI": 9,
+  "VII": 11,
+  "IIb": 1,
+  "IIIb": 3,
+  "Vb": 6,
+  "VIb": 8,
+  "VIIb": 10
+}
 
 const SolfegeMapping = {
   "I": "Do",
@@ -262,4 +275,4 @@ const SolfegeMapping = {
   "VIb": "Le",
   "VIIb": "Te"
 }
-export { apps, keyMap, degrees, initialUserProgress, SolfegeMapping,shortcuts };
+export { apps, keyMap, degrees, initialUserProgress, SolfegeMapping,shortcuts ,DegreeToDistance };
