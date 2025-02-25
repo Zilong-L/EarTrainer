@@ -50,6 +50,10 @@
     "Home": "Home",
     "SoundSettings": "Sound Settings",
     "instruments": {
+      "triangle": "triangle",
+      "square": "square",
+      "sawtooth": "sawtooth",
+      "pad": "pad",
       "bass-electric": "Bass Electric",
       "bassoon": "Bassoon",
       "cello": "Cello",

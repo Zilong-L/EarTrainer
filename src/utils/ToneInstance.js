@@ -1,192 +1,149 @@
 // toneInstance.js
-import { note } from 'tonal';
-import {SampleLibrary} from '@utils/SampleLibrary'; 
+import { SampleLibrary } from '@utils/SampleLibrary';
 import * as Tone from 'tone';
 import { Note } from 'tonal';
-import {SolfegeMapping} from '@EarTrainers/DegreeTrainer/Constants'
 let audioCache = null
-const audioCacheSolfege = {};
-let sampler = null;
 let droneInstance = null;
-let samplerChorus = new Tone.Chorus(4, 20, 1);
-let samplerGainNode = new Tone.Gain(0.5);
+
 let answerGainNode = new Tone.Gain(0.5).toDestination();
-let samplerReverb = new Tone.Reverb({
-  decay: 1,
-  wet: 1,
-}).toDestination();
 
 let pitchShifter = new Tone.PitchShift(0).connect(answerGainNode);
-
-const shiftPicthAndPlay = (player,steps)=>{
-  console.log('shiftPicthAndPlay',steps)
+let globalChorous = new Tone.Chorus({
+  frequency: 0.1,
+  delayTime: 10,
+  depth: 0.71,
+  feedback: 0.47,
+  spread: 181,
+  wet: 1.0
+}).connect(Tone.getDestination());
+const shiftPicthAndPlay = (player, steps) => {
+  console.log('shiftPicthAndPlay', steps)
   pitchShifter.pitch = steps;
   player.start();
 }
 
-let samplerFilter = new Tone.Filter({
-  type: "bandpass",
-
-});
 
 
 Tone.getContext().lookAhead = 0;
+let globalSampler = null;
+
+// **获取全局 Sampler**
 function getSamplerInstance() {
-  if (!sampler) {
-    sampler = SampleLibrary.load({
-      instruments: 'bass-electric', // Default instrument
-      baseUrl: '/samples/', // Adjust path to your samples directory,
-      quality: 'medium'
-    });
-    sampler.connect(samplerGainNode);
-    samplerGainNode.connect(samplerChorus);
-    samplerChorus.connect(samplerReverb);
-    sampler.chain(samplerFilter,samplerReverb);
+  if (!globalSampler) {
+    console.log('not loaded')
   }
-
-  function setVolume(value) {
-    const clampedValue = Math.min(1, Math.max(0, value)); // Clamp between 0 and 1
-    samplerGainNode.gain.value = clampedValue;
+  else {
+    return globalSampler;
   }
+}
 
-  async function changeSampler(instrumentName,quality='low') {
-    // Load the new instrument
-    const newSampler = SampleLibrary.load({
-      instruments: instrumentName,
-      baseUrl: '/samples/', // Adjust path to your samples directory
+// **创建新的 Sampler**
+class SamplerManager {
+  constructor(instrument = "triangle", quality = "medium", filterFreq = 1200, panVal = 0) {
+    this.sampler = SampleLibrary.load({
+      instruments: instrument,
+      baseUrl: "/samples/",
       quality: quality
     });
 
-    // Wait for the new instrument samples to load
-    await Tone.loaded();
+    // 添加效果
+    this.filter = new Tone.Filter({ frequency: filterFreq, type: "lowpass", rolloff: -12 });
+    this.gainNode = new Tone.Gain(0.5); // -6 dB
+    this.panner = new Tone.Panner(panVal);
 
-    // Disconnect the old sampler and connect the new one
-    sampler.disconnect();
-    newSampler.connect(samplerGainNode);
-    sampler.dispose();
-
-    // Replace the current sampler with the new one
-    sampler = newSampler;
-    console.log(`Sampler changed to: ${instrumentName}`);
+    // 连接音频链
+    this.sampler.chain(this.filter, this.panner, this.gainNode, globalChorous);
   }
 
-  return {
-    sampler: sampler,
-    setVolume,
-    changeSampler
-  };
+  setVolume(value) {
+    this.gainNode.gain.rampTo(Math.min(1, value*0.7));
+  }
+
+  setFilterFrequency(freq) {
+    this.filter.frequency.rampTo(freq, 0.1);
+  }
+  setPortamento(value) {
+    this.sampler.portamento = value;
+  }
+
+  setPan(value) {
+    this.panner.pan.rampTo(value, 0.1);
+  }
+
+  async changeSampler(instrumentName, quality = "low") {
+    const newSampler = SampleLibrary.load({
+      instruments: instrumentName,
+      baseUrl: "/samples/",
+      quality: quality
+    });
+
+    await Tone.loaded();
+
+    this.sampler.disconnect();
+    newSampler.chain(this.filter, this.panner, this.gainNode, globalChorous);
+    this.sampler.dispose();
+    this.sampler = newSampler;
+  }
 }
 
+
+
 function getDroneInstance() {
-  let masterGainNode = null;
   let rootMax = Tone.Frequency("C5").toMidi();
   let rootMin = Tone.Frequency("C2").toMidi();
+
   if (!droneInstance) {
-    const droneSampler = SampleLibrary.load({
-      instruments: 'contrabass', // Default instrument
-      baseUrl: '/samples/',
-      quality: 'medium'
-    });
+    const sampler = new SamplerManager('triangle'); // 载入 pad 采样器
+    const droneSynth = sampler.sampler; // 获取 Tone.Sampler 实例
 
-    const compressor = new Tone.Compressor({
-      threshold: -20,
-      ratio: 4,
-      attack: 0.003,
-      release: 0.25
-    });
-
-    const reverb = new Tone.Reverb({
-      decay: 2,
-      preDelay: 0.01
-    }).toDestination();
-
-    const filter = new Tone.Filter({
-      frequency: 400,
-      type: "lowpass",
-      rolloff: -12
-    });
-
-    masterGainNode = new Tone.Gain(0.8);
-
-    // Connect the effects chain
-    droneSampler.chain(masterGainNode,samplerFilter,samplerReverb)
-
-    let intervalId = null;
     let rootPlaying = false;
-
+    let currentRoot = "C2"; // 初始音符
+    let pannerValue = 0
+    let direction = 1;
+    setInterval(()=>{
+      pannerValue = pannerValue + 0.05 * direction
+      if(pannerValue > 0.5){
+        pannerValue = 0.5
+        direction = -1
+      }
+      if(pannerValue < -0.5){
+        pannerValue = -0.5
+        direction = 1
+      }
+      sampler.setPan(pannerValue)
+    }, 100)
     function start() {
-      if (droneSampler.loaded) {
-        // Play root continuously
+      if (!rootPlaying) {
         rootPlaying = true;
-        
-        // Create interval with random timing between 5-10 seconds
-        const playNextNote = () => {
-          const now = Tone.now();
-          droneSampler.triggerAttack(currentRoot, now);
-          
-          // Schedule next note with random delay
-          const nextInterval = Math.random() * 2000 + 3000; // 5000-10000ms (5-10 seconds)
-          intervalId = setTimeout(playNextNote, nextInterval);
-        };
-        
-        // Start the first note
-        playNextNote();
+        droneSynth.triggerAttack(currentRoot, Tone.now() ); // 使用音符名
       }
     }
 
     function stop() {
-      if (droneSampler.loaded) {
-        // Clear the timeout
-        if (intervalId) {
-          clearTimeout(intervalId);
-          intervalId = null;
-        }
-        
-        // Release the root note
-        if (rootPlaying) {
-          droneSampler.triggerRelease(currentRoot, Tone.now() + 0.5);
-
-          rootPlaying = false;
-        }
+      if (rootPlaying) {
+        droneSynth.triggerRelease(currentRoot, Tone.now()); // 使用音符名
+        rootPlaying = false;
       }
     }
-
-    function setVolume(value) {
-      const clampedValue = Math.min(1, Math.max(0, value));
-      masterGainNode.gain.value = clampedValue * 0.35;
-    }
-
-    let currentRoot = "C2";
-    let currentFifth = "G2";
-    let currentOctave = "C3";
 
     function updateRoot(rootNote) {
       if (typeof rootNote === "number") {
         rootNote = Note.fromMidi(rootNote);
       }
-      
-      // Release any currently playing notes
-      if (rootPlaying) {
-        droneSampler.triggerRelease([currentRoot, currentFifth, currentOctave], Tone.now() + 0.1);
-      }
-      
+      droneSynth.triggerRelease(currentRoot, Tone.now());
       currentRoot = rootNote;
-      currentFifth = Note.transpose(rootNote, "P5");
-      currentOctave = Note.transpose(rootNote, "P8");
+      if(!rootPlaying) {return;}
+      // 计算当前根音与目标音之间的音高偏移（单位：半音）
       
-      // Immediately play the new root note
-      if (droneSampler.loaded) {
-        droneSampler.triggerAttack(currentRoot, Tone.now() + 0.15);
-      }
-      
-      // If the loop is running, it will automatically use the new notes
-      // on its next iteration.
+      droneSynth.triggerAttack(rootNote, Tone.now());
+
     }
 
     droneInstance = {
+      sampler,
       start,
       stop,
-      setVolume,
+      setVolume: sampler.setVolume.bind(sampler), // 确保正确绑定
       updateRoot,
       rootMin,
       rootMax
@@ -197,21 +154,9 @@ function getDroneInstance() {
 }
 
 
-const preloadAudio = (degree,useSolfege) => {
-  // if(useSolfege){
-  //   if (!audioCache[degree]) {
-  //     console.log('get',degree)
-  //     audioCache[degree] = new Tone.Player(`/answers/Solfege/${SolfegeMapping[degree]}.wav`).connect(pitchShifter)
-  //   }
-  //   return audioCache[degree];
-  // }
-  // else{
-  //   if (!audioCacheSolfege[degree]) {
-  //     audioCacheSolfege[degree] = new Tone.Player(`/answers/${degree}.wav`).connect(answerGainNode)
-  //   }
-  //   return audioCacheSolfege[degree];
-  // }
-  if(!audioCache){
+
+const preloadAudio = () => {
+  if (!audioCache) {
     audioCache = new Tone.Player('/answers/Solfege.mp3').connect(pitchShifter)
   }
   return audioCache;
@@ -230,12 +175,14 @@ function playNotes(input, delay = 0.05, bpm = 60) {
 
   const pianoInstance = getSamplerInstance();
   const { sampler } = pianoInstance;
+  console.log(sampler)
 
   // 处理 MIDI 输入和音符字符串输入
   const notes = Array.isArray(input) ? input : [input];
   notes.forEach((note, index) => {
     activeTransport.schedule((time) => {
-      if (sampler.name == "PolySynth"||sampler._buffers && sampler._buffers.loaded) {
+      console.log(sampler)
+      if (sampler.name == "PolySynth" || sampler.name == "Synth" || sampler._buffers && sampler._buffers.loaded) {
         // 检查是否为 MIDI 值
         if (typeof note === 'number') {
           sampler.triggerAttackRelease([Tone.Frequency(note, 'midi').toNote()], 60 / bpm, time);
@@ -260,13 +207,15 @@ function playNotesTogether(input, delay = 10, bpm = 60) {
 
   const pianoInstance = getSamplerInstance();
   const { sampler } = pianoInstance;
+  console.log(sampler)
 
   // 处理 MIDI 输入和音符字符串输入
   const notes = Array.isArray(input) ? input : [input];
 
   // 播放和弦音符
   activeTransport.schedule((time) => {
-    if (sampler.name == "PolySynth"||sampler._buffers && sampler._buffers.loaded) {
+
+    if (sampler.name == "PolySynth"|| sampler.name == "Synth" || sampler._buffers && sampler._buffers.loaded) {
       notes.forEach(note => {
         // 检查是否为 MIDI 值
         if (typeof note === 'number') {
@@ -279,7 +228,7 @@ function playNotesTogether(input, delay = 10, bpm = 60) {
   }, delay);
 
   activeTransport.start();
-  return 60 /bpm + delay;
+  return 60 / bpm + delay;
 }
 
 
@@ -291,5 +240,10 @@ function cancelAllSounds() {
     activeTransport.cancel();
   }
 }
+function main() {
+  globalSampler = new SamplerManager("pad");
+}
 
-export { getSamplerInstance, getDroneInstance, preloadAudio, playNotes, cancelAllSounds, playNotesTogether, getAnswerGainNode,shiftPicthAndPlay };
+main();
+
+export { getSamplerInstance, getDroneInstance, preloadAudio, playNotes, cancelAllSounds, playNotesTogether, getAnswerGainNode, shiftPicthAndPlay,globalChorous };

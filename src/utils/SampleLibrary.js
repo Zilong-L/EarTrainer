@@ -9,8 +9,9 @@ import * as Tone from 'tone';
 var SampleLibrary = {
     minify: false,
     ext: '.[mp3|ogg]', // use setExt to change the extensions on all files // do not change this variable //
-    baseUrl: '/samples/',
-    list: ['bass-electric','bassoon','cello','clarinet','contrabass','flute','french-horn','guitar-acoustic','guitar-electric','guitar-nylon', 'harmonium','harp','organ','piano','saxophone','trombone','trumpet','tuba','violin','xylophone'],
+    baseUrl: '/samples/', // 默认采样器路径
+    list: ['bass-electric', 'bassoon', 'cello', 'clarinet', 'contrabass', 'flute', 'french-horn', 'guitar-acoustic', 'guitar-electric', 'guitar-nylon', 'harmonium', 'harp', 'organ', 'piano', 'saxophone', 'trombone', 'trumpet', 'tuba', 'violin', 'xylophone'],
+    synthList: ['triangle', 'square', 'sawtooth', 'pad'], // 预制合成器
     onload: null,
 
     setExt: function (newExt) {
@@ -26,14 +27,51 @@ var SampleLibrary = {
         this.ext = newExt;
         return console.log("sample extensions set to " + this.ext)
     },
+    loadSynth: function (type) {
+        let synth;
+        switch (type) {
+            case 'triangle':
+                synth = new Tone.PolySynth({
+                    oscillator: { type: 'triangle' },
+                    envelope: { attack: 0.05, decay: 0.1, sustain: 1, release: 0.5 }
+                });
+                break;
+            case 'square':
+                synth = new Tone.PolySynth({
+                    oscillator: { type: 'square' },
+                    envelope: { attack: 0.02, decay: 0.15, sustain: 0.8, release: 0.5 }
+                });
+                break;
+            case 'sawtooth':
+                synth = new Tone.PolySynth({
+                    oscillator: { type: 'sawtooth' },
+                    envelope: { attack: 0.1, decay: 0.2, sustain: 0.7, release: 0.5 }
+                });
+                break;
+            case 'pad':
+                synth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.5, decay: 0.5, sustain: 0.9, release: 2 }
+                });
+                break;
+            default:
+                console.warn(`Unknown synth type: ${type}`);
+                return null;
+        }
 
+        return synth;
+    },
     load: function (arg) {
         var t, rt, i;
         t = arg || {};
         t.instruments = t.instruments || this.list;
         t.baseUrl = t.baseUrl || this.baseUrl;
         t.onload = t.onload || this.onload;
-    
+
+        // 如果传了 synth，切换到合成器路径
+        if (this.synthList.includes(t.instruments)) {
+            return this.loadSynth(t.instruments);
+        }
         // Update extensions if arg given
         if (t.ext) {
             if (t.ext !== this.ext) {
@@ -41,9 +79,9 @@ var SampleLibrary = {
             }
             t.ext = this.ext;
         }
-    
+
         rt = {};
-    
+
         // Function to determine minification factor based on quality
         const getMinBy = (quality) => {
             switch (quality) {
@@ -58,7 +96,7 @@ var SampleLibrary = {
                     return 1; // Load all samples
             }
         };
-    
+
         const minifySamples = (samples, quality) => {
             const minBy = getMinBy(quality);
             // Create a new object with the filtered keys
@@ -68,17 +106,17 @@ var SampleLibrary = {
                     filtered[key] = samples[key]; // Add filtered keys to the new object
                     return filtered;
                 }, {});
-        
+
             return filteredSamples; // Return the filtered object
         };
-        
-    
+
+
         if (Array.isArray(t.instruments)) {
             for (i = 0; i <= t.instruments.length - 1; i++) {
                 var newT = this[t.instruments[i]];
                 // Generate a filtered list of samples based on quality
                 const filteredSamples = t.quality ? minifySamples(newT, t.quality) : newT;
-    
+
                 rt[t.instruments[i]] = new Tone.Sampler(
                     filteredSamples,
                     {
@@ -87,15 +125,15 @@ var SampleLibrary = {
                     }
                 );
             }
-    
+
             return rt;
-    
+
             // If a single instrument name is passed...
         } else {
             var newT = this[t.instruments];
             // Generate a filtered list of samples based on quality
             const filteredSamples = t.quality ? minifySamples(newT, t.quality) : newT;
-    
+
             return new Tone.Sampler(
                 filteredSamples,
                 {
@@ -105,7 +143,7 @@ var SampleLibrary = {
             );
         }
     },
-    
+
 
     'bass-electric': {
         'A#1': 'As1.[mp3|ogg]',
@@ -627,4 +665,4 @@ var SampleLibrary = {
 
 
 }
-export  {SampleLibrary};
+export { SampleLibrary };

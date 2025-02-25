@@ -8,26 +8,26 @@
     "challengeMode": "闯关模式",
     "freeMode": "自由训练"
   },
-  "home":{
-      "level": "关卡",
-      "totalAttempts": "总尝试：",
-      "correctCount": "正确数：",
-      "accuracyRate": "正确率：",
-      "title": "音级训练"
-    },
-    "buttons":{
-      "help":"🤔 使用帮助",
-      "settings": "设置",
-      "handfreeOn": "打开免提模式",
-      "handfreeOff": "关闭免提模式",
-      "earTrainer": "音乐难民",
-      "chordTrainer": "和弦练习",
-      "feedback":"💬 意见反馈"
-    },
+  "home": {
+    "level": "关卡",
+    "totalAttempts": "总尝试：",
+    "correctCount": "正确数：",
+    "accuracyRate": "正确率：",
+    "title": "音级训练"
+  },
+  "buttons": {
+    "help": "🤔 使用帮助",
+    "settings": "设置",
+    "handfreeOn": "打开免提模式",
+    "handfreeOff": "关闭免提模式",
+    "earTrainer": "音乐难民",
+    "chordTrainer": "和弦练习",
+    "feedback": "💬 意见反馈"
+  },
   "settings": {
     "Settings": "设置",
     "PracticeSettings": "练习设置",
-    "repeatWhenAdvance":"答对后重复当前音",
+    "repeatWhenAdvance": "答对后重复当前音",
     "Statistics": "统计",
     "GameSettings": "游戏设置",
     "VolumeSettings": "音量设置",
@@ -45,6 +45,10 @@
     "Home": "主页",
     "SoundSettings": "音色设置",
     "instruments": {
+      "triangle": "三角波",
+      "square": "方波",
+      "sawtooth": "锯齿波",
+      "pad": "合成音",
       "bass-electric": "电贝斯",
       "bassoon": "巴松管",
       "cello": "大提琴",
@@ -66,7 +70,7 @@
       "violin": "小提琴",
       "xylophone": "木琴"
     },
-    "quality":{
+    "quality": {
       "low": "流畅",
       "medium": "中等",
       "high": "高质量",
@@ -90,5 +94,5 @@
     "minutes": "分钟",
     "selectSetting": "从左侧选择一个设置",
     "clickLeft": "点击左侧的设置开始"
-  } 
+  }
 }

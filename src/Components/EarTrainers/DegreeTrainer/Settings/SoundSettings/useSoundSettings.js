@@ -1,6 +1,7 @@
 import { useLocalStorage } from '@uidotdev/usehooks';
 import { useEffect, useState } from 'react';
 import {getSamplerInstance} from '@utils/ToneInstance'
+
 const useSoundSettings = () => {
   const [selectedInstrument, setSelectedInstrument] = useLocalStorage('degreeTrainerInstrument', 'bass-electric');
   const [selectedQuality, setSelectedQuality] = useLocalStorage('degreeTrainerQuality', 'medium');
@@ -8,9 +9,14 @@ const useSoundSettings = () => {
 
   useEffect(()=>{
     async function changeInstrument() {
+      const sampler = getSamplerInstance()
+      if(!sampler) return;
       setIsLoadingInstrument(true);
-      await getSamplerInstance().changeSampler(selectedInstrument, selectedQuality);
-      setIsLoadingInstrument(false);
+      setTimeout(async () => {
+        await sampler.changeSampler(selectedInstrument, selectedQuality);
+        console.log("changed");
+        setIsLoadingInstrument(false);
+      }, 10);
     }
     changeInstrument();
   },[selectedInstrument, selectedQuality])
