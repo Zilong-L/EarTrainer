@@ -63,24 +63,6 @@ const DiatonicSettings = ({diatonicGameSettings}) => {
         translationPath="settings.diatonic"
       />
 
-      {/* Show Degrees Toggle */}
-      <div className="flex items-center justify-between">
-        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-          {t('settings.diatonic.showDegrees')}
-        </label>
-        <button
-          onClick={() => setShowDegree(!showDegree)}
-          className={`${
-            showDegree ? 'bg-notification-bg' : 'bg-bg-accent'
-          } relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
-        >
-          <span
-            className={`${
-              showDegree ? 'translate-x-6' : 'translate-x-1'
-            } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
-          />
-        </button>
-      </div>
       <div className="h-20 flex-shrink-0"></div>
     </div>
   );

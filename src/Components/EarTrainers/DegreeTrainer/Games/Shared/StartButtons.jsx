@@ -26,7 +26,7 @@ const DesktopStartButton = ({ gameState, isAdvance, onClick, isPlayingSound }) =
       drag
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }} // 限制拖拽
       onClick={onClick}
-      className="w-32 h-32 rounded-full  flex items-center justify-center bg-bg-accent text-text-primary text-3xl  transition-colors cursor-pointer"
+      className="w-32 h-32 rounded-full shadow-md  flex items-center justify-center bg-bg-accent text-text-primary text-3xl  transition-colors cursor-pointer"
     >
       {content}
     </motion.button>

@@ -12,7 +12,8 @@ const DiatonicGame = ({diatonicGameSettings}) => {
     showDegree,
     rootNote,
     sustainedNotes,
-    setSustainedNotes
+    setSustainedNotes,
+    setShowDegree
   } = diatonicGameSettings;
   
   return (
@@ -40,6 +41,8 @@ const DiatonicGame = ({diatonicGameSettings}) => {
           detectedChords={detectedChords} 
           sustainedNotes={sustainedNotes}
           setSustainedNotes={setSustainedNotes}
+          showDegree={showDegree}
+          setShowDegree={setShowDegree}
         />
       </div>
     </div>

@@ -17,7 +17,8 @@ const PianoVisualizer = ({ targetChord,activeNotes }) => {
     return Note.pitchClass(Note.fromMidi(midiNote)) === bass && midiNote<Note.midi('C3');
   }
   const isTargetNote = (midiNote) => {
-      return targetNotes.includes(Note.pitchClass(Note.fromMidi(midiNote))) && midiNote>=Note.midi('C3')&&midiNote<=Note.midi('C4');
+    return false;
+      // return targetNotes.includes(Note.pitchClass(Note.fromMidi(midiNote))) && midiNote>=Note.midi('C3')&&midiNote<=Note.midi('C4');
   }
   const isBlackKey = (midiNote) => {
     const noteInOctave = (midiNote - startNote) % KEYS_IN_OCTAVE;

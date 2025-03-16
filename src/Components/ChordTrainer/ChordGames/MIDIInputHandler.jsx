@@ -4,7 +4,7 @@ import { Chord, Note } from 'tonal';
 import { getSamplerInstance } from '@utils/ToneInstance';
 import { useTranslation } from 'react-i18next';
 import {getNiceChordName} from '@utils/ChordTrainer/GameLogics'
-const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord,detectedChords,sustainedNotes,setSustainedNotes }) => {
+const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord,detectedChords,sustainedNotes,setSustainedNotes, showDegree, setShowDegree }) => {
   const { t } = useTranslation('chordGame');
   let sustainActive = false;
   let sustainedNotesSet = new Set();
@@ -80,8 +80,26 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord,detectedCho
         </h3>
       </div>
       <div className="p-4 rounded-lg bg-bg-common">
-      
-      <PianoVisualizer targetChord={targetChord}activeNotes={activeNotes} />
+        <PianoVisualizer targetChord={targetChord} activeNotes={activeNotes} />
+        {targetChord && (
+          <div className="mt-4 flex items-center justify-end">
+            <button
+              onClick={() => setShowDegree(!showDegree)}
+              className={`${
+                showDegree ? 'bg-notification-bg' : 'bg-bg-accent'
+              } relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
+            >
+              <span
+                className={`${
+                  showDegree ? 'translate-x-6' : 'translate-x-1'
+                } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+              />
+            </button>
+            <span className="ml-2 text-sm font-medium text-text-primary">
+              {t('settings.diatonic.showDegrees')}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
