@@ -21,9 +21,13 @@ const WebRoutes = () => {
   );
 };
 const LanguageSwitcher = () => {
+  const [language, setLanguage] = useLocalStorage('language','zh');
   const { i18n } = useTranslation();
-
+  useEffect(()=>{
+    i18n.changeLanguage(language);
+  },[language])
   const changeLanguage = (lng) => {
+    setLanguage(lng);
     console.log("切换前的当前语言:", i18n.language); // 打印切换前的语言
     i18n.changeLanguage(lng).then(() => {
       console.log("切换后的当前语言:", i18n.language); // 打印切换后的语言
@@ -59,6 +63,7 @@ const ThemedContent = () => {
       document.body.classList.remove('light');
     }
   },[isDark]) 
+
   const toggleTheme = () => {
     setIsDark((prev) => !prev);
 
