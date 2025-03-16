@@ -1,46 +1,29 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Slider from '@components/SharedComponents/Slider';
 import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
-
+import HorizontalSlider from '@components/SharedComponents/slider/HorizontalSlider';
 function VolumeSettings() {
 
   // Keep Tone.js volumes in sync with settings
 
   const { t } = useTranslation('degreeTrainer');
   const { volume: { droneVolume, setDroneVolume, pianoVolume, setPianoVolume,answerVolume ,setAnswerVolume } } = useDegreeTrainerSettings();
-
+  console.log(pianoVolume)
   return (
     <div className="p-6 space-y-12">
-      <Slider
-        label={t('settings.DroneVolume')}
-        value={droneVolume}
-        onChange={(e) => setDroneVolume(parseFloat(e.target.value))}
-        min={0}
-        max={1}
-        step={0.01}
-        displayValue={`${Math.round(droneVolume * 100)}%`}
-      />
+      <div className="text-lg font-semibold text-text-primary">
+        {t('settings.DroneVolume')}
+        <HorizontalSlider min={0} max={1} step={0.01} setState={setDroneVolume} value={droneVolume} />
+      </div>
+      <div className="text-lg font-semibold text-text-primary">
+        {t('settings.AnswerVolume')}
+        <HorizontalSlider min={0} max={1} step={0.01} setState={setAnswerVolume} value={answerVolume} />
+      </div>
+      <div className="text-lg font-semibold text-text-primary">
+        {t('settings.PianoVolume')}
+        <HorizontalSlider min={0} max={1} step={0.01} setState={setPianoVolume} value={pianoVolume} />
+      </div>
 
-      <Slider
-        label={t('settings.PianoVolume')}
-        value={pianoVolume}
-        onChange={(e) => setPianoVolume(parseFloat(e.target.value))}
-        min={0}
-        max={1}
-        step={0.01}
-        displayValue={`${Math.round(pianoVolume * 100)}%`}
-      />
-
-      <Slider
-        label={t('settings.AnswerVolume')}
-        value={answerVolume}
-        onChange={(e) => setAnswerVolume(parseFloat(e.target.value))}
-        min={0}
-        max={1}
-        step={0.01}
-        displayValue={`${Math.round(answerVolume * 100)}%`}
-      />
     </div>
   );
 }

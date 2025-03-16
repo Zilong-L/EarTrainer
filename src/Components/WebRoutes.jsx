@@ -51,7 +51,7 @@ const ThemedContent = () => {
   const { t } = useTranslation('musicTrainer');
   const currentTheme = themes[location.pathname] || themes['/'];
   const [isDark, setIsDark] = useState(false);
-
+  const { i18n } = useTranslation();
   const toggleTheme = () => {
     setIsDark((prev) => !prev);
     document.body.classList.toggle('light', isDark);
@@ -59,7 +59,7 @@ const ThemedContent = () => {
 
   return (
     <ThemeProvider theme={currentTheme}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }} className="font-chewy">
+      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }} className={`${i18n.language === 'zh' ? 'font-chinese' : 'font-chewy'}`}>
         <CssBaseline />
 
         <AnimatePresence mode="wait">
@@ -67,7 +67,10 @@ const ThemedContent = () => {
 
             <Route path="/" element={<Intro />} />
 
-            <Route path="/chord-trainer" element={<ChordTrainer />} />
+            <Route path="/chord-trainer" element={
+              <DegreeTrainerSettingsProvider>
+              <ChordTrainer />
+              </DegreeTrainerSettingsProvider>} />
             <Route path="/ear-trainer" element={
 
               <motion.div

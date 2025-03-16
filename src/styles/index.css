@@ -3,12 +3,7 @@
 @tailwind utilities;
 
   
-@font-face {
-    font-family: 'Chilanka-Regular';
-    src: url('/fonts/Chilanka-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
+
 
     
 @font-face {
@@ -18,3 +13,9 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Chinese';
+  src: url('/fonts/Chinese.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

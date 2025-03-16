@@ -1,19 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 const MusicTrainer = () => {
   return (
     <div className="bg-[#e5e9de] min-h-screen md:h-auto md:min-h-screen px-[2rem] pb-8">
       <div className="max-w-[960px] md:max-w-[1440px] mx-auto">
         {/* 顶层标题区域 */}
         <header>
-          <div className="text-black md:ml-[2rem] text-[4rem] font-normal font-chewy">
+          <div className="text-black md:ml-[2rem] text-[4rem] font-normal ">
             Music Trainer
           </div>
         </header>
-
+      
         {/* 使用 grid 布局：左边 3/4，右边 1/4 */}
-        <div className="grid grid-rows-[1fr_1fr_1fr] md:grid-rows-[1fr] md:grid-cols-[3fr_1fr] gap-8 font-chewy max-w-screen mx-auto md:aspect-video">
+        <div className="grid grid-rows-[1fr_1fr_1fr] md:grid-rows-[1fr] md:grid-cols-[3fr_1fr] gap-8  max-w-screen mx-auto md:aspect-video">
           {/* 左侧主区域 - 点击跳转到 Degree Trainer */}
           <Link
             to="/ear-trainer/degree-trainer"
@@ -53,11 +52,11 @@ const MusicTrainer = () => {
               to="/ear-trainer/chord-color-trainer"
               className="relative bg-[#89bee1] rounded-[40px] p-4 h-1/2 md:h-[44%] text-center flex flex-col justify-start items-center"
             >
-              <div className="text-black text-[2.5rem] font-normal font-chewy self-end mr-[2rem] 
+              <div className="text-black text-[2.5rem] font-normal  self-end mr-[2rem] 
               md:self-center md:mr-0">
                 Chord Trainer
               </div>
-              <div className="self-end mr-[2rem] text-black text-[1.5rem] font-normal font-chewy">
+              <div className="self-end mr-[2rem] text-black text-[1.5rem] font-normal ">
                 learn to hear
               </div>
               <img
@@ -73,11 +72,11 @@ const MusicTrainer = () => {
               to="/chord-trainer"
               className="relative bg-[#ee9457] rounded-[40px] h-1/2 md:h-[56%] p-4 text-center flex flex-col justify-start items-center"
             >
-              <div className="text-black text-[2.5rem] font-normal font-chewy self-end mr-[2rem]
+              <div className="text-black text-[2.5rem] font-normal  self-end mr-[2rem]
               md:self-center md:mr-0">
                 Chord Trainer
               </div>
-              <div className="self-end mr-[2rem] text-black text-[1.5rem] font-normal font-chewy">
+              <div className="self-end mr-[2rem] text-black text-[1.5rem] font-normal ">
                 learn to play
               </div>
               <img
@@ -89,6 +88,7 @@ const MusicTrainer = () => {
           </div>
         </div>
       </div>
+ 
     </div>
   );
 };

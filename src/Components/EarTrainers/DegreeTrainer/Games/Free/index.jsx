@@ -34,7 +34,7 @@ const FreeMode = ({ FreeTrainerSettings }) => {
   }
   return (
     <div className="flex flex-col justify-end h-full mb-8">
-      <AudioPitchDetector
+      {/* <AudioPitchDetector
         currentNote={currentNote}
         disabledNotes={disabledNotes}
         filteredNotes={filteredNotes}
@@ -45,7 +45,7 @@ const FreeMode = ({ FreeTrainerSettings }) => {
         useSolfege={useSolfege}
         bpm={bpm}
         gameState={gameState}
-      />
+      /> */}
     <div className="flex-grow" />
   <CardStack
       currentNote={currentNote}

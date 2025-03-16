@@ -88,10 +88,9 @@ const useFreeTrainer = () => {
 
 
   useEffect(() => {
-    const newNote = generateRandomNoteBasedOnRoot(possibleNotesInRange, currentNote);
-    setCurrentNote(newNote);
-
     if (gameState === 'playing') {
+      const newNote = generateRandomNoteBasedOnRoot(possibleNotesInRange, currentNote);
+      setCurrentNote(newNote);
       playNote();
     }
   }, [possibleNotesInRange]);

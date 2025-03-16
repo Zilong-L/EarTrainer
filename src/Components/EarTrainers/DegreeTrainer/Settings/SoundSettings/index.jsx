@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import IOSInput from '@components/SharedComponents/IOSInput';
 import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
+import HorizontalSlider from '@components/SharedComponents/slider/HorizontalSlider';
 const instrumentsList = [
   'bass-electric', 'bassoon', 'cello', 'clarinet', 'contrabass', 'flute',
   'french-horn', 'guitar-acoustic', 'guitar-electric', 'guitar-nylon',
@@ -21,7 +21,8 @@ function SoundSettings({ settings, playNote }) {
       dronePan,
       setDronePan,
       droneFilter,
-      setDroneFilter
+      setDroneFilter,
+      clamps
     }
   } = useDegreeTrainerSettings();
 
@@ -40,7 +41,7 @@ function SoundSettings({ settings, playNote }) {
     setSelectedQuality(event.target.value);
     console.log(`Quality set to: ${event.target.value}`);
   };
-
+  console.log(clamps)
   return (
     <div className="p-6 space-y-12 max-w-[800px] mx-auto">
       {/* Quality Selector */}
@@ -62,25 +63,20 @@ function SoundSettings({ settings, playNote }) {
       </div>
 
       {/* Drone Effects */}
-      <div className="space-y-6">
+      <div className="flex flex-col">
         <div className="space-y-3">
           <label className="block text-sm font-medium text-text-primary mb-2">
             {t('settings.dronePan')}
           </label>
-          <div className="flex items-center gap-4">
-            <div className="flex-1">
-              <IOSInput
+          <div className="grid items-center gap-4">
+              <HorizontalSlider 
+                min={clamps.dronePan.min} 
+                max={clamps.dronePan.max} 
+                step={0.01} 
+                setState={setDronePan} 
                 value={dronePan}
-                setValue={setDronePan}
-                min={-1}
-                max={1}
-                width={60}
-                height={120}
+                mapFunction={(value) => value.toFixed(2)}
               />
-            </div>
-            <span className="w-16 text-center text-text-primary">
-              {dronePan.toFixed(2)}
-            </span>
           </div>
         </div>
 
@@ -89,19 +85,14 @@ function SoundSettings({ settings, playNote }) {
             {t('settings.droneFilter')}
           </label>
           <div className="flex items-center gap-4">
-            <div className="flex-1">
-              <IOSInput
+              <HorizontalSlider 
+                min={clamps.droneFilter.min} 
+                max={clamps.droneFilter.max} 
+                step={1} 
+                setState={setDroneFilter} 
                 value={droneFilter}
-                setValue={setDroneFilter}
-                min={20}
-                max={2000}
-                width={60}
-                height={120}
+                mapFunction={(value) => Math.round(value)}
               />
-            </div>
-            <span className="w-16 text-center text-text-primary">
-              {droneFilter.toFixed(0)} Hz
-            </span>
           </div>
         </div>
       </div>

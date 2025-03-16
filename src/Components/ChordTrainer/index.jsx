@@ -40,7 +40,7 @@ const ChordTrainer = () => {
   };
 
   return (
-    <div className="flex flex-col h-[100vh] font-chewy">
+    <div className="flex flex-col h-[100vh] ">
       <Header>
         <HeaderTitle>{t('trainer.title')}</HeaderTitle>
         <HeaderButtons>

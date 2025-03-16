@@ -51,12 +51,13 @@ const EarTrainer = () => {
 
   const openSettings = () => {
     setIsSettingsOpen(true);
-    setGameState((pre)=>pre=='playing'?'paused':pre);
+    setGameState((prev) => prev === 'playing' ? 'paused' : prev);
     document.body.classList.add('modal-open');
   };
 
   const closeSettings = () => {
     setIsSettingsOpen(false);
+    setGameState((prev) => prev === 'paused' ? 'playing' : prev);
     document.body.classList.remove('modal-open');
   };
 
