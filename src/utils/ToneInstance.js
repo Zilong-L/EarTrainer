@@ -17,7 +17,6 @@ let globalChorous = new Tone.Chorus({
   wet: 1.0
 }).connect(Tone.getDestination());
 const shiftPicthAndPlay = (player, steps) => {
-  console.log('shiftPicthAndPlay', steps)
   pitchShifter.pitch = steps;
   player.start();
 }
@@ -30,7 +29,6 @@ let globalSampler = null;
 // **获取全局 Sampler**
 function getSamplerInstance() {
   if (!globalSampler) {
-    console.log('not loaded')
   }
   else {
     return globalSampler;
@@ -162,13 +160,11 @@ function playNotes(input, delay = 0.05, bpm = 60) {
 
   const pianoInstance = getSamplerInstance();
   const { sampler } = pianoInstance;
-  console.log(sampler)
 
   // 处理 MIDI 输入和音符字符串输入
   const notes = Array.isArray(input) ? input : [input];
   notes.forEach((note, index) => {
     activeTransport.schedule((time) => {
-      console.log(sampler)
       if (sampler.name == "PolySynth" || sampler.name == "Synth" || sampler._buffers && sampler._buffers.loaded) {
         // 检查是否为 MIDI 值
         if (typeof note === 'number') {
@@ -194,7 +190,6 @@ function playNotesTogether(input, delay = 10, bpm = 60) {
 
   const pianoInstance = getSamplerInstance();
   const { sampler } = pianoInstance;
-  console.log(sampler)
 
   // 处理 MIDI 输入和音符字符串输入
   const notes = Array.isArray(input) ? input : [input];

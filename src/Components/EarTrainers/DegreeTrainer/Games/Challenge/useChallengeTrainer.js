@@ -4,7 +4,7 @@ import { degrees, initialUserProgress,DEGREES_MAP } from '@components/EarTrainer
 import { getDroneInstance, playNotes } from '@utils/ToneInstance';
 import toast from 'react-hot-toast';
 import { useLocalStorage } from '@uidotdev/usehooks';
-import { generateRandomNoteBasedOnRoot,    getPossibleNotesInRange,handleNoteGuess,handleGameLogic } from '@utils/GameLogics';
+import { getNextNote,    getPossibleNotesInRange,handleNoteGuess,handleGameLogic } from '@utils/GameLogics';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 
 const useChallengeTrainer = () => {
@@ -183,7 +183,7 @@ const useChallengeTrainer = () => {
   }, [rootNote, range, currentNotes]);
 
   useEffect(() => {
-    const newNote = generateRandomNoteBasedOnRoot(possibleNotesInRange, currentNote);
+    const newNote = getNextNote(possibleNotesInRange, currentNote);
     setCurrentNote(newNote);
 
     if (gameState === 'playing') {

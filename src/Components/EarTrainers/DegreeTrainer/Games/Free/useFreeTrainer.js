@@ -2,7 +2,7 @@ import { useState,useRef, useEffect, useMemo } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance, playNotes } from '@utils/ToneInstance';
-import { generateRandomNoteBasedOnRoot, isCorrect, calculateDegree, getPossibleNotesInRange, handleNoteGuess, handleGameLogic } from '@utils/GameLogics';
+import { getNextNote, isCorrect, calculateDegree, getPossibleNotesInRange, handleNoteGuess, handleGameLogic } from '@utils/GameLogics';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 const useFreeTrainer = () => {
   const {
@@ -16,7 +16,6 @@ const useFreeTrainer = () => {
     },
     stats:{updatePracticeRecords}
   } = useDegreeTrainerSettings();
-
   const [currentNote, setCurrentNote] = useState("");
   const [isPlayingSound, setIsPlayingSound] = useState(false);
   const [disabledNotes, setDisabledNotes] = useState([]);
@@ -49,12 +48,10 @@ const useFreeTrainer = () => {
 
 
 
-  const currentNotes = useMemo(() => customNotes, [customNotes]);
+  const currentNotes = customNotes
 
-  const filteredNotes = useMemo(() => {
-    if(!currentNotes) return [];
-    return currentNotes.filter(note => note.enable);
-  }, [currentNotes]);
+  const filteredNotes = currentNotes.filter(note => note.enable);
+
 
   const possibleNotesInRange = useMemo(() => {
     return getPossibleNotesInRange(rootNote, range, currentNotes);
@@ -88,9 +85,10 @@ const useFreeTrainer = () => {
 
 
   useEffect(() => {
+    const newNote = getNextNote(possibleNotesInRange, currentNote);
+    setCurrentNote(newNote);
+
     if (gameState === 'playing') {
-      const newNote = generateRandomNoteBasedOnRoot(possibleNotesInRange, currentNote);
-      setCurrentNote(newNote);
       playNote();
     }
   }, [possibleNotesInRange]);
@@ -121,7 +119,6 @@ const useFreeTrainer = () => {
 
     playNoteTimeoutRef.current = setTimeout(() => {
       setIsPlayingSound(false);
-      console.log('set false');
       playNoteTimeoutRef.current = null; // 清除引用
     }, (60 / (bpm / time)) * 1000);
   };
@@ -137,12 +134,16 @@ const useFreeTrainer = () => {
       setDisabledNotes([]);
       drone.start();
       Tone.getTransport().start();
+
       setGameState('playing')
+
 
     }
   }
     , [gameState, currentNote]);
     useEffect(() => {
+      const newNote = getNextNote(possibleNotesInRange, currentNote);
+      setCurrentNote(newNote);
       return () => {
         endGame();
       }
