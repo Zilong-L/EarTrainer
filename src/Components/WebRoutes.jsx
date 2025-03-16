@@ -1,8 +1,8 @@
-import { useState } from 'react';
+
 import { CssBaseline, Box, ThemeProvider, createTheme, Button } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import ChordTrainer from './ChordTrainer';
-import MusicTrainer from './EarTrainers/MusicTrainer';
+import { useEffect } from 'react';
 import Intro from './EarTrainers/Intro';
 import DegreeTrainer from '@EarTrainers/DegreeTrainer/DegreeTrainer'
 import ChordColorTrainer from '@EarTrainers/ChordColorTrainer/ChordColorTrainer'
@@ -12,7 +12,7 @@ import themes from '@themes/palette.js'
 import { useTranslation } from 'react-i18next'; // 引入 useTranslation 钩子
 import { AnimatePresence, motion } from 'motion/react';
 // Define themes for each trainer
-
+import { useLocalStorage } from '@uidotdev/usehooks';
 const WebRoutes = () => {
   return (
     <Router>
@@ -50,11 +50,18 @@ const ThemedContent = () => {
   const location = useLocation();
   const { t } = useTranslation('musicTrainer');
   const currentTheme = themes[location.pathname] || themes['/'];
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useLocalStorage('isdark',false);
   const { i18n } = useTranslation();
+  useEffect(()=>{
+    if(!isDark){
+      document.body.classList.add('light');
+    }else{
+      document.body.classList.remove('light');
+    }
+  },[isDark]) 
   const toggleTheme = () => {
     setIsDark((prev) => !prev);
-    document.body.classList.toggle('light', isDark);
+
   };
 
   return (
