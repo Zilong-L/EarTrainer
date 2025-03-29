@@ -1,36 +1,84 @@
-# EarTrainer Documentation
+# Scale Degree Trainer Usage Guide
+[中文](/zh-cn/) | English
+## Getting Started
 
-EarTrainer is a tool designed to help improve musical perception, supporting degree, melodic, and chord training. This documentation will guide you through installation, usage, and configuration.
+1. Launch the application and select the Scale Degree Trainer
+2. Choose a mode:
+   - **Free Mode:** Customize which scale degrees to practice
+   - **Challenge Mode:** Progress through 20 levels gradually
 
-- [Installation Guide](installation.md)
-- [Usage Guide](usage.md)
+## Basic Operations
 
-# [Music Refugee](https://musictrainer.barnman.cc)
-[中文](README.md) | English
+1. Listen to the played note
+2. Click or press the corresponding scale degree key
+   - Correct guess moves to the next note
+   - Wrong guess temporarily disables that scale degree
+3. Use the play button (or press R key) to repeat the note
 
-This is a simple sight-singing and ear-training tool to help improve musical perception.
+## Challenge Mode Levels
 
-## Core Features
-- [Ear Training](https://musictrainer.barnman.cc/ear-trainer)
-   - Pitch Recognition: Practice recognizing pitches to improve musical hearing. I think intervals are useless.
-   - Practice Statistics: Practice data is stored locally, allowing you to track your progress at any time.
-   - Keyboard and MIDI Input Support: Practice using either a keyboard or MIDI device.
-- [Chord Training](https://musictrainer.barnman.cc/chord-trainer)
-   - Chord Selection and Practice: Select a chord type and play it using a MIDI device. After correctly playing it, the next chord will be generated.
-   - Random Chord Generation: Generate various chords for practice to improve playing speed.
-## Website Features
-<img src="pics/image.png" alt="alt text" width="200" style="height: auto;" />
-<img src="pics/image1.png" alt="alt text" width="200" style="height: auto;" />
-<img src="pics/image3.png" alt="alt text" width="200" style="height: auto;" />
-<img src="pics/image2.png" alt="alt text" width="200" style="height: auto;" />
+20 levels gradually introduce more scale degrees:
 
-## [Click here to visit the website](https://musictrainer.barnman.cc)
+### Levels 1-7: Major Scale Degrees
+1. Level 1: I, VII
+2. Level 2: I, V, VII
+3. Level 3: I, III, V, VII
+4. Level 4: I, II, III, V, VII
+5. Level 5: I, II, III, V, VI, VII
+6. Level 6: I, II, III, IV, V, VI, VII
+7. Level 7: I, II, III, IV, #IV, V, VI, VII
 
-## Self-Hosting Instructions
-1. Clone the repository: `git clone my repo`
-2. Install Node.js v22 using nvm: `nvm install 22`
-3. Switch to Node.js v22: `nvm use 22`
-4. Install dependencies: `npm i`
-5. Start the development server: `npm run dev`
+### Levels 8-13: Minor Scale Degrees
+8. Level 8: I, II, bIII
+9. Level 9: I, II, bIII, V
+10. Level 10: I, II, bIII, V, bVI
+11. Level 11: I, II, bIII, V, bVI, bVII
+12. Level 12: I, II, bIII, IV, V, bVI, bVII
+13. Level 13: I, bII, II, bIII, IV, V, bVI, bVII
 
-Tested on: Node v22.7.0 (npm 10.8.2) `~/.local/share/nvm/v22.7.0/bin/node`
+### Levels 14-20: Advanced Scale Degrees
+14. Level 14: I, IV, V, VII
+15. Level 15: I, IV, V, bVII, VII
+16. Level 16: I, bIII, III, IV, V, bVII, VII
+17. Level 17: I, bII, II, bIII, III, IV, V, bVII, VII
+18. Level 18: I, bII, II, bIII, III, IV, #IV, V, bVII, VII
+19. Level 19: I, bII, II, bIII, III, IV, #IV/bV, V, bVII, VII
+20. Level 20: All scale degrees
+
+## Level Progress
+
+- Each level requires a minimum number of tests
+- Achieve 70% accuracy to unlock the next level
+- Earn stars based on accuracy:
+  - ⭐ 70-79%
+  - ⭐⭐ 80-89%
+  - ⭐⭐⭐ 90-100%
+
+## Settings Guide
+
+### Practice Settings
+- **Mode:** Toggle between free or challenge mode
+- **Range:** Set pitch range (C1-C6)
+- **Root Note:** Change the tonic
+- **BPM:** Adjust playback speed (10-200 BPM)
+
+### Volume Settings
+- Sustain: Adjust background sound volume
+- Piano: Adjust played note volume
+
+### Sound Settings
+- **Instrument:** Choose from 20+ instrument sounds
+- **Quality:** Set audio quality (Low, Medium, High, Full)
+
+### Statistics
+- View accuracy for each scale degree
+- Clear practice data
+
+## Keyboard Shortcuts
+- `1-7`: Guess scale degrees I-VII
+- `A,S,D,F,G`: Guess flat scale degrees (IIb, IIIb, etc.)
+- `R`: Repeat current note
+- `Spacebar`: Play/Pause
+- `Esc`: Return to main menu
+
+Visit the [online application](https://musictrainer.barnman.cc) to start training. 
