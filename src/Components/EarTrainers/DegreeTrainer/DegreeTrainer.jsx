@@ -14,19 +14,19 @@ import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/Setting
 import useFreeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer';
 import useChallengeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer';
 
-import {useDegreeTrainerSettings} from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
+import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import { useTranslation } from 'react-i18next';
 import '@components/EarTrainers/DegreeTrainer/Games/styles.css';
 import { Toaster } from 'react-hot-toast';
-import { keyMap,degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
-import {Note } from 'tonal';
+import { keyMap, degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
+import { Note } from 'tonal';
 import * as Tone from 'tone';
 import HeaderListButton from '@components/SharedComponents/HeaderListButton';
 let midi = null;
 const EarTrainer = () => {
   const globalSettings = useDegreeTrainerSettings();
-  const { t,i18n  } = useTranslation('degreeTrainer');
-  
+  const { t, i18n } = useTranslation('degreeTrainer');
+
   const {
     isHandfree,
     setIsHandfree,
@@ -36,13 +36,13 @@ const EarTrainer = () => {
   const FreeTrainerSettings = useFreeTrainer();
   const ChallengeTrainerSettings = useChallengeTrainer();
 
-  const settings = {...globalSettings, FreeTrainerSettings, ChallengeTrainerSettings};
+  const settings = { ...globalSettings, FreeTrainerSettings, ChallengeTrainerSettings };
   const currentGameSettings = mode === 'free' ? FreeTrainerSettings : ChallengeTrainerSettings;
   const {
-    playNote, 
-    rootNote ,
+    playNote,
+    rootNote,
     setActiveNote,
-    filteredNotes,  
+    filteredNotes,
     setGameState,
     currentNote,
   } = currentGameSettings;
@@ -87,10 +87,10 @@ const EarTrainer = () => {
 
         const button1 = document.querySelector(`button[data-note="${noteName}"]`);
         const button2 = document.querySelector(`button[data-note="${enharmonicNote}"]`);
-        if(div1){
+        if (div1) {
           div1.click();
         }
-        if(div2){
+        if (div2) {
           div2.click();
         }
         if (button1) {
@@ -126,10 +126,10 @@ const EarTrainer = () => {
       }
       if (midi == null) {
         midi = await navigator.requestMIDIAccess();
-        
+
       }
       if (midi) {
-        
+
         const inputs = midi.inputs.values();
         for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
           input.value.onmidimessage = midiMessageHandler
@@ -137,7 +137,7 @@ const EarTrainer = () => {
       }
     })();
     return () => {
-      
+
       if (midi) {
         const inputs = midi.inputs.values();
         for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
@@ -157,8 +157,8 @@ const EarTrainer = () => {
           </Link>
         </HeaderTitle>
         <HeaderButtons>
-        <LanguageSwitcher />
-          <HeaderButton 
+          <LanguageSwitcher />
+          <HeaderButton
             onClick={() => setIsHandfree(!isHandfree)}
             title={isHandfree ? t('buttons.handfreeOff') : t('buttons.handfreeOn')}
             className={isHandfree ? 'bg-bg-common' : 'bg-text-main text-text-main'}
@@ -170,10 +170,10 @@ const EarTrainer = () => {
           </HeaderButton>
           <HeaderButton>
             <a
-              href={`https://barnman.cc/music/degree-trainer-help-${i18n.language}`}
+              href={`https://docs.musictrainer.barnman.cc/#/${i18n.language}/`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-inherit no-underline block mt-[4px]"
+              className="text-inherit no-underline block "
             >
               {t('buttons.help')}
             </a>
@@ -192,16 +192,16 @@ const EarTrainer = () => {
               setGameState={setGameState}
             />
           </div>
-            {mode === 'free' ? (
-              <FreeMode 
-                FreeTrainerSettings={FreeTrainerSettings}
-              />
-            ) : (
-              <ChallengeMode 
+          {mode === 'free' ? (
+            <FreeMode
+              FreeTrainerSettings={FreeTrainerSettings}
+            />
+          ) : (
+            <ChallengeMode
               ChallengeTrainerSettings={ChallengeTrainerSettings}
-              />
-            )}
-          
+            />
+          )}
+
         </div>
       </div>
       <Toaster />

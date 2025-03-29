@@ -1,5 +1,5 @@
 # Scale Degree Trainer Usage Guide
-[中文](/zh-cn/) | English
+[中文](/zh/) | English
 ## Getting Started
 
 1. Launch the application and select the Scale Degree Trainer
