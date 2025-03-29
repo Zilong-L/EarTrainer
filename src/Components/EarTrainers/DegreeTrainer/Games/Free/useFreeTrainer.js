@@ -1,4 +1,4 @@
-import { useState,useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance, playNotes } from '@utils/ToneInstance';
@@ -14,7 +14,7 @@ const useFreeTrainer = () => {
       autoAdvance,
       useSolfege
     },
-    stats:{updatePracticeRecords}
+    stats: { updatePracticeRecords }
   } = useDegreeTrainerSettings();
   const [currentNote, setCurrentNote] = useState("");
   const [isPlayingSound, setIsPlayingSound] = useState(false);
@@ -23,6 +23,7 @@ const useFreeTrainer = () => {
   const [activeNote, setActiveNote] = useState(null);
   const [isAdvance, setIsAdvance] = useState('No');
   const [customNotes, _setCustomNotes] = useState(degrees);
+  const [selectedMode, setSelectedMode] = useState('');
 
   const playNoteTimeoutRef = useRef(null);
   const setCustomNotes = (notes) => {
@@ -36,7 +37,7 @@ const useFreeTrainer = () => {
   };
 
   useEffect(() => {
-    if(!localStorage.getItem('degreeTrainerCustomNotes')) {
+    if (!localStorage.getItem('degreeTrainerCustomNotes')) {
       return;
     }
     const customNotes = JSON.parse(localStorage.getItem('degreeTrainerCustomNotes'));
@@ -60,7 +61,7 @@ const useFreeTrainer = () => {
   // handle guesses
   useEffect(() => {
     if (!activeNote) return;
-    handleNoteGuess(activeNote, currentNote, rootNote, disabledNotes, setDisabledNotes, isAdvance, setIsAdvance, updatePracticeRecords, playNote, setActiveNote,autoAdvance);
+    handleNoteGuess(activeNote, currentNote, rootNote, disabledNotes, setDisabledNotes, isAdvance, setIsAdvance, updatePracticeRecords, playNote, setActiveNote, autoAdvance);
   }, [activeNote]);
 
   useEffect(() => {
@@ -106,7 +107,7 @@ const useFreeTrainer = () => {
     setGameState('start');
   };
 
-  const playNote = (note = null, delay = 0.05,time = 1) => {
+  const playNote = (note = null, delay = 0.05, time = 1) => {
     if (!note) {
       note = currentNote;
     }
@@ -141,14 +142,14 @@ const useFreeTrainer = () => {
     }
   }
     , [gameState, currentNote]);
-    useEffect(() => {
-      const newNote = getNextNote(possibleNotesInRange, currentNote);
-      setCurrentNote(newNote);
-      return () => {
-        endGame();
-      }
+  useEffect(() => {
+    const newNote = getNextNote(possibleNotesInRange, currentNote);
+    setCurrentNote(newNote);
+    return () => {
+      endGame();
     }
-      , []);
+  }
+    , []);
   const endGame = () => {
     Tone.getTransport().stop();
     Tone.getTransport().position = 0;
@@ -177,7 +178,10 @@ const useFreeTrainer = () => {
     endGame,
     setGameState,
     useSolfege,
-    isPlayingSound
+    isPlayingSound,
+    setCustomNotes,
+    selectedMode,
+    setSelectedMode
   };
 };
 

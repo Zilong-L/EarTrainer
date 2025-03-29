@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CardStack from '../Shared/CardStack';
-import {DesktopStartButton,PhoneStartButton} from '../Shared/StartButtons';
+import { DesktopStartButton, PhoneStartButton } from '../Shared/StartButtons';
 import AudioPitchDetector from '../Shared/AudioPitchDetector';
 const FreeMode = ({ FreeTrainerSettings }) => {
   const {
@@ -46,22 +46,22 @@ const FreeMode = ({ FreeTrainerSettings }) => {
         bpm={bpm}
         gameState={gameState}
       /> */}
-    <div className="flex-grow" />
-  <CardStack
-      currentNote={currentNote}
-      disabledNotes={disabledNotes}
-      filteredNotes={filteredNotes}
-      isAdvance={isAdvance}
-      setActiveNote={setActiveNote}
-      rootNote={rootNote}
-      isHandfree={isHandfree}
-      useSolfege={useSolfege}
-      bpm={bpm}
-      gameState={gameState}
-    >
-    </CardStack>
+      <div className="flex-grow" />
+      <CardStack
+        currentNote={currentNote}
+        disabledNotes={disabledNotes}
+        filteredNotes={filteredNotes}
+        isAdvance={isAdvance}
+        setActiveNote={setActiveNote}
+        rootNote={rootNote}
+        isHandfree={isHandfree}
+        useSolfege={useSolfege}
+        bpm={bpm}
+        gameState={gameState}
+      >
+      </CardStack>
       {/* 新增：桌面端大圆形按钮（lg 以上显示） */}
-      {isHandfree?<></>:(<div
+      {isHandfree ? <></> : (<div
         className="
           hidden
           lg:flex
@@ -82,9 +82,9 @@ const FreeMode = ({ FreeTrainerSettings }) => {
           onClick={handleButton}
         />
       </div>)}
-      <PhoneStartButton gameState={gameState} isAdvance={isAdvance} onClick={handleButton} isPlayingSound={isPlayingSound} /> 
-      </div>
-      );
+      <PhoneStartButton gameState={gameState} isAdvance={isAdvance} onClick={handleButton} isPlayingSound={isPlayingSound} />
+    </div>
+  );
 };
 
 export default FreeMode;
