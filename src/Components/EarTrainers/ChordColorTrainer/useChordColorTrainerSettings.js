@@ -9,7 +9,7 @@ const useChordColorTrainerSettings = () => {
   const [bpm, setBpm] = useState(40);
   const [droneVolume, setDroneVolume] = useState(0.3);
   const [pianoVolume, setPianoVolume] = useState(1.0);
-  const [rootNote, setRootNote] = useState(Tone.Frequency('C3').toMidi());
+  const [rootNote, setRootNote] = useState('C3');
   const [range, setRange] = useState([Tone.Frequency('C3').toNote(), Tone.Frequency('C4').toNote()]);
   const [practiceRecords, setPracticeRecords] = useState({});
   const [currentNotes, setCurrentNotes] = useState(degrees);
@@ -38,7 +38,7 @@ const useChordColorTrainerSettings = () => {
       setBpm(storedSettings.bpm || 40);
       setDroneVolume(storedSettings.droneVolume || 0.3);
       setPianoVolume(storedSettings.pianoVolume || 1.0);
-      setRootNote(storedSettings.rootNote || Tone.Frequency('C3').toMidi());
+      setRootNote(storedSettings.rootNote || 'C3');
       setRange(storedSettings.range || [Tone.Frequency('C3').toNote(), Tone.Frequency('C4').toNote()]);
       setCurrentNotes(storedSettings.currentNotes || degrees);
       setPreset(storedSettings.preset || 'major');
