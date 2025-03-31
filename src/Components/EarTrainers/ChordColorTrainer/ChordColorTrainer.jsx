@@ -14,7 +14,7 @@ import useChordColorTrainerSettings from '@components/EarTrainers/ChordColorTrai
 import { apps, keyMap, degrees } from '@components/EarTrainers/ChordColorTrainer/Constants';
 import CardStack from '@components/EarTrainers/ChordColorTrainer/CardStack';
 import { DesktopReplayButtons, PhoneReplayButtons } from '@components/EarTrainers/ChordColorTrainer/ReplayButtons';
-
+import LanguageSwitcher from '@components/SharedComponents/LanguageSwitcher'
 import { useTranslation } from 'react-i18next';
 
 let midi = null;
@@ -33,6 +33,7 @@ const EarTrainer = () => {
     endGame,
     playChord,
     playBrokenChord,
+    playTonic,
   } = useChordColorTrainer(settings);
 
   const {
@@ -51,6 +52,12 @@ const EarTrainer = () => {
   const handleStartGame = () => {
     setIsIntroOpen(false);
     startGame();
+  };
+
+  const handlePlayTonic = () => {
+    setIsPlayingSound(true);
+    playTonic();
+    setTimeout(() => setIsPlayingSound(false), 1000);
   };
 
   const openSettings = () => {
@@ -176,13 +183,7 @@ const EarTrainer = () => {
           </Link>
         </HeaderTitle>
         <HeaderButtons>
-          <HeaderButton
-            onClick={() => setMuteDrone(!muteDrone)}
-            title={muteDrone ? t('buttons.unmuteDrone') : t('buttons.muteDrone')}
-            className={muteDrone ? 'bg-bg-common' : 'bg-text-main text-text-main'}
-          >
-            <span className="">{muteDrone ? 'sensors_off' : 'sensors'}</span>
-          </HeaderButton>
+          <LanguageSwitcher />
           <HeaderButton onClick={openSettings}>
             <Cog6ToothIcon className="h-6 w-6" />
           </HeaderButton>
@@ -224,6 +225,7 @@ const EarTrainer = () => {
               handleStartGame={handleStartGame}
               onReplay={handlePlayChord}
               onBrokenChord={handlePlayBrokenChord}
+              onPlayTonic={handlePlayTonic}
               isPlayingSound={isPlayingSound}
               gameStarted={gameStarted}
             />
@@ -231,6 +233,7 @@ const EarTrainer = () => {
               handleStartGame={handleStartGame}
               onReplay={handlePlayChord}
               onBrokenChord={handlePlayBrokenChord}
+              onPlayTonic={handlePlayTonic}
               isPlayingSound={isPlayingSound}
               gameStarted={gameStarted}
             />

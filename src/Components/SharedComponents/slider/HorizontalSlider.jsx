@@ -1,6 +1,6 @@
 import { motion, useMotionValue, useTransform } from 'motion/react'
-import { useRef, useState, useEffect } from 'react'
-
+import { useRef, useState, useEffect, useCallback } from 'react'
+import { debounce } from 'lodash-es'
 function HorizontalSlider({
   height = 10,
   min = 0,
@@ -15,6 +15,7 @@ function HorizontalSlider({
   const containerRef = useRef(null)
   // Create motion value for tracking position in percentage (0 to 100)
   const x = useMotionValue(initialPercentage)
+  const debouncedSetState = useCallback(debounce(setState, 100), [setState])
   const [displayValue, setDisplayValue] = useState(value)
 
   // Flag to track panning
@@ -37,13 +38,13 @@ function HorizontalSlider({
   useEffect(() => {
     const unsubscribe = sliderValue.on("change", (newVal) => {
       if (Math.abs(newVal - lastEmittedValueRef.current) >= step) {
-        setState(newVal)
+        debouncedSetState(newVal)
         setDisplayValue(newVal)
         lastEmittedValueRef.current = newVal
       }
     })
     return () => unsubscribe()
-  }, [sliderValue, step, setState])
+  }, [sliderValue, step, debouncedSetState])
 
   // Handle pan gesture to update x
   const handlePan = (_, info) => {

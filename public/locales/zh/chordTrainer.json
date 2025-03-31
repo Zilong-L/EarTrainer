@@ -1,65 +1,66 @@
 {
-    "app": {
-      "title": "音乐难民",
-      "settings": "设置"
-    },
-    "introModal": {
-      "welcomeTitle": "欢迎使用和弦颜色训练器",
-      "description": "您将会听到一个和弦。您需要根据听到的和弦选择相应的和弦颜色。在右上角的设置中，您可以调节音量和练习内容。",
-      "startPractice": "开始练习"
-    },
-    "statistics": {
-      "chordAccuracy": "和弦正确率统计",
-      "statistics": "统计",
-      "chartLabel":"和弦正确率",
-      "deleteLocalData": "删除本地统计数据",
-      "confirmDeleteTitle": "确认删除",
-      "confirmDeleteDescription": "确定要删除所有本地统计数据吗？此操作不可恢复。",
-      "delete": "删除",
-      "cancel": "取消"
-    },
-    "settingsMenu": {
-      "settings": "设置",
-      "practiceSettings": "练习设置",
-      "volumeSettings": "音量设置",
-      "statistics": "统计"
-    },
-    "volumeSettings": {
-      "droneVolume": "持续音量",
-      "pianoVolume": "钢琴音量"
-    },
-    "practiceSettings": {
-      "noteRange": "音符范围",
-      "rootNote": "主音",
-      "bpm": "节拍",
-      "selectPreset": "选择预设",
-      "editPreset": "编辑预设",
-      "custom": "自定义",
-      "save": "保存",
-      "delete": "删除",
-      "degrees": "级数",
-      "chordTypes": "和弦类型"
-    },
-    "labels": {
-      "totalAttempts": "总尝试",
-      "correctCount": "正确数",
-      "accuracyRate": "正确率"
-    },
-    "buttons": {
-      "startPractice": "开始练习",
-      "replay": "重放",
-      "settings": "设置",
-      "delete": "删除",
-      "cancel": "取消",
-      "save": "保存",
-      "home": "首页",
-      "earTrainer": "音乐难民",
-      "chordTrainer": "和弦练习",
-      "muteDrone":"关闭主音",
-      "unmuteDrone":"打开主音"
-    },
-    "messages": {
-      "deleteConfirmation": "确定要删除所有本地统计数据吗？此操作不可恢复。"
-    }
+  "app": {
+    "title": "音乐难民",
+    "settings": "设置"
+  },
+  "introModal": {
+    "welcomeTitle": "欢迎使用和弦颜色训练器",
+    "description": "您将会听到一个和弦。您需要根据听到的和弦选择相应的和弦颜色。在右上角的设置中，您可以调节音量和练习内容。",
+    "startPractice": "开始练习"
+  },
+  "statistics": {
+    "chordAccuracy": "和弦正确率统计",
+    "statistics": "统计",
+    "chartLabel": "和弦正确率",
+    "deleteLocalData": "删除本地统计数据",
+    "confirmDeleteTitle": "确认删除",
+    "confirmDeleteDescription": "确定要删除所有本地统计数据吗？此操作不可恢复。",
+    "delete": "删除",
+    "cancel": "取消"
+  },
+  "settingsMenu": {
+    "settings": "设置",
+    "practiceSettings": "练习设置",
+    "volumeSettings": "音量设置",
+    "statistics": "统计"
+  },
+  "volumeSettings": {
+    "droneVolume": "持续音量",
+    "pianoVolume": "钢琴音量"
+  },
+  "practiceSettings": {
+    "noteRange": "音符范围",
+    "rootNote": "主音",
+    "bpm": "节拍",
+    "selectPreset": "选择预设",
+    "editPreset": "编辑预设",
+    "custom": "自定义",
+    "save": "保存",
+    "delete": "删除",
+    "degrees": "级数",
+    "chordTypes": "和弦类型"
+  },
+  "labels": {
+    "totalAttempts": "总尝试",
+    "correctCount": "正确数",
+    "accuracyRate": "正确率"
+  },
+  "buttons": {
+    "startPractice": "开始练习",
+    "replay": "重放",
+    "settings": "设置",
+    "delete": "删除",
+    "cancel": "取消",
+    "save": "保存",
+    "home": "首页",
+    "earTrainer": "音乐难民",
+    "chordTrainer": "和弦练习",
+    "muteDrone": "关闭主音",
+    "unmuteDrone": "打开主音",
+    "playTonic": "播放主音",
+    "stair": "分解和弦"
+  },
+  "messages": {
+    "deleteConfirmation": "确定要删除所有本地统计数据吗？此操作不可恢复。"
   }
-  
+}

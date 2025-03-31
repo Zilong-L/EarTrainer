@@ -1,65 +1,66 @@
 {
-    "app": {
-      "title": "Ear Trainer",
-      "settings": "Settings"
-    },
-    "introModal": {
-      "welcomeTitle": "Welcome to Chord Color Trainer",
-      "description": "You will hear a chord. You need to select the corresponding chord color based on what you hear. You can adjust the volume and practice content in the settings at the top right corner.",
-      "startPractice": "Start Practice"
-    },
-    "statistics": {
-      "chordAccuracy": "Chord Accuracy Statistics",
-      "statistics": "Statistics",
-      "chartLabel":"Chord Accuracy",
-      "deleteLocalData": "Delete Local Statistics Data",
-      "confirmDeleteTitle": "Confirm Delete",
-      "confirmDeleteDescription": "Are you sure you want to delete all local statistics data? This action cannot be undone.",
-      "delete": "Delete",
-      "cancel": "Cancel"
-    },
-    "settingsMenu": {
-      "settings": "Settings",
-      "practiceSettings": "Practice Settings",
-      "volumeSettings": "Volume Settings",
-      "statistics": "Statistics"
-    },
-    "volumeSettings": {
-      "droneVolume": "Drone Volume",
-      "pianoVolume": "Piano Volume"
-    },
-    "practiceSettings": {
-      "noteRange": "Note Range",
-      "rootNote": "Root Note",
-      "bpm": "BPM",
-      "selectPreset": "Select Preset",
-      "editPreset": "Edit Preset",
-      "custom": "Custom",
-      "save": "Save",
-      "delete": "Delete",
-      "degrees": "Degrees",
-      "chordTypes": "Chord Types"
-    },
-    "labels": {
-      "totalAttempts": "Total Attempts",
-      "correctCount": "Correct Count",
-      "accuracyRate": "Accuracy Rate"
-    },
-    "buttons": {
-      "startPractice": "Start Practice",
-      "replay": "Replay",
-      "settings": "Settings",
-      "delete": "Delete",
-      "cancel": "Cancel",
-      "save": "Save",
-      "home": "Home",
-      "earTrainer": "Ear Trainer",
-      "chordTrainer": "Chord Trainer",
-      "muteDrone":"mute Drone",
-      "unmuteDrone":"unmute Drone"
-    },
-    "messages": {
-      "deleteConfirmation": "Are you sure you want to delete all local statistics data? This action cannot be undone."
-    }
+  "app": {
+    "title": "Ear Trainer",
+    "settings": "Settings"
+  },
+  "introModal": {
+    "welcomeTitle": "Welcome to Chord Color Trainer",
+    "description": "You will hear a chord. You need to select the corresponding chord color based on what you hear. You can adjust the volume and practice content in the settings at the top right corner.",
+    "startPractice": "Start Practice"
+  },
+  "statistics": {
+    "chordAccuracy": "Chord Accuracy Statistics",
+    "statistics": "Statistics",
+    "chartLabel": "Chord Accuracy",
+    "deleteLocalData": "Delete Local Statistics Data",
+    "confirmDeleteTitle": "Confirm Delete",
+    "confirmDeleteDescription": "Are you sure you want to delete all local statistics data? This action cannot be undone.",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  },
+  "settingsMenu": {
+    "settings": "Settings",
+    "practiceSettings": "Practice Settings",
+    "volumeSettings": "Volume Settings",
+    "statistics": "Statistics"
+  },
+  "volumeSettings": {
+    "droneVolume": "Drone Volume",
+    "pianoVolume": "Piano Volume"
+  },
+  "practiceSettings": {
+    "noteRange": "Note Range",
+    "rootNote": "Root Note",
+    "bpm": "BPM",
+    "selectPreset": "Select Preset",
+    "editPreset": "Edit Preset",
+    "custom": "Custom",
+    "save": "Save",
+    "delete": "Delete",
+    "degrees": "Degrees",
+    "chordTypes": "Chord Types"
+  },
+  "labels": {
+    "totalAttempts": "Total Attempts",
+    "correctCount": "Correct Count",
+    "accuracyRate": "Accuracy Rate"
+  },
+  "buttons": {
+    "startPractice": "Start Practice",
+    "replay": "Replay",
+    "settings": "Settings",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "home": "Home",
+    "earTrainer": "Ear Trainer",
+    "chordTrainer": "Chord Trainer",
+    "muteDrone": "Mute Drone",
+    "unmuteDrone": "Unmute Drone",
+    "playTonic": "Play Tonic Note",
+    "stair": "Broken chord"
+  },
+  "messages": {
+    "deleteConfirmation": "Are you sure you want to delete all local statistics data? This action cannot be undone."
   }
-  
+}

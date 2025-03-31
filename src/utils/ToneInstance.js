@@ -54,7 +54,7 @@ class SamplerManager {
   }
 
   setVolume(value) {
-    this.gainNode.gain.rampTo(Math.min(1, value*0.7));
+    this.gainNode.gain.rampTo(Math.min(1, value * 0.7));
   }
 
   setFilterFrequency(freq) {
@@ -100,7 +100,7 @@ function getDroneInstance() {
     function start() {
       if (!rootPlaying) {
         rootPlaying = true;
-        droneSynth.triggerAttack(currentRoot, Tone.now() ); // 使用音符名
+        droneSynth.triggerAttack(currentRoot, Tone.now()); // 使用音符名
       }
     }
 
@@ -111,15 +111,19 @@ function getDroneInstance() {
       }
     }
 
+    function playOnce() {
+      droneSynth.triggerAttackRelease(currentRoot, 1, Tone.now());
+    }
+
     function updateRoot(rootNote) {
       if (typeof rootNote === "number") {
         rootNote = Note.fromMidi(rootNote);
       }
       droneSynth.triggerRelease(currentRoot, Tone.now());
       currentRoot = rootNote;
-      if(!rootPlaying) {return;}
+      if (!rootPlaying) { return; }
       // 计算当前根音与目标音之间的音高偏移（单位：半音）
-      
+
       droneSynth.triggerAttack(rootNote, Tone.now());
 
     }
@@ -128,6 +132,7 @@ function getDroneInstance() {
       sampler,
       start,
       stop,
+      playOnce,
       setVolume: sampler.setVolume.bind(sampler), // 确保正确绑定
       updateRoot,
       rootMin,
@@ -197,7 +202,7 @@ function playNotesTogether(input, delay = 10, bpm = 60) {
   // 播放和弦音符
   activeTransport.schedule((time) => {
 
-    if (sampler.name == "PolySynth"|| sampler.name == "Synth" || sampler._buffers && sampler._buffers.loaded) {
+    if (sampler.name == "PolySynth" || sampler.name == "Synth" || sampler._buffers && sampler._buffers.loaded) {
       notes.forEach(note => {
         // 检查是否为 MIDI 值
         if (typeof note === 'number') {
@@ -228,4 +233,4 @@ function main() {
 
 main();
 
-export { getSamplerInstance, getDroneInstance, preloadAudio, playNotes, cancelAllSounds, playNotesTogether, getAnswerGainNode, shiftPicthAndPlay,globalChorous };
+export { getSamplerInstance, getDroneInstance, preloadAudio, playNotes, cancelAllSounds, playNotesTogether, getAnswerGainNode, shiftPicthAndPlay, globalChorous };

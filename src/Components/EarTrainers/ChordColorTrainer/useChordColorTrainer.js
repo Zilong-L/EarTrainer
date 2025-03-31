@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
-import { defaultDegreeChordTypes,VoicingDictionary } from '@components/EarTrainers/ChordColorTrainer/Constants';
+import { defaultDegreeChordTypes, VoicingDictionary } from '@components/EarTrainers/ChordColorTrainer/Constants';
 import { getSamplerInstance, getDroneInstance } from '@utils/ToneInstance';
-import {Progression,Chord,Voicing,Interval,Note } from 'tonal';
-import {playNotesTogether,playNotes} from '@utils/ToneInstance'
+import { Progression, Chord, Voicing, Interval, Note } from 'tonal';
+import { playNotesTogether, playNotes } from '@utils/ToneInstance'
 const useChordColorTrainer = (settings) => {
   const {
     bpm,
@@ -15,7 +15,7 @@ const useChordColorTrainer = (settings) => {
     updatePracticeRecords,
   } = settings;
 
-  const [currentChord, setCurrentChord ] = useState("");
+  const [currentChord, setCurrentChord] = useState("");
   const [disabledChords, setDisabledChords] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [filteredChords, setFilteredChords] = useState([]);
@@ -34,6 +34,7 @@ const useChordColorTrainer = (settings) => {
 
   useEffect(() => {
     const newChord = generateRandomChord();
+    console.log(newChord)
     setCurrentChord(newChord);
   }, [filteredChords]);
 
@@ -58,7 +59,7 @@ const useChordColorTrainer = (settings) => {
     setCurrentChord(nextChord);
     setIsAdvance(false);
     setDisabledChords([]);
-    playChord(nextChord.notes,0.2);
+    playChord(nextChord.notes, 0.2);
   }
   const startGame = () => {
     Tone.getTransport().stop();
@@ -66,31 +67,34 @@ const useChordColorTrainer = (settings) => {
     Tone.getTransport().cancel();
     setGameStarted(true);
     advanceGame()
-    drone.start();
     Tone.getTransport().start();
   };
 
+  const playTonic = () => {
+    drone.playOnce();
+  };
+
   const playChord = (notes = null, delay = 0.05) => {
-    if(!notes){
+    if (!notes) {
       notes = currentChord.notes
     }
-    playNotesTogether(notes,delay,bpm)
-    
+    playNotesTogether(notes, delay, bpm)
+
   };
 
   const playBrokenChord = (notes = null, delay = 0.05) => {
-    if(!notes){
+    if (!notes) {
       notes = currentChord.notes
     }
-    playNotes(notes,delay,bpm)
+    playNotes(notes, delay, bpm)
   }
 
   const handleChordGuess = (guessedChord) => {
     const isCorrect = guessedChord === `${currentChord.degree}${currentChord.chordType}`
-    if(isCorrect){
+    if (isCorrect) {
       setIsAdvance(true);
       updatePracticeRecords(guessedChord, isCorrect);
-    }else{
+    } else {
       setDisabledChords((prev) => [...prev, guessedChord]);
       updatePracticeRecords(guessedChord, isCorrect);
       playBrokenChord()
@@ -98,8 +102,8 @@ const useChordColorTrainer = (settings) => {
     setActiveChord(null);
   };
 
-  
-  
+
+
 
   const endGame = () => {
     Tone.getTransport().stop();
@@ -112,27 +116,30 @@ const useChordColorTrainer = (settings) => {
 
   // 将 degreeChordTypes 对象转换为数组并过滤掉空的级数和弦组合
   useEffect(() => {
-    const allCombinations = degreeChordTypes.flatMap(chord => 
+    const allCombinations = degreeChordTypes.flatMap(chord =>
       chord.chordTypes.map(chordType => ({ degree: chord.degree, chordType }))
     );
-      setFilteredChords(allCombinations);
-  }, [degreeChordTypes,rootNote]);
+    setFilteredChords(allCombinations);
+  }, [degreeChordTypes, rootNote]);
 
   // 生成一个随机的级数和和弦类型组合
   const generateRandomChord = () => {
     const RomanNumeral = filteredChords[Math.floor(Math.random() * filteredChords.length)];
-    if(!RomanNumeral){
+    if (!RomanNumeral) {
       return null
     }
     // 生成和弦的音符
-    const chord = Progression.fromRomanNumerals(Tone.Frequency(rootNote,'midi').toNote().slice(0,-1), [`${RomanNumeral.degree}${RomanNumeral.chordType}`])[0]; // 使用随机的级数和和弦类型
+    const chord = Progression.fromRomanNumerals(rootNote.slice(0, -1), [`${RomanNumeral.degree}${RomanNumeral.chordType}`])[0]; // 使用随机的级数和和弦类型
     const chordRange = [range[0], Note.fromMidi(Note.midi(range[1]) + Interval.semitones('P8'))];
     const dictionary = VoicingDictionary.rootPosition;
+    console.log(dictionary)
     // TODO:this can be configured later to allow different voicings
     // for now, we only have root position voicings
-    const possibleChords = Voicing.search(chord,chordRange,dictionary)
+    const possibleChords = Voicing.search(chord, chordRange, dictionary)
+    console.log('pi', possibleChords, chord)
     const notes = possibleChords[Math.floor(Math.random() * possibleChords.length)];
-    return {...RomanNumeral,notes:notes};
+    console.log(notes)
+    return { ...RomanNumeral, notes: notes };
   };
 
   return {
@@ -141,11 +148,15 @@ const useChordColorTrainer = (settings) => {
     gameStarted,
     filteredChords,
     activeChord,
+    isAdvance,
+    setIsAdvance,
+    bpm,
     setActiveChord,
     startGame,
     playChord,
-    playBrokenChord,
     endGame,
+    playTonic,
+    playBrokenChord
   };
 };
 

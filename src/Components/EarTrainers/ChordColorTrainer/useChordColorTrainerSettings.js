@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { getDroneInstance } from '@utils/ToneInstance';
 import { chordPreset } from "@components/EarTrainers/ChordColorTrainer/Constants";
-import { degrees,defaultDegreeChordTypes, CHORD_TYPES } from "@components/EarTrainers/ChordColorTrainer/Constants";
+import { degrees, defaultDegreeChordTypes, CHORD_TYPES } from "@components/EarTrainers/ChordColorTrainer/Constants";
 // 定义和弦类型常量
 
 const useChordColorTrainerSettings = () => {
@@ -50,14 +50,14 @@ const useChordColorTrainerSettings = () => {
   useEffect(() => {
     setDegreeChordTypes(customPresets[preset] || chordPreset[preset] || defaultDegreeChordTypes);
     console.log('runs here')
-  },[preset])
-  useEffect(() => {
-    if(muteDrone){
-      drone.stop()
-    }else{
-      drone.start()
-    }
-  },[muteDrone])
+  }, [preset])
+  // useEffect(() => {
+  //   if(muteDrone){
+  //     drone.stop()
+  //   }else{
+  //     drone.start()
+  //   }
+  // },[muteDrone])
 
   const updatePracticeRecords = (degree, isCorrect) => {
     setPracticeRecords((prevRecords) => {
@@ -98,7 +98,7 @@ const useChordColorTrainerSettings = () => {
     setCustomPresets,
     muteDrone,
     setMuteDrone,
-    isStatOpen, 
+    isStatOpen,
     setIsStatOpen
   };
 };

@@ -100,6 +100,7 @@
     "changeInterval": "Change Interval",
     "minutes": "minutes",
     "selectSetting": "Select a setting from the left",
-    "clickLeft": "Click on a setting to the left to get started"
+    "clickLeft": "Click on a setting to the left to get started",
+    "SelectMode": "Select Mode"
   }
 }

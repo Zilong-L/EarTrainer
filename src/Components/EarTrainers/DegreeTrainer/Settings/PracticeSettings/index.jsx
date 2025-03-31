@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Midi, Note } from "tonal";
 import { getDroneInstance } from '@utils/ToneInstance';
@@ -8,6 +8,7 @@ import RangeSlider from '@components/SharedComponents/slider/RangeSlider';
 
 function PracticeSettings() {
   const { t } = useTranslation('degreeTrainer');
+  const [isReady, setIsReady] = useState(false);
   const {
     practice: {
       bpm,
@@ -30,6 +31,17 @@ function PracticeSettings() {
   const drone = getDroneInstance();
   const midiMin = drone.rootMin;
   const midiMax = drone.rootMax;
+
+  useEffect(() => {
+    // Ensure drone is initialized
+    if (drone && midiMin !== undefined && midiMax !== undefined) {
+      setIsReady(true);
+    }
+  }, [drone, midiMin, midiMax]);
+
+  if (!isReady) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="p-6 space-y-8">
@@ -108,8 +120,8 @@ function PracticeSettings() {
       <RangeSlider
         value={range}
         onChange={setRange}
-        min={Midi.toMidi('C1')}
-        max={Midi.toMidi('C6')}
+        min={midiMin}
+        max={midiMax}
         step={12}
         label={t('settings.NoteRange')}
         displayFunction={(value) => Midi.midiToNoteName(value)}
