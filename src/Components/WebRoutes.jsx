@@ -8,7 +8,7 @@ import RangeSlider from '@components/SharedComponents/slider/RangeSlider';
 
 // Lazy load components
 const ChordTrainer = lazy(() => import('./ChordTrainer'));
-const Intro = lazy(() => import('./EarTrainers/Intro'));
+const Intro = lazy(() => import('./Intro'));
 const DegreeTrainer = lazy(() => import('@EarTrainers/DegreeTrainer/DegreeTrainer'));
 const ChordColorTrainer = lazy(() => import('@EarTrainers/ChordColorTrainer/ChordColorTrainer'));
 const DegreeTrainerSettingsProvider = lazy(() => import('@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings').then(module => ({ default: module.DegreeTrainerSettingsProvider })));
