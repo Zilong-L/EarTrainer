@@ -10,7 +10,7 @@ const MusicTrainer = () => {
             Music Trainer
           </div>
         </header>
-      
+
         {/* 使用 grid 布局：左边 3/4，右边 1/4 */}
         <div className="grid grid-rows-[1fr_1fr_1fr] md:grid-rows-[1fr] md:grid-cols-[3fr_1fr] gap-8  max-w-screen mx-auto md:aspect-video">
           {/* 左侧主区域 - 点击跳转到 Degree Trainer */}
@@ -29,18 +29,20 @@ const MusicTrainer = () => {
               <p
                 className="row-start-2 md:absolute text-[#fafafa] font-normal leading-[125%] z-10 select-none text-[4rem] 
                 md:text-[16rem] md:translate-x-[8rem] md:translate-y-[5.5rem]"
-              >    
-              Trainer
-            </p>
-                
-              <img
-                src="imgs/Landing/hearing.png"
-                alt="Main Illustration"
-                className="col-start-2 row-span-2 relative z-20 object-contain  w-[20rem] h-[20rem] 
+              >
+                Trainer
+              </p>
+              <picture>
+                <source srcset="imgs/Landing/hearing.webp" type="image/webp" />
+                <img
+                  src="imgs/Landing/hearing.png"
+                  alt="Main Illustration"
+                  className="col-start-2 row-span-2 relative z-20 object-contain  w-[20rem] h-[20rem] 
                 md:w-[60.41%] md:h-[85.80%] ]
                "
-              />
-          
+                />
+              </picture>
+
 
             </div>
           </Link>
@@ -59,12 +61,15 @@ const MusicTrainer = () => {
               <div className="self-end mr-[2rem] text-black text-[1.5rem] font-normal ">
                 learn to hear
               </div>
-              <img
-                src="imgs/Landing/dj.png"
-                alt="DJ Monkey"
-                className="absolute h-full left-0 md:left-auto md:h-auto md:w-4/5 md:-bottom-7"
+              <picture>
+                <source srcset="imgs/Landing/dj.webp" type="image/webp" />
+                <img
+                  src="imgs/Landing/dj.png"
+                  alt="DJ Monkey"
+                  className="absolute h-full left-0 md:left-auto md:h-auto md:w-4/5 md:-bottom-7"
 
-              />
+                />
+              </picture>
             </Link>
 
             {/* 下卡片 - 点击跳转到 Chord Trainer */}
@@ -79,16 +84,19 @@ const MusicTrainer = () => {
               <div className="self-end mr-[2rem] text-black text-[1.5rem] font-normal ">
                 learn to play
               </div>
-              <img
-                src="imgs/Landing/woman_playing.png"
-                alt="Guitar Girl"
-                className="absolute h-full left-0 md:left-auto md:h-auto md:w-4/5 md:-bottom-5"
-              />
+              <picture>
+                <source srcset="imgs/Landing/woman_playing.webp" type="image/webp" />
+                <img
+                  src="imgs/Landing/woman_playing.png"
+                  alt="Guitar Girl"
+                  className="absolute h-full left-0 md:left-auto md:h-auto md:w-4/5 md:-bottom-5"
+                />
+              </picture>
             </Link>
           </div>
         </div>
       </div>
- 
+
     </div>
   );
 };
