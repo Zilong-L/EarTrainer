@@ -7,6 +7,13 @@ export default defineConfig({
   build: {
     target: "esnext",
     rollupOptions: {
+      output: {
+        manualChunks: {
+          tone: ['tone'],
+          i18n: ['i18next', 'react-i18next'],
+          motion: ['motion']
+        }
+      },
       plugins: [
         visualizer({
           open: true, // 打包完成后自动打开图表

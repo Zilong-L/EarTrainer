@@ -1,58 +1,114 @@
-import React, { useState, useEffect } from 'react';
-import { Bar } from 'react-chartjs-2';
+import React, { useState, useEffect, useRef } from 'react';
+import uPlot from 'uplot';
+import 'uplot/dist/uPlot.min.css';
 import { useTranslation } from 'react-i18next';
-import { getDroneInstance } from '@utils/ToneInstance';
 import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-} from 'chart.js';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
 function Statistics() {
   const { t } = useTranslation('degreeTrainer');
   const { stats: { practiceRecords, setPracticeRecords } } = useDegreeTrainerSettings();
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
-  console.log('practiceRecords:', practiceRecords);
+  const chartRef = useRef(null);
+  const plotInstance = useRef(null);
+
   const calculateAccuracy = (record) => {
     return record.total > 0 ? (record.correct / record.total) * 100 : 0;
   };
 
-  const generateChartData = () => {
-    const labels = Object.keys(practiceRecords);
-    const data = labels.map((degree) => calculateAccuracy(practiceRecords[degree]));
-    return {
-      labels,
-      datasets: [
-        {
-          label: t('settings.Statistics'),
-          data,
-          backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        },
-      ],
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 100
-          }
-        }
+  // Handle resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (plotInstance.current && chartRef.current) {
+        plotInstance.current.setSize({
+          width: chartRef.current.offsetWidth,
+          height: 256
+        });
       }
     };
-  };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!chartRef.current) return;
+
+    const labels = Object.keys(practiceRecords);
+    const data = labels.map((degree) => calculateAccuracy(practiceRecords[degree]));
+
+    const opts = {
+      width: chartRef.current.offsetWidth,
+      height: 256,
+      padding: [20, 10, 10, 40], // [top, right, bottom, left]
+      cursor: {
+        show: true,
+        points: {
+          show: true,
+          size: 5,
+        }
+      },
+      axes: [
+        {
+          scale: 'x',
+          values: (_, vals) => labels,
+          size: 40,
+          gap: 5,
+          grid: { show: true },
+        },
+        {
+          scale: 'y',
+          values: (_, vals) => vals.map(v => v + '%'),
+          size: 40,
+          gap: 5,
+          grid: { show: true },
+        },
+      ],
+      scales: {
+        x: {
+          time: false,
+        },
+        y: {
+          auto: false,
+          range: [0, 100],
+        },
+      },
+      series: [
+        {
+          label: 'Degree',
+        },
+        {
+          label: 'Accuracy',
+          stroke: 'rgba(75, 192, 192, 1)',
+          fill: 'rgba(75, 192, 192, 0.2)',
+          width: 2,
+          points: {
+            show: true,
+            stroke: 'rgba(75, 192, 192, 1)',
+            fill: 'white',
+            size: 4,
+          },
+          value: (_, v) => v.toFixed(1) + '%',
+        },
+      ],
+    };
+
+    // Cleanup previous instance
+    if (plotInstance.current) {
+      plotInstance.current.destroy();
+    }
+
+    // Create new instance
+    plotInstance.current = new uPlot(opts, [
+      Array.from({ length: labels.length }, (_, i) => i),  // x values as indices
+      data,
+    ], chartRef.current);
+
+    return () => {
+      if (plotInstance.current) {
+        plotInstance.current.destroy();
+      }
+    };
+  }, [practiceRecords]);
 
   const handleDeleteConfirm = () => {
     localStorage.removeItem('degreeTrainerRecords');
@@ -60,12 +116,10 @@ function Statistics() {
     setIsDeleteConfirmOpen(false);
   };
 
-
-
   return (
     <div className="p-6 space-y-12">
-      <div>
-        <Bar data={generateChartData()} />
+      <div className="w-full h-64 overflow-hidden">
+        <div ref={chartRef} className="w-full h-full"></div>
       </div>
       <div className="flex justify-end">
         <button

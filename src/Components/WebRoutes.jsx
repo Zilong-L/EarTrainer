@@ -1,17 +1,24 @@
-
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import ChordTrainer from './ChordTrainer';
-import { useEffect } from 'react';
-import Intro from './EarTrainers/Intro';
-import DegreeTrainer from '@EarTrainers/DegreeTrainer/DegreeTrainer'
-import ChordColorTrainer from '@EarTrainers/ChordColorTrainer/ChordColorTrainer'
-import { DegreeTrainerSettingsProvider, } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings'
-// Import additional trainers here
-import { useTranslation } from 'react-i18next'; // 引入 useTranslation 钩子
+import { useEffect, lazy, Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'motion/react';
-// Define themes for each trainer
 import { useLocalStorage } from '@uidotdev/usehooks';
 import Button from '@components/SharedComponents/Button';
+import RangeSlider from '@components/SharedComponents/slider/RangeSlider';
+
+// Lazy load components
+const ChordTrainer = lazy(() => import('./ChordTrainer'));
+const Intro = lazy(() => import('./EarTrainers/Intro'));
+const DegreeTrainer = lazy(() => import('@EarTrainers/DegreeTrainer/DegreeTrainer'));
+const ChordColorTrainer = lazy(() => import('@EarTrainers/ChordColorTrainer/ChordColorTrainer'));
+const DegreeTrainerSettingsProvider = lazy(() => import('@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings').then(module => ({ default: module.DegreeTrainerSettingsProvider })));
+
+// Loading component
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+  </div>
+);
 
 const WebRoutes = () => {
   return (
@@ -72,59 +79,62 @@ const ThemedContent = () => {
     <div className={`${i18n.language === 'zh' ? 'font-chinese' : 'font-chewy'}`}>
 
       <AnimatePresence mode="wait">
-        <Routes location={location}>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes location={location}>
+            <Route path="/" element={<Intro />} />
 
-          <Route path="/" element={<Intro />} />
+            <Route path="/chord-trainer" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <DegreeTrainerSettingsProvider>
+                  <ChordTrainer />
+                </DegreeTrainerSettingsProvider>
+              </Suspense>
+            } />
 
-          <Route path="/chord-trainer" element={
-            <DegreeTrainerSettingsProvider>
-              <ChordTrainer />
-            </DegreeTrainerSettingsProvider>} />
-          <Route path="/ear-trainer" element={
-
-            <motion.div
-              key={location.pathname} // 关键点：motion.div 负责整个页面切换动画
-              initial={location.pathname === '/' ? {} : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={location.pathname === '/' ? {} : { opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
-            >
-              <Intro />
-            </motion.div>
-          } />
-          <Route
-            path="/ear-trainer/degree-trainer"
-            element={
-
+            <Route path="/ear-trainer" element={
               <motion.div
-                key={location.pathname} // 关键点：motion.div 负责整个页面切换动画
+                key={location.pathname}
                 initial={location.pathname === '/' ? {} : { opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={location.pathname === '/' ? {} : { opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
               >
-                <DegreeTrainerSettingsProvider>
-                  <DegreeTrainer />
-                </DegreeTrainerSettingsProvider>
+                <Intro />
               </motion.div>
+            } />
 
-            }
-          />
-          <Route path="/ear-trainer/chord-color-trainer" element={
-            <motion.div
-              key={location.pathname} // 关键点：motion.div 负责整个页面切换动画
-              initial={location.pathname === '/' ? {} : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={location.pathname === '/' ? {} : { opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
-            >
-              <ChordColorTrainer />
-            </motion.div>
-          } />
-        </Routes>
+            <Route path="/ear-trainer/degree-trainer" element={
+              <motion.div
+                key={location.pathname}
+                initial={location.pathname === '/' ? {} : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={location.pathname === '/' ? {} : { opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
+              >
+                <Suspense fallback={<LoadingSpinner />}>
+                  <DegreeTrainerSettingsProvider>
+                    <DegreeTrainer />
+                  </DegreeTrainerSettingsProvider>
+                </Suspense>
+              </motion.div>
+            } />
+
+            <Route path="/ear-trainer/chord-color-trainer" element={
+              <motion.div
+                key={location.pathname}
+                initial={location.pathname === '/' ? {} : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={location.pathname === '/' ? {} : { opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
+              >
+                <ChordColorTrainer />
+              </motion.div>
+            } />
+          </Routes>
+        </Suspense>
       </AnimatePresence>
 
       <div className='text-center p-2 bg-black'>
