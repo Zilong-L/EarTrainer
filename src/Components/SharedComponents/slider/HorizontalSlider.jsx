@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useTransform } from 'framer-motion'
+import { motion, useMotionValue, useTransform } from 'motion/react'
 import { useRef, useState, useEffect } from 'react'
 
 function HorizontalSlider({
@@ -101,7 +101,7 @@ function HorizontalSlider({
           }}
         />
       </motion.div>
-      <div className="absolute right-0 -top-10">
+      <div className="absolute right-0 top-[-3rem] text-text-primary text-3xl">
         {mapFunction(displayValue)}
       </div>
     </div>

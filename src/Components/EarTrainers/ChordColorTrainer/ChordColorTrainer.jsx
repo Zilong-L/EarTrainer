@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { CssBaseline, Paper, Box, Button, Typography, AppBar, Toolbar, Container, Grid, Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
 import * as Tone from 'tone';
+import { Cog6ToothIcon } from '@heroicons/react/24/solid';
+import Header from '@components/SharedComponents/Header';
+import HeaderTitle from '@components/SharedComponents/HeaderTitle';
+import HeaderButtons from '@components/SharedComponents/HeaderButtons';
+import HeaderButton from '@components/SharedComponents/HeaderButton';
+import { Toaster } from 'react-hot-toast';
 
-import StairsIcon from '@mui/icons-material/Stairs';
-import SensorsIcon from '@mui/icons-material/Sensors';
-import SensorsOffIcon from '@mui/icons-material/SensorsOff';
-import MenuIcon from '@mui/icons-material/Menu';
-import ReplayIcon from '@mui/icons-material/Replay';
-import SettingsIcon from '@mui/icons-material/Settings';
-
-import Sidebar from '@components/Sidebar';
 import ChordColorTrainerSettings from '@components/EarTrainers/ChordColorTrainer/Settings';
-import IntroModal from '@components/EarTrainers/ChordColorTrainer/ChordColorTrainerIntro';
 import useChordColorTrainer from '@components/EarTrainers/ChordColorTrainer/useChordColorTrainer';
 import useChordColorTrainerSettings from '@components/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings';
 import { apps, keyMap, degrees } from '@components/EarTrainers/ChordColorTrainer/Constants';
+import CardStack from '@components/EarTrainers/ChordColorTrainer/CardStack';
+import { DesktopReplayButtons, PhoneReplayButtons } from '@components/EarTrainers/ChordColorTrainer/ReplayButtons';
 
 import { useTranslation } from 'react-i18next';
 
@@ -48,10 +46,21 @@ const EarTrainer = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isIntroOpen, setIsIntroOpen] = useState(true);
+  const [isPlayingSound, setIsPlayingSound] = useState(false);
 
-  const handleIntroClose = () => {
+  const handleStartGame = () => {
     setIsIntroOpen(false);
     startGame();
+  };
+
+  const openSettings = () => {
+    setIsSettingsOpen(true);
+    document.body.classList.add('modal-open');
+  };
+
+  const closeSettings = () => {
+    setIsSettingsOpen(false);
+    document.body.classList.remove('modal-open');
   };
 
   useEffect(() => {
@@ -122,6 +131,18 @@ const EarTrainer = () => {
     };
   }, []);
 
+  const handlePlayChord = async () => {
+    setIsPlayingSound(true);
+    await playChord();
+    setIsPlayingSound(false);
+  };
+
+  const handlePlayBrokenChord = async () => {
+    setIsPlayingSound(true);
+    await playBrokenChord();
+    setIsPlayingSound(false);
+  };
+
   const renderRecords = () => {
     const totalResults = Object.values(practiceRecords).reduce(
       (acc, record) => {
@@ -133,193 +154,92 @@ const EarTrainer = () => {
     );
 
     return (
-      <>
-        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>
-          {t('labels.totalAttempts')}: {totalResults.total}
-        </Typography>
-        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>
-          {t('labels.correctCount')}: {totalResults.correct}
-        </Typography>
-        <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.paper }}>
+      <div className="text-text-main">
+        <div>{t('labels.totalAttempts')}: {totalResults.total}</div>
+        <div>{t('labels.correctCount')}: {totalResults.correct}</div>
+        <div>
           {t('labels.accuracyRate')}:{' '}
           {totalResults.total > 0
             ? Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) + '%'
             : '0%'}
-        </Typography>
-      </>
+        </div>
+      </div>
     );
   };
 
   return (
-    <>
-      <AppBar position="static" sx={{ boxShadow: 0, paddingX: '0.5rem' }}>
-        <Toolbar sx={{ height: '64px', color: (theme) => theme.palette.text.primary }}>
-          <Typography
-            variant="h5"
-            sx={{ flexGrow: 1, textAlign: 'left', color: (theme) => theme.palette.text.primary }}
+    <div className="relative">
+      <Header>
+        <HeaderTitle>
+          <Link to="/ear-trainer" className="text-inherit no-underline">
+            {t('app.title')}
+          </Link>
+        </HeaderTitle>
+        <HeaderButtons>
+          <HeaderButton
+            onClick={() => setMuteDrone(!muteDrone)}
+            title={muteDrone ? t('buttons.unmuteDrone') : t('buttons.muteDrone')}
+            className={muteDrone ? 'bg-bg-common' : 'bg-text-main text-text-main'}
           >
-            <Link to="/ear-trainer" style={{ textDecoration: 'none', color: 'inherit' }}>
-              {t('app.title')}
-            </Link>
-          </Typography>
-          <Button
-            onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-            variant="contained"
-            color="primary"
-            sx={{ boxShadow: 'none' }}
-          >
-            <SettingsIcon />
-          </Button>
-
-          <Button
+            <span className="">{muteDrone ? 'sensors_off' : 'sensors'}</span>
+          </HeaderButton>
+          <HeaderButton onClick={openSettings}>
+            <Cog6ToothIcon className="h-6 w-6" />
+          </HeaderButton>
+          <HeaderButton
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            variant="contained"
-            color="primary"
-            sx={{ boxShadow: 'none', '@media (min-width:600px)': { display: 'none' } }}
+            className="md:hidden"
           >
-            <MenuIcon />
-          </Button>
-          {muteDrone ? (
-            <Tooltip title={t('buttons.unmuteDrone')}><Button
-              variant="contained"
-              color="primary"
-              sx={{ boxShadow: 'none' }}
-              onClick={() => {
-                setMuteDrone(!muteDrone);
-              }}
-            >
-              <SensorsOffIcon />
-            </Button>
-            </Tooltip>
-          ) : (
-            <Tooltip title={t('buttons.muteDrone')}>
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{ boxShadow: 'none' }}
-                onClick={() => {
-                  setMuteDrone(!muteDrone);
-                }}
-              >
-                <SensorsIcon />
-              </Button>
-            </Tooltip>
-          )}
-          {apps.map((item) => (
-            <Button
-              variant="contained"
-              key={item.name}
-              component={Link}
-              to={item.path}
-              sx={{
-                display: 'none',
-                '@media (min-width:600px)': { display: 'block', boxShadow: 'none', textTransform: 'none' },
-              }}
-            >
-              {t(`buttons.${item.name}`)}
-            </Button>
-          ))}
-        </Toolbar>
-      </AppBar>
-      <Paper sx={{ borderRadius: 0 }}>
-        <Container
-          maxWidth="sm"
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            height: 'calc(100svh - 64px)',
-            paddingY: '1rem',
-            paddingX: '1.5rem',
-          }}
-        >
-          <CssBaseline />
-          <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-          <ChordColorTrainerSettings
-            isSettingsOpen={isSettingsOpen}
-            setIsSettingsOpen={setIsSettingsOpen}
-            playChord={playChord}
-            settings={settings}
-          />
-          <IntroModal isOpen={isIntroOpen} handleClose={handleIntroClose} />
-          {gameStarted && (
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-                height: '100%',
-                marginBottom: '2rem',
-              }}
-            >
-              {isStatOpen && renderRecords()}
-              <Box sx={{ flexGrow: 1 }} />
-              <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
-                {filteredChords.map((note) => (
-                  <Grid item xs={4} key={`${note.degree}${note.chordType}`}>
-                    <Button
-                      variant="contained"
-                      onClick={() => setActiveChord(`${note.degree}${note.chordType}`)}
-                      fullWidth
-                      sx={{
-                        textTransform: 'none',
-                        fontSize: '1.5rem',
-                        height: '4rem',
-                        background: disabledChords.some(
-                          (disabledNote) => `${note.degree}${note.chordType}` === disabledNote
-                        )
-                          ? (theme) => theme.palette.action.disabled
-                          : 'default',
-                      }}
-                      data-note={Tone.Frequency(rootNote + note.distance, 'midi').toNote().slice(0, -1)}
-                    >
-                      {note.degree}
-                      {note.chordType}
-                    </Button>
-                  </Grid>
-                ))}
-              </Grid>
-              <Grid container spacing={2} sx={{ marginBottom: '1rem' }}>
-                <Grid item xs={6}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => playChord()}
-                    fullWidth
-                    sx={{
-                      textTransform: 'none',
-                      padding: '1rem',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <ReplayIcon sx={{ fontSize: '3rem' }} />
-                  </Button>
-                </Grid>
-                <Grid item xs={6}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => playBrokenChord()}
-                    fullWidth
-                    sx={{
-                      textTransform: 'none',
-                      padding: '1rem',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <StairsIcon sx={{ fontSize: '3rem' }} />
-                  </Button>
-                </Grid>
-              </Grid>
-            </Box>
-          )}
-        </Container>
-      </Paper>
-    </>
+            <span className="">menu</span>
+          </HeaderButton>
+        </HeaderButtons>
+      </Header>
+
+      <div className="h-[calc(100svh-64px)] bg-bg-main">
+        <div className="max-w-2xl mx-auto h-full flex flex-col justify-between py-4 px-6">
+          <div className="pr-4">
+            <ChordColorTrainerSettings
+              isSettingsOpen={isSettingsOpen}
+              setIsSettingsOpen={closeSettings}
+              playChord={playChord}
+              settings={settings}
+            />
+          </div>
+
+
+          {/* {gameStarted && isStatOpen && renderRecords()} */}
+          <div className="flex flex-col justify-end mb-8">
+            <div className="flex-grow" />
+
+            <CardStack
+              currentNote={currentNote}
+              disabledChords={disabledChords}
+              filteredChords={filteredChords}
+              setActiveChord={setActiveChord}
+              rootNote={rootNote}
+              gameStarted={gameStarted}
+            />
+
+            <DesktopReplayButtons
+              handleStartGame={handleStartGame}
+              onReplay={handlePlayChord}
+              onBrokenChord={handlePlayBrokenChord}
+              isPlayingSound={isPlayingSound}
+              gameStarted={gameStarted}
+            />
+            <PhoneReplayButtons
+              handleStartGame={handleStartGame}
+              onReplay={handlePlayChord}
+              onBrokenChord={handlePlayBrokenChord}
+              isPlayingSound={isPlayingSound}
+              gameStarted={gameStarted}
+            />
+          </div>
+
+        </div>
+      </div>
+      <Toaster />
+    </div>
   );
 };
 

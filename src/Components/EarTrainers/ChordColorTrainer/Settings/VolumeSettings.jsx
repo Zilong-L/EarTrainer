@@ -1,56 +1,73 @@
 import React from 'react';
-import { Slider, Button } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
 import { useTranslation } from 'react-i18next';
+import HorizontalSlider from '@components/SharedComponents/slider/HorizontalSlider';
+import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
 
 function VolumeSettings({ settings, setShowVolumeSettings }) {
   const { t } = useTranslation('chordTrainer');
-  const { droneVolume, pianoVolume, setDroneVolume, setPianoVolume } = settings;
+
+  const {
+    droneVolume,
+    pianoVolume,
+    setDroneVolume,
+    setPianoVolume,
+  } = settings;
 
   return (
-    <>
-      <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-        <label style={{ fontSize: '1.1rem' }}>{t('volumeSettings.droneVolume')}</label>
-        <Slider
-          color="secondary"
-          value={droneVolume}
-          valueLabelFormat={(value) => Math.round(value * 100)}
-          onChange={(e, value) => setDroneVolume(value)}
-          min={0}
-          max={1}
-          step={0.01}
-          valueLabelDisplay="auto"
-          sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
-        />
-      </div>
-      <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-        <label style={{ fontSize: '1.1rem' }}>{t('volumeSettings.pianoVolume')}</label>
-        <Slider
-          color="secondary"
-          valueLabelFormat={(value) => Math.round(value * 100)}
-          value={pianoVolume}
-          onChange={(e, value) => setPianoVolume(value)}
-          min={0}
-          max={1}
-          step={0.01}
-          valueLabelDisplay="auto"
-          sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
-        />
-      </div>
-      <Button
-        color="secondary"
+    <div className="relative">
+      {/* Back Button */}
+      <button
         onClick={() => setShowVolumeSettings(false)}
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-center',
-          fontSize: '1.2rem',
-          marginLeft: 'auto',
-        }}
-        aria-label={t('buttons.home')}
+        className="absolute -top-16 -left-4 px-4 py-2 bg-accent text-text-primary rounded-lg hover:bg-accent-hover transition-colors z-10"
       >
-        <HomeIcon />
-      </Button>
-    </>
+        <ArrowUturnLeftIcon className="w-6 h-6" />
+      </button>
+
+      {/* Volume Controls */}
+      <div className="space-y-12 pt-16">
+        <div className="space-y-12">
+          <div>
+            <div className="flex justify-between items-baseline mb-6">
+              <h2 className="text-2xl font-bold text-text-primary">
+                {t('volumeSettings.droneVolume')}
+              </h2>
+
+            </div>
+            <div className="flex items-center space-x-4">
+              <HorizontalSlider
+                value={droneVolume}
+                setState={setDroneVolume}
+                min={0}
+                max={1}
+                step={0.01}
+                className="flex-1"
+              />
+
+            </div>
+          </div>
+
+          <div>
+            <div className="flex justify-between items-baseline mb-6">
+              <h2 className="text-2xl font-bold text-text-primary">
+                {t('volumeSettings.pianoVolume')}
+              </h2>
+
+            </div>
+            <div className="flex items-center space-x-4">
+              <HorizontalSlider
+                value={pianoVolume}
+                setState={setPianoVolume}
+                min={0}
+                max={1}
+                step={0.01}
+                className="flex-1"
+              />
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

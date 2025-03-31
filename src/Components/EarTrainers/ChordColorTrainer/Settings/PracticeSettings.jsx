@@ -1,31 +1,13 @@
 import React, { useState } from 'react';
-import {
-  Slider,
-  Grid,
-  Box,
-  Checkbox,
-  Typography,
-  Divider,
-  Button,
-  FormControl,
-  InputLabel,
-  Input,
-  Select,
-  MenuItem,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  IconButton,
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import HomeIcon from '@mui/icons-material/Home';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import * as Tone from 'tone';
 import { CHORD_TYPES, chordPreset } from '@components/EarTrainers/ChordColorTrainer/Constants';
 import { useTranslation } from 'react-i18next';
+import ValueAdjuster from '@components/SharedComponents/ValueAdjuster';
+import RangeSlider from '@components/SharedComponents/slider/RangeSlider';
+import { Midi, Note } from "tonal";
+import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
 
-function PracticeSettings({ settings, setShowPracticeSettings }) {
+function PracticeSettings({ settings, setShowPracticeSettings, customPresets }) {
   const { t } = useTranslation('chordTrainer');
 
   const {
@@ -39,11 +21,11 @@ function PracticeSettings({ settings, setShowPracticeSettings }) {
     setDegreeChordTypes,
     preset,
     setPreset,
-    customPresets,
     setCustomPresets,
   } = settings;
   const [newPresetName, setNewPresetName] = useState('');
   const [editingPreset, setEditingPreset] = useState(null);
+  const [expandedDegree, setExpandedDegree] = useState(null);
 
   const handleChordTypeToggle = (degreeIndex, chordType) => {
     const newDegreeChordTypes = [...degreeChordTypes];
@@ -99,223 +81,115 @@ function PracticeSettings({ settings, setShowPracticeSettings }) {
   };
 
   return (
-    <>
-      <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-        <label id="note-range-slider" style={{ fontSize: '1.1rem' }}>
-          {t('practiceSettings.noteRange')}
-        </label>
-        <Slider
-          color="secondary"
-          value={range.map((note) => Tone.Frequency(note).toMidi())}
-          valueLabelFormat={(value) => Tone.Frequency(value, 'midi').toNote()}
-          onChange={(_, newValue) => {
-            if (Math.abs(newValue[1] - newValue[0]) >= 12) {
-              const newRange = newValue.map((midi) => Tone.Frequency(midi, 'midi').toNote());
-              setRange(newRange);
-            }
-          }}
-          disableSwap
-          min={Tone.Frequency('C2').toMidi()}
-          max={Tone.Frequency('C6').toMidi()}
-          valueLabelDisplay="auto"
-          sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
-        />
-      </div>
-      <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-        <label style={{ fontSize: '1.1rem' }}>{t('practiceSettings.rootNote')}</label>
-        <Slider
-          color="secondary"
-          valueLabelFormat={(value) => Tone.Frequency(value, 'midi').toNote()}
-          value={rootNote}
-          onChange={(e, value) => setRootNote(value)}
-          min={Tone.Frequency('C2').toMidi()}
-          max={Tone.Frequency('C6').toMidi()}
-          valueLabelDisplay="auto"
-          sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
-        />
-      </div>
-      <div style={{ padding: '6px 8px' }}>
-        <label style={{ fontSize: '1.1rem' }}>{`${t('practiceSettings.bpm')}:`}</label>
-        <Slider
-          color="secondary"
+    <div className="space-y-6 relative">
+      <button
+        onClick={() => setShowPracticeSettings(false)}
+        className="absolute -top-16 -left-4 px-4 py-2 bg-accent text-text-primary rounded-lg hover:bg-accent-hover transition-colors z-10"
+      >
+        <ArrowUturnLeftIcon className="w-6 h-6" />
+      </button>
+      {/* Note Range */}
+      <RangeSlider
+        value={[Tone.Frequency(range[0]).toMidi(), Tone.Frequency(range[1]).toMidi()]}
+        onChange={(value) => setRange([
+          Tone.Frequency(value[0], 'midi').toNote(),
+          Tone.Frequency(value[1], 'midi').toNote()
+        ])}
+        min={Tone.Frequency('C2').toMidi()}
+        max={Tone.Frequency('C6').toMidi()}
+        step={12}
+        label={t('practiceSettings.noteRange')}
+        displayFunction={(value) => Tone.Frequency(value, 'midi').toNote()}
+      />
+
+      {/* BPM and Root Note Controls */}
+      <div className="grid grid-cols-2 gap-6">
+        <ValueAdjuster
+          title={t('practiceSettings.bpm')}
           value={bpm}
-          onChange={(e, value) => setBpm(value)}
+          setValue={setBpm}
           min={40}
           max={200}
-          valueLabelDisplay="auto"
-          sx={{ '.MuiSlider-valueLabel': { fontSize: '1rem' } }}
+          step={1}
+          displayFunction={(value) => `${value} BPM`}
+        />
+
+        <ValueAdjuster
+          title={t('practiceSettings.rootNote')}
+          value={Tone.Frequency(rootNote).toMidi()}
+          setValue={(value) => setRootNote(Tone.Frequency(value, 'midi').toNote())}
+          min={Tone.Frequency('C2').toMidi()}
+          max={Tone.Frequency('C6').toMidi()}
+          step={1}
+          displayFunction={(value) => Tone.Frequency(value, 'midi').toNote()}
         />
       </div>
-      <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-        <FormControl fullWidth>
-          <InputLabel id="preset-selector-label" style={{ fontSize: '1.1rem' }}>
-            {t('practiceSettings.selectPreset')}
-          </InputLabel>
-          <Select
-            labelId="preset-selector-label"
-            id="preset-selector"
-            value={preset}
-            label={t('practiceSettings.selectPreset')}
-            onChange={(e) => handlePresetChange(e.target.value)}
-            style={{ fontSize: '1.1rem' }}
-          >
-            {Object.keys(chordPreset)
-              .filter((presetName) => presetName !== 'custom')
-              .map((presetName) => (
-                <MenuItem
-                  disableRipple={true}
-                  key={presetName}
-                  value={presetName}
-                  sx={{ color: 'text.paper' }}
-                >
-                  {presetName}
-                </MenuItem>
-              ))}
-            {Object.keys(customPresets).map((presetName) => (
-              <MenuItem
-                disableRipple={true}
-                key={presetName}
-                value={presetName}
-                sx={{ color: 'text.paper', display: 'flex', alignItems: 'center' }}
-              >
-                {editingPreset === presetName ? (
-                  <div>
-                    <Input
-                      value={newPresetName}
-                      onChange={(e) => setNewPresetName(e.target.value)}
-                      onKeyDown={(e) => {
-                        e.stopPropagation(); // Prevent event bubbling
-                        if (e.key === 'Enter') handleSavePresetName();
-                      }}
-                      onBlur={handleSavePresetName}
-                      autoFocus
-                      size="small"
-                      sx={{ color: 'text.paper' }}
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                    <Button
-                      onClick={handleSavePresetName}
-                      sx={{ color: 'text.paper', marginLeft: 'auto' }}
-                    >
-                      {t('practiceSettings.save')}
-                    </Button>
-                  </div>
-                ) : (
-                  <>
-                    {presetName}
-                    {preset !== presetName && (
-                      <>
-                        <IconButton
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleEditPresetName(presetName);
-                          }}
-                          size="small"
-                          sx={{
-                            marginLeft: 'auto',
-                            color: 'primary.main',
-                            '&:active': { animation: 'none' },
-                            '&:focus': { animation: 'none' },
-                          }}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDeleteCustomPreset(presetName);
-                          }}
-                          size="small"
-                          sx={{ color: 'error.main' }}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </>
-                    )}
-                  </>
-                )}
-              </MenuItem>
+
+      {/* Preset Selector */}
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-text-primary">
+          {t('practiceSettings.selectPreset')}
+        </label>
+        <select
+          value={preset}
+          onChange={(e) => handlePresetChange(e.target.value)}
+          className="w-full px-4 py-2 border border-bg-accent rounded-lg bg-bg-main text-text-primary focus:ring-2 focus:ring-accent focus:border-accent"
+        >
+          {Object.keys(chordPreset)
+            .filter((presetName) => presetName !== 'custom')
+            .map((presetName) => (
+              <option key={presetName} value={presetName}>
+                {presetName}
+              </option>
             ))}
-            <MenuItem disableRipple={true} value="custom" sx={{ color: 'text.paper' }}>
-              {t('practiceSettings.custom')}
-            </MenuItem>
-          </Select>
-        </FormControl>
+          {Object.keys(customPresets).map((presetName) => (
+            <option key={presetName} value={presetName}>
+              {presetName}
+            </option>
+          ))}
+          <option value="custom">{t('practiceSettings.custom')}</option>
+        </select>
       </div>
+
+      {/* Custom Preset Editor */}
       {!Object.keys(chordPreset).includes(preset) && (
-        <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-          <Accordion defaultExpanded>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-              sx={{ backgroundColor: 'primary.main', color: 'text.primary' }}
-            >
-              <Typography style={{ fontSize: '1.1rem' }}>
-                {t('practiceSettings.editPreset')}
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails sx={{ backgroundColor: 'primary.main', color: 'text.primary' }}>
-              <div style={{ padding: '6px 8px', fontSize: '1.1rem' }}>
-                <Grid container spacing={1} sx={{ marginTop: '4px', paddingLeft: 0 }}>
-                  {degreeChordTypes.map((degree, degreeIndex) => (
-                    <Grid item xs={12} key={degree.degree} sx={{ padding: 0 }}>
-                      <Divider />
-                      <Typography variant="body2" sx={{ fontSize: '1.1rem', marginY: '12px' }}>
-                        {degree.degree}
-                      </Typography>
-                      <Grid container spacing={1}>
-                        {CHORD_TYPES.map((chordType) => (
-                          <Grid item xs={4} key={chordType} sx={{ padding: 0 }}>
-                            <Box
-                              onClick={() => handleChordTypeToggle(degreeIndex, chordType)}
-                              sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                cursor: 'pointer',
-                                padding: '4px',
-                                '&:hover': { bgcolor: 'action.hover' },
-                              }}
-                            >
-                              <Checkbox
-                                color="secondary"
-                                checked={degree.chordTypes.includes(chordType)}
-                                tabIndex={-1}
-                                size="small"
-                                sx={{ padding: '2px' }}
-                              />
-                              <Typography
-                                variant="body2"
-                                sx={{ marginLeft: '4px', fontSize: '1.1rem' }}
-                              >
-                                {chordType}
-                              </Typography>
-                            </Box>
-                          </Grid>
-                        ))}
-                      </Grid>
-                    </Grid>
+        <div className="space-y-4">
+          {degreeChordTypes.map((degree, index) => (
+            <div key={index} className="border border-bg-accent rounded-lg overflow-hidden">
+              <button
+                className="w-full px-4 py-2 flex items-center justify-between bg-bg-accent hover:bg-bg-accent-hover transition-colors"
+                onClick={() => setExpandedDegree(expandedDegree === index ? null : index)}
+              >
+                <span className="text-text-primary">{degree.name}</span>
+                <span className="text-text-secondary">
+                  {expandedDegree === index ? '▼' : '▶'}
+                </span>
+              </button>
+              {expandedDegree === index && (
+                <div className="p-4 grid grid-cols-2 gap-2">
+                  {CHORD_TYPES.map((chordType) => (
+                    <label
+                      key={chordType}
+                      className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-bg-accent rounded"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={degree.chordTypes.includes(chordType)}
+                        onChange={() => handleChordTypeToggle(index, chordType)}
+                        className="rounded accent-accent"
+                      />
+                      <span className="text-text-secondary">{chordType}</span>
+                    </label>
                   ))}
-                </Grid>
-              </div>
-            </AccordionDetails>
-          </Accordion>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       )}
-      <Button
-        color="secondary"
-        onClick={() => setShowPracticeSettings(false)}
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-center',
-          fontSize: '1.2rem',
-          marginLeft: 'auto',
-        }}
-        aria-label={t('buttons.home')}
-      >
-        <HomeIcon />
-      </Button>
-    </>
+
+
+    </div>
   );
 }
 

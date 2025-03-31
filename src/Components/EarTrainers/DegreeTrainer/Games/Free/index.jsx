@@ -18,7 +18,8 @@ const FreeMode = ({ FreeTrainerSettings }) => {
     rootNote,
     isHandfree,
     useSolfege,
-    isPlayingSound
+    isPlayingSound,
+    isLoading
   } = FreeTrainerSettings;
   const { t } = useTranslation('degreeTrainer');
   const handleButton = () => {
@@ -80,9 +81,16 @@ const FreeMode = ({ FreeTrainerSettings }) => {
           isAdvance={isAdvance}
           isPlayingSound={isPlayingSound}
           onClick={handleButton}
+          isLoading={isLoading}
         />
       </div>)}
-      <PhoneStartButton gameState={gameState} isAdvance={isAdvance} onClick={handleButton} isPlayingSound={isPlayingSound} />
+      <PhoneStartButton
+        gameState={gameState}
+        isAdvance={isAdvance}
+        onClick={handleButton}
+        isPlayingSound={isPlayingSound}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

@@ -9,8 +9,8 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: 'zh', // 默认语言为英语
-    ns: ['degreeTrainer','sequenceTrainer','chordTrainer'], // 列出所有命名空间
+    fallbackLng: 'en', // 默认语言为英语
+    ns: ['degreeTrainer', 'sequenceTrainer', 'chordTrainer'], // 列出所有命名空间
     defaultNS: 'degreeTrainer', // 设置默认命名空间
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json', // 保持不变

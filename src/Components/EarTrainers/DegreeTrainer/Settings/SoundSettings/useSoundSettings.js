@@ -1,7 +1,7 @@
 import { useLocalStorage } from '@uidotdev/usehooks';
 import { useEffect, useState, useCallback } from 'react';
 import { getSamplerInstance, getDroneInstance } from '@utils/ToneInstance';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 
 const useSoundSettings = () => {
   const [selectedInstrument, setSelectedInstrument] = useLocalStorage('degreeTrainerInstrument', 'bass-electric');

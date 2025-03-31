@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, Box, Button, Container, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import PracticeSettings from './PracticeSettings';
 import VolumeSettings from './VolumeSettings';
 import Statistics from './StatisticsSettings';
-import { useTranslation } from 'react-i18next';
 
 function ChordColorTrainerSettings({
   isSettingsOpen,
@@ -55,75 +54,36 @@ function ChordColorTrainerSettings({
     localStorage.setItem('ChordColorTrainerSettings', JSON.stringify(settingsToSave));
   }
 
+  if (!isSettingsOpen) return null;
+
   return (
-    <Modal
-      open={isSettingsOpen}
-      onClose={closeSettings}
-      sx={{ color: (theme) => theme.palette.text.primary }}
-    >
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '80%',
-          maxWidth: 500,
-          bgcolor: (theme) => theme.palette.background.modal,
-          boxShadow: 24,
-          p: 4,
-          borderRadius: 2,
-          height: '80vh',
-          overflowY: 'auto',
-        }}
-      >
-        <Typography variant="h4" sx={{ textAlign: 'center' }}>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10" onClick={closeSettings}>
+      <div className="bg-bg-main rounded-lg p-6 w-[80%] max-w-[500px] h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <h2 className="text-2xl font-bold text-center text-text-primary mb-8">
           {t('settingsMenu.settings')}
-        </Typography>
+        </h2>
 
         {!showPracticeSettings && !showVolumeSettings && !showStatistics ? (
-          <>
-            <Container sx={{ marginTop: '3rem' }}>
-              <Button
-                sx={{
-                  color: 'text.primary',
-                  display: 'block',
-                  fontSize: '1.5rem',
-                  width: '100%',
-                  textAlign: 'left',
-                  marginBottom: '1rem',
-                }}
-                onClick={() => setShowPracticeSettings(true)}
-              >
-                {t('settingsMenu.practiceSettings')}
-              </Button>
-              <Button
-                sx={{
-                  color: 'text.primary',
-                  display: 'block',
-                  fontSize: '1.5rem',
-                  width: '100%',
-                  textAlign: 'left',
-                  marginBottom: '1rem',
-                }}
-                onClick={() => setShowStatistics(true)}
-              >
-                {t('settingsMenu.statistics')}
-              </Button>
-              <Button
-                sx={{
-                  color: 'text.primary',
-                  display: 'block',
-                  fontSize: '1.5rem',
-                  width: '100%',
-                  textAlign: 'left',
-                }}
-                onClick={() => setShowVolumeSettings(true)}
-              >
-                {t('settingsMenu.volumeSettings')}
-              </Button>
-            </Container>
-          </>
+          <div className="space-y-4">
+            <button
+              className="w-full text-left text-lg text-text-primary hover:text-accent transition-colors p-3 rounded-lg hover:bg-bg-accent"
+              onClick={() => setShowPracticeSettings(true)}
+            >
+              {t('settingsMenu.practiceSettings')}
+            </button>
+            <button
+              className="w-full text-left text-lg text-text-primary hover:text-accent transition-colors p-3 rounded-lg hover:bg-bg-accent"
+              onClick={() => setShowStatistics(true)}
+            >
+              {t('settingsMenu.statistics')}
+            </button>
+            <button
+              className="w-full text-left text-lg text-text-primary hover:text-accent transition-colors p-3 rounded-lg hover:bg-bg-accent"
+              onClick={() => setShowVolumeSettings(true)}
+            >
+              {t('settingsMenu.volumeSettings')}
+            </button>
+          </div>
         ) : showPracticeSettings ? (
           <PracticeSettings
             settings={settings}
@@ -135,8 +95,8 @@ function ChordColorTrainerSettings({
         ) : (
           <VolumeSettings settings={settings} setShowVolumeSettings={setShowVolumeSettings} />
         )}
-      </Box>
-    </Modal>
+      </div>
+    </div>
   );
 }
 

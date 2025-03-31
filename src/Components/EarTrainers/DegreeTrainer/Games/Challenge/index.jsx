@@ -4,7 +4,7 @@ import CardStack from '../Shared/CardStack';
 import { DesktopStartButton, PhoneStartButton } from '../Shared/StartButtons';
 
 const ChallengeMode = ({ ChallengeTrainerSettings }) => {
-  const { 
+  const {
     currentNote,
     disabledNotes,
     filteredNotes,
@@ -21,25 +21,26 @@ const ChallengeMode = ({ ChallengeTrainerSettings }) => {
     setIsAdvance,
     useSolfege,
     isHandfree,
-    isPlayingSound
+    isPlayingSound,
+    isLoading
   } = ChallengeTrainerSettings;
   const { t } = useTranslation('degreeTrainer');
 
   const renderRecords = () => {
     const totalResults = currentPracticeRecords;
-    const accuracy = totalResults.total > 0 
+    const accuracy = totalResults.total > 0
       ? Math.round((totalResults.correct / totalResults.total) * 100)
       : 0;
 
     return (
       <div className="space-y-3 text-text-primary md:space-y-4">
-        <p className="text-lg md:text-2xl">{t('home.level')}: {currentLevel+1}</p>
+        <p className="text-lg md:text-2xl">{t('home.level')}: {currentLevel + 1}</p>
         <p className="text-lg md:text-2xl">{t('home.totalAttempts')} {totalResults.total} / {userProgress[currentLevel].minTests}</p>
         <p className="text-lg md:text-2xl">{t('home.correctCount')} {totalResults.correct}</p>
         <p className="text-2xl md:text-4xl">
           {accuracy >= 90 ? '⭐⭐⭐' :
-           accuracy >= 80 ? '⭐⭐' :
-           accuracy >= 70 ? '⭐' : ''}
+            accuracy >= 80 ? '⭐⭐' :
+              accuracy >= 70 ? '⭐' : ''}
         </p>
       </div>
     );
@@ -56,23 +57,23 @@ const ChallengeMode = ({ ChallengeTrainerSettings }) => {
     }
   }
   return (
- <div className="flex flex-col justify-end h-full mb-8">
-    {renderRecords()}
-    <div className="flex-grow" />
-  <CardStack
-      currentNote={currentNote}
-      disabledNotes={disabledNotes}
-      filteredNotes={filteredNotes}
-      isAdvance={isAdvance}
-      setActiveNote={setActiveNote}
-      rootNote={rootNote}
-      isHandfree={isHandfree}
-      useSolfege={useSolfege}
-      bpm={bpm}
-      gameState={gameState}
-    >
-    </CardStack>
-    {isHandfree?<></>:(<div
+    <div className="flex flex-col justify-end h-full mb-8">
+      {renderRecords()}
+      <div className="flex-grow" />
+      <CardStack
+        currentNote={currentNote}
+        disabledNotes={disabledNotes}
+        filteredNotes={filteredNotes}
+        isAdvance={isAdvance}
+        setActiveNote={setActiveNote}
+        rootNote={rootNote}
+        isHandfree={isHandfree}
+        useSolfege={useSolfege}
+        bpm={bpm}
+        gameState={gameState}
+      >
+      </CardStack>
+      {isHandfree ? <></> : (<div
         className="
           hidden
           lg:flex
@@ -91,11 +92,18 @@ const ChallengeMode = ({ ChallengeTrainerSettings }) => {
           isAdvance={isAdvance}
           isPlayingSound={isPlayingSound}
           onClick={handleButton}
+          isLoading={isLoading}
         />
       </div>)}
-      <PhoneStartButton gameState={gameState} isAdvance={isAdvance} onClick={handleButton} isPlayingSound={isPlayingSound} /> 
-      </div>
-      );
+      <PhoneStartButton
+        gameState={gameState}
+        isAdvance={isAdvance}
+        onClick={handleButton}
+        isPlayingSound={isPlayingSound}
+        isLoading={isLoading}
+      />
+    </div>
+  );
 };
 
 export default ChallengeMode;

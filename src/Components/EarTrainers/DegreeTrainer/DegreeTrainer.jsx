@@ -7,21 +7,18 @@ import Header from '@components/SharedComponents/Header';
 import HeaderTitle from '@components/SharedComponents/HeaderTitle';
 import HeaderButtons from '@components/SharedComponents/HeaderButtons';
 import HeaderButton from '@components/SharedComponents/HeaderButton';
-import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
-
+import { FireIcon } from '@heroicons/react/24/outline'
 
 import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/Settings';
 import useFreeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer';
 import useChallengeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer';
-
+import LanguageSwitcher from '@components/SharedComponents/LanguageSwitcher';
 import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import { useTranslation } from 'react-i18next';
-import '@components/EarTrainers/DegreeTrainer/Games/styles.css';
 import { Toaster } from 'react-hot-toast';
 import { keyMap, degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { Note } from 'tonal';
 import * as Tone from 'tone';
-import HeaderListButton from '@components/SharedComponents/HeaderListButton';
 let midi = null;
 const EarTrainer = () => {
   const globalSettings = useDegreeTrainerSettings();
@@ -163,7 +160,7 @@ const EarTrainer = () => {
             title={isHandfree ? t('buttons.handfreeOff') : t('buttons.handfreeOn')}
             className={isHandfree ? 'bg-bg-common' : 'bg-text-main text-text-main'}
           >
-            <span className="material-icons"><AllInclusiveIcon></AllInclusiveIcon></span>
+            <span ><FireIcon className='h-6 w-6' /></span>
           </HeaderButton>
           <HeaderButton onClick={() => openSettings()}>
             <Cog6ToothIcon className="h-6 w-6" />
@@ -209,31 +206,5 @@ const EarTrainer = () => {
   );
 };
 
-const LanguageSwitcher = () => {
-  const { i18n } = useTranslation();
 
-  const changeLanguage = (lng) => {
-    console.log("切换前的当前语言:", i18n.language);
-    i18n
-      .changeLanguage(lng)
-      .then(() => {
-        console.log("切换后的当前语言:", i18n.language);
-      })
-      .catch((err) => {
-        console.error("语言切换失败:", err);
-      });
-  };
-
-  const languageOptions = [
-    { label: '中文', onClick: () => changeLanguage('zh') },
-    { label: 'English', onClick: () => changeLanguage('en') },
-  ];
-
-  return (
-    <HeaderListButton
-      buttonLabel="Language" // You can customize the button label as needed
-      items={languageOptions}
-    />
-  );
-};
 export default EarTrainer;

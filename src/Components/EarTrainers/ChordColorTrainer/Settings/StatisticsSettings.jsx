@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { Box, Button, Typography, Switch, Modal } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
 import { useTranslation } from 'react-i18next';
-
+import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
 function Statistics({ settings, setShowStatistics }) {
   const { t } = useTranslation('chordTrainer');
   const { practiceRecords, isStatOpen, setPracticeRecords, setIsStatOpen } = settings;
@@ -20,7 +18,7 @@ function Statistics({ settings, setShowStatistics }) {
       labels,
       datasets: [
         {
-          label: t('statistics.chartLabel'), // Add 'chartLabel' to your JSON files
+          label: t('statistics.chartLabel'),
           data,
           backgroundColor: 'rgba(75, 192, 192, 0.6)',
         },
@@ -35,93 +33,75 @@ function Statistics({ settings, setShowStatistics }) {
   };
 
   return (
-    <>
-      <Typography variant="h5">{t('statistics.chordAccuracy')}</Typography>
-      <Bar data={generateChartData()} />
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: 2,
-          cursor: 'pointer',
-          padding: '6px 8px',
-        }}
-        onClick={() => setIsStatOpen(!isStatOpen)}
+    <div className="space-y-6 relative">
+      {/* Chart */}
+      <button
+        onClick={() => setShowStatistics(false)}
+        className="absolute -top-16 -left-4 px-4 py-2 bg-accent text-text-primary rounded-lg hover:bg-accent-hover transition-colors z-10"
       >
-        <Typography variant="body1" sx={{ textAlign: 'left' }}>
-          {t('statistics.statistics')}
-        </Typography>
-        <Switch
-          checked={isStatOpen}
-          onChange={() => setIsStatOpen(!isStatOpen)}
-          name="toggleStatistics"
-          color="secondary"
-        />
-      </Box>
-      <Button
-        color="secondary"
-        variant="contained"
+        <ArrowUturnLeftIcon className="w-6 h-6" />
+      </button>
+      <div className="space-y-4">
+        <h3 className="text-xl font-bold text-text-primary">
+          {t('statistics.chordAccuracy')}
+        </h3>
+        <div className="w-full h-64">
+          <Bar data={generateChartData()} />
+        </div>
+      </div>
+
+      {/* Statistics Toggle */}
+      <div className="flex items-center justify-between p-4 bg-bg-accent rounded-lg cursor-pointer hover:bg-bg-accent-hover transition-colors">
+        <span className="text-text-primary">{t('statistics.statistics')}</span>
+        <label className="relative inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            className="sr-only peer"
+            checked={isStatOpen}
+            onChange={() => setIsStatOpen(!isStatOpen)}
+          />
+          <div className="w-11 h-6 bg-bg-main peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-accent rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-accent"></div>
+        </label>
+      </div>
+
+      {/* Delete Button */}
+      <button
         onClick={() => setIsDeleteConfirmOpen(true)}
-        sx={{ marginTop: 2, marginLeft: 'auto', display: 'block' }}
+        className="w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
       >
         {t('statistics.deleteLocalData')}
-      </Button>
-      <Modal
-        open={isDeleteConfirmOpen}
-        onClose={() => setIsDeleteConfirmOpen(false)}
-        aria-labelledby="delete-confirmation-title"
-        aria-describedby="delete-confirmation-description"
-      >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 300,
-            bgcolor: 'background.paper',
-            border: '2px solid #000',
-            boxShadow: 24,
-            p: 4,
-            borderRadius: 2,
-          }}
-        >
-          <Typography id="delete-confirmation-title" variant="h6" component="h2" sx={{color:(theme)=>theme.palette.text.paper}}>
-            {t('statistics.confirmDeleteTitle')}
-          </Typography>
-          <Typography id="delete-confirmation-description" sx={{ mt: 2 ,color:(theme)=>theme.palette.text.paper}}>
-            {t('statistics.confirmDeleteDescription')}
-          </Typography>
-          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
-            <Button onClick={handleDeleteConfirm} color="secondary" variant="contained">
-              {t('statistics.delete')}
-            </Button>
-            <Button
-              onClick={() => setIsDeleteConfirmOpen(false)}
-              color="primary"
-              variant="outlined"
-            >
-              {t('statistics.cancel')}
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-      <Button
-        color="secondary"
-        onClick={() => setShowStatistics(false)}
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-center',
-          fontSize: '1.2rem',
-          marginLeft: 'auto',
-          marginTop: '1rem',
-        }}
-        aria-label={t('buttons.home')}
-      >
-        <HomeIcon />
-      </Button>
-    </>
+      </button>
+
+      {/* Delete Confirmation Modal */}
+      {isDeleteConfirmOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-bg-main rounded-lg p-6 w-[90%] max-w-md">
+            <h3 className="text-xl font-bold text-text-primary mb-4">
+              {t('statistics.confirmDeleteTitle')}
+            </h3>
+            <p className="text-text-secondary mb-6">
+              {t('statistics.confirmDeleteDescription')}
+            </p>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={() => setIsDeleteConfirmOpen(false)}
+                className="px-4 py-2 border border-bg-accent text-text-primary rounded-lg hover:bg-bg-accent transition-colors"
+              >
+                {t('statistics.cancel')}
+              </button>
+              <button
+                onClick={handleDeleteConfirm}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+              >
+                {t('statistics.delete')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+    </div>
   );
 }
 
