@@ -1,35 +1,33 @@
-
 const apps = [{ name: 'earTrainer', path: '/ear-trainer' }, { name: 'chordTrainer', path: '/chord-trainer' }];
-const CHORD_TYPES = ['M', 'm', 'o','M7','m7','7'];
-
+const CHORD_TYPES = ['M', 'm', 'o', 'M7', 'm7', '7'];
 const keyMap = {
-    '1': 0,
-    '2': 2,
-    '3': 4,
-    '4': 5,
-    '5': 7,
-    '6': 9,
-    '7': 11,
-    'a': 1,
-    's': 3,
-    'd': 6,
-    'f': 8,
-    'g': 10
-  };
-  const degrees = [
-    { name: "I", distance: 0, enable: true },
-    { name: "IIb", distance: 1, enable: false },
-    { name: "II", distance: 2, enable: true },
-    { name: "IIIb", distance: 3, enable: false },
-    { name: "III", distance: 4, enable: true },
-    { name: "IV", distance: 5, enable: false },
-    { name: "Vb", distance: 6, enable: false },
-    { name: "V", distance: 7, enable: false },
-    { name: "VIb", distance: 8, enable: false },
-    { name: "VI", distance: 9, enable: false },
-    { name: "VIIb", distance: 10, enable: false },
-    { name: "VII", distance: 11, enable: false },
-  ];
+  '1': 0,
+  '2': 2,
+  '3': 4,
+  '4': 5,
+  '5': 7,
+  '6': 9,
+  '7': 11,
+  'a': 1,
+  's': 3,
+  'd': 6,
+  'f': 8,
+  'g': 10
+};
+const degrees = [
+  { name: "I", distance: 0, enable: true },
+  { name: "IIb", distance: 1, enable: false },
+  { name: "II", distance: 2, enable: true },
+  { name: "IIIb", distance: 3, enable: false },
+  { name: "III", distance: 4, enable: true },
+  { name: "IV", distance: 5, enable: false },
+  { name: "Vb", distance: 6, enable: false },
+  { name: "V", distance: 7, enable: false },
+  { name: "VIb", distance: 8, enable: false },
+  { name: "VI", distance: 9, enable: false },
+  { name: "VIIb", distance: 10, enable: false },
+  { name: "VII", distance: 11, enable: false },
+];
 const defaultDegreeChordTypes = [
   {
     degree: 'I',
@@ -159,11 +157,11 @@ const chordPreset = {
     degree: 'VII',
     chordTypes: ['M'] // 修改为数组
   }],
-  '基础色彩':[
+  '基础色彩': [
     {
       degree: 'I',
       distance: 0, // 添加距离
-      chordTypes: ['M','m','o']
+      chordTypes: ['M', 'm', 'o']
     },
   ],
   'custom': [
@@ -232,7 +230,7 @@ const chordPreset = {
 };
 
 const VoicingDictionary = {
-  rootPosition:{
+  rootPosition: {
     M: ["1P 3M 5P"], // 保持不变，使用根音位置
     m: ["1P 3m 5P"], // 保持不变，使用根音位置
     o: ["1P 3m 5d"], // 保持不变，使用根音位置
@@ -263,4 +261,4 @@ const VoicingDictionary = {
   mM7: ["3m 5P 7M 9M", "7M 9M 10m 12P"],
   m6: ["3m 5P 6M 9M", "6M 9M 10m 12P"],
 };
-export { apps,keyMap,degrees,defaultDegreeChordTypes,CHORD_TYPES,VoicingDictionary,chordPreset};
+export { apps, keyMap, degrees, defaultDegreeChordTypes, CHORD_TYPES, VoicingDictionary, chordPreset };

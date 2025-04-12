@@ -6,10 +6,11 @@ import ValueAdjuster from '@components/SharedComponents/ValueAdjuster';
 import RangeSlider from '@components/SharedComponents/slider/RangeSlider';
 import { Midi, Note } from "tonal";
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
-
-function PracticeSettings({ settings, setShowPracticeSettings, customPresets }) {
-  const { t } = useTranslation('chordTrainer');
-
+import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
+import useI18nStore from '@stores/i18nStore';
+function PracticeSettings({ setShowPracticeSettings }) {
+  const { namespace } = useI18nStore();
+  const { t } = useTranslation(namespace);
   const {
     range,
     rootNote,
@@ -21,8 +22,9 @@ function PracticeSettings({ settings, setShowPracticeSettings, customPresets }) 
     setDegreeChordTypes,
     preset,
     setPreset,
+    customPresets,
     setCustomPresets,
-  } = settings;
+  } = useChordColorTrainerSettingsStore();
   const [newPresetName, setNewPresetName] = useState('');
   const [editingPreset, setEditingPreset] = useState(null);
   const [expandedDegree, setExpandedDegree] = useState(null);
@@ -82,12 +84,6 @@ function PracticeSettings({ settings, setShowPracticeSettings, customPresets }) 
 
   return (
     <div className="space-y-6 relative">
-      <button
-        onClick={() => setShowPracticeSettings(false)}
-        className="absolute -top-16 -left-4 px-4 py-2 bg-accent text-text-primary rounded-lg hover:bg-accent-hover transition-colors z-10"
-      >
-        <ArrowUturnLeftIcon className="w-6 h-6" />
-      </button>
       {/* Note Range */}
       <RangeSlider
         value={[Tone.Frequency(range[0]).toMidi(), Tone.Frequency(range[1]).toMidi()]}

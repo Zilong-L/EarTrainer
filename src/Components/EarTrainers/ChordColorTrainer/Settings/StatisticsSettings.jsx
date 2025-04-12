@@ -3,14 +3,15 @@ import uPlot from 'uplot';
 import 'uplot/dist/uPlot.min.css';
 import { useTranslation } from 'react-i18next';
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
-
-function Statistics({ settings, setShowStatistics }) {
-  const { t } = useTranslation('chordTrainer');
-  const { practiceRecords, isStatOpen, setPracticeRecords, setIsStatOpen } = settings;
+import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
+import useI18nStore from '@stores/i18nStore';
+function Statistics({ setShowStatistics }) {
+  const { practiceRecords, isStatOpen, setPracticeRecords, setIsStatOpen } = useChordColorTrainerSettingsStore();
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const chartRef = useRef(null);
   const plotInstance = useRef(null);
-
+  const { namespace } = useI18nStore();
+  const { t } = useTranslation(namespace);
   const calculateAccuracy = (record) => {
     return record.total > 0 ? (record.correct / record.total) * 100 : 0;
   };
@@ -119,12 +120,6 @@ function Statistics({ settings, setShowStatistics }) {
   return (
     <div className="space-y-6 relative">
       {/* Chart */}
-      <button
-        onClick={() => setShowStatistics(false)}
-        className="absolute -top-16 -left-4 px-4 py-2 bg-accent text-text-primary rounded-lg hover:bg-accent-hover transition-colors z-10"
-      >
-        <ArrowUturnLeftIcon className="w-6 h-6" />
-      </button>
       <div className="space-y-4">
         <h3 className="text-xl font-bold text-text-primary">
           {t('statistics.chordAccuracy')}

@@ -38,6 +38,7 @@ export default defineConfig({
       "@hooks": "/src/hooks",
       "@ui": "/src/Components/UI",
       "@styles": "/src/styles",
+      "@stores": "/src/stores"
       // Add more aliases as needed
     },
   },

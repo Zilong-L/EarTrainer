@@ -1,30 +1,29 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import HorizontalSlider from '@components/SharedComponents/slider/HorizontalSlider';
 const instrumentsList = [
   'bass-electric', 'bassoon', 'cello', 'clarinet', 'contrabass', 'flute',
   'french-horn', 'guitar-acoustic', 'guitar-electric', 'guitar-nylon',
   'harmonium', 'harp', 'organ', 'piano', 'saxophone', 'trombone',
-  'trumpet', 'tuba', 'violin', 'xylophone','triangle', 'square', 'sawtooth', 'pad'
+  'trumpet', 'tuba', 'violin', 'xylophone', 'triangle', 'square', 'sawtooth', 'pad'
 ];
-
-function SoundSettings({ settings, playNote }) {
+import { playNotes } from '@utils/ToneInstance';
+import useSoundSettings from './useSoundSettings';
+function SoundSettings() {
   const { t } = useTranslation('degreeTrainer');
-  const { 
-    sound: {
-      selectedInstrument, 
-      setSelectedInstrument,
-      isLoadingInstrument, 
-      selectedQuality, 
-      setSelectedQuality,
-      dronePan,
-      setDronePan,
-      droneFilter,
-      setDroneFilter,
-      clamps
-    }
-  } = useDegreeTrainerSettings();
+  const {
+
+    selectedInstrument,
+    setSelectedInstrument,
+    isLoadingInstrument,
+    selectedQuality,
+    setSelectedQuality,
+    dronePan,
+    setDronePan,
+    droneFilter,
+    setDroneFilter,
+    clamps
+  } = useSoundSettings();
 
   const handleInstrumentSelect = (instrument) => {
     setSelectedInstrument(instrument);
@@ -33,7 +32,7 @@ function SoundSettings({ settings, playNote }) {
   useEffect(() => {
     console.log(isLoadingInstrument)
     if (!isLoadingInstrument) {
-      playNote();
+      playNotes(['C3']);
     }
   }, [isLoadingInstrument]);
 
@@ -69,14 +68,14 @@ function SoundSettings({ settings, playNote }) {
             {t('settings.dronePan')}
           </label>
           <div className="grid items-center gap-4">
-              <HorizontalSlider 
-                min={clamps.dronePan.min} 
-                max={clamps.dronePan.max} 
-                step={0.01} 
-                setState={setDronePan} 
-                value={dronePan}
-                mapFunction={(value) => value.toFixed(2)}
-              />
+            <HorizontalSlider
+              min={clamps.dronePan.min}
+              max={clamps.dronePan.max}
+              step={0.01}
+              setState={setDronePan}
+              value={dronePan}
+              mapFunction={(value) => value.toFixed(2)}
+            />
           </div>
         </div>
 
@@ -85,14 +84,14 @@ function SoundSettings({ settings, playNote }) {
             {t('settings.droneFilter')}
           </label>
           <div className="flex items-center gap-4">
-              <HorizontalSlider 
-                min={clamps.droneFilter.min} 
-                max={clamps.droneFilter.max} 
-                step={1} 
-                setState={setDroneFilter} 
-                value={droneFilter}
-                mapFunction={(value) => Math.round(value)}
-              />
+            <HorizontalSlider
+              min={clamps.droneFilter.min}
+              max={clamps.droneFilter.max}
+              step={1}
+              setState={setDroneFilter}
+              value={droneFilter}
+              mapFunction={(value) => Math.round(value)}
+            />
           </div>
         </div>
       </div>

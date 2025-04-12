@@ -3,3 +3,6 @@ dist
 .env
 .aider*
 stats.html
+
+.clinerules
+docs_private

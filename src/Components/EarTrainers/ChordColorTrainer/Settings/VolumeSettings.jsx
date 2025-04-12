@@ -2,26 +2,23 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import HorizontalSlider from '@components/SharedComponents/slider/HorizontalSlider';
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
+import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
+import useI18nStore from '@stores/i18nStore';
+function VolumeSettings({ setShowVolumeSettings }) {
 
-function VolumeSettings({ settings, setShowVolumeSettings }) {
-  const { t } = useTranslation('chordTrainer');
+  const { namespace } = useI18nStore();
+  const { t } = useTranslation(namespace);
 
   const {
     droneVolume,
     pianoVolume,
     setDroneVolume,
     setPianoVolume,
-  } = settings;
+  } = useChordColorTrainerSettingsStore();
 
   return (
     <div className="relative">
       {/* Back Button */}
-      <button
-        onClick={() => setShowVolumeSettings(false)}
-        className="absolute -top-16 -left-4 px-4 py-2 bg-accent text-text-primary rounded-lg hover:bg-accent-hover transition-colors z-10"
-      >
-        <ArrowUturnLeftIcon className="w-6 h-6" />
-      </button>
 
       {/* Volume Controls */}
       <div className="space-y-12 pt-16">

@@ -10,18 +10,25 @@ import { Toaster } from 'react-hot-toast';
 
 import ChordColorTrainerSettings from '@components/EarTrainers/ChordColorTrainer/Settings';
 import useChordColorTrainer from '@components/EarTrainers/ChordColorTrainer/useChordColorTrainer';
-import useChordColorTrainerSettings from '@components/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings';
+import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
 import { apps, keyMap, degrees } from '@components/EarTrainers/ChordColorTrainer/Constants';
 import CardStack from '@components/EarTrainers/ChordColorTrainer/CardStack';
 import { DesktopReplayButtons, PhoneReplayButtons } from '@components/EarTrainers/ChordColorTrainer/ReplayButtons';
 import LanguageSwitcher from '@components/SharedComponents/LanguageSwitcher'
 import { useTranslation } from 'react-i18next';
+import useI18nStore from "@stores/i18nStore";
 
 let midi = null;
 const EarTrainer = () => {
-  const { t } = useTranslation('chordTrainer');
-
-  const settings = useChordColorTrainerSettings();
+  const { t } = useTranslation('chordColorTrainer');
+  const setNamespace = useI18nStore((state) => state.setNamespace);
+  const {
+    rootNote,
+    practiceRecords,
+    muteDrone,
+    setMuteDrone,
+    isStatOpen
+  } = useChordColorTrainerSettingsStore();
 
   const {
     currentNote,
@@ -34,15 +41,9 @@ const EarTrainer = () => {
     playChord,
     playBrokenChord,
     playTonic,
-  } = useChordColorTrainer(settings);
-
-  const {
-    rootNote,
-    practiceRecords,
-    muteDrone,
-    setMuteDrone,
-    isStatOpen
-  } = settings;
+    isAdvance,
+    setIsAdvance,
+  } = useChordColorTrainer();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -71,6 +72,7 @@ const EarTrainer = () => {
   };
 
   useEffect(() => {
+    setNamespace('chordColorTrainer');
     return () => {
       endGame();
     };
@@ -150,29 +152,8 @@ const EarTrainer = () => {
     setIsPlayingSound(false);
   };
 
-  const renderRecords = () => {
-    const totalResults = Object.values(practiceRecords).reduce(
-      (acc, record) => {
-        acc.total += record.total;
-        acc.correct += record.correct;
-        return acc;
-      },
-      { total: 0, correct: 0 }
-    );
 
-    return (
-      <div className="text-text-main">
-        <div>{t('labels.totalAttempts')}: {totalResults.total}</div>
-        <div>{t('labels.correctCount')}: {totalResults.correct}</div>
-        <div>
-          {t('labels.accuracyRate')}:{' '}
-          {totalResults.total > 0
-            ? Math.round((totalResults.correct / totalResults.total).toFixed(2) * 100) + '%'
-            : '0%'}
-        </div>
-      </div>
-    );
-  };
+
 
   return (
     <div className="relative">
@@ -203,7 +184,6 @@ const EarTrainer = () => {
               isSettingsOpen={isSettingsOpen}
               setIsSettingsOpen={closeSettings}
               playChord={playChord}
-              settings={settings}
             />
           </div>
 
@@ -228,6 +208,8 @@ const EarTrainer = () => {
               onPlayTonic={handlePlayTonic}
               isPlayingSound={isPlayingSound}
               gameStarted={gameStarted}
+              isAdvance={isAdvance}
+              setIsAdvance={setIsAdvance}
             />
             <PhoneReplayButtons
               handleStartGame={handleStartGame}
@@ -236,6 +218,8 @@ const EarTrainer = () => {
               onPlayTonic={handlePlayTonic}
               isPlayingSound={isPlayingSound}
               gameStarted={gameStarted}
+              isAdvance={isAdvance}
+              setIsAdvance={setIsAdvance}
             />
           </div>
 

@@ -9,9 +9,7 @@ import HeaderButtons from '@components/SharedComponents/HeaderButtons';
 import HeaderButton from '@components/SharedComponents/HeaderButton';
 import { FireIcon } from '@heroicons/react/24/outline'
 
-import DegreeTrainerSettings from '@components/EarTrainers/DegreeTrainer/Settings';
-import useFreeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer';
-import useChallengeTrainer from '@components/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer';
+import SettingsPanel from '@components/SharedComponents/Settings/SettingsPanel';
 import LanguageSwitcher from '@components/SharedComponents/LanguageSwitcher';
 import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import { useTranslation } from 'react-i18next';
@@ -19,21 +17,33 @@ import { Toaster } from 'react-hot-toast';
 import { keyMap, degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
 import { Note } from 'tonal';
 import * as Tone from 'tone';
+import useI18nStore from "@stores/i18nStore";
 let midi = null;
+import useFreeTrainer from '@EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer';
+import useChallengeTrainer from '@EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer';
+
+import PracticeSettings from './Settings/PracticeSettings';
+import VolumeSettings from './Settings/VolumeSettings';
+import Statistics from './Settings/Statistics';
+import SoundSettings from '@components/SharedComponents/Settings/SoundSettings';
+import GameSettings from './Settings/GameSettings';
+
+
 const EarTrainer = () => {
   const globalSettings = useDegreeTrainerSettings();
+  const setNamespace = useI18nStore(state => state.setNamespace);
+  const FreeTrainerSettings = useFreeTrainer();
+  const ChallengeTrainerSettings = useChallengeTrainer();
   const { t, i18n } = useTranslation('degreeTrainer');
 
   const {
     isHandfree,
     setIsHandfree,
     mode,
+
   } = globalSettings;
 
-  const FreeTrainerSettings = useFreeTrainer();
-  const ChallengeTrainerSettings = useChallengeTrainer();
 
-  const settings = { ...globalSettings, FreeTrainerSettings, ChallengeTrainerSettings };
   const currentGameSettings = mode === 'free' ? FreeTrainerSettings : ChallengeTrainerSettings;
   const {
     playNote,
@@ -58,9 +68,18 @@ const EarTrainer = () => {
     document.body.classList.remove('modal-open');
   };
 
+  useEffect(() => {
+    setNamespace('degreeTrainer')
+  }, [])
   // Start game based on mode when component mounts
 
-
+  const components = [
+    { id: 'game', label: 'settings.GameSettings', component: GameSettings, props: { currentGameSettings: currentGameSettings } },
+    { id: 'practice', label: 'settings.PracticeSettings', component: PracticeSettings },
+    { id: 'statistics', label: 'settings.Statistics', component: Statistics },
+    { id: 'volume', label: 'settings.VolumeSettings', component: VolumeSettings },
+    { id: 'sound', label: 'settings.SoundSettings', component: SoundSettings }
+  ];
   useEffect(() => {
     const handleKeyPress = (event) => {
       const key = event.key;
@@ -180,13 +199,10 @@ const EarTrainer = () => {
       <div className="h-[calc(100svh-64px)] bg-bg-main">
         <div className="max-w-2xl mx-auto h-full flex flex-col justify-between py-4 px-6">
           <div className="pr-4"> {/* Add right padding for scrollbar placeholder */}
-            <DegreeTrainerSettings
-              settings={settings}
-              isSettingsOpen={isSettingsOpen}
-              setIsSettingsOpen={closeSettings}
-              playNote={playNote}
-              currentGameSettings={currentGameSettings}
-              setGameState={setGameState}
+            <SettingsPanel
+              isOpen={isSettingsOpen}
+              onClose={closeSettings}
+              components={components}
             />
           </div>
           {mode === 'free' ? (

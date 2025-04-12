@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getDroneInstance, getSamplerInstance } from '@utils/ToneInstance';
 import { useLocalStorage } from '@uidotdev/usehooks';
-import useSoundSettings from '@EarTrainers/DegreeTrainer/Settings/SoundSettings/useSoundSettings';
+import useSoundSettings from '@components/SharedComponents/Settings/SoundSettings/useSoundSettings';
 const useChordGameSettings = () => {
   const [mode, setMode] = useLocalStorage('ChordTrainer_Mode', 'Chord Practice');
   const [bpm, setBpm] = useLocalStorage('ChordTrainer_Bpm', 40);
@@ -9,7 +9,7 @@ const useChordGameSettings = () => {
   const drone = getDroneInstance();
   const piano = getSamplerInstance();
   const sound = useSoundSettings();
-  const {selectedInstrument, selectedQuality,setIsLoadingInstrument} = sound
+  const { selectedInstrument, selectedQuality, setIsLoadingInstrument } = sound
   useEffect(() => {
     const loadInstrument = async () => {
       setIsLoadingInstrument(true);

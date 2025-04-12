@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useLocalStorage } from '@uidotdev/usehooks';
-import useSoundSettings from '@EarTrainers/DegreeTrainer/Settings/SoundSettings/useSoundSettings';
+import useSoundSettings from '@components/SharedComponents/Settings/SoundSettings/useSoundSettings';
 import useVolumeSettings from '@EarTrainers/DegreeTrainer/Settings/VolumeSettings/useVolumeSettings';
 import usePracticeSettings from '@EarTrainers/DegreeTrainer/Settings/PracticeSettings/usePracticeSettings';
 import useStatistics from '@EarTrainers/DegreeTrainer/Settings/Statistics/useStatistics';

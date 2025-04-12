@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+
+import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore'
 import * as Tone from 'tone';
 import { defaultDegreeChordTypes, VoicingDictionary } from '@components/EarTrainers/ChordColorTrainer/Constants';
 import { getSamplerInstance, getDroneInstance } from '@utils/ToneInstance';
 import { Progression, Chord, Voicing, Interval, Note } from 'tonal';
 import { playNotesTogether, playNotes } from '@utils/ToneInstance'
-const useChordColorTrainer = (settings) => {
+const useChordColorTrainer = () => {
   const {
     bpm,
     droneVolume,
@@ -13,14 +15,18 @@ const useChordColorTrainer = (settings) => {
     range,
     degreeChordTypes,
     updatePracticeRecords,
-  } = settings;
+    selectedInstrument
+  } = useChordColorTrainerSettingsStore();
+
+  // 获取全局音色设置
 
   const [currentChord, setCurrentChord] = useState("");
   const [disabledChords, setDisabledChords] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [filteredChords, setFilteredChords] = useState([]);
   const [activeChord, setActiveChord] = useState('');
-  const [isAdvance, setIsAdvance] = useState(false);
+  // Pending state: 'No' | 'Ready' | 'Now'
+  const [isAdvance, setIsAdvance] = useState('No');
 
   const piano = getSamplerInstance();
   const drone = getDroneInstance();
@@ -30,6 +36,13 @@ const useChordColorTrainer = (settings) => {
     drone.setVolume(droneVolume);
     piano.setVolume(pianoVolume);
   }, [droneVolume, pianoVolume, rootNote]);
+
+  // 音色变化时切换采样器
+  useEffect(() => {
+    if (piano && piano.changeSampler) {
+      piano.changeSampler(selectedInstrument, "low");
+    }
+  }, [selectedInstrument]);
 
 
   useEffect(() => {
@@ -48,16 +61,16 @@ const useChordColorTrainer = (settings) => {
   }, [activeChord]);
 
   useEffect(() => {
-    if (isAdvance) {
-      advanceGame()
+    if (isAdvance === 'Now') {
+      advanceGame();
     }
-
+    // Do nothing if 'No' or 'Ready'
   }, [isAdvance]);
 
   const advanceGame = () => {
     const nextChord = generateRandomChord();
     setCurrentChord(nextChord);
-    setIsAdvance(false);
+    setIsAdvance('No');
     setDisabledChords([]);
     playChord(nextChord.notes, 0.2);
   }
@@ -66,7 +79,7 @@ const useChordColorTrainer = (settings) => {
     Tone.getTransport().position = 0;
     Tone.getTransport().cancel();
     setGameStarted(true);
-    advanceGame()
+    setIsAdvance('Now'); // Start with advancing to the first chord
     Tone.getTransport().start();
   };
 
@@ -90,14 +103,14 @@ const useChordColorTrainer = (settings) => {
   }
 
   const handleChordGuess = (guessedChord) => {
-    const isCorrect = guessedChord === `${currentChord.degree}${currentChord.chordType}`
+    const isCorrect = guessedChord === `${currentChord.degree}${currentChord.chordType}`;
     if (isCorrect) {
-      setIsAdvance(true);
+      setIsAdvance('Ready'); // Pending state, wait for user to trigger next
       updatePracticeRecords(guessedChord, isCorrect);
     } else {
       setDisabledChords((prev) => [...prev, guessedChord]);
       updatePracticeRecords(guessedChord, isCorrect);
-      playBrokenChord()
+      playBrokenChord();
     }
     setActiveChord(null);
   };
@@ -111,6 +124,7 @@ const useChordColorTrainer = (settings) => {
     Tone.getTransport().cancel();
     setGameStarted(false);
     setDisabledChords([]);
+    setIsAdvance('No');
     drone.stop();
   };
 

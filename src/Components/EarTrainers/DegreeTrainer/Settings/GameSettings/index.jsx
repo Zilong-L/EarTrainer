@@ -6,9 +6,9 @@ import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/
 
 function GameSettings({ currentGameSettings }) {
   const {
-      mode,
+    mode,
     setMode,
-    stats:{
+    stats: {
       setCurrentPracticeRecords,
     }
   } = useDegreeTrainerSettings()
@@ -25,11 +25,10 @@ function GameSettings({ currentGameSettings }) {
             setMode('free');
             setCurrentPracticeRecords({ total: 0, correct: 0 });
           }}
-          className={`flex-1 py-2 rounded-lg transition-colors ${
-            mode === 'free'
+          className={`flex-1 py-2 rounded-lg transition-colors ${mode === 'free'
               ? 'bg-notification-bg text-notification-text'
               : 'bg-bg-main text-text-primary hover:bg-bg-hover'
-          }`}
+            }`}
         >
           {t('intro.freeMode')}
         </button>
@@ -39,25 +38,24 @@ function GameSettings({ currentGameSettings }) {
             setCurrentPracticeRecords({ total: 0, correct: 0 });
 
           }}
-          className={`flex-1 py-2 rounded-lg transition-colors ${
-            mode === 'challenge'
+          className={`flex-1 py-2 rounded-lg transition-colors ${mode === 'challenge'
               ? 'bg-notification-bg text-notification-text'
               : 'bg-bg-main text-text-primary hover:bg-bg-hover'
-          }`}
+            }`}
         >
           {t('intro.challengeMode')}
         </button>
       </div>
 
       {mode === 'free' && (
-        <FreeSettings 
-        FreeTrainerSettings={currentGameSettings}
+        <FreeSettings
+          FreeTrainerSettings={currentGameSettings}
         />
       )}
 
       {mode === 'challenge' && (
-        <ChallengeSettings 
-        ChallengeTrainerSettings={currentGameSettings}
+        <ChallengeSettings
+          ChallengeTrainerSettings={currentGameSettings}
         />
       )}
     </div>
