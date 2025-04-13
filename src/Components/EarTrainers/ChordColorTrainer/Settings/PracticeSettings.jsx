@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { CHORD_TYPES, chordPreset } from '@components/EarTrainers/ChordColorTrainer/Constants';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,7 @@ import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
 import { Disclosure } from '@headlessui/react'; // Import Disclosure
 import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
 import useI18nStore from '@stores/i18nStore';
+
 function PracticeSettings({ setShowPracticeSettings }) {
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
@@ -25,12 +26,24 @@ function PracticeSettings({ setShowPracticeSettings }) {
     setPreset,
     customPresets,
     setCustomPresets,
+    isLoadingPreset,
+    setIsLoadingPreset,
   } = useChordColorTrainerSettingsStore();
   const [newPresetName, setNewPresetName] = useState('');
   const [editingPreset, setEditingPreset] = useState(null);
-  // Remove expandedDegrees state
+
+  useEffect(() => {
+    setIsLoadingPreset(true);
+    if (preset && chordPreset[preset]) {
+      setDegreeChordTypes(chordPreset[preset]);
+    } else if (preset && customPresets[preset]) {
+      setDegreeChordTypes(customPresets[preset]);
+    }
+    setTimeout(setIsLoadingPreset(false), 0)
+  }, [preset, customPresets, setDegreeChordTypes, setIsLoadingPreset]);
 
   const handleChordTypeToggle = (degreeIndex, chordType) => {
+    if (isLoadingPreset) return;
     const newDegreeChordTypes = [...degreeChordTypes];
     const chordTypes = newDegreeChordTypes[degreeIndex].chordTypes;
     if (chordTypes.includes(chordType)) {
@@ -41,7 +54,7 @@ function PracticeSettings({ setShowPracticeSettings }) {
     setDegreeChordTypes(newDegreeChordTypes);
     setCustomPresets({ ...customPresets, [preset]: newDegreeChordTypes });
   };
-  console.log(degreeChordTypes)
+
   const handlePresetChange = (presetValue) => {
     setPreset(presetValue);
     if (presetValue === 'custom') {
@@ -69,8 +82,7 @@ function PracticeSettings({ setShowPracticeSettings }) {
     delete updatedCustomPresets[presetName];
     setCustomPresets(updatedCustomPresets);
     if (preset === presetName) {
-      setPreset('major'); // Reset to default preset
-      setDegreeChordTypes(chordPreset['major']);
+      setPreset('大调');
     }
   };
 
@@ -165,7 +177,7 @@ function PracticeSettings({ setShowPracticeSettings }) {
             <option value="custom">{t('practiceSettings.custom')}</option>
           </select>
         )}
-        <div className="flex items-center space-x-2 absolute right-0 top-8">
+        <div className="flex items-center space-x-2  right-0 top-8">
           <button
             onClick={() => handleEditPresetName(preset)}
             disabled={!Object.keys(customPresets).includes(preset)}
@@ -187,9 +199,9 @@ function PracticeSettings({ setShowPracticeSettings }) {
       </div>
 
       {/* Custom Preset Editor */}
-      {!Object.keys(chordPreset).includes(preset) && (
+      {!Object.keys(chordPreset).includes(preset) && degreeChordTypes && (
         <div className="space-y-4">
-          {degreeChordTypes.map((degree, index) => (
+          {degreeChordTypes?.map((degree, index) => (
             <Disclosure as="div" key={index} className="border border-bg-accent rounded-lg overflow-hidden">
               {({ open }) => ( // Use render prop to get open state
                 <>
@@ -223,8 +235,6 @@ function PracticeSettings({ setShowPracticeSettings }) {
           ))}
         </div>
       )}
-
-
     </div>
   );
 }

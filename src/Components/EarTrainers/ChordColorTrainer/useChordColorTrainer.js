@@ -45,7 +45,6 @@ const useChordColorTrainer = () => {
 
   useEffect(() => {
     const newChord = generateRandomChord();
-    console.log(newChord);
     setCurrentChord(newChord);
   }, [filteredChords]);
 
@@ -155,15 +154,11 @@ const useChordColorTrainer = () => {
       Note.fromMidi(Note.midi(range[1]) + Interval.semitones('P8')),
     ];
     const dictionary = VoicingDictionary.rootPosition;
-    console.log(dictionary);
     // TODO:this can be configured later to allow different voicings
     // for now, we only have root position voicings
-    const possibleChords = Voicing.search(chord, chordRange, dictionary);
-    console.log('pi', possibleChords, chord);
     const notes = possibleChords[
       Math.floor(Math.random() * possibleChords.length)
     ];
-    console.log(notes);
     return notes;
   };
 
@@ -205,14 +200,19 @@ const useChordColorTrainer = () => {
 
   // 将 degreeChordTypes 对象转换为数组并过滤掉空的级数和弦组合
   useEffect(() => {
-    const allCombinations = degreeChordTypes.flatMap((chord) =>
-      chord.chordTypes.map((chordType) => ({ degree: chord.degree, chordType }))
-    );
-    setFilteredChords(allCombinations);
+    if (degreeChordTypes) {
+      const allCombinations = degreeChordTypes.flatMap((chord) =>
+        chord.chordTypes.map((chordType) => ({ degree: chord.degree, chordType }))
+      );
+      setFilteredChords(allCombinations);
+    }
   }, [degreeChordTypes, rootNote]);
 
   // 生成一个随机的级数和和弦类型组合
   const generateRandomChord = () => {
+    if (!filteredChords || filteredChords.length === 0) {
+      return null;
+    }
     const RomanNumeral =
       filteredChords[Math.floor(Math.random() * filteredChords.length)];
     if (!RomanNumeral) {
@@ -227,14 +227,11 @@ const useChordColorTrainer = () => {
       Note.fromMidi(Note.midi(range[1]) + Interval.semitones('P8')),
     ];
     const dictionary = VoicingDictionary.rootPosition;
-    console.log(dictionary);
     // TODO:this can be configured later to allow different voicings
     // for now, we only have root position voicings
     const possibleChords = Voicing.search(chord, chordRange, dictionary);
-    console.log('pi', possibleChords, chord);
     const notes =
       possibleChords[Math.floor(Math.random() * possibleChords.length)];
-    console.log(notes);
     return { ...RomanNumeral, notes: notes };
   };
 
