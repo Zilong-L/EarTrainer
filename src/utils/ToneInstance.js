@@ -76,7 +76,7 @@ class SamplerManager {
     });
 
     await Tone.loaded();
-
+    console.log(newSampler)
     this.sampler.disconnect();
     newSampler.chain(this.filter, this.panner, this.gainNode, globalChorous);
     this.sampler.dispose();
@@ -227,10 +227,36 @@ function cancelAllSounds() {
     activeTransport.cancel();
   }
 }
+function scheduleNotes(events) {
+  const activeTransport = Tone.getTransport();
+  if (activeTransport) {
+    activeTransport.stop();
+    activeTransport.cancel();
+  }
+
+  const pianoInstance = getSamplerInstance();
+  const { sampler } = pianoInstance;
+
+  events.forEach(event => {
+    const { note, time, duration } = event;
+    activeTransport.schedule((transportTime) => {
+      if (typeof note === 'number') {  // Handle MIDI numbers
+        sampler.triggerAttackRelease(Tone.Frequency(note, 'midi').toNote(), duration, transportTime);
+      } else {
+        sampler.triggerAttackRelease(note, duration, transportTime);
+      }
+    }, time);  // Schedule at the specified time
+  });
+
+  if (activeTransport.state !== 'started') {
+    activeTransport.start();
+  }
+}
+
 function main() {
   globalSampler = new SamplerManager("pad");
 }
 
 main();
 
-export { getSamplerInstance, getDroneInstance, preloadAudio, playNotes, cancelAllSounds, playNotesTogether, getAnswerGainNode, shiftPicthAndPlay, globalChorous };
+export { getSamplerInstance, getDroneInstance, preloadAudio, playNotes, cancelAllSounds, playNotesTogether, getAnswerGainNode, shiftPicthAndPlay, globalChorous, scheduleNotes };  // Add scheduleNotes to exports

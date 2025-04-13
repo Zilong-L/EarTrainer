@@ -24,10 +24,7 @@ const EarTrainer = () => {
   const setNamespace = useI18nStore((state) => state.setNamespace);
   const {
     rootNote,
-    practiceRecords,
-    muteDrone,
-    setMuteDrone,
-    isStatOpen
+
   } = useChordColorTrainerSettingsStore();
 
   const {
@@ -38,7 +35,7 @@ const EarTrainer = () => {
     setActiveChord,
     startGame,
     endGame,
-    playChord,
+    playChordColorPattern,
     playBrokenChord,
     playTonic,
     isAdvance,
@@ -47,18 +44,13 @@ const EarTrainer = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isIntroOpen, setIsIntroOpen] = useState(true);
-  const [isPlayingSound, setIsPlayingSound] = useState(false);
 
   const handleStartGame = () => {
-    setIsIntroOpen(false);
     startGame();
   };
 
   const handlePlayTonic = () => {
-    setIsPlayingSound(true);
     playTonic();
-    setTimeout(() => setIsPlayingSound(false), 1000);
   };
 
   const openSettings = () => {
@@ -82,7 +74,7 @@ const EarTrainer = () => {
     const handleKeyPress = (event) => {
       const key = event.key;
       if (key === 'r') {
-        playChord();
+        playChordColorPattern();
         return;
       }
 
@@ -141,15 +133,10 @@ const EarTrainer = () => {
   }, []);
 
   const handlePlayChord = async () => {
-    setIsPlayingSound(true);
-    await playChord();
-    setIsPlayingSound(false);
-  };
-
+    await playChordColorPattern();
+  }
   const handlePlayBrokenChord = async () => {
-    setIsPlayingSound(true);
     await playBrokenChord();
-    setIsPlayingSound(false);
   };
 
 
@@ -183,7 +170,7 @@ const EarTrainer = () => {
             <ChordColorTrainerSettings
               isSettingsOpen={isSettingsOpen}
               setIsSettingsOpen={closeSettings}
-              playChord={playChord}
+              playChord={playChordColorPattern}
             />
           </div>
 
@@ -206,7 +193,6 @@ const EarTrainer = () => {
               onReplay={handlePlayChord}
               onBrokenChord={handlePlayBrokenChord}
               onPlayTonic={handlePlayTonic}
-              isPlayingSound={isPlayingSound}
               gameStarted={gameStarted}
               isAdvance={isAdvance}
               setIsAdvance={setIsAdvance}
@@ -216,7 +202,6 @@ const EarTrainer = () => {
               onReplay={handlePlayChord}
               onBrokenChord={handlePlayBrokenChord}
               onPlayTonic={handlePlayTonic}
-              isPlayingSound={isPlayingSound}
               gameStarted={gameStarted}
               isAdvance={isAdvance}
               setIsAdvance={setIsAdvance}

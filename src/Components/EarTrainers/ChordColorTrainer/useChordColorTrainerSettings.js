@@ -36,8 +36,6 @@ const useChordColorTrainerSettings = () => {
   } = useChordColorTrainerSettingsStore();
   const { selectedInstrument } = useSoundSettings();
 
-  const drone = getDroneInstance();
-
   useEffect(() => {
     const storedRecords = JSON.parse(localStorage.getItem('ChordColorTrainerRecords')) || {};
     setPracticeRecords(storedRecords);
@@ -74,7 +72,8 @@ const useChordColorTrainerSettings = () => {
     muteDrone,
     setMuteDrone,
     isStatOpen,
-    setIsStatOpen
+    setIsStatOpen,
+    selectedInstrument
   };
 };
 export default useChordColorTrainerSettings;
