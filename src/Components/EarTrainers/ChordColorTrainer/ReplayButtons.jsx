@@ -15,7 +15,7 @@ const DesktopReplayButtons = ({
 }) => {
     const { namespace } = useI18nStore();
     const { t } = useTranslation(namespace);
-    console.log(t('buttons.next'))
+
     if (!gameStarted) return <div className="hidden lg:flex justify-center items-center gap-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <Button onClick={handleStartGame} className='w-32 h-32 rounded-full shadow-md flex items-center justify-center bg-bg-accent text-text-primary text-4xl transition-colors'>{t('buttons.start')}</Button>
     </div>;

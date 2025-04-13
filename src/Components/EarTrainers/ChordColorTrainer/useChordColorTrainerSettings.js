@@ -32,7 +32,7 @@ const useChordColorTrainerSettings = () => {
     setPreset,
     setCustomPresets,
     setMuteDrone,
-    setIsStatOpen
+    setIsStatOpen,
   } = useChordColorTrainerSettingsStore();
   const { selectedInstrument } = useSoundSettings();
 
@@ -40,11 +40,9 @@ const useChordColorTrainerSettings = () => {
     const storedRecords = JSON.parse(localStorage.getItem('ChordColorTrainerRecords')) || {};
     setPracticeRecords(storedRecords);
   }, [setPracticeRecords]);
-
   useEffect(() => {
-    setDegreeChordTypes(customPresets[preset] || chordPreset[preset] || degreeChordTypes);
-    console.log('runs here');
-  }, [preset, customPresets, setDegreeChordTypes, degreeChordTypes]);
+    setDegreeChordTypes(customPresets[preset]);
+  }, [preset, customPresets, setDegreeChordTypes]);
 
   return {
     bpm,

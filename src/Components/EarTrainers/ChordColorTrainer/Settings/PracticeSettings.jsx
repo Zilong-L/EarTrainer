@@ -26,24 +26,16 @@ function PracticeSettings({ setShowPracticeSettings }) {
     setPreset,
     customPresets,
     setCustomPresets,
-    isLoadingPreset,
-    setIsLoadingPreset,
+
   } = useChordColorTrainerSettingsStore();
   const [newPresetName, setNewPresetName] = useState('');
   const [editingPreset, setEditingPreset] = useState(null);
 
-  useEffect(() => {
-    setIsLoadingPreset(true);
-    if (preset && chordPreset[preset]) {
-      setDegreeChordTypes(chordPreset[preset]);
-    } else if (preset && customPresets[preset]) {
-      setDegreeChordTypes(customPresets[preset]);
-    }
-    setTimeout(setIsLoadingPreset(false), 0)
-  }, [preset, customPresets, setDegreeChordTypes, setIsLoadingPreset]);
+
 
   const handleChordTypeToggle = (degreeIndex, chordType) => {
-    if (isLoadingPreset) return;
+    // console.log('trigger')
+    // if (isLoadingPreset) return;
     const newDegreeChordTypes = [...degreeChordTypes];
     const chordTypes = newDegreeChordTypes[degreeIndex].chordTypes;
     if (chordTypes.includes(chordType)) {
