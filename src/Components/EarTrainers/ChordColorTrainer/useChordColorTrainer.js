@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
+import { DegreeToDistance } from '@utils/Constants';
 import { defaultDegreeChordTypes, VoicingDictionary } from '@components/EarTrainers/ChordColorTrainer/Constants';
 import { getSamplerInstance, getDroneInstance, scheduleNotes } from '@utils/ToneInstance';  // Added scheduleNotes
-import { Progression, RomanNumeral, Chord, Voicing, Interval, Note } from 'tonal';
+import { Chord, Voicing, Interval, Note, VoiceLeading, Midi } from 'tonal';
 import { playNotesTogether, playNotes } from '@utils/ToneInstance';
 import useChordColorTrainerSettings from './useChordColorTrainerSettings';
 const useChordColorTrainer = () => {
@@ -148,17 +149,24 @@ const useChordColorTrainer = () => {
 
   const getNotesForChord = (numeral) => {
 
-    const chord = Progression.fromRomanNumerals(rootNote.slice(0, -1), [numeral])[0]; // 使用随机的级数和和弦类型
+    const numeralDegree = /([IV]+)([b#]?)/.exec(numeral)[0]
+    const steps = DegreeToDistance[numeralDegree] || 0;
+    const note = Midi.midiToNoteName(Midi.toMidi(rootNote) + steps).slice(0, -1);
+
+    const chordType = numeral.slice(numeralDegree.length);
+    const chord = Chord.get(note + chordType);
+    console.log(chord)
     const chordRange = [
       range[0],
       Note.fromMidi(Note.midi(range[1]) + Interval.semitones('P8')),
     ];
     const dictionary = VoicingDictionary.rootPosition;
-    // TODO:this can be configured later to allow different voicings
-    // for now, we only have root position voicings
+    const possibleChords = Voicing.search(chord.symbol, chordRange, dictionary);
+    console.log('possibleChords', possibleChords)
     const notes = possibleChords[
       Math.floor(Math.random() * possibleChords.length)
     ];
+    console.log('notes', notes)
     return notes;
   };
 
@@ -218,20 +226,7 @@ const useChordColorTrainer = () => {
     if (!RomanNumeral) {
       return null;
     }
-    // 生成和弦的音符
-    const chord = Progression.fromRomanNumerals(rootNote.slice(0, -1), [
-      `${RomanNumeral.degree}${RomanNumeral.chordType}`,
-    ])[0]; // 使用随机的级数和和弦类型
-    const chordRange = [
-      range[0],
-      Note.fromMidi(Note.midi(range[1]) + Interval.semitones('P8')),
-    ];
-    const dictionary = VoicingDictionary.rootPosition;
-    // TODO:this can be configured later to allow different voicings
-    // for now, we only have root position voicings
-    const possibleChords = Voicing.search(chord, chordRange, dictionary);
-    const notes =
-      possibleChords[Math.floor(Math.random() * possibleChords.length)];
+    const notes = getNotesForChord(RomanNumeral.degree + RomanNumeral.chordType);
     return { ...RomanNumeral, notes: notes };
   };
 

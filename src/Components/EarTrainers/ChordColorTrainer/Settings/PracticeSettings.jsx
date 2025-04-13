@@ -10,7 +10,7 @@ import { Disclosure } from '@headlessui/react'; // Import Disclosure
 import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
 import useI18nStore from '@stores/i18nStore';
 
-function PracticeSettings({ setShowPracticeSettings }) {
+function PracticeSettings() {
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
   const {
@@ -64,7 +64,8 @@ function PracticeSettings({ setShowPracticeSettings }) {
 
   const handleCopyPreset = (presetName) => {
     const newPresetNameValue = `Copy of ${presetName}`;
-    const updatedCustomPresets = { ...customPresets, [newPresetNameValue]: degreeChordTypes };
+    const deepCopiedDegreeChordTypes = structuredClone(degreeChordTypes);
+    const updatedCustomPresets = { ...customPresets, [newPresetNameValue]: deepCopiedDegreeChordTypes };
     setCustomPresets(updatedCustomPresets);
     setPreset(newPresetNameValue);
   };
@@ -74,7 +75,8 @@ function PracticeSettings({ setShowPracticeSettings }) {
     delete updatedCustomPresets[presetName];
     setCustomPresets(updatedCustomPresets);
     if (preset === presetName) {
-      setPreset('大调');
+      const firstCustomPreset = Object.keys(updatedCustomPresets)[0];
+      setPreset(firstCustomPreset || '大调');
     }
   };
 
@@ -95,7 +97,7 @@ function PracticeSettings({ setShowPracticeSettings }) {
   };
 
   return (
-    <div className="space-y-6 relative">
+    <div className="space-y-6 relative ">
       {/* Note Range */}
       <RangeSlider
         value={[Tone.Frequency(range[0]).toMidi(), Tone.Frequency(range[1]).toMidi()]}
@@ -134,7 +136,7 @@ function PracticeSettings({ setShowPracticeSettings }) {
       </div>
 
       {/* Preset Selector */}
-      <div className="space-y-2">
+      <div className="space-y-2 ">
         <label className="block text-sm font-medium text-text-primary">
           {t('practiceSettings.selectPreset')}
         </label>
@@ -184,7 +186,11 @@ function PracticeSettings({ setShowPracticeSettings }) {
           >
             🗑️
           </button>
-          <button onClick={() => handleCopyPreset(preset)} className="px-2 py-1 rounded-md bg-bg-accent text-text-primary">
+          <button
+            onClick={() => handleCopyPreset(preset)}
+            disabled={Object.keys(chordPreset).includes(preset)}
+            className="px-2 py-1 rounded-md bg-bg-accent text-text-primary disabled:opacity-50"
+          >
             📋
           </button>
         </div>
@@ -192,38 +198,29 @@ function PracticeSettings({ setShowPracticeSettings }) {
 
       {/* Custom Preset Editor */}
       {!Object.keys(chordPreset).includes(preset) && degreeChordTypes && (
-        <div className="space-y-4">
+        <div className="grid grid-cols-4">
           {degreeChordTypes?.map((degree, index) => (
-            <Disclosure as="div" key={index} className="border border-bg-accent rounded-lg overflow-hidden">
-              {({ open }) => ( // Use render prop to get open state
-                <>
-                  {/* Restore semantic styling with explicit text color and padding */}
-                  <Disclosure.Button className="w-full px-4 py-2 flex items-center justify-between bg-bg-accent hover:bg-bg-accent-hover transition-colors text-left">
-                    <span className="text-text-primary font-semibold">{degree.name}</span> {/* Label with primary text color */}
-                    {degree.degree}
-                    <span className="text-text-secondary ml-auto"> {/* Arrow with secondary text color */}
-                      {open ? '▼' : '▶'}
-                    </span>
-                  </Disclosure.Button>
-                  <Disclosure.Panel className="p-4 grid grid-cols-2 gap-2">
-                    {CHORD_TYPES.map((chordType) => (
-                      <label
-                        key={chordType}
-                        className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-bg-accent rounded"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={degree.chordTypes.includes(chordType)}
-                          onChange={() => handleChordTypeToggle(index, chordType)}
-                          className="rounded accent-accent"
-                        />
-                        <span className="text-text-secondary">{chordType}</span>
-                      </label>
-                    ))}
-                  </Disclosure.Panel>
-                </>
-              )}
-            </Disclosure>
+            <div key={index} className="border border-bg-accent  overflow-hidden">
+              <div className="w-full px-4 py-2 flex items-center justify-between bg-bg-accent hover:bg-bg-accent-hover transition-colors text-left">
+                {degree.degree}
+              </div>
+              <div className="p-4 grid grid-cols-2 gap-2">
+                {CHORD_TYPES.map((chordType) => (
+                  <label
+                    key={chordType}
+                    className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-bg-accent rounded"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={degree.chordTypes.includes(chordType)}
+                      onChange={() => handleChordTypeToggle(index, chordType)}
+                      className="rounded accent-accent"
+                    />
+                    <span className="text-text-secondary">{chordType}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       )}

@@ -41,7 +41,7 @@ const useChordColorTrainerSettings = () => {
     setPracticeRecords(storedRecords);
   }, [setPracticeRecords]);
   useEffect(() => {
-    setDegreeChordTypes(customPresets[preset]);
+    setDegreeChordTypes(customPresets[preset] || chordPreset[preset] || degreeChordTypes);
   }, [preset, customPresets, setDegreeChordTypes]);
 
   return {

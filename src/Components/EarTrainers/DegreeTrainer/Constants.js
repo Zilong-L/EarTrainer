@@ -15,18 +15,18 @@ const keyMap = {
   'g': 10
 };
 const shortcuts = {
-  'I':1,
-  'II':2,
-  'III':3,
-  'IV':4,
-  'V':5,
-  'VI':6,
-  'VII':7,
-  'IIb':'a',
-  'IIIb':'s',
-  'Vb':'d',
-  'VIb':'f',
-  'VIIb':'g'
+  'I': 1,
+  'II': 2,
+  'III': 3,
+  'IV': 4,
+  'V': 5,
+  'VI': 6,
+  'VII': 7,
+  'IIb': 'a',
+  'IIIb': 's',
+  'Vb': 'd',
+  'VIb': 'f',
+  'VIIb': 'g'
 }
 const degrees = [
   { name: "I", distance: 0, enable: true, interval: "1P" },   // Perfect Unison
@@ -205,15 +205,15 @@ const initialUserProgress = [
   },
 ];
 const DEGREES_MAP = {
-  LEVEL_1:  [true, false, false, false, false, false, false, false, false, false, false, true], // 1 7
-  LEVEL_2:  [true, false, false, false, false, false, false, true, false, false, false, true], // 1 5 7
-  LEVEL_3:  [true, false, false, false, true, false, false, true, false, false, false, true], // 1 3 5 7
-  LEVEL_4:  [true, false, true, false, true, false, false, true, false, false, false, true], // 1 2 3 5 7
-  LEVEL_5:  [true, false, true, false, true, false, false, true, false, true, false, true], // 1 2 3 5 6 7
-  LEVEL_6:  [true, false, true, false, true, true, false, true, false, true, false, true], // 1 2 3 4 5 6 7
-  LEVEL_7:  [true, false, true, false, true, true, true, true, false, true, false, true], // 1 2 3 4 #4 5 6 7
-  LEVEL_8:  [true, false, true, true, false, false, false, false, false, false, false, false], // 1 2 b3
-  LEVEL_9:  [true, false, true, true, false, false, false, true, false, false, false, false], // 1 2 b3 5
+  LEVEL_1: [true, false, false, false, false, false, false, false, false, false, false, true], // 1 7
+  LEVEL_2: [true, false, false, false, false, false, false, true, false, false, false, true], // 1 5 7
+  LEVEL_3: [true, false, false, false, true, false, false, true, false, false, false, true], // 1 3 5 7
+  LEVEL_4: [true, false, true, false, true, false, false, true, false, false, false, true], // 1 2 3 5 7
+  LEVEL_5: [true, false, true, false, true, false, false, true, false, true, false, true], // 1 2 3 5 6 7
+  LEVEL_6: [true, false, true, false, true, true, false, true, false, true, false, true], // 1 2 3 4 5 6 7
+  LEVEL_7: [true, false, true, false, true, true, true, true, false, true, false, true], // 1 2 3 4 #4 5 6 7
+  LEVEL_8: [true, false, true, true, false, false, false, false, false, false, false, false], // 1 2 b3
+  LEVEL_9: [true, false, true, true, false, false, false, true, false, false, false, false], // 1 2 b3 5
   LEVEL_10: [true, false, true, true, false, false, false, true, true, false, false, false], // 1 2 b3 5 b6
   LEVEL_11: [true, false, true, true, false, false, false, true, true, false, true, false], // 1 2 b3 5 b6 b7
   LEVEL_12: [true, false, true, true, false, true, false, true, true, false, true, false], // 1 2 b3 4 5 b6 b7
@@ -250,20 +250,7 @@ const NOTES_MAP = {
 };
 
 
-const DegreeToDistance = {
-  "I": 0,
-  "II": 2,
-  "III": 4,
-  "IV": 5,
-  "V": 7,
-  "VI": 9,
-  "VII": 11,
-  "IIb": 1,
-  "IIIb": 3,
-  "Vb": 6,
-  "VIb": 8,
-  "VIIb": 10
-}
+
 
 const SolfegeMapping = {
   "I": "Do",
@@ -279,4 +266,4 @@ const SolfegeMapping = {
   "VIb": "Le",
   "VIIb": "Te"
 }
-export { apps, keyMap, degrees, initialUserProgress, SolfegeMapping,shortcuts ,DegreeToDistance,DEGREES_MAP,  NOTES_MAP };
+export { apps, keyMap, degrees, initialUserProgress, SolfegeMapping, shortcuts, DEGREES_MAP, NOTES_MAP };

@@ -1,5 +1,5 @@
 const apps = [{ name: 'earTrainer', path: '/ear-trainer' }, { name: 'chordTrainer', path: '/chord-trainer' }];
-const CHORD_TYPES = ['M', 'm', 'o', 'M7', 'm7', '7'];
+const CHORD_TYPES = ['M', 'm', 'dim', 'M7', 'm7', '7', 'dim7', 'm7b5', 'aug'];
 const keyMap = {
   '1': 0,
   '2': 2,
@@ -14,6 +14,7 @@ const keyMap = {
   'f': 8,
   'g': 10
 };
+
 const degrees = [
   { name: "I", distance: 0, enable: true },
   { name: "IIb", distance: 1, enable: false },
@@ -233,21 +234,21 @@ const VoicingDictionary = {
   rootPosition: {
     M: ["1P 3M 5P"], // 保持不变，使用根音位置
     m: ["1P 3m 5P"], // 保持不变，使用根音位置
-    o: ["1P 3m 5d"], // 保持不变，使用根音位置
-    aug: ["1P 3m 5A"], // 保持不变，使用根音位置
+    dim: ["1P 3m 5d"], // 保持不变，使用根音位置
+    aug: ["1P 3M 5A"], // 保持不变，使用根音位置
     m7: ["1P 3m 5P 7m"], // 保持不变，使用根音位置
     "7": ["1P 3M 5P 7m"], // 修改为根音位置
     "M7": ["1P 3M 5P 7M"], // 修改为根音位置
     "69": ["1P 3M 5P 6A"], // 修改为根音位置
     m7b5: ["1P 3m 5d 7m"], // 修改为根音位置
-    "7b9": ["1P 3M 5m 7m"], // 修改为根音位置
+    "7b9": ["3M 6m 7m 9m"], // 修改为根音位置
     "7b13": ["1P 3M 5m 7m"], // 修改为根音位置
-    o7: ["1P 3m 5d 6M"], // 修改为根音位置
+    dim7: ["1P 3m 5d 6M"], // 修改为根音位置
   },
   M: ["1P 3M 5P", "3M 5P 8P", "5P 8P 10M"],
   m: ["1P 3m 5P", "3m 5P 8P", "5P 8P 10m"],
-  o: ["1P 3m 5d", "3m 5d 8P", "5d 8P 10m"],
-  aug: ["1P 3m 5A", "3m 5A 8P", "5A 8P 10m"],
+  dim: ["1P 3m 5d", "3m 5d 8P", "5d 8P 10m"],
+  aug: ["1P 3M 5A", "3M  5A 8P", "5A 8P 10m"],
   m7: ["1P 3m 5P 7m", "7m 9M 10m 12P"],
   "7": ["3M 6M 7m 9M", "7m 9M 10M 13M"],
   "M7": ["3M 5P 7M 9M", "7M 9M 10M 12P"],
@@ -255,7 +256,7 @@ const VoicingDictionary = {
   m7b5: ["3m 5d 7m 8P", "7m 8P 10m 12d"],
   "7b9": ["3M 6m 7m 9m", "7m 9m 10M 13m"], // b9 / b13
   "7b13": ["3M 6m 7m 9m", "7m 9m 10M 13m"], // b9 / b13
-  o7: ["1P 3m 5d 6M", "5d 6M 8P 10m"],
+  dim7: ["1P 3m 5d 6M", "5d 6M 8P 10m"],
   "7#11": ["7m 9M 11A 13A"],
   "7#9": ["3M 7m 9A"],
   mM7: ["3m 5P 7M 9M", "7M 9M 10m 12P"],

@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Note } from "tonal";
 import { calculateDegree } from "@utils/GameLogics";
-import { SolfegeMapping, DegreeToDistance } from "@components/EarTrainers/DegreeTrainer/Constants";
+import { SolfegeMapping } from "@components/EarTrainers/DegreeTrainer/Constants";
+import { DegreeToDistance } from '@utils/Constants';
 import ThresholdSlider from "./ThresholdSlider";
 import { isSameNote } from "@utils/ChordTrainer/GameLogics";
 
