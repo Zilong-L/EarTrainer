@@ -7,7 +7,7 @@ import useI18nStore from '@stores/i18nStore';
 const DesktopReplayButtons = ({
     handleStartGame,
     onReplay,
-    onBrokenChord,
+    onPlayChordSimple, // Changed from onBrokenChord
     onPlayTonic,
     gameStarted,
     isAdvance,
@@ -17,7 +17,7 @@ const DesktopReplayButtons = ({
     const { t } = useTranslation(namespace);
     console.log(t('buttons.next'))
     if (!gameStarted) return <div className="hidden lg:flex justify-center items-center gap-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Button onClick={handleStartGame} className='w-32 h-32 rounded-full shadow-md flex items-center justify-center bg-bg-accent text-text-primary text-4xl transition-colors'>start</Button>
+        <Button onClick={handleStartGame} className='w-32 h-32 rounded-full shadow-md flex items-center justify-center bg-bg-accent text-text-primary text-4xl transition-colors'>{t('buttons.start')}</Button>
     </div>;
 
     return (
@@ -29,10 +29,10 @@ const DesktopReplayButtons = ({
                 <span className="text-4xl">{t('buttons.replay')}</span>
             </MotionButton>
             <MotionButton
-                onClick={onBrokenChord}
+                onClick={onPlayChordSimple} // Use the new prop
                 className="w-32 h-32 bg-bg-accent text-text-primary text-3xl"
             >
-                <span className="text-4xl">{t('buttons.stair')}</span>
+                <span className="text-4xl">{t('buttons.chord')}</span> {/* Change translation key */}
             </MotionButton>
             <MotionButton
                 onClick={onPlayTonic}
@@ -46,7 +46,7 @@ const DesktopReplayButtons = ({
                     onClick={() => setIsAdvance('Now')}
                     className="w-32 h-32 bg-green-500 text-white text-4xl"
                 >
-                    {t('buttons.next') || 'Next'}
+                    {t('buttons.next')}
                 </MotionButton>
             )}
         </div>
@@ -56,7 +56,7 @@ const DesktopReplayButtons = ({
 const PhoneReplayButtons = ({
     handleStartGame,
     onReplay,
-    onBrokenChord,
+    onPlayChordSimple, // Changed from onBrokenChord
     onPlayTonic,
     gameStarted,
     isAdvance,
@@ -66,7 +66,7 @@ const PhoneReplayButtons = ({
     const { t } = useTranslation(namespace);
 
     if (!gameStarted) return <div className="grid ">
-        <Button onClick={handleStartGame} className="text-4xl lg:hidden">start</Button>
+        <Button onClick={handleStartGame} className="text-4xl lg:hidden">{t('buttons.start')}</Button>
     </div>;
 
     return (
@@ -78,10 +78,10 @@ const PhoneReplayButtons = ({
                 <span className=" text-4xl">{t('buttons.replay')}</span>
             </Button>
             <Button
-                onClick={onBrokenChord}
+                onClick={onPlayChordSimple} // Use the new prop
                 className={`w-full h-16 bg-bg-common hover:bg-bg-hover text-text-main rounded-lg transition-colors flex items-center justify-center`}
             >
-                <span className=" text-4xl">{t('buttons.stair')}</span>
+                <span className=" text-4xl">{t('buttons.chord')}</span> {/* Change translation key */}
             </Button>
             <Button
                 onClick={onPlayTonic}
@@ -95,7 +95,7 @@ const PhoneReplayButtons = ({
                     onClick={() => setIsAdvance('Now')}
                     className="w-full h-16 bg-green-500 text-white text-4xl rounded-lg transition-colors flex items-center justify-center"
                 >
-                    {t('buttons.next') || 'Next'}
+                    {t('buttons.next')}
                 </Button>
             )}
         </div>

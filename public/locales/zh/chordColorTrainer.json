@@ -22,7 +22,8 @@
     "settings": "设置",
     "practiceSettings": "练习设置",
     "volumeSettings": "音量设置",
-    "statistics": "统计"
+    "statistics": "统计",
+    "soundSettings": "声音设置"
   },
   "volumeSettings": {
     "droneVolume": "持续音量",
@@ -58,7 +59,9 @@
     "muteDrone": "关闭主音",
     "unmuteDrone": "打开主音",
     "playTonic": "播放主音",
-    "stair": "分解和弦"
+    "chord": "和弦",
+    "next": "下一个",
+    "start": "开始"
   },
   "messages": {
     "deleteConfirmation": "确定要删除所有本地统计数据吗？此操作不可恢复。"

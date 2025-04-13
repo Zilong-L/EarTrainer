@@ -36,7 +36,7 @@ const EarTrainer = () => {
     startGame,
     endGame,
     playChordColorPattern,
-    playBrokenChord,
+    playChord,
     playTonic,
     isAdvance,
     setIsAdvance,
@@ -132,11 +132,11 @@ const EarTrainer = () => {
     };
   }, []);
 
-  const handlePlayChord = async () => {
+  const handlePlayChordColorPattern = async () => {
     await playChordColorPattern();
   }
-  const handlePlayBrokenChord = async () => {
-    await playBrokenChord();
+  const handlePlayChord = async () => {
+    await playChord();
   };
 
 
@@ -190,8 +190,8 @@ const EarTrainer = () => {
 
             <DesktopReplayButtons
               handleStartGame={handleStartGame}
-              onReplay={handlePlayChord}
-              onBrokenChord={handlePlayBrokenChord}
+              onReplay={handlePlayChordColorPattern}
+              onPlayChordSimple={handlePlayChord}
               onPlayTonic={handlePlayTonic}
               gameStarted={gameStarted}
               isAdvance={isAdvance}
@@ -199,8 +199,8 @@ const EarTrainer = () => {
             />
             <PhoneReplayButtons
               handleStartGame={handleStartGame}
-              onReplay={handlePlayChord}
-              onBrokenChord={handlePlayBrokenChord}
+              onReplay={handlePlayChordColorPattern}
+              onPlayChordSimple={handlePlayChord}
               onPlayTonic={handlePlayTonic}
               gameStarted={gameStarted}
               isAdvance={isAdvance}

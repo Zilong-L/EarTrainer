@@ -22,7 +22,8 @@
     "settings": "Settings",
     "practiceSettings": "Practice Settings",
     "volumeSettings": "Volume Settings",
-    "statistics": "Statistics"
+    "statistics": "Statistics",
+    "soundSettings": "Sound Settings"
   },
   "volumeSettings": {
     "droneVolume": "Drone Volume",
@@ -58,7 +59,9 @@
     "muteDrone": "Mute Drone",
     "unmuteDrone": "Unmute Drone",
     "playTonic": "Play Tonic Note",
-    "stair": "Broken chord"
+    "chord": "Chord",
+    "next": "Next",
+    "start": "Start"
   },
   "messages": {
     "deleteConfirmation": "Are you sure you want to delete all local statistics data? This action cannot be undone."

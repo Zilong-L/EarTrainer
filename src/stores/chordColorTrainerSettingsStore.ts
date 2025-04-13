@@ -12,8 +12,9 @@ interface PracticeRecords {
     [degree: string]: PracticeRecord;
 }
 
+// Correct the type to store the full DegreeInfo array for custom presets
 interface CustomPresets {
-    [presetName: string]: string[];
+    [presetName: string]: DegreeInfo[];
 }
 
 interface DegreeInfo {

@@ -21,11 +21,6 @@ function ChordColorTrainerSettings({
 
   const components = [
     {
-      id: 'sound',
-      label: 'settingsMenu.soundSettings',
-      component: SoundSettings,
-    },
-    {
       id: 'practice',
       label: 'settingsMenu.practiceSettings',
       component: PracticeSettings,
@@ -39,6 +34,11 @@ function ChordColorTrainerSettings({
       id: 'volume',
       label: 'settingsMenu.volumeSettings',
       component: VolumeSettings,
+    },
+    {
+      id: 'sound',
+      label: 'settingsMenu.soundSettings',
+      component: SoundSettings,
     },
   ];
 

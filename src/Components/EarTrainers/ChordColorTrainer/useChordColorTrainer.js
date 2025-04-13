@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-
 import * as Tone from 'tone';
 import { defaultDegreeChordTypes, VoicingDictionary } from '@components/EarTrainers/ChordColorTrainer/Constants';
 import { getSamplerInstance, getDroneInstance, scheduleNotes } from '@utils/ToneInstance';  // Added scheduleNotes
-import { Progression, Chord, Voicing, Interval, Note } from 'tonal';
+import { Progression, RomanNumeral, Chord, Voicing, Interval, Note } from 'tonal';
 import { playNotesTogether, playNotes } from '@utils/ToneInstance';
 import useChordColorTrainerSettings from './useChordColorTrainerSettings';
 const useChordColorTrainer = () => {
@@ -148,10 +147,9 @@ const useChordColorTrainer = () => {
     scheduleNotes(events); // Pass events to scheduleNotes for handling
   };
 
-  const getNotesForChord = (degree, chordType) => {
-    const chord = Progression.fromRomanNumerals(rootNote.slice(0, -1), [
-      `${degree}${chordType}`,
-    ])[0]; // 使用随机的级数和和弦类型
+  const getNotesForChord = (numeral) => {
+
+    const chord = Progression.fromRomanNumerals(rootNote.slice(0, -1), [numeral])[0]; // 使用随机的级数和和弦类型
     const chordRange = [
       range[0],
       Note.fromMidi(Note.midi(range[1]) + Interval.semitones('P8')),
@@ -170,21 +168,26 @@ const useChordColorTrainer = () => {
   };
 
   const handleChordGuess = (guessedChord) => {
+    // If in 'Ready' state, just play the sound for comparison, don't guess/record/disable
+    if (isAdvance === 'Ready') {
+      const notes = getNotesForChord(guessedChord);
+      playChordColorPattern(notes);
+      setActiveChord(null); // Reset active chord after playing
+      return; // Exit early, skip guessing logic
+    }
+
     const isCorrect =
       guessedChord === `${currentChord.degree}${currentChord.chordType}`;
     if (isCorrect) {
       setIsAdvance('Ready'); // Pending state, wait for user to trigger next
+      setDisabledChords([]); // Re-enable all buttons on correct guess
       updatePracticeRecords(guessedChord, isCorrect);
       playChordColorPattern(currentChord.notes); // Play current chord on correct guess
     } else {
       setDisabledChords((prev) => [...prev, guessedChord]);
       updatePracticeRecords(guessedChord, isCorrect);
-      // Play the guessed chord's notes simultaneously on incorrect guess
-      const [degree, chordType] = [
-        guessedChord.slice(0, -1),
-        guessedChord.slice(-1),
-      ];
-      const notes = getNotesForChord(degree, chordType);
+      // Play the guessed chord's notes on incorrect guess
+      const notes = getNotesForChord(guessedChord);
       playChordColorPattern(notes);
     }
     setActiveChord(null);

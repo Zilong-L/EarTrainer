@@ -6,6 +6,7 @@ import ValueAdjuster from '@components/SharedComponents/ValueAdjuster';
 import RangeSlider from '@components/SharedComponents/slider/RangeSlider';
 import { Midi, Note } from "tonal";
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
+import { Disclosure } from '@headlessui/react'; // Import Disclosure
 import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
 import useI18nStore from '@stores/i18nStore';
 function PracticeSettings({ setShowPracticeSettings }) {
@@ -27,7 +28,7 @@ function PracticeSettings({ setShowPracticeSettings }) {
   } = useChordColorTrainerSettingsStore();
   const [newPresetName, setNewPresetName] = useState('');
   const [editingPreset, setEditingPreset] = useState(null);
-  const [expandedDegree, setExpandedDegree] = useState(null);
+  // Remove expandedDegrees state
 
   const handleChordTypeToggle = (degreeIndex, chordType) => {
     const newDegreeChordTypes = [...degreeChordTypes];
@@ -40,7 +41,7 @@ function PracticeSettings({ setShowPracticeSettings }) {
     setDegreeChordTypes(newDegreeChordTypes);
     setCustomPresets({ ...customPresets, [preset]: newDegreeChordTypes });
   };
-
+  console.log(degreeChordTypes)
   const handlePresetChange = (presetValue) => {
     setPreset(presetValue);
     if (presetValue === 'custom') {
@@ -54,6 +55,13 @@ function PracticeSettings({ setShowPracticeSettings }) {
       setCustomPresets(updatedCustomPresets);
       setPreset(newPresetNameValue);
     }
+  };
+
+  const handleCopyPreset = (presetName) => {
+    const newPresetNameValue = `Copy of ${presetName}`;
+    const updatedCustomPresets = { ...customPresets, [newPresetNameValue]: degreeChordTypes };
+    setCustomPresets(updatedCustomPresets);
+    setPreset(newPresetNameValue);
   };
 
   const handleDeleteCustomPreset = (presetName) => {
@@ -126,60 +134,92 @@ function PracticeSettings({ setShowPracticeSettings }) {
         <label className="block text-sm font-medium text-text-primary">
           {t('practiceSettings.selectPreset')}
         </label>
-        <select
-          value={preset}
-          onChange={(e) => handlePresetChange(e.target.value)}
-          className="w-full px-4 py-2 border border-bg-accent rounded-lg bg-bg-main text-text-primary focus:ring-2 focus:ring-accent focus:border-accent"
-        >
-          {Object.keys(chordPreset)
-            .filter((presetName) => presetName !== 'custom')
-            .map((presetName) => (
+        {editingPreset === preset ? (
+          <div className="flex items-center space-x-2">
+            <input
+              type="text"
+              value={newPresetName}
+              onChange={(e) => setNewPresetName(e.target.value)}
+              className="w-full px-2 py-1 border border-bg-accent rounded-md bg-bg-main text-text-primary focus:ring-2 focus:ring-accent focus:border-accent"
+            />
+            <button onClick={handleSavePresetName} className="px-2 py-1 rounded-md bg-bg-accent text-text-primary">Save</button>
+          </div>
+        ) : (
+          <select
+            value={preset}
+            onChange={(e) => handlePresetChange(e.target.value)}
+            className="w-full px-4 py-2 border border-bg-accent rounded-lg bg-bg-main text-text-primary focus:ring-2 focus:ring-accent focus:border-accent"
+          >
+            {Object.keys(chordPreset)
+              .filter((presetName) => presetName !== 'custom')
+              .map((presetName) => (
+                <option key={presetName} value={presetName}>
+                  {presetName}
+                </option>
+              ))}
+            {Object.keys(customPresets).map((presetName) => (
               <option key={presetName} value={presetName}>
                 {presetName}
               </option>
             ))}
-          {Object.keys(customPresets).map((presetName) => (
-            <option key={presetName} value={presetName}>
-              {presetName}
-            </option>
-          ))}
-          <option value="custom">{t('practiceSettings.custom')}</option>
-        </select>
+            <option value="custom">{t('practiceSettings.custom')}</option>
+          </select>
+        )}
+        <div className="flex items-center space-x-2 absolute right-0 top-8">
+          <button
+            onClick={() => handleEditPresetName(preset)}
+            disabled={!Object.keys(customPresets).includes(preset)}
+            className="px-2 py-1 rounded-md bg-bg-accent text-text-primary disabled:opacity-50"
+          >
+            ✏️
+          </button>
+          <button
+            onClick={() => handleDeleteCustomPreset(preset)}
+            disabled={!Object.keys(customPresets).includes(preset)}
+            className="px-2 py-1 rounded-md bg-bg-accent text-text-primary disabled:opacity-50"
+          >
+            🗑️
+          </button>
+          <button onClick={() => handleCopyPreset(preset)} className="px-2 py-1 rounded-md bg-bg-accent text-text-primary">
+            📋
+          </button>
+        </div>
       </div>
 
       {/* Custom Preset Editor */}
       {!Object.keys(chordPreset).includes(preset) && (
         <div className="space-y-4">
           {degreeChordTypes.map((degree, index) => (
-            <div key={index} className="border border-bg-accent rounded-lg overflow-hidden">
-              <button
-                className="w-full px-4 py-2 flex items-center justify-between bg-bg-accent hover:bg-bg-accent-hover transition-colors"
-                onClick={() => setExpandedDegree(expandedDegree === index ? null : index)}
-              >
-                <span className="text-text-primary">{degree.name}</span>
-                <span className="text-text-secondary">
-                  {expandedDegree === index ? '▼' : '▶'}
-                </span>
-              </button>
-              {expandedDegree === index && (
-                <div className="p-4 grid grid-cols-2 gap-2">
-                  {CHORD_TYPES.map((chordType) => (
-                    <label
-                      key={chordType}
-                      className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-bg-accent rounded"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={degree.chordTypes.includes(chordType)}
-                        onChange={() => handleChordTypeToggle(index, chordType)}
-                        className="rounded accent-accent"
-                      />
-                      <span className="text-text-secondary">{chordType}</span>
-                    </label>
-                  ))}
-                </div>
+            <Disclosure as="div" key={index} className="border border-bg-accent rounded-lg overflow-hidden">
+              {({ open }) => ( // Use render prop to get open state
+                <>
+                  {/* Restore semantic styling with explicit text color and padding */}
+                  <Disclosure.Button className="w-full px-4 py-2 flex items-center justify-between bg-bg-accent hover:bg-bg-accent-hover transition-colors text-left">
+                    <span className="text-text-primary font-semibold">{degree.name}</span> {/* Label with primary text color */}
+                    {degree.degree}
+                    <span className="text-text-secondary ml-auto"> {/* Arrow with secondary text color */}
+                      {open ? '▼' : '▶'}
+                    </span>
+                  </Disclosure.Button>
+                  <Disclosure.Panel className="p-4 grid grid-cols-2 gap-2">
+                    {CHORD_TYPES.map((chordType) => (
+                      <label
+                        key={chordType}
+                        className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-bg-accent rounded"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={degree.chordTypes.includes(chordType)}
+                          onChange={() => handleChordTypeToggle(index, chordType)}
+                          className="rounded accent-accent"
+                        />
+                        <span className="text-text-secondary">{chordType}</span>
+                      </label>
+                    ))}
+                  </Disclosure.Panel>
+                </>
               )}
-            </div>
+            </Disclosure>
           ))}
         </div>
       )}
