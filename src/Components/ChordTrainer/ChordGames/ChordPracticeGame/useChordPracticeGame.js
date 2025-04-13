@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { detect } from "@tonaljs/chord-detect";
-import { Chord, Midi, Note ,ChordType} from 'tonal';
-import { compareChords,getInversion,sortChordsByCommonality} from '@utils/ChordTrainer/GameLogics';
-import {strangeChrods} from '@utils/ChordTrainer/Constants'
+import { Chord, Midi, Note, ChordType } from 'tonal';
+import { compareChords, getInversion, sortChordsByCommonality } from '@utils/ChordTrainer/GameLogics';
+import { strangeChords } from '@utils/ChordTrainer/Constants'
 
 const DRILL_MODES = {
   RANDOM: 'random',
@@ -30,17 +30,17 @@ const useChordPracticeGame = () => {
 
   const notes = Array(12).fill(0).map((_, i) => Note.transposeFifths("C", i - Math.floor(6)));
   useEffect(() => {
-    if(!activeNotes) return;
+    if (!activeNotes) return;
     const notesString = activeNotes.map((note) => Midi.midiToNoteName(note));
     let chordResult = detect(notesString, { assumePerfectFifth: true });
-    if(!chordResult) {
+    if (!chordResult) {
       setDetectedChords([]);
       return;
     }
     //sort to show common chords first
     let chordResultObjects = chordResult.map(chord => Chord.get(chord));
-    chordResultObjects = chordResultObjects.filter((chord)=>!strangeChrods.includes(chord.type))
-    
+    chordResultObjects = chordResultObjects.filter((chord) => !strangeChords.includes(chord.type))
+
     chordResult = sortChordsByCommonality(chordResultObjects)
     setDetectedChords(chordResult);
   }, [activeNotes]);
@@ -51,11 +51,11 @@ const useChordPracticeGame = () => {
       getNextChord();
     }
   }, [detectedChords]);
-  
+
   useEffect(() => {
     getNextChord();
   }, [chordType]);
-  
+
 
   const getNextChord = useCallback(() => {
     // Convert chord type names to match Tonal's format
@@ -69,22 +69,22 @@ const useChordPracticeGame = () => {
         newRoot = Note.simplify(Note.transpose(currentRoot, "P5"));
         setDrillIndex((drillIndex + 1) % 12);
         break;
-        
+
       case DRILL_MODES.CIRCLE_FOURTHS:
         newRoot = Note.simplify(Note.transpose(currentRoot, "P4"));
         setDrillIndex((drillIndex + 11) % 12); // Move backwards in circle
         break;
-        
+
       case DRILL_MODES.SEMITONE_UP:
         newRoot = Note.simplify(Note.transpose(currentRoot, "m2"));
         setDrillIndex((drillIndex + 1) % 12);
         break;
-        
+
       case DRILL_MODES.SEMITONE_DOWN:
         newRoot = Note.simplify(Note.transpose(currentRoot, "-m2"));
         setDrillIndex((drillIndex + 1) % 12);
         break;
-        
+
       case DRILL_MODES.RANDOM:
       default:
         do {
@@ -92,13 +92,13 @@ const useChordPracticeGame = () => {
         } while (currentRoot === newRoot);
         break;
     }
-    
+
     // Handle inversions based on selection
     let nextTargetChord;
     const maxInversion = chordtype.includes('7') ? 3 : 2;
-    
+
     let position;
-    switch(selectedInversion) {
+    switch (selectedInversion) {
       case "root":
         position = 0;
         break;
@@ -117,10 +117,10 @@ const useChordPracticeGame = () => {
       default:
         position = 0;
     }
-    
+
     nextTargetChord = getInversion(newRoot, chordtype, position);
 
-    
+
     setTargetChord(nextTargetChord);
   }, [drillMode, selectedInversion, chordType, targetChord]);
   return {

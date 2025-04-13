@@ -14,19 +14,19 @@ import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettings
 import { apps, keyMap, degrees } from '@components/EarTrainers/ChordColorTrainer/Constants';
 import CardStack from '@components/EarTrainers/ChordColorTrainer/CardStack';
 import { DesktopReplayButtons, PhoneReplayButtons } from '@components/EarTrainers/ChordColorTrainer/ReplayButtons';
-import LanguageSwitcher from '@components/SharedComponents/LanguageSwitcher'
+import LanguageSwitcher from '@components/SharedComponents/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 import useI18nStore from "@stores/i18nStore";
+import MIDIInputHandler from './MIDIInputHandler';
+import PianoVisualizer from '@components/SharedComponents/PianoVisualizer';
+import DraggableWindow from '@components/DraggableWindow';
 
-let midi = null;
 const EarTrainer = () => {
   const { t } = useTranslation('chordColorTrainer');
   const setNamespace = useI18nStore((state) => state.setNamespace);
   const {
     rootNote,
-
   } = useChordColorTrainerSettingsStore();
-
   const {
     currentNote,
     disabledChords,
@@ -40,6 +40,8 @@ const EarTrainer = () => {
     playTonic,
     isAdvance,
     setIsAdvance,
+    activeNotes,
+    setActiveNotes,
   } = useChordColorTrainer();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -97,40 +99,7 @@ const EarTrainer = () => {
     };
   }, [rootNote, currentNote]);
 
-  useEffect(() => {
-    const midiMessageHandler = (message) => {
-      const [command, note, velocity] = message.data;
-      if (command === 144 && velocity > 0) {
-        const noteName = Tone.Frequency(note, 'midi').toNote();
-        setActiveChord(noteName);
-      }
-    };
-    (async () => {
-      if (navigator.requestMIDIAccess == null) {
-        return;
-      }
-      if (midi == null) {
-        midi = await navigator.requestMIDIAccess();
-        console.log('MIDI loaded for chord trainer');
-      }
-      if (midi) {
-        console.log('MIDI is already loaded, now register listener');
-        const inputs = midi.inputs.values();
-        for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
-          input.value.onmidimessage = midiMessageHandler;
-        }
-      }
-    })();
-    return () => {
-      console.log('MIDI is not deleted, but delete listener');
-      if (midi) {
-        const inputs = midi.inputs.values();
-        for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
-          input.value.onmidimessage = null;
-        }
-      }
-    };
-  }, []);
+
 
   const handlePlayChordColorPattern = async () => {
     await playChordColorPattern();
@@ -164,8 +133,8 @@ const EarTrainer = () => {
         </HeaderButtons>
       </Header>
 
-      <div className="h-[calc(100svh-64px)] bg-bg-main">
-        <div className="max-w-2xl mx-auto h-full flex flex-col justify-between py-4 px-6">
+      <div className="h-[calc(100svh-64px)] bg-bg-main ">
+        <div className="max-w-2xl mx-auto h-full flex flex-col justify-between py-4 px-6 relative">
           <div className="pr-4">
             <ChordColorTrainerSettings
               isSettingsOpen={isSettingsOpen}
@@ -176,8 +145,16 @@ const EarTrainer = () => {
 
 
           {/* {gameStarted && isStatOpen && renderRecords()} */}
-          <div className="flex flex-col justify-end mb-8">
+          <div className="flex flex-col justify-end  ">
+
             <div className="flex-grow" />
+            <DraggableWindow>
+              <MIDIInputHandler
+                activeNotes={activeNotes}
+                setActiveNotes={setActiveNotes}
+                targetChord={currentNote}
+              />
+            </DraggableWindow>
 
             <CardStack
               currentNote={currentNote}

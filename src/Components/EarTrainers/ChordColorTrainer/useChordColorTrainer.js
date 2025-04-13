@@ -6,6 +6,8 @@ import { getSamplerInstance, getDroneInstance, scheduleNotes } from '@utils/Tone
 import { Chord, Voicing, Interval, Note, VoiceLeading, Midi } from 'tonal';
 import { playNotesTogether, playNotes } from '@utils/ToneInstance';
 import useChordColorTrainerSettings from './useChordColorTrainerSettings';
+import { getChords, compareChords } from '@utils/ChordTrainer/GameLogics';
+
 const useChordColorTrainer = () => {
   const {
     bpm,
@@ -18,14 +20,12 @@ const useChordColorTrainer = () => {
     selectedInstrument,
   } = useChordColorTrainerSettings();
 
-  // 获取全局音色设置
-
   const [currentChord, setCurrentChord] = useState('');
   const [disabledChords, setDisabledChords] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [filteredChords, setFilteredChords] = useState([]);
   const [activeChord, setActiveChord] = useState('');
-  // Pending state: 'No' | 'Ready' | 'Now'
+  const [activeNotes, setActiveNotes] = useState([]); // Define activeNotes state
   const [isAdvance, setIsAdvance] = useState('No');
 
   const piano = getSamplerInstance();
@@ -144,8 +144,25 @@ const useChordColorTrainer = () => {
       });
     });
 
-    scheduleNotes(events); // Pass events to scheduleNotes for handling
+    scheduleNotes(events);
   };
+
+  useEffect(() => {
+    if (activeNotes && activeNotes.length > 0) {
+      const detectedChords = getChords(activeNotes);
+      if (detectedChords && detectedChords.length > 0) {
+        const steps = DegreeToDistance[detectedChords[0].degree] || 0;
+        const note = Midi.midiToNoteName(Midi.toMidi(rootNote) + steps).slice(0, -1);
+        const chordType = currentChord.chordType;
+        const chord = note + chordType
+        console.log(chord, detectedChords)
+        const isCorrect = compareChords(detectedChords, chord);
+        if (isCorrect) {
+          setIsAdvance('Ready');
+        }
+      }
+    }
+  }, [activeNotes, currentChord]);
 
   const getNotesForChord = (numeral) => {
 
@@ -246,6 +263,8 @@ const useChordColorTrainer = () => {
     playTonic,
     playBrokenChord,
     playChordColorPattern,
+    activeNotes, // Export activeNotes
+    setActiveNotes, // Export setActiveNotes
   };
 };
 

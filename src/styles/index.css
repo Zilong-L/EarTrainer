@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-  
 
 
-    
+
+
 @font-face {
   font-family: 'Chewy-Regular';
   src: url('/fonts/Chewy-Regular.ttf') format('truetype');
@@ -18,4 +18,11 @@
   src: url('/fonts/Chinese.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+}
+
+#headlessui-portal-root {
+  all: unset;
+  font-family: inherit;
+  line-height: inherit;
+  color: inherit;
 }

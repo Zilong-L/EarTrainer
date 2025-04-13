@@ -41,14 +41,12 @@ const DesktopReplayButtons = ({
             >
                 <LightBulbIcon className="h-6 w-6" />
             </MotionButton>
-            {isAdvance === 'Ready' && (
-                <MotionButton
-                    onClick={() => setIsAdvance('Now')}
-                    className="w-32 h-32 bg-green-500 text-white text-4xl"
-                >
-                    {t('buttons.next')}
-                </MotionButton>
-            )}
+            <MotionButton
+                onClick={() => setIsAdvance('Now')}
+                className={`w-32 h-32 text-4xl ${isAdvance === 'Ready' ? 'bg-green-500 text-white' : 'bg-bg-accent text-text-primary'}`}
+            >
+                {t('buttons.next')}
+            </MotionButton>
         </div>
     );
 };
@@ -90,14 +88,12 @@ const PhoneReplayButtons = ({
             >
                 <LightBulbIcon className="h-6 w-6" />
             </Button>
-            {isAdvance === 'Ready' && (
-                <Button
-                    onClick={() => setIsAdvance('Now')}
-                    className="w-full h-16 bg-green-500 text-white text-4xl rounded-lg transition-colors flex items-center justify-center"
-                >
-                    {t('buttons.next')}
-                </Button>
-            )}
+            <Button
+                onClick={() => setIsAdvance('Now')}
+                className={`w-full h-16 text-4xl rounded-lg transition-colors flex items-center justify-center ${isAdvance === 'Ready' ? 'bg-green-500 text-white' : 'bg-bg-common hover:bg-bg-hover text-text-main'}`}
+            >
+                {t('buttons.next')}
+            </Button>
         </div>
     );
 };

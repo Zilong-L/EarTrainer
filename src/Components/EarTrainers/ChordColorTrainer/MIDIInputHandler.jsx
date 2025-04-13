@@ -1,14 +1,23 @@
-import React, { useEffect } from 'react';
-import PianoVisualizer from '@components/SharedComponents/PianoVisualizer';
-import { Chord, Note } from 'tonal';
+import React, { useEffect, useState } from 'react';
+import { Note, Chord } from 'tonal';
 import { getSamplerInstance } from '@utils/ToneInstance';
 import { useTranslation } from 'react-i18next';
-import { getNiceChordName } from '@utils/ChordTrainer/GameLogics'
-const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord, detectedChords, sustainedNotes, setSustainedNotes, showDegree, setShowDegree }) => {
+import { getChords, getNiceChordName } from '@utils/ChordTrainer/GameLogics';
+import PianoVisualizer from '@components/SharedComponents/PianoVisualizer';
+
+const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord }) => {
+  const [showDegree, setShowDegree] = useState(false);
   const { t } = useTranslation('chordGame');
   let sustainActive = false;
   let sustainedNotesSet = new Set();
   let pressingNotes = new Set();
+  const [detectedChords, setDetectedChords] = useState([]);
+
+  useEffect(() => {
+    if (!activeNotes) return;
+    const chordResult = getChords(activeNotes);
+    setDetectedChords(chordResult);
+  }, [activeNotes]);
 
   const midiMessageHandler = (message) => {
     const [command, note, velocity] = message.data;
@@ -80,24 +89,7 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord, detectedCh
         </h3>
       </div>
       <div className="p-4 rounded-lg bg-bg-common">
-        <PianoVisualizer targetChord={targetChord} activeNotes={activeNotes} />
-        {targetChord && (
-          <div className="mt-4 flex items-center justify-end">
-            <button
-              onClick={() => setShowDegree(!showDegree)}
-              className={`${showDegree ? 'bg-notification-bg' : 'bg-bg-accent'
-                } relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
-            >
-              <span
-                className={`${showDegree ? 'translate-x-6' : 'translate-x-1'
-                  } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
-              />
-            </button>
-            <span className="ml-2 text-sm font-medium text-text-primary">
-              {t('settings.diatonic.showDegrees')}
-            </span>
-          </div>
-        )}
+        <PianoVisualizer activeNotes={activeNotes} />
       </div>
     </div>
   );

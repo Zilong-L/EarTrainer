@@ -1,24 +1,25 @@
 import React from 'react';
-import { Note,Chord, midi} from 'tonal';
+import { Note, Chord, midi } from 'tonal';
 
-const PianoVisualizer = ({ targetChord,activeNotes }) => {
+const PianoVisualizer = ({ targetChord, activeNotes }) => {
   const startNote = 36; // C2
   const endNote = 84;   // C6
   const activeNotesSet = new Set(activeNotes);
-  let targetNotes = Chord.notes(targetChord).map((note) => Note.simplify(note));
-  targetNotes =[...targetNotes,...  targetNotes.map((note) => Note.enharmonic(note)) ]
+  // let targetNotes = Chord.notes(targetChord).map((note) => Note.simplify(note));
+  // targetNotes =[...targetNotes,...  targetNotes.map((note) => Note.enharmonic(note)) ]
 
-  const bass = targetChord.split('/')[1];
+  const bass = targetChord ? targetChord.split('/')[1] : null;
   // Piano key patterns
   const KEYS_IN_OCTAVE = 12;
   const WHITE_KEYS_IN_OCTAVE = 7;
 
   const isBassNote = (midiNote) => {
-    return Note.pitchClass(Note.fromMidi(midiNote)) === bass && midiNote<Note.midi('C3');
+    if (!bass) return false;
+    return Note.pitchClass(Note.fromMidi(midiNote)) === bass && midiNote < Note.midi('C3');
   }
   const isTargetNote = (midiNote) => {
     return false;
-      // return targetNotes.includes(Note.pitchClass(Note.fromMidi(midiNote))) && midiNote>=Note.midi('C3')&&midiNote<=Note.midi('C4');
+    // return targetNotes.includes(Note.pitchClass(Note.fromMidi(midiNote))) && midiNote>=Note.midi('C3')&&midiNote<=Note.midi('C4');
   }
   const isBlackKey = (midiNote) => {
     const noteInOctave = (midiNote - startNote) % KEYS_IN_OCTAVE;
@@ -59,9 +60,9 @@ const PianoVisualizer = ({ targetChord,activeNotes }) => {
             <div
               key={midiNote}
               className={`relative flex-1 border border-gray-300 
-                ${isNoteActive(midiNote) 
-                  ? 'bg-notification-text shadow-inner' 
-                  : isTargetNote(midiNote)||isBassNote(midiNote)?'bg-showcase-bg':  'bg-white hover:bg-gray-50'
+                ${isNoteActive(midiNote)
+                  ? 'bg-notification-text shadow-inner'
+                  : isTargetNote(midiNote) || isBassNote(midiNote) ? 'bg-showcase-bg' : 'bg-white hover:bg-gray-50'
                 }
                 transition-colors duration-100
                 rounded-b-lg
@@ -85,8 +86,8 @@ const PianoVisualizer = ({ targetChord,activeNotes }) => {
               }}
               className={`h-28 z-10 
                 ${isNoteActive(midiNote)
-                  ? 'bg-notification-text shadow-lg' 
-                  :  isTargetNote(midiNote)||isBassNote(midiNote)?'bg-showcase-bg':'shadow-lg bg-gray-900 hover:bg-gray-800'
+                  ? 'bg-notification-text shadow-lg'
+                  : isTargetNote(midiNote) || isBassNote(midiNote) ? 'bg-showcase-bg' : 'shadow-lg bg-gray-900 hover:bg-gray-800'
                 }
                 transition-colors duration-100
                 rounded-b-lg

@@ -1,5 +1,5 @@
-import { Chord, Note } from 'tonal';
-import {niceChordNames,chordCommonnessHash} from '@utils/ChordTrainer/Constants'
+import { Midi, Chord, Note, } from 'tonal';
+import { strangeChords, niceChordNames, chordCommonnessHash } from '@utils/ChordTrainer/Constants'
 const compareChords = (detectedChords, targetChord, ignoreTranspose = false) => {
   let detectedChordsForComparison = detectedChords;
   let targetChordForComparison = targetChord;
@@ -61,7 +61,7 @@ const getNiceChordName = (chords) => {
   return chords.map((chord) => {
     const chordObject = Chord.get(chord)
     const bass = Note.simplify(chordObject.bass)
-    if(!chordObject.type){
+    if (!chordObject.type) {
       return '';
     }
     if (bass) {
@@ -73,9 +73,23 @@ const getNiceChordName = (chords) => {
 }
 
 const sortChordsByCommonality = (chordResultObjects) => {
-  const sortedChordResultObjects =  chordResultObjects.sort((a, b) => {
+  const sortedChordResultObjects = chordResultObjects.sort((a, b) => {
     return chordCommonnessHash[a.type] - chordCommonnessHash[b.type]
   })
   return sortedChordResultObjects.map(chord => chord.symbol)
 }
-export { compareChords, getInversion, getNiceChordName,sortChordsByCommonality,isSameNote};
+
+const getChords = (notes) => {
+  const notesString = notes.map((note) => Midi.midiToNoteName(note));
+  let chordResult = Chord.detect(notesString, { assumePerfectFifth: true });
+  if (!chordResult) {
+    return;
+  }
+  //sort to show common chords first
+  let chordResultObjects = chordResult.map(chord => Chord.get(chord));
+  chordResultObjects = chordResultObjects.filter((chord) => !strangeChords.includes(chord.type))
+
+  chordResult = sortChordsByCommonality(chordResultObjects)
+  return chordResult;
+}
+export { compareChords, getInversion, getNiceChordName, sortChordsByCommonality, isSameNote, getChords };
