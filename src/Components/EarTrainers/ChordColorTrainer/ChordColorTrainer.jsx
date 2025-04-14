@@ -26,6 +26,7 @@ const EarTrainer = () => {
   const setNamespace = useI18nStore((state) => state.setNamespace);
   const {
     rootNote,
+    chordPlayOption
   } = useChordColorTrainerSettingsStore();
   const {
     currentNote,
@@ -42,10 +43,14 @@ const EarTrainer = () => {
     setIsAdvance,
     activeNotes,
     setActiveNotes,
-  } = useChordColorTrainer();
+  } = useChordColorTrainer(chordPlayOption);
+
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const playMidiSounds = useChordColorTrainerSettingsStore((state) => state.playMidiSounds);
+  const setPlayMidiSounds = useChordColorTrainerSettingsStore((state) => state.setPlayMidiSounds);
 
   const handleStartGame = () => {
     startGame();
@@ -72,34 +77,32 @@ const EarTrainer = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const handleKeyPress = (event) => {
-      const key = event.key;
-      if (key === 'r') {
-        playChordColorPattern();
-        return;
-      }
+  // useEffect(() => {
+  //   const handleKeyPress = (event) => {
+  //     const key = event.key;
+  //     if (key === 'r') {
+  //       playChordColorPattern();
+  //       return;
+  //     }
 
-      let degreeIndex;
-      if (keyMap[key] !== undefined) {
-        degreeIndex = keyMap[key];
-      }
-      if (degreeIndex !== undefined) {
-        const selectedDegree = degrees[degreeIndex];
-        const noteName = Tone.Frequency(rootNote + selectedDegree.distance, 'midi').toNote().slice(0, -1);
-        const button = document.querySelector(`button[data-note="${noteName}"]`);
-        if (button) {
-          button.click();
-        }
-      }
-    };
-    window.addEventListener('keydown', handleKeyPress);
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-    };
-  }, [rootNote, currentNote]);
-
-
+  //     let degreeIndex;
+  //     if (keyMap[key] !== undefined) {
+  //       degreeIndex = keyMap[key];
+  //     }
+  //     if (degreeIndex !== undefined) {
+  //       const selectedDegree = degrees[degreeIndex];
+  //       const noteName = Tone.Frequency(rootNote + selectedDegree.distance, 'midi').toNote().slice(0, -1);
+  //       const button = document.querySelector(`button[data-note="${noteName}"]`);
+  //       if (button) {
+  //         button.click();
+  //       }
+  //     }
+  //   };
+  //   window.addEventListener('keydown', handleKeyPress);
+  //   return () => {
+  //     window.removeEventListener('keydown', handleKeyPress);
+  //   };
+  // }, [rootNote, currentNote]);
 
   const handlePlayChordColorPattern = async () => {
     await playChordColorPattern();
@@ -107,9 +110,6 @@ const EarTrainer = () => {
   const handlePlayChord = async () => {
     await playChord();
   };
-
-
-
 
   return (
     <div className="relative">
@@ -135,6 +135,26 @@ const EarTrainer = () => {
 
       <div className="h-[calc(100svh-64px)] bg-bg-main ">
         <div className="max-w-2xl mx-auto h-full flex flex-col justify-between py-4 px-6 relative">
+          <div className="mb-4">
+            <label htmlFor="chordPlayOption" className="block text-sm font-medium text-gray-700">Chord Play Option:</label>
+            <select
+              id="chordPlayOption"
+              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+              value={chordPlayOption}
+              onChange={(e) => useChordColorTrainerSettingsStore.getState().setChordPlayOption(e.target.value)}
+            >
+              <option value="default">Default</option>
+              <option value="random">Random</option>
+              <option value="ascending">Ascending</option>
+              <option value="descending">Descending</option>
+            </select>
+          </div>
+          <MIDIInputHandler
+            activeNotes={activeNotes}
+            setActiveNotes={setActiveNotes}
+            targetChord={currentNote}
+            playMidiSounds={playMidiSounds}
+          />
           <div className="pr-4">
             <ChordColorTrainerSettings
               isSettingsOpen={isSettingsOpen}
@@ -143,19 +163,17 @@ const EarTrainer = () => {
             />
           </div>
 
+          {/* Add the new button as a fixed element on the right */}
+          <button
+            onClick={() => setPlayMidiSounds(!playMidiSounds)}
+            className="fixed right-4 bottom-4 bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            {playMidiSounds ? 'Mute MIDI Sounds' : 'Enable MIDI Sounds'}
+          </button>
 
           {/* {gameStarted && isStatOpen && renderRecords()} */}
-          <div className="flex flex-col justify-end  ">
-
+          <div className="flex flex-col justify-end">
             <div className="flex-grow" />
-            <DraggableWindow>
-              <MIDIInputHandler
-                activeNotes={activeNotes}
-                setActiveNotes={setActiveNotes}
-                targetChord={currentNote}
-              />
-            </DraggableWindow>
-
             <CardStack
               currentNote={currentNote}
               disabledChords={disabledChords}
@@ -164,7 +182,6 @@ const EarTrainer = () => {
               rootNote={rootNote}
               gameStarted={gameStarted}
             />
-
             <DesktopReplayButtons
               handleStartGame={handleStartGame}
               onReplay={handlePlayChordColorPattern}
@@ -184,7 +201,6 @@ const EarTrainer = () => {
               setIsAdvance={setIsAdvance}
             />
           </div>
-
         </div>
       </div>
       <Toaster />

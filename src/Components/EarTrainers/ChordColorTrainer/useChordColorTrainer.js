@@ -8,7 +8,7 @@ import { playNotesTogether, playNotes } from '@utils/ToneInstance';
 import useChordColorTrainerSettings from './useChordColorTrainerSettings';
 import { getChords, compareChords } from '@utils/ChordTrainer/GameLogics';
 
-const useChordColorTrainer = () => {
+const useChordColorTrainer = (chordPlayOption) => {
   const {
     bpm,
     droneVolume,
@@ -104,45 +104,82 @@ const useChordColorTrainer = () => {
     }
 
     const t = 60 / bpm; // Time unit based on bpm
-
     const events = [];
+    let reversedNotes; // Declare reversedNotes outside the switch
 
-    // 1. Upscale arpeggio
-    notes.forEach((note, i) => {
-      events.push({
-        note: note,
-        time: i * 0.25 * t, // Relative time
-        duration: (4 - i * 0.25) * t,
-      });
-    });
+    switch (chordPlayOption) {
+      case 'random':
+        // Implement random chord play logic
+        const randomNotes = [...notes].sort(() => Math.random() - 0.5);
+        randomNotes.forEach((note, i) => {
+          events.push({
+            note: note,
+            time: i * 0.25 * t, // Relative time
+            duration: 2 * t, // Sustain notes
+          });
+        });
+        break;
+      case 'ascending':
+        // Implement ascending chord play logic
+        notes.forEach((note, i) => {
+          events.push({
+            note: note,
+            time: i * 0.25 * t, // Relative time
+            duration: 2 * t, // Sustain notes
+          });
+        });
+        break;
+      case 'descending':
+        // Implement descending chord play logic
+        reversedNotes = notes.slice().reverse();
+        reversedNotes.forEach((note, i) => {
+          events.push({
+            note: note,
+            time: i * 0.25 * t, // Relative time
+            duration: 2 * t, // Sustain notes
+          });
+        });
+        break;
+      default:
+        // Default: Original pattern provided by user
+        // 1. Upscale arpeggio
+        notes.forEach((note, i) => {
+          events.push({
+            note: note,
+            time: i * 0.25 * t, // Relative time
+            duration: (4 - i * 0.25) * t,
+          });
+        });
 
-    // 2. First full chord
-    notes.forEach((note) => {
-      events.push({
-        note: note,
-        time: 2 * t, // After upscale
-        duration: 2 * t,
-      });
-    });
+        // 2. First full chord
+        notes.forEach((note) => {
+          events.push({
+            note: note,
+            time: 2 * t, // After upscale
+            duration: 2 * t,
+          });
+        });
 
-    // 3. Downscale arpeggio
-    const reversedNotes = notes.slice().reverse();
-    reversedNotes.forEach((note, i) => {
-      events.push({
-        note: note,
-        time: (4 + 0.25 * i) * t, // After first full chord
-        duration: (4 - i * 0.25) * t, // Simplified duration
-      });
-    });
+        // 3. Downscale arpeggio
+        reversedNotes = notes.slice().reverse(); // Assign here
+        reversedNotes.forEach((note, i) => {
+          events.push({
+            note: note,
+            time: (4 + 0.25 * i) * t, // After first full chord
+            duration: (4 - i * 0.25) * t, // Simplified duration
+          });
+        });
 
-    // 4. Second full chord
-    notes.forEach((note) => {
-      events.push({
-        note: note,
-        time: 6 * t, // After downscale
-        duration: 2 * t,
-      });
-    });
+        // 4. Second full chord
+        notes.forEach((note) => {
+          events.push({
+            note: note,
+            time: 6 * t, // After downscale
+            duration: 2 * t,
+          });
+        });
+        break;
+    }
 
     scheduleNotes(events);
   };
@@ -151,18 +188,17 @@ const useChordColorTrainer = () => {
     if (activeNotes && activeNotes.length > 0) {
       const detectedChords = getChords(activeNotes);
       if (detectedChords && detectedChords.length > 0) {
-        const steps = DegreeToDistance[detectedChords[0].degree] || 0;
+        const steps = DegreeToDistance[currentChord.degree] || 0;
         const note = Midi.midiToNoteName(Midi.toMidi(rootNote) + steps).slice(0, -1);
         const chordType = currentChord.chordType;
         const chord = note + chordType
-        console.log(chord, detectedChords)
         const isCorrect = compareChords(detectedChords, chord);
         if (isCorrect) {
           setIsAdvance('Ready');
         }
       }
     }
-  }, [activeNotes, currentChord]);
+  }, [activeNotes, currentChord, rootNote]);
 
   const getNotesForChord = (numeral) => {
 

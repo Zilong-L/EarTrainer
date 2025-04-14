@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Note, Chord } from 'tonal';
 import { getSamplerInstance } from '@utils/ToneInstance';
 import { useTranslation } from 'react-i18next';
 import { getChords, getNiceChordName } from '@utils/ChordTrainer/GameLogics';
 import PianoVisualizer from '@components/SharedComponents/PianoVisualizer';
 
-const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord }) => {
+const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord, playMidiSounds }) => {
+  const playMidiSoundsRef = useRef(playMidiSounds);  // Initialize with the prop value
+
+  useEffect(() => {
+    playMidiSoundsRef.current = playMidiSounds;  // Update ref when prop changes
+  }, [playMidiSounds]);
+  // Removed duplicate declaration to fix TypeScript error
   const [showDegree, setShowDegree] = useState(false);
   const { t } = useTranslation('chordGame');
   let sustainActive = false;
@@ -23,26 +29,32 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord }) => {
     const [command, note, velocity] = message.data;
     const pianoSampler = getSamplerInstance().sampler;
 
-    if (command === 176 && note === 64) {
+    if (command === 176 && note === 64 && playMidiSoundsRef.current) {
       sustainActive = velocity > 0;
 
       if (!sustainActive) {
         sustainedNotesSet.forEach((n) => {
           if (!pressingNotes.has(n)) {
-            pianoSampler.triggerRelease(Note.fromMidi(n));
+            if (playMidiSoundsRef.current) {
+              pianoSampler.triggerRelease(Note.fromMidi(n));
+            }
           }
         });
         sustainedNotesSet.clear();
         pressingNotes.forEach((n) => sustainedNotesSet.add(n));
       }
     } else if (command === 144 && velocity > 0) {
-      pianoSampler.triggerAttack(Note.fromMidi(note), undefined, velocity / 128);
+      if (playMidiSoundsRef.current) {
+        pianoSampler.triggerAttack(Note.fromMidi(note), undefined, velocity / 128);
+      }
       pressingNotes.add(note);
       sustainedNotesSet.add(note);
     } else if (command === 128 || (command === 144 && velocity === 0)) {
       pressingNotes.delete(note);
       if (!sustainActive) {
-        pianoSampler.triggerRelease(Note.fromMidi(note));
+        if (playMidiSoundsRef.current) {
+          pianoSampler.triggerRelease(Note.fromMidi(note));
+        }
         sustainedNotesSet.delete(note);
       }
     }
@@ -78,19 +90,7 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord }) => {
 
   return (
     <div className="w-full space-y-4 ">
-      <div className="p-4 rounded-lg bg-bg-common">
-        <h3 className="text-lg font-medium text-text-primary">
-          {t('detectedChords')}: <span>{getNiceChordName(detectedChords).join(', ')}</span>
-        </h3>
-      </div>
-      <div className="p-4 rounded-lg bg-bg-common">
-        <h3 className="text-lg font-medium text-text-primary">
-          {t('notes')}: <span>{activeNotes.map((midi) => Note.fromMidi(midi)).join(', ')}</span>
-        </h3>
-      </div>
-      <div className="p-4 rounded-lg bg-bg-common">
-        <PianoVisualizer activeNotes={activeNotes} />
-      </div>
+
     </div>
   );
 };

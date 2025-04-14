@@ -38,6 +38,8 @@ interface ChordColorTrainerState {
     muteDrone: boolean;
     isStatOpen: boolean;
     degreeChordTypes: DegreeInfo[];
+    playMidiSounds: boolean;
+    chordPlayOption: string;
 }
 
 interface ChordColorTrainerActions {
@@ -71,6 +73,8 @@ const useChordColorTrainerSettingsStore = create<ChordColorTrainerState & ChordC
             muteDrone: false,
             isStatOpen: true,
             degreeChordTypes: defaultDegreeChordTypes,
+            playMidiSounds: true,
+            chordPlayOption: 'default',
 
             setBpm: (bpm) => set({ bpm }),
             setDroneVolume: (droneVolume) => set({ droneVolume }),
@@ -93,7 +97,9 @@ const useChordColorTrainerSettingsStore = create<ChordColorTrainerState & ChordC
             setCustomPresets: (customPresets) => set({ customPresets }),
             setMuteDrone: (muteDrone) => set({ muteDrone }),
             setIsStatOpen: (isStatOpen) => set({ isStatOpen }),
-            setDegreeChordTypes: (degreeChordTypes) => set({ degreeChordTypes }),
+            setDegreeChordTypes: (degreeChordTypes: DegreeInfo[]) => set({ degreeChordTypes }),
+            setPlayMidiSounds: (playMidiSounds: boolean) => set({ playMidiSounds }),
+            setChordPlayOption: (chordPlayOption: string) => set({ chordPlayOption }),
         }),
         {
             name: 'ChordColorTrainerSettings',

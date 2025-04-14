@@ -51,7 +51,6 @@ const CardStack = ({
                                 animate={{ x: offsetX, rotateZ: rotation, y: verticalOffset, scale: 1, transition: { duration: 0.2, ease: 'linear' } }}
                                 whileHover={{ scale: 1.3, rotateZ: 0, y: 0, zIndex: 50, transition: { duration: 0.1, ease: 'linear' } }}
                                 whileDrag={{ scale: 1.3, zIndex: 50, rotateZ: 0 }}
-                                drag
                                 dragSnapToOrigin
                                 className={`absolute h-32 w-24 md:h-[14rem] md:w-[10rem] rounded-xl shadow-lg flex flex-col 
                   items-center justify-between py-4 text-2xl md:text-3xl font-bold 
