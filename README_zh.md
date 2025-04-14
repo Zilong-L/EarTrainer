@@ -1,45 +1,43 @@
-# [Music Refugee](https://musictrainer.barnman.cc)
-[中文](README.md) | English
+# [音乐难民](https://musictrainer.barnman.cc)
+中文 | [English](README_en.md)
 
-This is a simple sight-singing and ear-training tool to help improve musical perception.
+这是一款简单的视唱练耳工具，帮助提高乐感。
 
-## Core Features
-- [Ear Training](https://musictrainer.barnman.cc/ear-trainer)
-   - Pitch Recognition: Practice recognizing pitches to improve musical hearing. I think intervals are useless.
-   - Practice Statistics: Practice data is stored locally, allowing you to track your progress at any time.
-   - Keyboard and MIDI Input Support: Practice using either a keyboard or MIDI device.
-   - Handfree Mode: Practice without looking at the screen. Answer is given after a set time.
-   - Instrument sounds: Choose any instruments you like.
-- [Chord Training](https://musictrainer.barnman.cc/chord-trainer)
-   - Chord Selection and Practice: Select a chord type and play it using a MIDI device. After correctly playing it, the next chord will be generated.
-   - Random Chord Generation: Generate various chords for practice to improve playing speed.
-## Website Features
+## 核心功能
+- [听音训练](https://musictrainer.barnman.cc/ear-trainer)
+   - 音级识别: 练习识别音级，帮助提高音乐听觉。我觉得音程没用。
+   - 练习统计: 练习数据存储在本地，随时查看进展。
+   - 键盘与MIDI输入支持: 无论是使用键盘还是MIDI设备，都可以进行练习。
+   - 免提模式: 自动播报答案，双手离开键盘，不盯着屏幕也能练习。
+   - 多乐器支持：可以选择多种音色。
+- [和弦训练](https://musictrainer.barnman.cc/chord-trainer)
+   - 和弦选择与练习: 选择一种和弦类型并通过MIDI设备演奏，正确演奏后将生成下一个和弦。
+   - 随机和弦生成: 为您生成各种和弦进行练习，提高演奏速度。
+## 网站功能
 <img src="pics/image.png" alt="alt text" width="200" style="height: auto;" />
 <img src="pics/image1.png" alt="alt text" width="200" style="height: auto;" />
 <img src="pics/image3.png" alt="alt text" width="200" style="height: auto;" />
 <img src="pics/image2.png" alt="alt text" width="200" style="height: auto;" />
 
-## [Click here to visit the website](https://musictrainer.barnman.cc)
+## [点这里进入网站](https://musictrainer.barnman.cc)
 
-## Self-Hosting Instructions
-1. Clone the repository: `git clone my repo`
-2. Install Node.js v22 using nvm: `nvm install 22`
-3. Switch to Node.js v22: `nvm use 22`
-4. Install dependencies: `npm i`
-5. Start the development server: `npm run dev`
+## 自行托管方法
+1. 克隆仓库: `git clone my repo`
+2. 使用nvm安装Node.js v22: `nvm install 22`
+3. 切换到Node.js v22: `nvm use 22`
+4. 安装依赖: `npm i`
+5. 启动开发服务器: `npm run dev`
 
-Tested on: Node v22.7.0 (npm 10.8.2) `~/.local/share/nvm/v22.7.0/bin/node`
+测试环境: Node v22.7.0 (npm 10.8.2) `~/.local/share/nvm/v22.7.0/bin/node`
 
-## Thanks
+## 感谢下列仓库
 
-This project uses the following libraries:
-
-### Music Related
+### 音乐相关
 *   [tonal](https://github.com/tonaljs/tonal)
 *   [tone](https://tonejs.github.io/)
 *   [pitchfinder](https://github.com/danigb/pitchfinder)
 
-### UI Related
+### UI相关
 *   [@emotion/react](https://emotion.sh/docs/introduction)
 *   [@emotion/styled](https://emotion.sh/docs/introduction)
 *   [@fontsource/roboto](https://fonts.google.com/specimen/Roboto)
@@ -56,7 +54,7 @@ This project uses the following libraries:
 *   [uplot](https://github.com/leeoniya/uPlot)
 *   [zustand](https://github.com/pmndrs/zustand)
 
-### Performance Related
+### 性能相关
 *   [i18next](https://www.i18next.com/)
 *   [i18next-browser-languagedetector](https://github.com/i18next/i18next-browser-languagedetector)
 *   [i18next-http-backend](https://github.com/i18next/i18next-http-backend)
