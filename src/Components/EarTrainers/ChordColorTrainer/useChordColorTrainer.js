@@ -37,12 +37,6 @@ const useChordColorTrainer = (chordPlayOption) => {
     piano.setVolume(pianoVolume);
   }, [droneVolume, pianoVolume, rootNote]);
 
-  // 音色变化时切换采样器
-  useEffect(() => {
-    if (piano && piano.changeSampler) {
-      piano.changeSampler(selectedInstrument, 'low');
-    }
-  }, [selectedInstrument]);
 
   useEffect(() => {
     const newChord = generateRandomChord();
@@ -181,7 +175,6 @@ const useChordColorTrainer = (chordPlayOption) => {
   };
 
   useEffect(() => {
-    console.log(isAdvance)
     if (isAdvance === 'Pending') {
       if (activeNotes.length === 0) {
         setIsAdvance('Now');
@@ -197,10 +190,8 @@ const useChordColorTrainer = (chordPlayOption) => {
         const chordType = currentChord.chordType;
         const chord = note + chordType;
         const isCorrect = compareChords(detectedChords, chord);
-        console.log('detectedChords', detectedChords, 'currentChord', currentChord, 'isCorrect', isCorrect);
         if (isCorrect) {
           if (activeNotes.length >= 6) {
-            console.log(activeNotes.length);
             setIsAdvance('Pending');  // Changed from 'Now' to 'Pending'
           } else {
             setIsAdvance('Ready');  // Unchanged
@@ -218,18 +209,15 @@ const useChordColorTrainer = (chordPlayOption) => {
 
     const chordType = numeral.slice(numeralDegree.length);
     const chord = Chord.get(note + chordType);
-    console.log(chord)
     const chordRange = [
       range[0],
       Note.fromMidi(Note.midi(range[1]) + Interval.semitones('P8')),
     ];
     const dictionary = VoicingDictionary.rootPosition;
     const possibleChords = Voicing.search(chord.symbol, chordRange, dictionary);
-    console.log('possibleChords', possibleChords)
     const notes = possibleChords[
       Math.floor(Math.random() * possibleChords.length)
     ];
-    console.log('notes', notes)
     return notes;
   };
 

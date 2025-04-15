@@ -1,6 +1,6 @@
 import { useLocalStorage } from '@uidotdev/usehooks';
 import { useEffect, useState, useCallback } from 'react';
-import { getSamplerInstance, getDroneInstance } from '@utils/ToneInstance';
+import { getSamplerInstance, getDroneInstance, playNotes } from '@utils/ToneInstance';
 import { debounce } from 'lodash-es';
 
 const useSoundSettings = () => {
@@ -22,34 +22,44 @@ const useSoundSettings = () => {
   };
 
   // Debounced effect updates
-  const updateDroneEffects = useCallback(debounce(() => {
-    const drone = getDroneInstance();
-    if (drone) {
-      drone.sampler.setPan(dronePan);
-      drone.sampler.setFilterFrequency(droneFilter);
-    }
-  }, 300), [dronePan, droneFilter]);
+  // const updateDroneEffects = useCallback(debounce(() => {
+  //   const drone = getDroneInstance();
+  //   if (drone) {
+  //     drone.sampler.setPan(dronePan);
+  //     drone.sampler.setFilterFrequency(droneFilter);
+  //   }
+  // }, 300), [dronePan, droneFilter]);
 
-  useEffect(() => {
-    updateDroneEffects();
-  }, [dronePan, droneFilter, updateDroneEffects]);
+  // useEffect(() => {
+  //   updateDroneEffects();
+  // }, [dronePan, droneFilter, updateDroneEffects]);
 
-  useEffect(() => {
-    async function changeInstrument() {
-      const sampler = getSamplerInstance();
-      if (!sampler) return;
-      setIsLoadingInstrument(true);
-      setTimeout(async () => {
-        await sampler.changeSampler(selectedInstrument, selectedQuality);
-        console.log("changed");
-        setIsLoadingInstrument(false);
-      }, 10);
+  const changeInstrumentCallback = useCallback(async (newInstrument, newQuality) => {
+    console.log("Changing instrument to:", newInstrument, "Quality:", newQuality);
+    const sampler = getSamplerInstance();
+    if (!sampler) return;
+    setIsLoadingInstrument(true);
+    try {
+      // Using setTimeout to ensure state update happens before heavy load
+      await sampler.changeSampler(newInstrument, newQuality);
+      // Update state only after successful change
+      setSelectedInstrument(newInstrument);
+      setSelectedQuality(newQuality);
+    } catch (error) {
+      console.error("Failed to change instrument:", error);
+      // Optionally revert state or show error to user
+    } finally {
+      console.log("finalizing")
+      setIsLoadingInstrument(false);
+      playNotes(['C3']);
     }
-    changeInstrument();
-  }, [selectedInstrument, selectedQuality]);
+  }, [setIsLoadingInstrument, setSelectedInstrument, setSelectedQuality]);
+
 
   return {
     selectedInstrument,
+    // Keep setSelectedInstrument/Quality for direct state updates if needed elsewhere,
+    // but primary change mechanism is now the callback.
     setSelectedInstrument,
     selectedQuality,
     setSelectedQuality,
@@ -59,7 +69,8 @@ const useSoundSettings = () => {
     setDroneFilter,
     isLoadingInstrument,
     setIsLoadingInstrument,
-    clamps
+    clamps,
+    changeInstrumentCallback // Expose the new callback
   };
 };
 

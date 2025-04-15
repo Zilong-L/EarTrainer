@@ -12,34 +12,27 @@ import useSoundSettings from './useSoundSettings';
 function SoundSettings() {
   const { t } = useTranslation('degreeTrainer');
   const {
-
     selectedInstrument,
-    setSelectedInstrument,
     isLoadingInstrument,
     selectedQuality,
-    setSelectedQuality,
     dronePan,
     setDronePan,
     droneFilter,
     setDroneFilter,
-    clamps
+    clamps,
+    changeInstrumentCallback // Destructure the new callback
   } = useSoundSettings();
 
-  const handleInstrumentSelect = (instrument) => {
-    setSelectedInstrument(instrument);
-  };
 
-  useEffect(() => {
-    console.log(isLoadingInstrument)
-    if (!isLoadingInstrument) {
-      playNotes(['C3']);
-    }
-  }, [isLoadingInstrument]);
 
-  const handleQualityChange = (event) => {
-    setSelectedQuality(event.target.value);
-    console.log(`Quality set to: ${event.target.value}`);
-  };
+  // useEffect(() => {
+  //   if (!isLoadingInstrument) {
+  //     console.log('play')
+
+  //   }
+  // }, [isLoadingInstrument]);
+
+  // Removed handleQualityChange function
   console.log(clamps)
   return (
     <div className="p-6 space-y-12 max-w-[800px] mx-auto">
@@ -50,7 +43,7 @@ function SoundSettings() {
         </label>
         <select
           value={selectedQuality}
-          onChange={handleQualityChange}
+          onChange={(event) => changeInstrumentCallback(selectedInstrument, event.target.value)}
           disabled={isLoadingInstrument}
           className="w-full px-4 py-2 border border-bg-accent rounded-lg bg-bg-main text-text-primary focus:ring-2 focus:ring-accent focus:border-accent disabled:opacity-50"
         >
@@ -101,7 +94,7 @@ function SoundSettings() {
         {instrumentsList.map((instrument) => (
           <button
             key={instrument}
-            onClick={() => handleInstrumentSelect(instrument)}
+            onClick={() => changeInstrumentCallback(instrument, selectedQuality)}
             disabled={isLoadingInstrument}
             className={`px-4 py-2 rounded-lg transition-all capitalize
               ${selectedInstrument === instrument

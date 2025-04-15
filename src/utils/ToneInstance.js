@@ -28,11 +28,7 @@ let globalSampler = null;
 
 // **获取全局 Sampler**
 function getSamplerInstance() {
-  if (!globalSampler) {
-  }
-  else {
-    return globalSampler;
-  }
+  return globalSampler;
 }
 
 // **创建新的 Sampler**
@@ -76,7 +72,6 @@ class SamplerManager {
     });
 
     await Tone.loaded();
-    console.log(newSampler)
     this.sampler.disconnect();
     newSampler.chain(this.filter, this.panner, this.gainNode, globalChorous);
     this.sampler.dispose();
@@ -165,6 +160,7 @@ function playNotes(input, delay = 0.05, bpm = 60) {
 
   const pianoInstance = getSamplerInstance();
   const { sampler } = pianoInstance;
+  console.log(sampler)
 
   // 处理 MIDI 输入和音符字符串输入
   const notes = Array.isArray(input) ? input : [input];
