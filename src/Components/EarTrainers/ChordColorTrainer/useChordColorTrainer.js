@@ -104,80 +104,76 @@ const useChordColorTrainer = (chordPlayOption) => {
     }
 
     const t = 60 / bpm; // Time unit based on bpm
-    const events = [];
+    let events = null;
     let reversedNotes; // Declare reversedNotes outside the switch
 
     switch (chordPlayOption) {
       case 'random':
         // Implement random chord play logic
         const randomNotes = [...notes].sort(() => Math.random() - 0.5);
-        randomNotes.forEach((note, i) => {
-          events.push({
-            note: note,
-            time: i * 0.25 * t, // Relative time
-            duration: 2 * t, // Sustain notes
-          });
-        });
+        events = randomNotes.map((note, i) => ({
+          note: note,
+          time: i * 0.25 * t, // Relative time
+          duration: 2 * t, // Sustain notes
+        }));
         break;
       case 'ascending':
         // Implement ascending chord play logic
-        notes.forEach((note, i) => {
-          events.push({
-            note: note,
-            time: i * 0.25 * t, // Relative time
-            duration: 2 * t, // Sustain notes
-          });
-        });
+        events = notes.map((note, i) => ({
+          note: note,
+          time: i * 0.25 * t, // Relative time
+          duration: 2 * t, // Sustain notes
+        }));
         break;
       case 'descending':
         // Implement descending chord play logic
         reversedNotes = notes.slice().reverse();
-        reversedNotes.forEach((note, i) => {
-          events.push({
-            note: note,
-            time: i * 0.25 * t, // Relative time
-            duration: 2 * t, // Sustain notes
-          });
-        });
+        events = reversedNotes.map((note, i) => ({
+          note: note,
+          time: i * 0.25 * t, // Relative time
+          duration: 2 * t, // Sustain notes
+        }));
         break;
       default:
         // Default: Original pattern provided by user
         // 1. Upscale arpeggio
-        notes.forEach((note, i) => {
-          events.push({
-            note: note,
-            time: i * 0.25 * t, // Relative time
-            duration: (4 - i * 0.25) * t,
-          });
-        });
+        const upscaleArpeggioEvents = notes.map((note, i) => ({
+          note: note,
+          time: i * 0.25 * t, // Relative time
+          duration: (4 - i * 0.25) * t,
+        }));
 
         // 2. First full chord
-        notes.forEach((note) => {
-          events.push({
-            note: note,
-            time: 2 * t, // After upscale
-            duration: 2 * t,
-          });
-        });
+        const firstFullChordEvents = notes.map((note) => ({
+          note: note,
+          time: 2 * t, // After upscale
+          duration: 2 * t,
+        }));
 
         // 3. Downscale arpeggio
         reversedNotes = notes.slice().reverse(); // Assign here
-        reversedNotes.forEach((note, i) => {
-          events.push({
-            note: note,
-            time: (4 + 0.25 * i) * t, // After first full chord
-            duration: (4 - i * 0.25) * t, // Simplified duration
-          });
-        });
+        const downscaleArpeggioEvents = reversedNotes.map((note, i) => ({
+          note: note,
+          time: (4 + 0.25 * i) * t, // After first full chord
+          duration: (4 - i * 0.25) * t, // Simplified duration
+        }));
 
         // 4. Second full chord
-        notes.forEach((note) => {
-          events.push({
-            note: note,
-            time: 6 * t, // After downscale
-            duration: 2 * t,
-          });
-        });
+        const secondFullChordEvents = notes.map((note) => ({
+          note: note,
+          time: 6 * t, // After downscale
+          duration: 2 * t,
+        }));
+
+        events = [...upscaleArpeggioEvents, ...firstFullChordEvents, ...downscaleArpeggioEvents, ...secondFullChordEvents];
+        break;
+      case 'block':
+        // Implement block chord play logic
+        events = notes.map((note) => ({
+          note: note,
+          time: 0, // All notes at the same time
+          duration: 2 * t, // Sustain notes
+        }));
         break;
     }
 

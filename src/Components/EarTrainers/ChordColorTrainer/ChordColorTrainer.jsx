@@ -144,9 +144,10 @@ const EarTrainer = () => {
               onChange={(e) => useChordColorTrainerSettingsStore.getState().setChordPlayOption(e.target.value)}
             >
               <option value="default">Default</option>
-              <option value="random">Random</option>
-              <option value="ascending">Ascending</option>
+              <option value="block">Block</option>
               <option value="descending">Descending</option>
+              <option value="ascending">Ascending</option>
+              <option value="random">Random</option>
             </select>
           </div>
           <MIDIInputHandler
