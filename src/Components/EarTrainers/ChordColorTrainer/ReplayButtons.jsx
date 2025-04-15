@@ -43,11 +43,11 @@ const DesktopReplayButtons = ({
             </MotionButton>
             <MotionButton
                 onClick={() => setIsAdvance('Now')}
-                className={`w-32 h-32 text-4xl ${isAdvance === 'Ready' ? 'bg-green-500 text-white' : 'bg-bg-accent text-text-primary'}`}
+                className={`w-32 h-32 text-4xl ${isAdvance === 'No' ? 'bg-bg-accent text-text-primary' : isAdvance === "Pending" ? 'bg-green-700 text-white' : 'bg-green-500 text-white'}`}
             >
                 {t('buttons.next')}
             </MotionButton>
-        </div>
+        </div >
     );
 };
 

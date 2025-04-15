@@ -185,20 +185,34 @@ const useChordColorTrainer = (chordPlayOption) => {
   };
 
   useEffect(() => {
+    console.log(isAdvance)
+    if (isAdvance === 'Pending') {
+      if (activeNotes.length === 0) {
+        setIsAdvance('Now');
+      }
+      return;  // Early return
+    }
+
     if (activeNotes && activeNotes.length > 0) {
       const detectedChords = getChords(activeNotes);
       if (detectedChords && detectedChords.length > 0) {
         const steps = DegreeToDistance[currentChord.degree] || 0;
         const note = Midi.midiToNoteName(Midi.toMidi(rootNote) + steps).slice(0, -1);
         const chordType = currentChord.chordType;
-        const chord = note + chordType
+        const chord = note + chordType;
         const isCorrect = compareChords(detectedChords, chord);
+        console.log('detectedChords', detectedChords, 'currentChord', currentChord, 'isCorrect', isCorrect);
         if (isCorrect) {
-          setIsAdvance('Ready');
+          if (activeNotes.length >= 6) {
+            console.log(activeNotes.length);
+            setIsAdvance('Pending');  // Changed from 'Now' to 'Pending'
+          } else {
+            setIsAdvance('Ready');  // Unchanged
+          }
         }
       }
     }
-  }, [activeNotes, currentChord, rootNote]);
+  }, [activeNotes, currentChord, rootNote, isAdvance]);  // Added isAdvance to dependencies
 
   const getNotesForChord = (numeral) => {
 
@@ -225,7 +239,7 @@ const useChordColorTrainer = (chordPlayOption) => {
 
   const handleChordGuess = (guessedChord) => {
     // If in 'Ready' state, just play the sound for comparison, don't guess/record/disable
-    if (isAdvance === 'Ready') {
+    if (isAdvance !== 'No') {
       const notes = getNotesForChord(guessedChord);
       playChordColorPattern(notes);
       setActiveChord(null); // Reset active chord after playing
