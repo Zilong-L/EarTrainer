@@ -9,15 +9,6 @@ const useChordGameSettings = () => {
   const drone = getDroneInstance();
   const piano = getSamplerInstance();
   const sound = useSoundSettings();
-  const { selectedInstrument, selectedQuality, setIsLoadingInstrument } = sound
-  useEffect(() => {
-    const loadInstrument = async () => {
-      setIsLoadingInstrument(true);
-      await getSamplerInstance().changeSampler(selectedInstrument, selectedQuality);
-      setIsLoadingInstrument(false);
-    };
-    loadInstrument();
-  }, [selectedInstrument, selectedQuality]);
 
   // Update drone root note
 
