@@ -30,7 +30,7 @@ const EarTrainer = () => {
     chordPlayOption
   } = useChordColorTrainerSettingsStore();
   const {
-    currentNote,
+    currentChord,
     disabledChords,
     gameStarted,
     filteredChords,
@@ -107,7 +107,7 @@ const EarTrainer = () => {
   //   return () => {
   //     window.removeEventListener('keydown', handleKeyPress);
   //   };
-  // }, [rootNote, currentNote]);
+  // }, [rootNote, currentChord]);
 
   const handlePlayChordColorPattern = async () => {
     if (isLoadingInstrument) return;
@@ -160,7 +160,6 @@ const EarTrainer = () => {
           <MIDIInputHandler
             activeNotes={activeNotes}
             setActiveNotes={setActiveNotes}
-            targetChord={currentNote}
             playMidiSounds={playMidiSounds}
           />
           <div className="pr-4">
@@ -183,11 +182,12 @@ const EarTrainer = () => {
           <div className="flex flex-col justify-end">
             <div className="flex-grow" />
             <CardStack
-              currentNote={currentNote}
+              currentChord={currentChord}
               disabledChords={disabledChords}
               filteredChords={filteredChords}
               setActiveChord={setActiveChord}
               rootNote={rootNote}
+              isAdvance={isAdvance}
               gameStarted={gameStarted}
             />
             <DesktopReplayButtons

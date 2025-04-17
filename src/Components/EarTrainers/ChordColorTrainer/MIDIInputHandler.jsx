@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { getChords, getNiceChordName } from '@utils/ChordTrainer/GameLogics';
 import PianoVisualizer from '@components/SharedComponents/PianoVisualizer';
 
-const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord, playMidiSounds }) => {
+const MIDIInputHandler = ({ activeNotes, setActiveNotes, playMidiSounds }) => {
   const playMidiSoundsRef = useRef(playMidiSounds);  // Initialize with the prop value
 
   useEffect(() => {

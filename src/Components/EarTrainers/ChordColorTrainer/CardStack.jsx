@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import Button from '@components/SharedComponents/Button';
 import { motion } from "motion/react";
 
-const isCorrect = (noteName, currentNote) => {
-    if (!currentNote) return false;
-    return noteName === currentNote;
+const isCorrect = (chordName, currentChord) => {
+    if (!currentChord) return false;
+    return chordName === `${currentChord.degree}${currentChord.chordType}`;
 };
 
 const CardStack = ({
-    currentNote,
+    currentChord,
     disabledChords,
     filteredChords,
     setActiveChord,
     rootNote,
+    isAdvance,
     gameState,
     gameStarted
 }) => {
@@ -25,7 +26,7 @@ const CardStack = ({
                     {filteredChords.slice(0, 12).map((chord, index) => {
                         // const noteName = Tone.Frequency(rootNote + chord.distance, 'midi').toNote().slice(0, -1);
                         const chordName = `${chord.degree}${chord.chordType}`;
-                        const isCorrectAnswer = isCorrect(chordName, currentNote);
+                        const isCorrectAnswer = isCorrect(chordName, currentChord);
                         const isDisabled = disabledChords.some((disabledChord) => chordName === disabledChord);
                         const totalCards = filteredChords.length;
 
@@ -48,13 +49,13 @@ const CardStack = ({
                             <motion.div
                                 key={chordName}
                                 initial={{ x: offsetX, rotateZ: rotation, y: verticalOffset, scale: 1 }}
-                                animate={{ x: offsetX, rotateZ: rotation, y: verticalOffset, scale: 1, transition: { duration: 0.2, ease: 'linear' } }}
+                                animate={{ x: offsetX, rotateZ: rotation, y: verticalOffset, scale: 1 }}
                                 whileHover={{ scale: 1.3, rotateZ: 0, y: 0, zIndex: 50, transition: { duration: 0.1, ease: 'linear' } }}
                                 whileDrag={{ scale: 1.3, zIndex: 50, rotateZ: 0 }}
                                 dragSnapToOrigin
                                 className={`absolute h-32 w-24 md:h-[14rem] md:w-[10rem] rounded-xl shadow-lg flex flex-col 
-                  items-center justify-between py-4 text-2xl md:text-3xl font-bold 
-                  ${isCorrectAnswer ? 'bg-gradient-to-b from-green-600 to-green-400' : 'bg-bg-accent text-text-primary'}
+                  items-center justify-between py-4 text-2xl md:text-3xl font-bold  transition-colors bg-bg-accent text-text-primary
+                  ${isAdvance != 'No' && isCorrectAnswer ? 'bg-gradient-to-b from-green-600 to-green-400' : ''}
                   ${isDisabled ? 'opacity-50 pointer-events-none' : ''}`}
                                 style={{
                                     left,
@@ -79,16 +80,15 @@ const CardStack = ({
                 {filteredChords.map((chord) => {
                     // const noteName = Tone.Frequency(rootNote + chord.distance, 'midi').toNote().slice(0, -1);
                     const chordName = `${chord.degree}${chord.chordType}`;
-                    const isCorrectAnswer = isCorrect(chordName, currentNote);
-
+                    const isCorrectAnswer = isCorrect(chordName, currentChord);
+                    console.log(currentChord, chordName, isCorrectAnswer);
                     return (
                         <Button
                             key={chordName}
                             variant="primary"
                             onClick={() => setActiveChord(chordName)}
-                            className={`h-16 text-2xl relative ${isCorrectAnswer ? 'correct-answer' : ''}`}
+                            className={`h-16 text-2xl relative transition-colors ${isAdvance != 'No' && isCorrectAnswer ? 'bg-green-500' : ''}`}
                             disabled={disabledChords.some(disabledChord => chordName === disabledChord)}
-                        // data-note={noteName}
                         >
                             {chordName}
                         </Button>
@@ -99,4 +99,4 @@ const CardStack = ({
     );
 };
 
-export default CardStack; 
+export default CardStack;

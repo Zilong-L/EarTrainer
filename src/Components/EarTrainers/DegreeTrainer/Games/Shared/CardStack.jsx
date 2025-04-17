@@ -49,8 +49,8 @@ const CardStack = ({
             return <motion.div
               key={noteName}
               initial={{ x: offsetX, rotateZ: rotation, y: verticalOffset, scale: 1 }}
-              animate={{ x: offsetX, rotateZ: rotation, y: verticalOffset, scale: 1,transition:{duration:0.2,ease:'linear' } }}
-              whileHover={{ scale: 1.3, rotateZ: 0, y: 0, zIndex: 50 ,transition:{duration:0.1,ease:'linear' }}}
+              animate={{ x: offsetX, rotateZ: rotation, y: verticalOffset, scale: 1, transition: { duration: 0.2, ease: 'linear' } }}
+              whileHover={{ scale: 1.3, rotateZ: 0, y: 0, zIndex: 50, transition: { duration: 0.1, ease: 'linear' } }}
               whileDrag={{ scale: 1.3, zIndex: 50, rotateZ: 0, }}
               drag
               dragSnapToOrigin
@@ -80,29 +80,37 @@ const CardStack = ({
 
         </div>
       </div>
-      <div className={`grid grid-cols-3 gap-4 mb-4 lg:hidden ${gameState == 'end' ? 'hidden' : ''}`}>
-        {filteredNotes.map((note) => {
+      <div className={`flex flex-wrap justify-center gap-3 mb-4 lg:hidden ${gameState == 'end' ? 'hidden' : ''}`}>
+        {filteredNotes.map((note, index) => {
           const noteName = Tone.Frequency(Tone.Frequency(rootNote).toMidi() + note.distance, 'midi').toNote();
           const isCorrectAnswer = isCorrect(noteName, currentNote) && isAdvance !== 'No';
+          const isDisabled = disabledNotes.some(disabledNote =>
+            noteName.slice(0, -1) === disabledNote.slice(0, -1)
+          );
 
           return (
-            <Button
+            <motion.div
               key={note.name}
-              variant="primary"
-              onClick={() => setActiveNote(noteName)}
-              className={`h-16 text-2xl relative ${isCorrectAnswer ? 'correct-answer' : ''}`}
-              style={isCorrectAnswer && isAdvance ? {
-                '--x': `${Math.random() * 100}%`,
-                '--y': `${Math.random() * 100}%`,
-                '--animation-duration': `${(60 / bpm) * 1.5}s`
-              } : {}}
-              disabled={disabledNotes.some(disabledNote =>
-                noteName.slice(0, -1) === disabledNote.slice(0, -1)
-              )}
-              data-note={noteName.slice(0, -1)}
+              initial={{ scale: 1 }}
+
+              whileTap={{ scale: 0.95 }}
+              className="w-[30%]"
             >
-              {useSolfege ? SolfegeMapping[note.name] || note.name : note.name}
-            </Button>
+              <Button
+                variant="primary"
+                onClick={() => setActiveNote(noteName)}
+                className={`h-16 w-full text-2xl relative transition-[background-color] duration-[300ms] ${isCorrectAnswer ? 'bg-gradient-to-br  from-green-400 to-green-600' : ''} ${isDisabled ? 'opacity-50' : ''}`}
+                style={isCorrectAnswer && isAdvance ? {
+                  '--x': `${Math.random() * 100}%`,
+                  '--y': `${Math.random() * 100}%`,
+                  '--animation-duration': `${(60 / bpm) * 1.5}s`
+                } : {}}
+                disabled={isDisabled}
+                data-note={noteName.slice(0, -1)}
+              >
+                {useSolfege ? SolfegeMapping[note.name] || note.name : note.name}
+              </Button>
+            </motion.div>
           );
         })}
       </div>

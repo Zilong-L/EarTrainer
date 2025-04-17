@@ -7,7 +7,8 @@ import Header from '@components/SharedComponents/Header';
 import HeaderTitle from '@components/SharedComponents/HeaderTitle';
 import HeaderButtons from '@components/SharedComponents/HeaderButtons';
 import HeaderButton from '@components/SharedComponents/HeaderButton';
-import { FireIcon } from '@heroicons/react/24/outline'
+import { RadioIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
+
 
 import SettingsPanel from '@components/SharedComponents/Settings/SettingsPanel';
 import LanguageSwitcher from '@components/SharedComponents/LanguageSwitcher';
@@ -52,6 +53,7 @@ const EarTrainer = () => {
     filteredNotes,
     setGameState,
     currentNote,
+    gameState
   } = currentGameSettings;
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -172,15 +174,16 @@ const EarTrainer = () => {
             {t('home.title')}
           </Link>
         </HeaderTitle>
-        <HeaderButtons>
-          <LanguageSwitcher />
-          <HeaderButton
+        <HeaderButtons title="pocket mode!">
+          {gameState != 'end' && <HeaderButton
             onClick={() => setIsHandfree(!isHandfree)}
             title={isHandfree ? t('buttons.handfreeOff') : t('buttons.handfreeOn')}
             className={isHandfree ? 'bg-bg-common' : 'bg-text-main text-text-main'}
           >
-            <span ><FireIcon className='h-6 w-6' /></span>
-          </HeaderButton>
+            <span ><RadioIcon className='h-6 w-6' /></span>
+          </HeaderButton>}
+          <LanguageSwitcher />
+
           <HeaderButton onClick={() => openSettings()}>
             <Cog6ToothIcon className="h-6 w-6" />
           </HeaderButton>
@@ -191,7 +194,7 @@ const EarTrainer = () => {
               rel="noopener noreferrer"
               className="text-inherit no-underline block "
             >
-              {t('buttons.help')}
+              <QuestionMarkCircleIcon className='h-6 w-6' />
             </a>
           </HeaderButton>
         </HeaderButtons>

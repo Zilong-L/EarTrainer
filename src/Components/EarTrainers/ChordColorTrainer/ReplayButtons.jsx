@@ -112,7 +112,7 @@ const PhoneReplayButtons = ({
             <Button
                 onClick={() => setIsAdvance('Now')}
                 disabled={isLoadingInstrument}
-                className={`w-full h-16 text-4xl rounded-lg transition-colors flex items-center justify-center ${isAdvance === 'Ready' ? 'bg-green-500 text-white' : 'bg-bg-common hover:bg-bg-hover text-text-main'} ${isLoadingInstrument ? 'opacity-50' : ''}`}
+                className={`w-full h-16 text-4xl rounded-lg transition-colors flex items-center justify-center bg-bg-common hover:bg-bg-hover text-text-main ${isAdvance === 'No' ? 'bg-bg-accent text-text-primary' : isAdvance === "Pending" ? 'bg-green-700 text-white' : 'bg-green-500 text-white'} ${isLoadingInstrument ? 'opacity-50' : ''}`}
             >
                 {t('buttons.next')}
             </Button>
