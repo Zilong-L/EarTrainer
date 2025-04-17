@@ -36,6 +36,7 @@
 *   [tonal](https://github.com/tonaljs/tonal)
 *   [tone](https://tonejs.github.io/)
 *   [pitchfinder](https://github.com/danigb/pitchfinder)
+*   [tonejs-instruments](https://github.com/nbrosowsky/tonejs-instruments)
 
 ### UI相关
 *   [@emotion/react](https://emotion.sh/docs/introduction)

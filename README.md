@@ -38,6 +38,7 @@ This project uses the following libraries:
 *   [tonal](https://github.com/tonaljs/tonal)
 *   [tone](https://tonejs.github.io/)
 *   [pitchfinder](https://github.com/danigb/pitchfinder)
+*   [tonejs-instruments](https://github.com/nbrosowsky/tonejs-instruments)
 
 ### UI Related
 *   [@emotion/react](https://emotion.sh/docs/introduction)
