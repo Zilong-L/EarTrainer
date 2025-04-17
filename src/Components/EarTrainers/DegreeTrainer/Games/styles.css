@@ -3,14 +3,34 @@
     transform: scale(0);
     opacity: 0.2;
   }
+
   30% {
     transform: scale(3);
     opacity: 0.2;
   }
+
   100% {
     transform: scale(3);
     opacity: 0.2;
   }
+}
+
+@keyframes floatNote {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scale(1.2);
+  }
+}
+
+.note-float {
+  position: absolute;
+  animation: floatNote 1.2s ease-out forwards;
+  pointer-events: none;
 }
 
 .correct-answer {
@@ -24,7 +44,8 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background: rgb(147, 255, 24); /* Tailwind purple-300 */
+  background: rgb(147, 255, 24);
+  /* Tailwind purple-300 */
   border-radius: 50%;
   width: 100%;
   padding-bottom: 100%;

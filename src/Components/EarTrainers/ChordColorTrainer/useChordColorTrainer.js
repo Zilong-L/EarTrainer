@@ -70,7 +70,7 @@ const useChordColorTrainer = (chordPlayOption) => {
     Tone.getTransport().position = 0;
     Tone.getTransport().cancel();
     setGameStarted(true);
-    setIsAdvance('Now'); // Start with advancing to the first chord
+    playChordColorPattern(currentChord.notes);
     Tone.getTransport().start();
   };
 

@@ -10,11 +10,13 @@ interface SoundSettingsState {
     dronePan: number;
     droneFilter: number;
     isLoadingInstrument: boolean;
+    playMidiSounds: boolean;
     setSelectedInstrument: (instrument: string) => void;
     setSelectedQuality: (quality: string) => void; // Consider union type here too
     setDronePan: (pan: number) => void;
     setDroneFilter: (filter: number) => void;
     setIsLoadingInstrument: (loading: boolean) => void;
+    setPlayMidiSounds: (playMidiSounds: boolean) => void;
     changeInstrument: (newInstrument: string, newQuality: string) => Promise<void>;
 }
 
@@ -78,11 +80,13 @@ export const useSoundSettingsStore = create<SoundSettingsState>()( // Use the ()
             dronePan: 0,
             droneFilter: 1200,
             isLoadingInstrument: false,
+            playMidiSounds: true,
             setSelectedInstrument: (instrument) => set({ selectedInstrument: instrument }),
             setSelectedQuality: (quality) => set({ selectedQuality: quality }),
             setDronePan: (pan) => set({ dronePan: pan }),
             setDroneFilter: (filter) => set({ droneFilter: filter }),
             setIsLoadingInstrument: (loading) => set({ isLoadingInstrument: loading }),
+            setPlayMidiSounds: (playMidiSounds) => set({ playMidiSounds }),
             changeInstrument: async (newInstrument, newQuality) => {
                 console.log("Changing instrument to:", newInstrument, "Quality:", newQuality);
                 const sampler = getSamplerInstance();

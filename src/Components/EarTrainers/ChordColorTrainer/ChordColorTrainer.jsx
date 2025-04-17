@@ -50,8 +50,6 @@ const EarTrainer = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  const playMidiSounds = useChordColorTrainerSettingsStore((state) => state.playMidiSounds);
-  const setPlayMidiSounds = useChordColorTrainerSettingsStore((state) => state.setPlayMidiSounds);
 
   const isLoadingInstrument = useSoundSettingsStore(state => state.isLoadingInstrument);
 
@@ -160,7 +158,6 @@ const EarTrainer = () => {
           <MIDIInputHandler
             activeNotes={activeNotes}
             setActiveNotes={setActiveNotes}
-            playMidiSounds={playMidiSounds}
           />
           <div className="pr-4">
             <ChordColorTrainerSettings
@@ -171,12 +168,7 @@ const EarTrainer = () => {
           </div>
 
           {/* Add the new button as a fixed element on the right */}
-          <button
-            onClick={() => setPlayMidiSounds(!playMidiSounds)}
-            className="fixed right-4 bottom-4 bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            {playMidiSounds ? 'Mute MIDI Sounds' : 'Enable MIDI Sounds'}
-          </button>
+
 
           {/* {gameStarted && isStatOpen && renderRecords()} */}
           <div className="flex flex-col justify-end">

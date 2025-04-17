@@ -84,7 +84,6 @@ const CardStack = ({
                     // const noteName = Tone.Frequency(rootNote + chord.distance, 'midi').toNote().slice(0, -1);
                     const chordName = `${chord.degree}${chord.chordType} `;
                     const isCorrectAnswer = isCorrect(chordName, currentChord);
-                    console.log(currentChord, chordName, isCorrectAnswer);
                     return (
                         <Button
                             key={chordName}

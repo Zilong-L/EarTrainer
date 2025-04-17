@@ -3,14 +3,18 @@ import { Note, Chord } from 'tonal';
 import { getSamplerInstance } from '@utils/Tone/samplers';
 import { useTranslation } from 'react-i18next';
 import { getChords, getNiceChordName } from '@utils/ChordTrainer/GameLogics';
-import PianoVisualizer from '@components/SharedComponents/PianoVisualizer';
+import { Portal } from '@headlessui/react';
+import { useSoundSettingsStore } from '@stores/soundSettingsStore';
+import PianoVisualizer from './PianoVisualizer';
+const MIDIInputHandler = ({ activeNotes, setActiveNotes }) => {
 
-const MIDIInputHandler = ({ activeNotes, setActiveNotes, playMidiSounds }) => {
-  const playMidiSoundsRef = useRef(playMidiSounds);  // Initialize with the prop value
-
+  const playMidiSounds = useSoundSettingsStore((state) => state.playMidiSounds);
+  const setPlayMidiSounds = useSoundSettingsStore((state) => state.setPlayMidiSounds);
+  const playMidiSoundsRef = useRef(playMidiSounds);
   useEffect(() => {
-    playMidiSoundsRef.current = playMidiSounds;  // Update ref when prop changes
+    playMidiSoundsRef.current = playMidiSounds;
   }, [playMidiSounds]);
+
   // Removed duplicate declaration to fix TypeScript error
   const [showDegree, setShowDegree] = useState(false);
   const { t } = useTranslation('chordGame');
@@ -29,7 +33,7 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes, playMidiSounds }) => {
     const [command, note, velocity] = message.data;
     const pianoSampler = getSamplerInstance().sampler;
 
-    if (command === 176 && note === 64 && playMidiSoundsRef.current) {
+    if (command === 176 && note === 64) {
       sustainActive = velocity > 0;
 
       if (!sustainActive) {
@@ -47,6 +51,7 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes, playMidiSounds }) => {
       if (playMidiSoundsRef.current) {
         pianoSampler.triggerAttack(Note.fromMidi(note), undefined, velocity / 128);
       }
+
       pressingNotes.add(note);
       sustainedNotesSet.add(note);
     } else if (command === 128 || (command === 144 && velocity === 0)) {
@@ -90,9 +95,12 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes, playMidiSounds }) => {
 
   return (
     <div className="w-full space-y-4 ">
-
-    </div>
+      <Portal>
+        <PianoVisualizer detectedChords={detectedChords} activeNotes={activeNotes} />
+      </Portal>
+    </div >
   );
 };
 
 export default MIDIInputHandler;
+

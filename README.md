@@ -1,5 +1,5 @@
 # [Music Refugee](https://musictrainer.barnman.cc)
-[中文](README.md) | English
+[中文](README_zh.md) | English
 
 This is a simple sight-singing and ear-training tool to help improve musical perception.
 
