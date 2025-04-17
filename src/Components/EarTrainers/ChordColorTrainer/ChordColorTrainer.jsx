@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import * as Tone from 'tone';
 import { Cog6ToothIcon } from '@heroicons/react/24/solid';
+import { useSoundSettingsStore } from '@stores/soundSettingsStore';
 import Header from '@components/SharedComponents/Header';
 import HeaderTitle from '@components/SharedComponents/HeaderTitle';
 import HeaderButtons from '@components/SharedComponents/HeaderButtons';
@@ -52,11 +53,15 @@ const EarTrainer = () => {
   const playMidiSounds = useChordColorTrainerSettingsStore((state) => state.playMidiSounds);
   const setPlayMidiSounds = useChordColorTrainerSettingsStore((state) => state.setPlayMidiSounds);
 
+  const isLoadingInstrument = useSoundSettingsStore(state => state.isLoadingInstrument);
+
   const handleStartGame = () => {
+    if (isLoadingInstrument) return;
     startGame();
   };
 
   const handlePlayTonic = () => {
+    if (isLoadingInstrument) return;
     playTonic();
   };
 
@@ -105,9 +110,11 @@ const EarTrainer = () => {
   // }, [rootNote, currentNote]);
 
   const handlePlayChordColorPattern = async () => {
+    if (isLoadingInstrument) return;
     await playChordColorPattern();
   }
   const handlePlayChord = async () => {
+    if (isLoadingInstrument) return;
     await playChord();
   };
 
@@ -191,6 +198,7 @@ const EarTrainer = () => {
               gameStarted={gameStarted}
               isAdvance={isAdvance}
               setIsAdvance={setIsAdvance}
+              isLoadingInstrument={isLoadingInstrument}
             />
             <PhoneReplayButtons
               handleStartGame={handleStartGame}
@@ -200,6 +208,7 @@ const EarTrainer = () => {
               gameStarted={gameStarted}
               isAdvance={isAdvance}
               setIsAdvance={setIsAdvance}
+              isLoadingInstrument={isLoadingInstrument}
             />
           </div>
         </div>
