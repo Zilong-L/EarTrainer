@@ -16,10 +16,10 @@ const MusicTrainer = () => {
           {/* 左侧主区域 - 点击跳转到 Degree Trainer */}
           <Link
             to="/ear-trainer/degree-trainer"
-            className="relative w-full bg-[#f4bc64] rounded-[40px] overflow-hidden"
+            className="relative w-full bg-[#f4bc64] rounded-[40px] overflow-hidden flex items-center"
           >
             {/* 内部内容容器 */}
-            <div className="grid p-2 md:p-0 md:absolute inset-0 z-0 md:flex md:items-center md:justify-center md:align-center">
+            <div className="grid p-2 md:p-0 md:absolute inset-0 z-0 md:flex items-center md:justify-center md:align-center">
               <p
                 className="row-start-1 flex-col md:absolute text-[#fafafa] font-normal leading-[125%] z-10 select-none text-[4rem] 
                 md:text-[16rem] md:-translate-x-[7rem] md:-translate-y-[15rem]"
@@ -54,13 +54,6 @@ const MusicTrainer = () => {
               to="/ear-trainer/chord-color-trainer"
               className="relative bg-[#89bee1] rounded-[40px] p-4 h-1/2 md:h-[44%] text-center flex flex-col justify-start items-center"
             >
-              <div className="text-black text-[2.5rem] font-normal  self-end mr-[2rem] 
-              md:self-center md:mr-0">
-                Chord Trainer
-              </div>
-              <div className="self-end mr-[2rem] text-black text-[1.5rem] font-normal ">
-                learn to hear
-              </div>
               <picture>
                 <source srcSet="imgs/Landing/dj.webp" type="image/webp" />
                 <img
@@ -70,6 +63,13 @@ const MusicTrainer = () => {
 
                 />
               </picture>
+              <div className="text-black text-[2.5rem] font-normal  self-end   mr-[2rem] 
+              md:self-center md:mr-0">
+                Chord Trainer
+              </div>
+              <div className="self-end mr-[2rem] text-black text-[1.5rem] font-normal ">
+                learn to hear
+              </div>
             </Link>
 
             {/* 下卡片 - 点击跳转到 Chord Trainer */}
