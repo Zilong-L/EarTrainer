@@ -1,11 +1,8 @@
 import { useEffect } from 'react';
-import * as Tone from 'tone';
-import { getDroneInstance } from '@utils/ToneInstance';
 import { chordPreset } from "@components/EarTrainers/ChordColorTrainer/Constants";
 import { CHORD_TYPES } from "@components/EarTrainers/ChordColorTrainer/Constants";
 import useChordColorTrainerSettingsStore from '../../../stores/chordColorTrainerSettingsStore';
-import useSoundSettings from '@components/SharedComponents/Settings/SoundSettings/useSoundSettings';
-
+import { useSoundSettingsStore } from '@stores/soundSettingsStore';
 const useChordColorTrainerSettings = () => {
   const {
     bpm,
@@ -34,7 +31,7 @@ const useChordColorTrainerSettings = () => {
     setMuteDrone,
     setIsStatOpen,
   } = useChordColorTrainerSettingsStore();
-  const { selectedInstrument } = useSoundSettings();
+  const { selectedInstrument } = useSoundSettingsStore((state) => state.selectedInstrument);
 
   useEffect(() => {
     const storedRecords = JSON.parse(localStorage.getItem('ChordColorTrainerRecords')) || {};

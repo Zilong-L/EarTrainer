@@ -1,5 +1,5 @@
 import { useLocalStorage } from '@uidotdev/usehooks';
-import { getDroneInstance, getSamplerInstance, getAnswerGainNode } from '@utils/ToneInstance';
+import { getDroneInstance, getSamplerInstance, getAnswerGainNode } from '@utils/Tone/samplers';
 import { useEffect } from 'react';
 
 
@@ -31,7 +31,7 @@ const useVolumeSettings = () => {
   return {
     droneVolume,
     setDroneVolume,
-    pianoVolume, 
+    pianoVolume,
     setPianoVolume,
     answerVolume,
     setAnswerVolume

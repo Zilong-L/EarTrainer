@@ -34,8 +34,7 @@ function PracticeSettings() {
 
 
   const handleChordTypeToggle = (degreeIndex, chordType) => {
-    // console.log('trigger')
-    // if (isLoadingPreset) return;
+
     const newDegreeChordTypes = [...degreeChordTypes];
     const chordTypes = newDegreeChordTypes[degreeIndex].chordTypes;
     if (chordTypes.includes(chordType)) {

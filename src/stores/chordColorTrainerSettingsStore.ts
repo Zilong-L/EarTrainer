@@ -60,7 +60,7 @@ interface ChordColorTrainerActions {
 
 const useChordColorTrainerSettingsStore = create<ChordColorTrainerState & ChordColorTrainerActions>()(
     persist(
-        (set, get) => ({
+        (set) => ({
             bpm: 40,
             droneVolume: 0.3,
             pianoVolume: 1.0,

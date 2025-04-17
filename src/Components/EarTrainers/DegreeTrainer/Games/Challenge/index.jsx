@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CardStack from '../Shared/CardStack';
 import { DesktopStartButton, PhoneStartButton } from '../Shared/StartButtons';
-
+import { useSoundSettingsStore } from '@stores/soundSettingsStore'; // Import the sampler store
 const ChallengeMode = ({ ChallengeTrainerSettings }) => {
   const {
     currentNote,
@@ -22,9 +22,10 @@ const ChallengeMode = ({ ChallengeTrainerSettings }) => {
     useSolfege,
     isHandfree,
     isPlayingSound,
-    isLoading
   } = ChallengeTrainerSettings;
   const { t } = useTranslation('degreeTrainer');
+  const isLoadingInstrument = useSoundSettingsStore(state => state.isLoadingInstrument); // Get sampler loading state
+
 
   const renderRecords = () => {
     const totalResults = currentPracticeRecords;
@@ -92,7 +93,7 @@ const ChallengeMode = ({ ChallengeTrainerSettings }) => {
           isAdvance={isAdvance}
           isPlayingSound={isPlayingSound}
           onClick={handleButton}
-          isLoading={isLoading}
+          isLoadingInstrument={isLoadingInstrument}
         />
       </div>)}
       <PhoneStartButton
@@ -100,7 +101,7 @@ const ChallengeMode = ({ ChallengeTrainerSettings }) => {
         isAdvance={isAdvance}
         onClick={handleButton}
         isPlayingSound={isPlayingSound}
-        isLoading={isLoading}
+        isLoadingInstrument={isLoadingInstrument}
       />
     </div>
   );

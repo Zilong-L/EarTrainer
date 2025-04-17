@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { DegreeToDistance } from '@utils/Constants';
 import { defaultDegreeChordTypes, VoicingDictionary } from '@components/EarTrainers/ChordColorTrainer/Constants';
-import { getSamplerInstance, getDroneInstance, scheduleNotes } from '@utils/ToneInstance';  // Added scheduleNotes
+import { getSamplerInstance, getDroneInstance } from '@utils/Tone/samplers';  // Added scheduleNotes
+import { scheduleNotes } from '@utils/Tone/playbacks';  // Added scheduleNotes
 import { Chord, Voicing, Interval, Note, VoiceLeading, Midi } from 'tonal';
-import { playNotesTogether, playNotes } from '@utils/ToneInstance';
+import { playNotesTogether, playNotes } from '@utils/Tone/playbacks';
 import useChordColorTrainerSettings from './useChordColorTrainerSettings';
 import { getChords, compareChords } from '@utils/ChordTrainer/GameLogics';
 

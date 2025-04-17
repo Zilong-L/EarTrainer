@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Note, Chord } from 'tonal';
-import { getSamplerInstance } from '@utils/ToneInstance';
+import { getSamplerInstance } from '@utils/Tone/samplers';
 import { useTranslation } from 'react-i18next';
 import { getChords, getNiceChordName } from '@utils/ChordTrainer/GameLogics';
 import PianoVisualizer from '@components/SharedComponents/PianoVisualizer';

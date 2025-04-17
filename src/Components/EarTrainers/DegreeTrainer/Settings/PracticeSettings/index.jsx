@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Midi, Note } from "tonal";
-import { getDroneInstance } from '@utils/ToneInstance';
+import { getDroneInstance } from '@utils/Tone/samplers';
 import { useDegreeTrainerSettings } from '@components/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import ValueAdjuster from '@components/SharedComponents/ValueAdjuster';
 import RangeSlider from '@components/SharedComponents/slider/RangeSlider';
@@ -29,8 +29,8 @@ function PracticeSettings() {
   } = useDegreeTrainerSettings();
 
   const drone = getDroneInstance();
-  const midiMin = drone.rootMin;
-  const midiMax = drone.rootMax;
+  const midiMin = Midi.toMidi('C2')
+  const midiMax = Midi.toMidi('C4')
 
   useEffect(() => {
     // Ensure drone is initialized

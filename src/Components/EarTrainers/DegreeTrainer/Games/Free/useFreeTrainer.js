@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import * as Tone from 'tone';
 import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
-import { getDroneInstance, playNotes } from '@utils/ToneInstance';
+import { getDroneInstance } from '@utils/Tone/samplers';
+import { playNotes } from '@utils/Tone/playbacks';
 import { getNextNote, isCorrect, calculateDegree, getPossibleNotesInRange, handleNoteGuess, handleGameLogic } from '@utils/GameLogics';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 const useFreeTrainer = () => {

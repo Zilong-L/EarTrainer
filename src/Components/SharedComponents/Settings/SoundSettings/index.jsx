@@ -7,8 +7,7 @@ const instrumentsList = [
   'harmonium', 'harp', 'organ', 'piano', 'saxophone', 'trombone',
   'trumpet', 'tuba', 'violin', 'xylophone', 'triangle', 'square', 'sawtooth', 'pad'
 ];
-import { playNotes } from '@utils/ToneInstance';
-import useSoundSettings from './useSoundSettings';
+import { useSoundSettingsStore } from '@stores/soundSettingsStore';
 function SoundSettings() {
   const { t } = useTranslation('degreeTrainer');
   const {
@@ -19,11 +18,19 @@ function SoundSettings() {
     setDronePan,
     droneFilter,
     setDroneFilter,
-    clamps,
-    changeInstrumentCallback // Destructure the new callback
-  } = useSoundSettings();
+    changeInstrument // Destructure the new callback
+  } = useSoundSettingsStore();
 
-
+  const clamps = {
+    dronePan: {
+      min: -1,
+      max: 1
+    },
+    droneFilter: {
+      min: 20,
+      max: 2000
+    }
+  };
 
   // useEffect(() => {
   //   if (!isLoadingInstrument) {
@@ -33,7 +40,7 @@ function SoundSettings() {
   // }, [isLoadingInstrument]);
 
   // Removed handleQualityChange function
-  console.log(clamps)
+  // console.log(clamps)
   return (
     <div className="p-6 space-y-12 max-w-[800px] mx-auto">
       {/* Quality Selector */}
@@ -43,7 +50,7 @@ function SoundSettings() {
         </label>
         <select
           value={selectedQuality}
-          onChange={(event) => changeInstrumentCallback(selectedInstrument, event.target.value)}
+          onChange={(event) => changeInstrument(selectedInstrument, event.target.value)}
           disabled={isLoadingInstrument}
           className="w-full px-4 py-2 border border-bg-accent rounded-lg bg-bg-main text-text-primary focus:ring-2 focus:ring-accent focus:border-accent disabled:opacity-50"
         >
@@ -94,7 +101,7 @@ function SoundSettings() {
         {instrumentsList.map((instrument) => (
           <button
             key={instrument}
-            onClick={() => changeInstrumentCallback(instrument, selectedQuality)}
+            onClick={() => changeInstrument(instrument, selectedQuality)}
             disabled={isLoadingInstrument}
             className={`px-4 py-2 rounded-lg transition-all capitalize
               ${selectedInstrument === instrument

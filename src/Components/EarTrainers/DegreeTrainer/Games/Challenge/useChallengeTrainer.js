@@ -1,10 +1,11 @@
-import { useState, useEffect, useMemo,useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import * as Tone from 'tone';
-import { degrees, initialUserProgress,DEGREES_MAP } from '@components/EarTrainers/DegreeTrainer/Constants';
-import { getDroneInstance, playNotes } from '@utils/ToneInstance';
+import { degrees, initialUserProgress, DEGREES_MAP } from '@components/EarTrainers/DegreeTrainer/Constants';
+import { getDroneInstance } from '@utils/Tone/samplers';
+import { playNotes } from '@utils/Tone/playbacks';
 import toast from 'react-hot-toast';
 import { useLocalStorage } from '@uidotdev/usehooks';
-import { getNextNote,    getPossibleNotesInRange,handleNoteGuess,handleGameLogic } from '@utils/GameLogics';
+import { getNextNote, getPossibleNotesInRange, handleNoteGuess, handleGameLogic } from '@utils/GameLogics';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 
 const useChallengeTrainer = () => {
@@ -27,7 +28,7 @@ const useChallengeTrainer = () => {
 
   const [currentLevel, setCurrentLevel] = useLocalStorage('degreeTrainerCurrentLevel', 1);
   const [userProgress, setUserProgress] = useLocalStorage('degreeTrainerUserProgress', initialUserProgress);
-  
+
   const [progressVersion, setProgressVersion] = useLocalStorage('degreeTrainerProgressVersion', 0);
   const [isPlayingSound, setIsPlayingSound] = useState(false);
   const playNoteTimeoutRef = useRef(null);
@@ -74,7 +75,7 @@ const useChallengeTrainer = () => {
   }, [progressVersion, setProgressVersion, setUserProgress, userProgress]);
 
   const unlockLevel = () => {
-    if(mode !== 'challenge') return;
+    if (mode !== 'challenge') return;
     const currentLevelData = userProgress[currentLevel];
     const totalTests = currentPracticeRecords.total;
     console.log(currentLevelData)
@@ -96,7 +97,7 @@ const useChallengeTrainer = () => {
           const newUserProgress = [...userProgress];
           newUserProgress[nextLevel].unlocked = true;
           setUserProgress(newUserProgress);
-          toast.success(`🎉 Level ${nextLevel+1} unlocked!`);
+          toast.success(`🎉 Level ${nextLevel + 1} unlocked!`);
         }
       }
 
@@ -130,10 +131,10 @@ const useChallengeTrainer = () => {
 
 
   const currentNotes = useMemo(() => {
-    console.log('LEVEL_'+(currentLevel+1))
+    console.log('LEVEL_' + (currentLevel + 1))
     return degrees.map((note, index) => ({
       ...note,
-      enable: DEGREES_MAP['LEVEL_'+(currentLevel+1)][index],
+      enable: DEGREES_MAP['LEVEL_' + (currentLevel + 1)][index],
     }));
   }, [currentLevel]);
   useEffect(() => {
@@ -168,12 +169,12 @@ const useChallengeTrainer = () => {
   }
     , [gameState, currentNote]);
 
-    useEffect(() => {
-      return () => {
-        endGame();
-      }
+  useEffect(() => {
+    return () => {
+      endGame();
     }
-      , []);
+  }
+    , []);
   const filteredNotes = useMemo(() => {
     return currentNotes.filter(note => note.enable);
   }, [currentNotes]);
@@ -205,7 +206,7 @@ const useChallengeTrainer = () => {
     setGameState('start');
   };
 
-  const playNote = (note = null, delay = 0.05,time = 1) => {
+  const playNote = (note = null, delay = 0.05, time = 1) => {
     if (!note) {
       note = currentNote;
     }
@@ -226,7 +227,7 @@ const useChallengeTrainer = () => {
 
   useEffect(() => {
     if (!activeNote) return;
-    handleNoteGuess(activeNote, currentNote, rootNote, disabledNotes,setDisabledNotes, isAdvance,setIsAdvance, updatePracticeRecords, playNote, setActiveNote,autoAdvance);
+    handleNoteGuess(activeNote, currentNote, rootNote, disabledNotes, setDisabledNotes, isAdvance, setIsAdvance, updatePracticeRecords, playNote, setActiveNote, autoAdvance);
   }, [activeNote]);
 
 
@@ -249,7 +250,7 @@ const useChallengeTrainer = () => {
     activeNote,
     bpm,
     isAdvance,
-    setIsAdvance ,
+    setIsAdvance,
     setActiveNote,
     currentPracticeRecords,
     setCurrentPracticeRecords,
@@ -265,7 +266,7 @@ const useChallengeTrainer = () => {
     useSolfege,
     isHandfree,
     isPlayingSound
-    
+
   };
 };
 

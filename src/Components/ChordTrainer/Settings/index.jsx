@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import SoundSettings from '@components/SharedComponents/Settings/SoundSettings';
 import ChordPracticeSettings from '@ChordTrainer/ChordGames/ChordPracticeGame/ChordPracticeSettings';
 import DiatonicSettings from '@ChordTrainer/ChordGames/DiatonicGame/DiatonicSettings';
-import { getSamplerInstance } from '@utils/ToneInstance';
+import { getSamplerInstance } from '@utils/Tone/samplers';
 const Settings = ({ isOpen, setIsOpen, settings }) => {
   const { t } = useTranslation('chordGame');
   const globalSettings = settings.globalSettings;

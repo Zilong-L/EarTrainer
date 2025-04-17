@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useLocalStorage } from '@uidotdev/usehooks';
-import useSoundSettings from '@components/SharedComponents/Settings/SoundSettings/useSoundSettings';
 import useVolumeSettings from '@EarTrainers/DegreeTrainer/Settings/VolumeSettings/useVolumeSettings';
 import usePracticeSettings from '@EarTrainers/DegreeTrainer/Settings/PracticeSettings/usePracticeSettings';
 import useStatistics from '@EarTrainers/DegreeTrainer/Settings/Statistics/useStatistics';
@@ -17,7 +16,6 @@ export const DegreeTrainerSettingsProvider = ({ children }) => {
   // State hooks for each setting
   const [mode, setMode] = useLocalStorage('degreeTrainerMode', 'free');
   const [isHandfree, setIsHandfree] = useState(false);
-  const sound = useSoundSettings();
   const volume = useVolumeSettings();
   const practice = usePracticeSettings();
   const stats = useStatistics();
@@ -28,7 +26,6 @@ export const DegreeTrainerSettingsProvider = ({ children }) => {
     setMode,
     isHandfree,
     setIsHandfree,
-    sound,
     volume,
     practice,
     stats

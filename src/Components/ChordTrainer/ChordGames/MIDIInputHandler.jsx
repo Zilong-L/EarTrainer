@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PianoVisualizer from '@components/SharedComponents/PianoVisualizer';
 import { Chord, Note } from 'tonal';
-import { getSamplerInstance } from '@utils/ToneInstance';
+import { getSamplerInstance } from '@utils/Tone/samplers';
 import { useTranslation } from 'react-i18next';
 import { getNiceChordName } from '@utils/ChordTrainer/GameLogics'
 const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord, detectedChords, sustainedNotes, setSustainedNotes, showDegree, setShowDegree }) => {

@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
-import { getDroneInstance, getSamplerInstance } from '@utils/ToneInstance';
+import { getDroneInstance, getSamplerInstance } from '@utils/Tone/samplers';
 import { useLocalStorage } from '@uidotdev/usehooks';
-import useSoundSettings from '@components/SharedComponents/Settings/SoundSettings/useSoundSettings';
 const useChordGameSettings = () => {
   const [mode, setMode] = useLocalStorage('ChordTrainer_Mode', 'Chord Practice');
   const [bpm, setBpm] = useLocalStorage('ChordTrainer_Bpm', 40);
   const [pianoVolume, setPianoVolume] = useLocalStorage('ChordTrainer_PianoVolume', 1.0);
   const drone = getDroneInstance();
   const piano = getSamplerInstance();
-  const sound = useSoundSettings();
 
   // Update drone root note
 
@@ -42,7 +40,6 @@ const useChordGameSettings = () => {
   }
 
   return {
-    sound,
     bpm,
     pianoVolume,
     mode,

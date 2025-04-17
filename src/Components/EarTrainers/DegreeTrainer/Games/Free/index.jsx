@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import CardStack from '../Shared/CardStack';
 import { DesktopStartButton, PhoneStartButton } from '../Shared/StartButtons';
 import AudioPitchDetector from '../Shared/AudioPitchDetector';
+import { useSoundSettingsStore } from '@stores/soundSettingsStore'; // Import the sampler store
 const FreeMode = ({ FreeTrainerSettings }) => {
   const {
     currentNote,
@@ -19,10 +20,17 @@ const FreeMode = ({ FreeTrainerSettings }) => {
     isHandfree,
     useSolfege,
     isPlayingSound,
-    isLoading
   } = FreeTrainerSettings;
   const { t } = useTranslation('degreeTrainer');
+  const isLoadingInstrument = useSoundSettingsStore(state => state.isLoadingInstrument); // Get sampler loading state
+
   const handleButton = () => {
+    // Prevent action if sampler is loading
+    if (isLoadingInstrument) {
+      console.log("loading!")
+      return;
+    }
+
     if (gameState === 'end') {
       setGameState('start');
     } else {
@@ -81,7 +89,7 @@ const FreeMode = ({ FreeTrainerSettings }) => {
           isAdvance={isAdvance}
           isPlayingSound={isPlayingSound}
           onClick={handleButton}
-          isLoading={isLoading}
+          isLoadingInstrument={isLoadingInstrument} // Pass sampler loading state
         />
       </div>)}
       <PhoneStartButton
@@ -89,7 +97,7 @@ const FreeMode = ({ FreeTrainerSettings }) => {
         isAdvance={isAdvance}
         onClick={handleButton}
         isPlayingSound={isPlayingSound}
-        isLoading={isLoading}
+        isLoadingInstrument={isLoadingInstrument} // Pass sampler loading state
       />
     </div>
   );

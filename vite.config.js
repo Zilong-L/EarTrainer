@@ -1,12 +1,15 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import { visualizer } from 'rollup-plugin-visualizer';
-
+import checker from 'vite-plugin-checker'
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), checker({ typescript: true })],
   build: {
     target: "esnext",
+    esbuild: {
+      drop: ['console', 'debugger']
+    },
     rollupOptions: {
       output: {
         manualChunks: {
@@ -16,7 +19,6 @@ export default defineConfig({
         }
       },
       plugins: [
-
         visualizer({
           open: true, // 打包完成后自动打开图表
           filename: 'stats.html',

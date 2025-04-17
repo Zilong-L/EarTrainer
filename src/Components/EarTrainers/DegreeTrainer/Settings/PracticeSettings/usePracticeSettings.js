@@ -1,12 +1,12 @@
 import { useLocalStorage } from '@uidotdev/usehooks';
 import { useEffect, useState } from 'react';
-import { getDroneInstance } from '@utils/ToneInstance';
+import { getDroneInstance } from '@utils/Tone/samplers';
 import { Sampler } from 'tone';
-import {Note} from 'tonal';
+import { Note } from 'tonal';
 const usePracticeSettings = () => {
   const [bpm, setBpm] = useLocalStorage('degreeTrainerBPM', 60);
   const [rootNote, setRootNote] = useLocalStorage('degreeTrainerRootNote', 'C2');
-  const [range, _setRange] = useState([36,48])
+  const [range, _setRange] = useState([36, 48])
   const [autoAdvance, setAutoAdvance] = useLocalStorage('degreeTrainerAutoAdvance', true);
   const [useSolfege, setUseSolfege] = useLocalStorage('degreeTrainerUseSolfege', true);
   const [autoChangeRoot, setAutoChangeRoot] = useLocalStorage('degreeTrainerAutoChangeRoot', false);
@@ -32,7 +32,7 @@ const usePracticeSettings = () => {
         setRootNote(newRoot);
       }, changeInterval * 1000);
     }
-    
+
     return () => clearInterval(interval);
   }, [autoChangeRoot, changeInterval]);
 
