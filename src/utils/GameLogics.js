@@ -119,7 +119,7 @@ function handleGameLogic({ isAdvance, isHandfree, gameState, bpm, currentNote, r
 
 
   const handfreeGame = () => {
-    const player = preloadAudio();
+    const player = preloadAudio('/answers/Solfege.mp3');
 
     if (player.loaded) {
       const offset = calculateOffset(currentNote, rootNote);
