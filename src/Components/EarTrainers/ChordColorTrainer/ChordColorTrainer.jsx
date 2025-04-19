@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import * as Tone from 'tone';
-import { Cog6ToothIcon } from '@heroicons/react/24/solid';
+import { Cog6ToothIcon, BookOpenIcon } from '@heroicons/react/24/solid';
 import { useSoundSettingsStore } from '@stores/soundSettingsStore';
 import Header from '@components/SharedComponents/Header';
 import HeaderTitle from '@components/SharedComponents/HeaderTitle';
@@ -23,7 +23,7 @@ import PianoVisualizer from '@components/SharedComponents/PianoVisualizer';
 import DraggableWindow from '@components/DraggableWindow';
 
 const EarTrainer = () => {
-  const { t } = useTranslation('chordColorTrainer');
+  const { t, i18n } = useTranslation('chordColorTrainer');
   const setNamespace = useI18nStore((state) => state.setNamespace);
   const {
     rootNote,
@@ -134,6 +134,17 @@ const EarTrainer = () => {
             className="md:hidden"
           >
             <span className="">menu</span>
+          </HeaderButton>
+          <HeaderButton>
+            <a
+              href={`https://docs.musictrainer.barnman.cc/#/${i18n.language}/chord-color-trainer/main-features`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-inherit no-underline block"
+              title={t('buttons.help')}
+            >
+              <BookOpenIcon className="h-6 w-6" />
+            </a>
           </HeaderButton>
         </HeaderButtons>
       </Header>

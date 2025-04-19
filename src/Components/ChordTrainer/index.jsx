@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Bars3Icon, Cog6ToothIcon } from '@heroicons/react/24/solid';
+import { Bars3Icon, Cog6ToothIcon, BookOpenIcon } from '@heroicons/react/24/solid';
+
 import Header from '@components/SharedComponents/Header';
 import HeaderTitle from '@components/SharedComponents/HeaderTitle';
 import HeaderButtons from '@components/SharedComponents/HeaderButtons';
@@ -17,13 +18,13 @@ import useDiatonicGame from '@ChordTrainer/ChordGames/DiatonicGame/useDiatonicGa
 
 
 const ChordTrainer = () => {
-  const { t } = useTranslation('chordGame');
+  const { t, i18n } = useTranslation('chordGame');
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
-  
+
   const globalSettings = useChordGameSettings();
   const chordPracticeGameSettings = useChordPracticeGame();
   const diatonicGameSettings = useDiatonicGame();
-  const settings = {globalSettings, chordPracticeGameSettings,diatonicGameSettings}
+  const settings = { globalSettings, chordPracticeGameSettings, diatonicGameSettings }
   const { mode } = globalSettings;
 
   const renderGameMode = () => {
@@ -42,20 +43,34 @@ const ChordTrainer = () => {
   return (
     <div className="flex flex-col h-[100vh] ">
       <Header>
-        <HeaderTitle>{t('trainer.title')}</HeaderTitle>
-        <HeaderButtons>
-            <HeaderButton onClick={() => setIsSettingsModalOpen(true)}>
-              <Cog6ToothIcon className="h-6 w-6" />
-            </HeaderButton>
 
-            
-            
+        <HeaderTitle>
+          <Link to="/ear-trainer" className="text-inherit no-underline">
+            {t('trainer.title')}
+          </Link></HeaderTitle>
+        <HeaderButtons>
+          <HeaderButton onClick={() => setIsSettingsModalOpen(true)}>
+            <Cog6ToothIcon className="h-6 w-6" />
+          </HeaderButton>
+
+          <HeaderButton className="">
+            <a
+              href={`https://docs.musictrainer.barnman.cc/#/${i18n.language}/${i18n.language === 'zh' ? '键盘训练/主要功能' : 'keyboard-training/main-features'}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-inherit no-underline block"
+              title={t('buttons.help')}
+            >
+              <BookOpenIcon className="h-6 w-6" />
+            </a>
+          </HeaderButton>
+
         </HeaderButtons>
       </Header>
 
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
-        
+
         <main className="flex-1 pt-20 overflow-y-auto bg-bg-main">
           <div className="max-w-6xl mx-auto">
             {renderGameMode()}

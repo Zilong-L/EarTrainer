@@ -7,7 +7,7 @@ import Header from '@components/SharedComponents/Header';
 import HeaderTitle from '@components/SharedComponents/HeaderTitle';
 import HeaderButtons from '@components/SharedComponents/HeaderButtons';
 import HeaderButton from '@components/SharedComponents/HeaderButton';
-import { RadioIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
+import { RadioIcon, BookOpenIcon } from '@heroicons/react/24/solid'
 
 
 import SettingsPanel from '@components/SharedComponents/Settings/SettingsPanel';
@@ -189,12 +189,12 @@ const EarTrainer = () => {
           </HeaderButton>
           <HeaderButton>
             <a
-              href={`https://docs.musictrainer.barnman.cc/#/${i18n.language}/`}
+              href={`https://docs.musictrainer.barnman.cc/#/${i18n.language}/${i18n.language === 'zh' ? '音级训练/主要功能' : 'scale-degree-training/main-features'}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-inherit no-underline block "
             >
-              <QuestionMarkCircleIcon className='h-6 w-6' />
+              <BookOpenIcon className='h-6 w-6' />
             </a>
           </HeaderButton>
         </HeaderButtons>
