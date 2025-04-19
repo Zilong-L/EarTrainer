@@ -1,5 +1,5 @@
 # [音乐难民](https://musictrainer.barnman.cc)
-中文 | [English](README_en.md)
+中文 | [English](README.md)
 
 这是一款简单的视唱练耳工具，帮助提高乐感。
 
