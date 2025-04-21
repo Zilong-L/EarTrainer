@@ -55,7 +55,6 @@ const CardStack = ({
               animate={{ x: offsetX, rotateZ: rotation, y: verticalOffset, scale: 1, transition: { duration: 0.2, ease: 'linear' } }}
               whileHover={{ scale: 1.3, rotateZ: 0, y: 0, transition: { duration: 0.1, ease: 'linear' } }}
               whileDrag={{ scale: 1.3, rotateZ: 0, }}
-              drag
               dragSnapToOrigin
               className={`absolute h-32 w-24 md:h-[14rem] md:w-[10rem] rounded-xl shadow-lg flex flex-col 
       items-center justify-between py-4 text-2xl md:text-3xl font-bold 
@@ -99,10 +98,10 @@ const CardStack = ({
 
               whileTap={{ scale: 0.95 }}
               className="w-[30%]"
+              onClick={() => setActiveNote(noteName)}
             >
               <Button
                 variant="primary"
-                onClick={() => setActiveNote(noteName)}
                 className={`h-16 w-full text-2xl relative transition-[background-color] duration-[300ms] ${isCorrectAnswer ? 'bg-green-500 text-white' : ''} ${isDisabled ? 'opacity-50' : ''}`}
                 style={isCorrectAnswer && isAdvance ? {
                   '--x': `${Math.random() * 100}%`,
