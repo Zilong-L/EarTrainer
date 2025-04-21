@@ -82,7 +82,7 @@ const CardStack = ({
             <div className={`grid grid-cols-3 gap-4 mb-4 justify-start lg:hidden ${gameState === 'end' ? 'hidden' : ''} `}>
                 {filteredChords.map((chord) => {
                     // const noteName = Tone.Frequency(rootNote + chord.distance, 'midi').toNote().slice(0, -1);
-                    const chordName = `${chord.degree}${chord.chordType} `;
+                    const chordName = `${chord.degree}${chord.chordType}`;
                     const isCorrectAnswer = isCorrect(chordName, currentChord);
                     return (
                         <Button
