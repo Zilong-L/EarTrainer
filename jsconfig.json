@@ -1,18 +1,37 @@
 {
-    "compilerOptions": {
-      "baseUrl": ".",
-      "paths": {
-        "@components/*": ["src/Components/*"],
-        "@shared/*": ["src/Components/SharedComponents/*"],
-        "@EarTrainers/*": ["src/Components/EarTrainers/*"],
-        "@ChordTrainer/*": ["src/Components/ChordTrainer/*"],
-        "@utils/*": ["src/utils/*"],
-        "@assets/*": ["src/assets/*"],
-        "@themes/*": ["src/themes/*"],
-        "@hooks/*": ["src/hooks/*"],
-        "@ui/*": ["src/Components/UI/*"],
-        "@styles/*": ["src/styles/*"]
-      }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": [
+        "src/Components/*"
+      ],
+      "@shared/*": [
+        "src/Components/SharedComponents/*"
+      ],
+      "@EarTrainers/*": [
+        "src/pages/EarTrainers/*"
+      ],
+      "@ChordTrainer/*": [
+        "src/pages/ChordTrainer/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@themes/*": [
+        "src/themes/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@ui/*": [
+        "src/Components/UI/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ]
     }
   }
-  
+}

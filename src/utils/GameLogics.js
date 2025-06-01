@@ -1,5 +1,5 @@
 import * as Tone from 'tone';
-import { degrees } from '@components/EarTrainers/DegreeTrainer/Constants';
+import { degrees } from '@EarTrainers/DegreeTrainer/Constants';
 import { Note, Range } from 'tonal';
 import { preloadAudio } from '@utils/Tone/samplers';
 

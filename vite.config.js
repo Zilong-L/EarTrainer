@@ -13,7 +13,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          tone: ['tone'],
+          tone: ['tone', 'tonal'],
           i18n: ['i18next', 'react-i18next'],
           motion: ['motion']
         }
@@ -30,10 +30,10 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      "@EarTrainers": "/src/pages/EarTrainers",
+      "@ChordTrainer": "/src/pages/ChordTrainer",
       "@components": "/src/Components",
       "@shared": "/src/Components/SharedComponents",
-      "@EarTrainers": "/src/Components/EarTrainers",
-      "@ChordTrainer": "/src/Components/ChordTrainer",
       "@utils": "/src/utils",
       "@assets": "/src/assets",
       "@themes": "/src/themes",

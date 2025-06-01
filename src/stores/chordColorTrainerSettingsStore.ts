@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, PersistOptions } from 'zustand/middleware';
 import * as Tone from 'tone';
-import { degrees, defaultDegreeChordTypes } from "@components/EarTrainers/ChordColorTrainer/Constants";
+import { degrees, defaultDegreeChordTypes } from "@EarTrainers/ChordColorTrainer/Constants";
 
 interface PracticeRecord {
     total: number;

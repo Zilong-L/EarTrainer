@@ -32,10 +32,10 @@
                 "src/Components/SharedComponents/*"
             ],
             "@EarTrainers/*": [
-                "src/Components/EarTrainers/*"
+                "src/pages/EarTrainers/*"
             ],
             "@ChordTrainer/*": [
-                "src/Components/ChordTrainer/*"
+                "src/pages/ChordTrainer/*"
             ],
             "@utils/*": [
                 "src/utils/*"
@@ -62,6 +62,8 @@
     },
     "include": [
         "src/**/*.ts",
-        "src/**/*.tsx"
+        "src/**/*.tsx",
+        "src/Components/SharedComponents/HeaderTitle.jsx",
+        "src/pages/ChordTrainer/components/Settings/index.jsx"
     ]
 }
