@@ -83,13 +83,15 @@ const ThemedContent = () => {
           <Routes location={location}>
             <Route path="/" element={<Intro />} />
 
-            <Route path="/chord-trainer" element={
+            <Route path="/chord-trainer/*" element={
               <Suspense fallback={<LoadingSpinner />}>
                 <DegreeTrainerSettingsProvider>
                   <ChordTrainer />
                 </DegreeTrainerSettingsProvider>
               </Suspense>
-            } />
+            }>
+
+            </Route>
 
             <Route path="/ear-trainer" element={
               <motion.div

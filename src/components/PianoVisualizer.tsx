@@ -1,7 +1,12 @@
 import React from 'react';
-import { Note, Chord, midi } from 'tonal';
+import { Note } from 'tonal';
 
-const PianoVisualizer = ({ targetChord, activeNotes }) => {
+interface PianoVisualizerProps {
+  targetChord?: string;
+  activeNotes: number[];
+}
+
+const PianoVisualizer: React.FC<PianoVisualizerProps> = ({ targetChord, activeNotes }) => {
   const startNote = 36; // C2
   const endNote = 84;   // C6
   const activeNotesSet = new Set(activeNotes);
@@ -13,27 +18,29 @@ const PianoVisualizer = ({ targetChord, activeNotes }) => {
   const KEYS_IN_OCTAVE = 12;
   const WHITE_KEYS_IN_OCTAVE = 7;
 
-  const isBassNote = (midiNote) => {
+  const isBassNote = (midiNote: number) => {
     if (!bass) return false;
-    return Note.pitchClass(Note.fromMidi(midiNote)) === bass && midiNote < Note.midi('C3');
+    const c3Midi = Note.midi('C3');
+    return Note.pitchClass(Note.fromMidi(midiNote)) === bass && c3Midi !== null && midiNote < c3Midi;
   }
-  const isTargetNote = (midiNote) => {
+  const isTargetNote = (midiNote: number) => {
+    midiNote;
     return false;
     // return targetNotes.includes(Note.pitchClass(Note.fromMidi(midiNote))) && midiNote>=Note.midi('C3')&&midiNote<=Note.midi('C4');
   }
-  const isBlackKey = (midiNote) => {
+  const isBlackKey = (midiNote: number) => {
     const noteInOctave = (midiNote - startNote) % KEYS_IN_OCTAVE;
     return [1, 3, 6, 8, 10].includes(noteInOctave);
   };
 
-  const getWhiteKeyIndex = (midiNote) => {
+  const getWhiteKeyIndex = (midiNote: number) => {
     const noteInOctave = (midiNote - startNote) % KEYS_IN_OCTAVE;
     const octaveOffset = Math.floor((midiNote - startNote) / KEYS_IN_OCTAVE) * WHITE_KEYS_IN_OCTAVE;
     const whiteKeyMap = [0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6];
     return octaveOffset + whiteKeyMap[noteInOctave];
   };
 
-  const getBlackKeyOffset = (midiNote) => {
+  const getBlackKeyOffset = (midiNote: number) => {
     const totalWhiteKeys = whiteKeys.length;
     const whiteKeyWidth = 100 / totalWhiteKeys;
     const whiteKeyIndex = getWhiteKeyIndex(midiNote);
@@ -41,7 +48,7 @@ const PianoVisualizer = ({ targetChord, activeNotes }) => {
     return `${whiteKeyIndex * whiteKeyWidth + (whiteKeyWidth * 0.7)}%`;
   };
 
-  const isNoteActive = (midiNote) => activeNotesSet.has(midiNote);
+  const isNoteActive = (midiNote: number) => activeNotesSet.has(midiNote);
 
   const whiteKeys = Array.from({ length: endNote - startNote + 1 })
     .map((_, index) => startNote + index)

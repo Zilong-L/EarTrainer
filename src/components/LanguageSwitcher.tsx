@@ -1,10 +1,16 @@
 import { useTranslation } from 'react-i18next';
 import HeaderListButton from '@components/HeaderListButton';
 import { LanguageIcon } from '@heroicons/react/24/solid';
-const LanguageSwitcher = () => {
+
+interface LanguageOption {
+  label: string;
+  onClick: () => void;
+}
+
+const LanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
 
-  const changeLanguage = (lng) => {
+  const changeLanguage = (lng: string) => {
     console.log("切换前的当前语言:", i18n.language);
     i18n
       .changeLanguage(lng)
@@ -16,7 +22,7 @@ const LanguageSwitcher = () => {
       });
   };
 
-  const languageOptions = [
+  const languageOptions: LanguageOption[] = [
     { label: '中文', onClick: () => changeLanguage('zh') },
     { label: 'English', onClick: () => changeLanguage('en') },
   ];

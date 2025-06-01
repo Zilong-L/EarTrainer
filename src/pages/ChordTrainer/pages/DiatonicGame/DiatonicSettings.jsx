@@ -8,7 +8,7 @@ const scaleTypes = ['major', 'harmonic', 'melodic', 'natural'];
 
 const DiatonicSettings = ({ diatonicGameSettings }) => {
   const { t } = useTranslation('chordGame');
-
+  console.log(diatonicGameSettings)
   const {
     rootNote,
     setRootNote,

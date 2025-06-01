@@ -1,54 +1,13 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import '@styles/scrollbar.css';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useTranslation } from 'react-i18next';
 import SoundSettings from '@components/Settings/SoundSettings';
-import ChordPracticeSettings from '@ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings';
-import DiatonicSettings from '@ChordTrainer/pages/DiatonicGame/DiatonicSettings';
-import { getSamplerInstance } from '@utils/Tone/samplers';
 
-const Settings = ({ isOpen, setIsOpen, settings }) => {
+const Settings = ({ isOpen, setIsOpen, gameSettingsComponent }) => {
   const { t } = useTranslation('chordGame');
-  const globalSettings = settings.globalSettings;
+  const [currentTab, setCurrentTab] = useState('game');
 
-  const chordPracticeSettings = settings.chordPracticeGameSettings;
-  const diatonicGameSettings = settings.diatonicGameSettings;
-  const { mode, setMode } = globalSettings;
-  const [currentSettings, setCurrentSettings] = useState('Chord Practice');
-  useEffect(() => {
-    console.log('haha ')
-    setCurrentSettings(mode);
-  }, [mode]);
-  const playNote = () => {
-    getSamplerInstance().sampler.triggerAttackRelease('C4', '2n');
-    console.log('play')
-  }
-  const handleModeChange = (newMode) => {
-    setMode(newMode);
-    setCurrentSettings(newMode);
-  };
-
-  const handleSettingsChange = (settingsPage) => {
-    setCurrentSettings(settingsPage);
-  };
-
-  const renderModeContent = () => {
-    if (currentSettings === 'Chord Practice') {
-      return <ChordPracticeSettings chordPracticeSettings={chordPracticeSettings} />;
-    } else if (currentSettings === 'Diatonic') {
-      return <DiatonicSettings diatonicGameSettings={diatonicGameSettings} />;
-    } else if (currentSettings === 'Progression') {
-      return (
-        <div className="p-4 text-slate-700 dark:text-slate-300">
-          Progression Mode Settings Coming Soon!
-        </div>
-      );
-    } else if (currentSettings === 'Sound Settings') {
-      return (
-        <SoundSettings settings={globalSettings} playNote={playNote} />
-      )
-    }
-  };
 
   useLayoutEffect(() => {
     if (isOpen) {
@@ -86,30 +45,23 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
           <div className="flex flex-1 overflow-hidden">
             {/* Navigation Sidebar */}
             <div className="pt-2 w-48 border-r border-bg-accent bg-bg-common h-full">
-
-              {/* Navigation Items */}
               <nav className="p-2 space-y-1">
-                {['Chord Practice', 'Diatonic', 'Progression'].map((m) => (
-                  <button
-                    key={m}
-                    onClick={() => handleModeChange(m)}
-                    className={`w-full px-3 py-2 text-left rounded-md transition-colors
-                  ${currentSettings === m
-                        ? 'bg-notification-bg text-notification-text'
-                        : 'text-text-primary hover:bg-bg-accent'
-                      }`}
-                  >
-                    {t(`settings.modes.${m.toLowerCase().replace(' ', '')}`)}
-                  </button>
-                ))}
-
-                {/* Sound Settings Button */}
                 <button
-                  onClick={() => handleSettingsChange('Sound Settings')}
+                  onClick={() => setCurrentTab('game')}
                   className={`w-full px-3 py-2 text-left rounded-md transition-colors
-                ${currentSettings === 'Sound Settings'
+                    ${currentTab === 'game'
                       ? 'bg-notification-bg text-notification-text'
-                      : 'text-text-primary bg-bg-common'
+                      : 'text-text-primary hover:bg-bg-accent'
+                    }`}
+                >
+                  {t('settings.modes.game')}
+                </button>
+                <button
+                  onClick={() => setCurrentTab('sound')}
+                  className={`w-full px-3 py-2 text-left rounded-md transition-colors
+                    ${currentTab === 'sound'
+                      ? 'bg-notification-bg text-notification-text'
+                      : 'text-text-primary hover:bg-bg-accent'
                     }`}
                 >
                   {t('settings.modes.soundSettings')}
@@ -119,8 +71,10 @@ const Settings = ({ isOpen, setIsOpen, settings }) => {
 
             {/* Content Area */}
             <div className="flex-1 flex flex-col pb-6 bg-bg-main">
-              <div className="px-6 overflow-y-auto h-full box-border bg-bg-main" >
-                {renderModeContent()}
+              <div className="px-6 overflow-y-auto h-full box-border bg-bg-main">
+                {currentTab === 'game' ? gameSettingsComponent : (
+                  <SoundSettings />
+                )}
               </div>
             </div>
           </div>

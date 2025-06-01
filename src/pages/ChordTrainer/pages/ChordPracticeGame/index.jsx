@@ -1,28 +1,30 @@
-import React from 'react';
-import MIDIInputHandler from '../../components/MIDIInputHandler';
-import { getNiceChordName } from '@utils/ChordTrainer/GameLogics';
-const ChordPracticeGame = ({ chordPracticeGameSettings }) => {
-  const { targetChord, detectedChords, activeNotes, setActiveNotes, sustainedNotes, setSustainedNotes } = chordPracticeGameSettings;
+import React, { useState } from 'react';
 
-  return (
-    <div className="h-[65vh]  flex flex-col justify-center">
-      <div className="h-[30vh] w-full">
-        <h1 className="text-6xl font-bold text-left mb-4 text-text-primary ">
-          {getNiceChordName([targetChord])}
-        </h1>
-      </div>
-      <div className="w-full">
-        <MIDIInputHandler
-          activeNotes={activeNotes}
-          targetChord={targetChord}
-          setActiveNotes={setActiveNotes}
-          detectedChords={detectedChords}
-          sustainedNotes={sustainedNotes}
-          setSustainedNotes={setSustainedNotes}
-        />
-      </div>
-    </div>
-  );
+
+import Settings from '@ChordTrainer/components/Settings';
+import useChordPracticeGame from './useChordPracticeGame';
+import ChordPracticeSettings from './ChordPracticeSettings';
+import GameDisplay from './GameDisplay';
+import useSettingsModalStore from '@ChordTrainer/stores/settingsStore';
+const ChordPracticeGame = () => {
+    const { isOpen, setIsOpen } = useSettingsModalStore();
+    const chordPracticeGame = useChordPracticeGame();
+
+    return (
+        <main>
+            <div className="flex-1 pt-20 overflow-y-auto bg-bg-main">
+                <div className="max-w-6xl mx-auto">
+                    <GameDisplay chordPracticeGameSettings={chordPracticeGame} />
+                </div>
+            </div>
+            <Settings
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                gameSettingsComponent={<ChordPracticeSettings chordPracticeSettings={chordPracticeGame} />}
+            />
+        </main>
+
+    );
 };
 
 export default ChordPracticeGame;

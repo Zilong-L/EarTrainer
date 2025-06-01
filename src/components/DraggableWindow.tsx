@@ -1,17 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, ReactNode } from 'react';
 import { Portal } from '@headlessui/react';
 import { useTranslation } from 'react-i18next';
 
-const DraggableWindow = ({ children }) => {
+interface DraggableWindowProps {
+    children: ReactNode;
+}
+
+const DraggableWindow: React.FC<DraggableWindowProps> = ({ children }) => {
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [size, setSize] = useState({ width: 200, height: 150 });
     const [isDragging, setIsDragging] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
-    const dragRef = useRef(null);
-    const resizeRef = useRef(null);
+    const dragRef = useRef<{ startX: number; startY: number } | null>(null);
+    const resizeRef = useRef<{ startX: number; startY: number } | null>(null);
     const { i18n } = useTranslation();
 
-    const handleMouseDown = (e) => {
+    const handleMouseDown = (e: React.MouseEvent) => {
         setIsDragging(true);
         dragRef.current = {
             startX: e.clientX - position.x,
@@ -19,14 +23,14 @@ const DraggableWindow = ({ children }) => {
         };
     };
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
         if (isDragging) {
-            const x = e.clientX - dragRef.current.startX;
-            const y = e.clientY - dragRef.current.startY;
+            const x = e.clientX - (dragRef.current?.startX || 0);
+            const y = e.clientY - (dragRef.current?.startY || 0);
             setPosition({ x, y });
         } else if (isResizing) {
-            const newWidth = e.clientX - resizeRef.current.startX;
-            const newHeight = e.clientY - resizeRef.current.startY;
+            const newWidth = e.clientX - (resizeRef.current?.startX || 0);
+            const newHeight = e.clientY - (resizeRef.current?.startY || 0);
             setSize({
                 width: Math.max(newWidth, 50),
                 height: Math.max(newHeight, 50),
@@ -39,7 +43,7 @@ const DraggableWindow = ({ children }) => {
         setIsResizing(false);
     };
 
-    const handleResizeMouseDown = (e) => {
+    const handleResizeMouseDown = (e: React.MouseEvent) => {
         setIsResizing(true);
         resizeRef.current = {
             startX: e.clientX - size.width,
@@ -65,7 +69,7 @@ const DraggableWindow = ({ children }) => {
         };
     }, [isDragging, isResizing, handleMouseMove, handleMouseUp]);
 
-    const windowStyle = {
+    const windowStyle: React.CSSProperties = {
         position: 'absolute',
         left: position.x,
         top: position.y,
@@ -79,7 +83,7 @@ const DraggableWindow = ({ children }) => {
         overflow: 'hidden',
     };
 
-    const resizeHandleStyle = {
+    const resizeHandleStyle: React.CSSProperties = {
         position: 'absolute',
         right: '0px',
         bottom: '0px',

@@ -1,9 +1,20 @@
 import React from 'react';
 
-const Button = ({ 
-  onClick, 
-  children, 
-  className = '', 
+interface ButtonProps {
+  onClick?: () => void;
+  children: React.ReactNode;
+  className?: string;
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  [key: string]: any;
+}
+
+const Button: React.FC<ButtonProps> = ({
+  onClick,
+  children,
+  className = '',
   variant = 'primary',
   size = 'md',
   disabled = false,
@@ -11,7 +22,7 @@ const Button = ({
   ...props
 }) => {
   const baseStyles = 'rounded-lg font-medium transition-all duration-200 focus:outline-none shadow-sm hover:shadow-md';
-  
+
   const variants = {
     primary: 'bg-bg-accent text-text-primary ',
     secondary: 'bg-bg-accent text-text-primary',

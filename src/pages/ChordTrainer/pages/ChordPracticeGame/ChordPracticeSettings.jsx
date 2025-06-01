@@ -15,6 +15,7 @@ const ChordPracticeSettings = ({ chordPracticeSettings }) => {
   const chordTypesAll = ChordType.names();
   console.log(ChordType.names())
   const { t } = useTranslation('chordGame');
+  console.log(chordPracticeSettings)
   const { chordType, setChordType, proMode, setProMode, drillMode, setDrillMode, selectedInversion, setSelectedInversion } = chordPracticeSettings;
 
   const handleChordSelect = (chord) => {
@@ -75,8 +76,8 @@ const ChordPracticeSettings = ({ chordPracticeSettings }) => {
               key={chord}
               onClick={() => handleChordSelect(chord)}
               className={`w-full px-4 py-2 text-left rounded-lg transition-all ${chordType === ChordType.get(chord.toLocaleLowerCase()).aliases[0]
-                  ? 'bg-notification-bg text-notification-text'
-                  : 'bg-bg-common text-text-primary'
+                ? 'bg-notification-bg text-notification-text'
+                : 'bg-bg-common text-text-primary'
                 }`}
             >
               {chord}
@@ -93,8 +94,8 @@ const ChordPracticeSettings = ({ chordPracticeSettings }) => {
                     key={chord}
                     onClick={() => handleChordSelect(chord)}
                     className={`w-full px-4 py-2 text-left rounded-lg transition-all ${chordType === ChordType.get(chord.toLocaleLowerCase()).aliases[0]
-                        ? 'bg-notification-bg text-notification-text'
-                        : 'bg-bg-common text-text-primary'
+                      ? 'bg-notification-bg text-notification-text'
+                      : 'bg-bg-common text-text-primary'
                       }`}
                   >
                     {t(`settings.chords.${chord}`)}

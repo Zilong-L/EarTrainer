@@ -16,7 +16,7 @@ const useDiatonicGame = () => {
   const [showDegree, setShowDegree] = useState(false);
 
   useEffect(() => {
-    if(!activeNotes) return;
+    if (!activeNotes) return;
     const notesString = activeNotes.map((note) => Midi.midiToNoteName(note));
     const chordResult = detect(notesString, { assumePerfectFifth: true });
     setDetectedChords(chordResult);
@@ -51,9 +51,9 @@ const useDiatonicGame = () => {
       // Combine triads and seventh chords, removing duplicates
       chords = [...new Set([...key.triads, ...key.chords])];
     }
-    
+
     setChordPool(chords);
-    
+
   }, [rootNote, scaleType, chordType]);
 
   useEffect(() => {
@@ -68,10 +68,10 @@ const useDiatonicGame = () => {
       return;
     }
     let randomChord;
-    do{
+    do {
       randomChord = chordPool[Math.floor(Math.random() * chordPool.length)];
 
-    }while(randomChord === targetChord)
+    } while (randomChord === targetChord)
     setTargetChord(randomChord);
   };
 
@@ -81,7 +81,7 @@ const useDiatonicGame = () => {
     if (isMatch) {
       getNextChord();
     }
-  }, [detectedChords,  ignoreTranspose]);
+  }, [detectedChords, ignoreTranspose]);
 
   return {
     targetChord,

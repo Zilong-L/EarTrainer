@@ -1,91 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Outlet, Routes } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Bars3Icon, Cog6ToothIcon, BookOpenIcon } from '@heroicons/react/24/solid';
+import { Cog6ToothIcon, BookOpenIcon } from '@heroicons/react/24/solid';
+import { Route } from 'react-router-dom';
 
-import Header from '@components/Header';
-import HeaderTitle from '@components/HeaderTitle';
-import HeaderButtons from '@components/HeaderButtons';
-import HeaderButton from '@components/HeaderButton';
-
-import ChordPracticeGame from '@ChordTrainer/pages/ChordPracticeGame';
-import DiatonicGame from '@ChordTrainer/pages/DiatonicGame';
-import Settings from './components/Settings';
-
-import useChordGameSettings from '@ChordTrainer/useChordGameSettings';
-import useChordPracticeGame from '@ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame';
-import useDiatonicGame from '@ChordTrainer/pages/DiatonicGame/useDiatonicGame';
-
-
+import ChordTrainerOutlet from './ChordTrainerOutlet';
+import DiatonicGame from './pages/DiatonicGame';
+import ChordPracticeGame from './pages/ChordPracticeGame';
 const ChordTrainer = () => {
-  const { t, i18n } = useTranslation('chordGame');
-  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
-  const globalSettings = useChordGameSettings();
-  const chordPracticeGameSettings = useChordPracticeGame();
-  const diatonicGameSettings = useDiatonicGame();
-  const settings = { globalSettings, chordPracticeGameSettings, diatonicGameSettings }
-  const { mode } = globalSettings;
-
-  const renderGameMode = () => {
-    switch (mode) {
-      case 'Chord Practice':
-        return <ChordPracticeGame chordPracticeGameSettings={chordPracticeGameSettings} />;
-      case 'Diatonic':
-        return <DiatonicGame diatonicGameSettings={diatonicGameSettings} />;
-      case 'Progression':
-        return <div>Progression Mode Coming Soon!</div>;
-      default:
-        return null;
-    }
-  };
 
   return (
-    <div className="flex flex-col h-[100vh] ">
-      <Header>
-
-        <HeaderTitle>
-          <Link to="/ear-trainer" className="text-inherit no-underline">
-            {t('trainer.title')}
-          </Link></HeaderTitle>
-        <HeaderButtons>
-          <HeaderButton onClick={() => setIsSettingsModalOpen(true)}>
-            <Cog6ToothIcon className="h-6 w-6" />
-          </HeaderButton>
-
-          <HeaderButton className="">
-            <a
-              href={`https://docs.musictrainer.barnman.cc/#/${i18n.language}/${i18n.language === 'zh' ? '键盘训练/主要功能' : 'keyboard-training/main-features'}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-inherit no-underline block"
-              title={t('buttons.help')}
-            >
-              <BookOpenIcon className="h-6 w-6" />
-            </a>
-          </HeaderButton>
-
-        </HeaderButtons>
-      </Header>
-
-      {/* Main Content */}
-      <div className="flex flex-1 overflow-hidden">
-
-        <main className="flex-1 pt-20 overflow-y-auto bg-bg-main">
-          <div className="max-w-6xl mx-auto">
-            {renderGameMode()}
-          </div>
-        </main>
-      </div>
-
-      {/* Settings Modal */}
-      <Settings
-        isOpen={isSettingsModalOpen}
-        setIsOpen={setIsSettingsModalOpen}
-        settings={settings}
-      />
+    <div className="flex flex-col h-[100vh]">
+      <Routes>
+        <Route path='/' element={<ChordTrainerOutlet />}>
+          <Route path="chord-practice" element={<ChordPracticeGame />} />
+          <Route path="diatonic" element={<DiatonicGame />} />
+          <Route path="" element={<ChordPracticeGame />} />
+        </Route>
+      </Routes>
     </div>
   );
 };
 
 export default ChordTrainer;
+

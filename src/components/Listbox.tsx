@@ -1,15 +1,23 @@
-import React from 'react';
 import { Listbox } from '@headlessui/react';
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
-function classNames(...classes) {
+interface CustomListboxProps {
+  value: string;
+  onChange: (value: string) => void;
+  options: string[];
+  label: string;
+  t?: (key: string) => string;
+  translationPath?: string;
+}
+
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-const CustomListbox = ({ value, onChange, options, label, t, translationPath }) => {
+const CustomListbox = ({ value, onChange, options, label, t, translationPath }: CustomListboxProps) => {
   return (
     <Listbox value={value} onChange={onChange}>
-      {({ open }) => (
+      {() => (
         <div className="space-y-2">
           <Listbox.Label className="block text-sm font-medium text-text-primary">
             {label}
@@ -17,7 +25,7 @@ const CustomListbox = ({ value, onChange, options, label, t, translationPath }) 
           <div className="relative">
             <Listbox.Button className="relative w-full cursor-default rounded-lg bg-bg-common py-3 pl-3 pr-10 text-left text-text-primary shadow-sm ring-1 ring-inset ring-bg-accent focus:outline-none focus:ring-2 focus:ring-notification-bg sm:text-sm sm:leading-6">
               <span className="block truncate">
-                {translationPath ? t(`${translationPath}.${value}`) : value}
+                {translationPath && t ? t(`${translationPath}.${value}`) : value}
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronUpDownIcon className="h-5 w-5 text-text-secondary" aria-hidden="true" />
@@ -39,7 +47,7 @@ const CustomListbox = ({ value, onChange, options, label, t, translationPath }) 
                   {({ selected }) => (
                     <>
                       <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
-                        {translationPath ? t(`${translationPath}.${option}`) : option}
+                        {translationPath && t ? t(`${translationPath}.${option}`) : option}
                       </span>
                     </>
                   )}
