@@ -1,18 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import CustomListbox from '@shared/Listbox';
+import CustomListbox from '@components/Listbox';
 
 const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
 const chordTypes = ['triads', 'sevenths', 'mixed'];
 const scaleTypes = ['major', 'harmonic', 'melodic', 'natural'];
 
-const DiatonicSettings = ({diatonicGameSettings}) => {
+const DiatonicSettings = ({ diatonicGameSettings }) => {
   const { t } = useTranslation('chordGame');
-  
-  const { 
-    rootNote, 
-    setRootNote, 
-    scaleType, 
+
+  const {
+    rootNote,
+    setRootNote,
+    scaleType,
     setScaleType,
     chordType,
     setChordType,

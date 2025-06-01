@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import * as Tone from 'tone';
 import { Cog6ToothIcon, BookOpenIcon } from '@heroicons/react/24/solid';
 import { useSoundSettingsStore } from '@stores/soundSettingsStore';
-import Header from '@components/SharedComponents/Header';
-import HeaderTitle from '@components/SharedComponents/HeaderTitle';
-import HeaderButtons from '@components/SharedComponents/HeaderButtons';
-import HeaderButton from '@components/SharedComponents/HeaderButton';
+import Header from '@components/Header';
+import HeaderTitle from '@components/HeaderTitle';
+import HeaderButtons from '@components/HeaderButtons';
+import HeaderButton from '@components/HeaderButton';
 import { Toaster } from 'react-hot-toast';
 
 import ChordColorTrainerSettings from '@EarTrainers/ChordColorTrainer/Settings';
@@ -15,11 +15,11 @@ import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettings
 import { apps, keyMap, degrees } from '@EarTrainers/ChordColorTrainer/Constants';
 import CardStack from '@EarTrainers/ChordColorTrainer/CardStack';
 import { DesktopReplayButtons, PhoneReplayButtons } from '@EarTrainers/ChordColorTrainer/ReplayButtons';
-import LanguageSwitcher from '@components/SharedComponents/LanguageSwitcher';
+import LanguageSwitcher from '@components/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 import useI18nStore from "@stores/i18nStore";
 import MIDIInputHandler from './MIDIInputHandler';
-import PianoVisualizer from '@components/SharedComponents/PianoVisualizer';
+import PianoVisualizer from '@components/PianoVisualizer';
 import DraggableWindow from '@components/DraggableWindow';
 
 const EarTrainer = () => {

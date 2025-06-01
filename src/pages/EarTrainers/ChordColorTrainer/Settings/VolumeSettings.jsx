@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import HorizontalSlider from '@components/SharedComponents/slider/HorizontalSlider';
+import HorizontalSlider from '@components/slider/HorizontalSlider';
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
 import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
 import useI18nStore from '@stores/i18nStore';

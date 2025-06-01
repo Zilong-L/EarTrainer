@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import HeaderListButton from '@components/SharedComponents/HeaderListButton';
+import HeaderListButton from '@components/HeaderListButton';
 import { LanguageIcon } from '@heroicons/react/24/solid';
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();

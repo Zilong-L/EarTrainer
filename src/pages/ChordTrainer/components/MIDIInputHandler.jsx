@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import PianoVisualizer from '@components/SharedComponents/PianoVisualizer';
+import PianoVisualizer from '@components/PianoVisualizer';
 import { Chord, Note } from 'tonal';
 import { getSamplerInstance } from '@utils/Tone/samplers';
 import { useTranslation } from 'react-i18next';

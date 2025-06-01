@@ -3,8 +3,8 @@ import { useEffect, lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'motion/react';
 import { useLocalStorage } from '@uidotdev/usehooks';
-import Button from '@components/SharedComponents/Button';
-import RangeSlider from '@components/SharedComponents/slider/RangeSlider';
+import Button from '@components/Button';
+import RangeSlider from '@components/slider/RangeSlider';
 
 // Lazy load components
 const ChordTrainer = lazy(() => import('./ChordTrainer'));

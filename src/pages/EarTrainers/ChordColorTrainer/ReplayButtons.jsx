@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { LightBulbIcon } from '@heroicons/react/24/solid';
-import Button from '@components/SharedComponents/Button';
-import MotionButton from '@components/SharedComponents/MotionButton';
+import Button from '@components/Button';
+import MotionButton from '@components/MotionButton';
 import useI18nStore from '@stores/i18nStore';
 const DesktopReplayButtons = ({
     handleStartGame,

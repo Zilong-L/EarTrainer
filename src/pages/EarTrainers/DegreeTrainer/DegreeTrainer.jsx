@@ -3,15 +3,15 @@ import FreeMode from '@EarTrainers/DegreeTrainer/Games/Free';
 import ChallengeMode from '@EarTrainers/DegreeTrainer/Games/Challenge';
 import { Link } from 'react-router-dom';
 import { Cog6ToothIcon } from '@heroicons/react/24/solid';
-import Header from '@components/SharedComponents/Header';
-import HeaderTitle from '@components/SharedComponents/HeaderTitle';
-import HeaderButtons from '@components/SharedComponents/HeaderButtons';
-import HeaderButton from '@components/SharedComponents/HeaderButton';
+import Header from '@components/Header';
+import HeaderTitle from '@components/HeaderTitle';
+import HeaderButtons from '@components/HeaderButtons';
+import HeaderButton from '@components/HeaderButton';
 import { RadioIcon, BookOpenIcon } from '@heroicons/react/24/solid'
 
 
-import SettingsPanel from '@components/SharedComponents/Settings/SettingsPanel';
-import LanguageSwitcher from '@components/SharedComponents/LanguageSwitcher';
+import SettingsPanel from '@components/Settings/SettingsPanel';
+import LanguageSwitcher from '@components/LanguageSwitcher';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import { useTranslation } from 'react-i18next';
 import { Toaster } from 'react-hot-toast';
@@ -26,7 +26,7 @@ import useChallengeTrainer from '@EarTrainers/DegreeTrainer/Games/Challenge/useC
 import PracticeSettings from './Settings/PracticeSettings';
 import VolumeSettings from './Settings/VolumeSettings';
 import Statistics from './Settings/Statistics';
-import SoundSettings from '@components/SharedComponents/Settings/SoundSettings';
+import SoundSettings from '@components/Settings/SoundSettings';
 import GameSettings from './Settings/GameSettings';
 
 

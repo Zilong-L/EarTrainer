@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChordType } from 'tonal';
-import CustomListbox from '@shared/Listbox';
+import CustomListbox from '@components/Listbox';
 
 const chordTypes = {
   Triads: ['Major', 'Minor', 'Diminished', 'Augmented'],
@@ -71,40 +71,38 @@ const ChordPracticeSettings = ({ chordPracticeSettings }) => {
       <div className="space-y-4">
         {proMode
           ? chordTypesAll.map((chord) => (
-              <button
-                key={chord}
-                onClick={() => handleChordSelect(chord)}
-                className={`w-full px-4 py-2 text-left rounded-lg transition-all ${
-                  chordType === ChordType.get(chord.toLocaleLowerCase()).aliases[0]
-                    ? 'bg-notification-bg text-notification-text'
-                    : 'bg-bg-common text-text-primary'
+            <button
+              key={chord}
+              onClick={() => handleChordSelect(chord)}
+              className={`w-full px-4 py-2 text-left rounded-lg transition-all ${chordType === ChordType.get(chord.toLocaleLowerCase()).aliases[0]
+                  ? 'bg-notification-bg text-notification-text'
+                  : 'bg-bg-common text-text-primary'
                 }`}
-              >
-                {chord}
-              </button>
-            ))
+            >
+              {chord}
+            </button>
+          ))
           : Object.entries(chordTypes).map(([category, chords]) => (
-              <div key={category}>
-                <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                  {t(`settings.chordCategories.${category}`)}
-                </h4>
-                <div className="space-y-2">
-                  {chords.map((chord) => (
-                    <button
-                      key={chord}
-                      onClick={() => handleChordSelect(chord)}
-                      className={`w-full px-4 py-2 text-left rounded-lg transition-all ${
-                        chordType === ChordType.get(chord.toLocaleLowerCase()).aliases[0]
-                          ? 'bg-notification-bg text-notification-text'
-                          : 'bg-bg-common text-text-primary'
+            <div key={category}>
+              <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                {t(`settings.chordCategories.${category}`)}
+              </h4>
+              <div className="space-y-2">
+                {chords.map((chord) => (
+                  <button
+                    key={chord}
+                    onClick={() => handleChordSelect(chord)}
+                    className={`w-full px-4 py-2 text-left rounded-lg transition-all ${chordType === ChordType.get(chord.toLocaleLowerCase()).aliases[0]
+                        ? 'bg-notification-bg text-notification-text'
+                        : 'bg-bg-common text-text-primary'
                       }`}
-                    >
-                      {t(`settings.chords.${chord}`)}
-                    </button>
-                  ))}
-                </div>
+                  >
+                    {t(`settings.chords.${chord}`)}
+                  </button>
+                ))}
               </div>
-            ))}
+            </div>
+          ))}
       </div>
     </div>
   );

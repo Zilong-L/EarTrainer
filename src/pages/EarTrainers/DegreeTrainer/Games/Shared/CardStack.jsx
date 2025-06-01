@@ -2,7 +2,7 @@ import React, { useState, useRef, useMemo, useEffect, useCallback } from 'react'
 import * as Tone from 'tone';
 import { isCorrect } from '@utils/GameLogics';
 import { SolfegeMapping, shortcuts } from '@EarTrainers/DegreeTrainer/Constants';
-import Button from '@components/SharedComponents/Button';
+import Button from '@components/Button';
 import { motion } from "motion/react";
 
 

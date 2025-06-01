@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { AudioBars } from './AudioWave';
 import { ArrowPathIcon, ForwardIcon } from '@heroicons/react/24/solid';
-import Button from '@components/SharedComponents/Button';
+import Button from '@components/Button';
 import { useTranslation } from 'react-i18next'; // Import useTranslation
 
 // 桌面端按钮组件

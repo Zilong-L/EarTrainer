@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import HorizontalSlider from '@components/SharedComponents/slider/HorizontalSlider';
+import HorizontalSlider from '@components/slider/HorizontalSlider';
 const instrumentsList = [
   'bass-electric', 'bassoon', 'cello', 'clarinet', 'contrabass', 'flute',
   'french-horn', 'guitar-acoustic', 'guitar-electric', 'guitar-nylon',

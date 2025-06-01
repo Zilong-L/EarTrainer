@@ -26,10 +26,7 @@
         "noUncheckedSideEffectImports": true,
         "paths": {
             "@components/*": [
-                "src/Components/*"
-            ],
-            "@shared/*": [
-                "src/Components/SharedComponents/*"
+                "src/components/*"
             ],
             "@EarTrainers/*": [
                 "src/pages/EarTrainers/*"
@@ -48,9 +45,6 @@
             ],
             "@hooks/*": [
                 "src/hooks/*"
-            ],
-            "@ui/*": [
-                "src/Components/UI/*"
             ],
             "@styles/*": [
                 "src/styles/*"

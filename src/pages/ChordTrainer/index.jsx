@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Bars3Icon, Cog6ToothIcon, BookOpenIcon } from '@heroicons/react/24/solid';
 
-import Header from '@components/SharedComponents/Header';
-import HeaderTitle from '@components/SharedComponents/HeaderTitle';
-import HeaderButtons from '@components/SharedComponents/HeaderButtons';
-import HeaderButton from '@components/SharedComponents/HeaderButton';
+import Header from '@components/Header';
+import HeaderTitle from '@components/HeaderTitle';
+import HeaderButtons from '@components/HeaderButtons';
+import HeaderButton from '@components/HeaderButton';
 
 import ChordPracticeGame from '@ChordTrainer/pages/ChordPracticeGame';
 import DiatonicGame from '@ChordTrainer/pages/DiatonicGame';

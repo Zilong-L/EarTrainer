@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from '@components/SharedComponents/Button';
+import Button from '@components/Button';
 import { motion } from "motion/react";
 
 const isCorrect = (chordName, currentChord) => {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
-import HorizontalSlider from '@components/SharedComponents/slider/HorizontalSlider';
+import HorizontalSlider from '@components/slider/HorizontalSlider';
 function VolumeSettings() {
 
   // Keep Tone.js volumes in sync with settings

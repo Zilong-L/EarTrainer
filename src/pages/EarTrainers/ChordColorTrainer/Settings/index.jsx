@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import PracticeSettings from './PracticeSettings';
 import VolumeSettings from './VolumeSettings';
 import Statistics from './StatisticsSettings';
-import SoundSettings from '@components/SharedComponents/Settings/SoundSettings';
-import SettingsPanel from '@components/SharedComponents/Settings/SettingsPanel';
+import SoundSettings from '@components/Settings/SoundSettings';
+import SettingsPanel from '@components/Settings/SettingsPanel';
 import useI18nStore from '@stores/i18nStore';
 function ChordColorTrainerSettings({
   isSettingsOpen,

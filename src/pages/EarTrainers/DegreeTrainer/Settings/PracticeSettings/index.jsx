@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Midi, Note } from "tonal";
 import { getDroneInstance } from '@utils/Tone/samplers';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
-import ValueAdjuster from '@components/SharedComponents/ValueAdjuster';
-import RangeSlider from '@components/SharedComponents/slider/RangeSlider';
+import ValueAdjuster from '@components/ValueAdjuster';
+import RangeSlider from '@components/slider/RangeSlider';
 
 function PracticeSettings() {
   const { t } = useTranslation('degreeTrainer');

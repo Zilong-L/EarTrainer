@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { CHORD_TYPES, chordPreset } from '@EarTrainers/ChordColorTrainer/Constants';
 import { useTranslation } from 'react-i18next';
-import ValueAdjuster from '@components/SharedComponents/ValueAdjuster';
-import RangeSlider from '@components/SharedComponents/slider/RangeSlider';
+import ValueAdjuster from '@components/ValueAdjuster';
+import RangeSlider from '@components/slider/RangeSlider';
 import { Midi, Note } from "tonal";
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
 import { Disclosure } from '@headlessui/react'; // Import Disclosure

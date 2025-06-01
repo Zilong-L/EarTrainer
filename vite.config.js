@@ -32,13 +32,11 @@ export default defineConfig({
     alias: {
       "@EarTrainers": "/src/pages/EarTrainers",
       "@ChordTrainer": "/src/pages/ChordTrainer",
-      "@components": "/src/Components",
-      "@shared": "/src/Components/SharedComponents",
+      "@components": "/src/components",
       "@utils": "/src/utils",
       "@assets": "/src/assets",
       "@themes": "/src/themes",
       "@hooks": "/src/hooks",
-      "@ui": "/src/Components/UI",
       "@styles": "/src/styles",
       "@stores": "/src/stores"
       // Add more aliases as needed
