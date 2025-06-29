@@ -22,8 +22,9 @@ const CardStack = ({
     return (
         <div>
             <div className={`hidden lg:${gameState === 'end' ? 'hidden' : ''} lg:flex items-center justify-center h-64 mb-4 relative`}>
-                <div className="flex h-full items-center" style={{ width: `${Math.min(filteredChords.length, 12) * 15}%` }}>
-                    {filteredChords.slice(0, 12).map((chord, index) => {
+                <div className="flex h-full items-center" style={{ width: `${filteredChords.length * 15}%` }}>
+                    {filteredChords.map((chord, index) => {
+                        console.log('calculate')
                         // const noteName = Tone.Frequency(rootNote + chord.distance, 'midi').toNote().slice(0, -1);
                         const chordName = `${chord.degree}${chord.chordType}`;
                         const isCorrectAnswer = isCorrect(chordName, currentChord);
