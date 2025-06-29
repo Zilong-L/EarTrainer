@@ -64,6 +64,7 @@ const CardStack = ({
                                 style={{
                                     left,
                                     transformOrigin: "bottom center",
+                                    willChange: 'transform' // Promote to its own compositor layer for GPU acceleration
                                 }}
                                 onHoverStart={() => setHoveredIndex(index)}
                                 onHoverEnd={() => setHoveredIndex(null)}
