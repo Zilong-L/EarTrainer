@@ -1,4 +1,5 @@
 import { useSoundSettingsStore } from '@stores/soundSettingsStore';
+import { playNotesAdditive } from '@utils/Tone/playbacks';
 
 const START_NOTE = 48; // C3
 const END_NOTE = 71;   // B4
@@ -66,9 +67,14 @@ const PianoVisualizer = ({ activeNotes = [], detectedChords = [] }) => {
     const svgWidth = SVG_PADDING_X * 2 + totalWhiteKeys * WHITE_KEY_WIDTH; // Calculate width based on white keys + padding
     const svgHeight = WHITE_KEY_HEIGHT + SVG_PADDING_Y * 2;
 
+    const handleKeyClick = (midiNote) => {
+        if (playMidiSounds) {
+            playNotesAdditive([midiNote]);
+        }
+    };
+
     return (
-        <button className="font-chewy hidden md:block absolute right-4 top-[38.2%] -translate-y-[50%] text-white rounded gap-4 bg-black/50 p-4 w-[300px]"
-            onClick={() => setPlayMidiSounds(!playMidiSounds)}>
+        <div className="font-chewy hidden md:block absolute right-4 top-[38.2%] -translate-y-[50%] text-white rounded gap-4 bg-black/50 p-4 w-[300px]">
 
             <div className="flex  justify-between flex-col">
                 <div className="text-4xl font-bold ">
@@ -105,6 +111,8 @@ const PianoVisualizer = ({ activeNotes = [], detectedChords = [] }) => {
                         fill={getKeyColor(key.midi, activeNotes, rootNoteMidi, false)}
                         stroke="black"
                         strokeWidth="1"
+                        onClick={() => handleKeyClick(key.midi)}
+                        className="cursor-pointer"
                     />
                 ))}
 
@@ -119,23 +127,28 @@ const PianoVisualizer = ({ activeNotes = [], detectedChords = [] }) => {
                         fill={getKeyColor(key.midi, activeNotes, rootNoteMidi, true)}
                         stroke="black"
                         strokeWidth="1"
+                        onClick={() => handleKeyClick(key.midi)}
+                        className="cursor-pointer"
                     />
                 ))}
 
                 {/* Speaker icon (adjust position based on new width) */}
-                {playMidiSounds ? (
-                    <g stroke="black" strokeWidth="3" fill="none">
-                        <path d="M242 24 Q250 30 242 36" />
-                        <path d="M248 20 Q258 30 248 40" />
-                    </g>
-                ) : (
-                    <g>
-                        <line x1="244" y1="22" x2="252" y2="38" stroke="black" strokeWidth="3" />
-                        <line x1="252" y1="22" x2="244" y2="38" stroke="black" strokeWidth="3" />
-                    </g>
-                )}
+                <g onClick={() => setPlayMidiSounds(!playMidiSounds)} className="cursor-pointer">
+                    <rect x="235" y="15" width="30" height="30" fill="transparent" />
+                    {playMidiSounds ? (
+                        <>
+                            <path d="M242 24 Q250 30 242 36" stroke="black" strokeWidth="3" fill="none" />
+                            <path d="M248 20 Q258 30 248 40" stroke="black" strokeWidth="3" fill="none" />
+                        </>
+                    ) : (
+                        <>
+                            <line x1="244" y1="22" x2="252" y2="38" stroke="black" strokeWidth="3" />
+                            <line x1="252" y1="22" x2="244" y2="38" stroke="black" strokeWidth="3" />
+                        </>
+                    )}
+                </g>
             </svg>
-        </button>
+        </div>
     );
 };
 

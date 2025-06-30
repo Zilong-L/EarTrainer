@@ -102,4 +102,20 @@ function scheduleNotes(events: NoteEvent[]): void {
     }
 }
 
-export { playNotes, cancelAllSounds, playNotesTogether, scheduleNotes };
+
+function playNotesAdditive(
+    input: number | string | Array<number | string>,
+    duration: string = '8n'
+): void {
+    const { sampler } = getSamplerInstance();
+    const notes = Array.isArray(input) ? input : [input];
+
+    if (sampler.name === "PolySynth" || sampler.name === "Synth" || (sampler as any)._buffers?.loaded) {
+        const notesToPlay = notes.map(note =>
+            typeof note === 'number' ? Tone.Frequency(note, 'midi').toNote() : note
+        );
+        sampler.triggerAttackRelease(notesToPlay, duration);
+    }
+}
+
+export { playNotes, cancelAllSounds, playNotesTogether, scheduleNotes, playNotesAdditive };
