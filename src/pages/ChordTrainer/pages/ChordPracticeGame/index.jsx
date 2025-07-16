@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-
-
+import React from 'react';
 import Settings from '@ChordTrainer/components/Settings';
 import useChordPracticeGame from './useChordPracticeGame';
 import ChordPracticeSettings from './ChordPracticeSettings';
 import GameDisplay from './GameDisplay';
 import useSettingsModalStore from '@ChordTrainer/stores/settingsStore';
+
 const ChordPracticeGame = () => {
     const { isOpen, setIsOpen } = useSettingsModalStore();
     const chordPracticeGame = useChordPracticeGame();
@@ -20,10 +19,9 @@ const ChordPracticeGame = () => {
             <Settings
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
-                gameSettingsComponent={<ChordPracticeSettings chordPracticeSettings={chordPracticeGame} />}
+                gameSettingsComponent={<ChordPracticeSettings />}
             />
         </main>
-
     );
 };
 
