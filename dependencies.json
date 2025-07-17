@@ -1,0 +1,4682 @@
+{
+  "modules": [
+    {
+      "source": "src/components/Button.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/components/DraggableWindow.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/components/Header.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/components/HeaderButton.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/components/HeaderButtons.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/components/HeaderListButton.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/components/HeaderTitle.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/components/LanguageSwitcher.tsx",
+      "dependencies": [
+        {
+          "module": "@components/HeaderListButton",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderListButton",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/HeaderListButton",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/components/LanguageSwitcher.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/components/Listbox.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/components/MotionButton.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/components/PianoVisualizer.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/components/Settings/SettingsPanel.jsx",
+      "dependencies": [
+        {
+          "module": "@stores/i18nStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/i18nStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@stores/i18nStore",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/components/Settings/SettingsPanel.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/ReplayButtons.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/PracticeSettings.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/StatisticsSettings.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/VolumeSettings.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/index.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/components/Settings/SoundSettings/index.jsx",
+      "dependencies": [
+        {
+          "module": "@components/slider/HorizontalSlider",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/slider/HorizontalSlider",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/soundSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/soundSettingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/slider/HorizontalSlider",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/components/Settings/SoundSettings/index.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/VolumeSettings.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@stores/soundSettingsStore",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/components/Settings/SoundSettings/index.jsx",
+        "src/components/Settings/SoundSettings/useSoundSettings.js",
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/MIDIInputHandler.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/PianoVisualizer.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.js",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/components/Settings/SoundSettings/useSoundSettings.js",
+      "dependencies": [
+        {
+          "module": "@stores/soundSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/soundSettingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/components/ValueAdjuster/index.jsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/components/slider/HorizontalSlider.jsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/components/slider/RangeSlider.jsx",
+      "dependencies": [
+        {
+          "module": "./rangeSlider.css",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/components/slider/rangeSlider.css",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/components/slider/rangeSlider.css",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "local",
+        "import"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/components/slider/RangeSlider.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/i18n.js",
+      "dependencies": [],
+      "dependents": [
+        "src/main.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/main.jsx",
+      "dependencies": [
+        {
+          "module": "./i18n",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/i18n.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./pages/WebRoutes",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/WebRoutes.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./styles/index.css",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/styles/index.css",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./styles/themes.css",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/styles/themes.css",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/styles/index.css",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "local",
+        "import"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/main.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/styles/themes.css",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "local",
+        "import"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/main.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/WebRoutes.jsx",
+      "dependencies": [
+        {
+          "module": "./ChordTrainer",
+          "moduleSystem": "es6",
+          "dynamic": true,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "dynamic-import"
+          ],
+          "resolved": "src/pages/ChordTrainer/index.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./Intro",
+          "moduleSystem": "es6",
+          "dynamic": true,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "dynamic-import"
+          ],
+          "resolved": "src/pages/Intro.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/Button",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Button",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/slider/RangeSlider",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/slider/RangeSlider",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/ChordColorTrainer/ChordColorTrainer",
+          "moduleSystem": "es6",
+          "dynamic": true,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/ChordColorTrainer/ChordColorTrainer",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/DegreeTrainer",
+          "moduleSystem": "es6",
+          "dynamic": true,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/DegreeTrainer",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "moduleSystem": "es6",
+          "dynamic": true,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/main.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/Button",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/WebRoutes.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/CardStack.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/ReplayButtons.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Shared/StartButtons.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/slider/RangeSlider",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/WebRoutes.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/PracticeSettings.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/ChordColorTrainer/ChordColorTrainer",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/WebRoutes.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/DegreeTrainer/DegreeTrainer",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/WebRoutes.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/WebRoutes.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/GameSettings/index.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/index.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer.js",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/index.jsx",
+      "dependencies": [
+        {
+          "module": "./ChordTrainerOutlet",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./pages/ChordPracticeGame",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./pages/DiatonicGame",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/WebRoutes.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
+      "dependencies": [
+        {
+          "module": "./stores/settingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/stores/settingsStore.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./utils/routes/constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/utils/routes/constants.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/Header",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Header",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/HeaderButton",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderButton",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/HeaderButtons",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderButtons",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/HeaderTitle",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderTitle",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/ChordTrainer/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/Header",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/HeaderButton",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/HeaderButtons",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/HeaderTitle",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/stores/settingsStore.ts",
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/ChordTrainerOutlet.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/utils/routes/constants.ts",
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/ChordTrainerOutlet.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
+      "dependencies": [
+        {
+          "module": "./ChordPracticeSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./GameDisplay",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./useChordPracticeGame",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@ChordTrainer/components/Settings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@ChordTrainer/components/Settings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@ChordTrainer/stores/settingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@ChordTrainer/stores/settingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/ChordTrainer/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@ChordTrainer/components/Settings",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@ChordTrainer/stores/settingsStore",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
+      "dependencies": [
+        {
+          "module": "../../stores/chordPracticeStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/stores/chordPracticeStore.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/Listbox",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Listbox",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/Listbox",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/stores/chordPracticeStore.ts",
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
+      "dependencies": [
+        {
+          "module": "../../components/MIDIInputHandler",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/ChordTrainer/GameLogics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/ChordTrainer/GameLogics",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@utils/ChordTrainer/GameLogics",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
+        "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
+        "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.js",
+        "src/pages/EarTrainers/ChordColorTrainer/MIDIInputHandler.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.js",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+      "dependencies": [
+        {
+          "module": "@components/PianoVisualizer",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/PianoVisualizer",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/ChordTrainer/GameLogics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/ChordTrainer/GameLogics",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Tone/samplers",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/samplers",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/PianoVisualizer",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@utils/Tone/samplers",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/MIDIInputHandler.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.js",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer.js",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer.js",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/usePracticeSettings.js",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/useVolumeSettings.js",
+        "src/stores/soundSettingsStore.ts",
+        "src/utils/GameLogics.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
+      "dependencies": [
+        {
+          "module": "../../stores/chordPracticeStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/stores/chordPracticeStore.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/ChordTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/ChordTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/ChordTrainer/GameLogics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/ChordTrainer/GameLogics",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@utils/ChordTrainer/Constants",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
+        "src/utils/ChordTrainer/GameLogics.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
+      "dependencies": [
+        {
+          "module": "./DiatonicSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./GameDisplay",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./useDiatonicGame",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@ChordTrainer/components/Settings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@ChordTrainer/components/Settings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@ChordTrainer/stores/settingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@ChordTrainer/stores/settingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/Header",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Header",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/HeaderButton",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderButton",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/HeaderButtons",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderButtons",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/HeaderTitle",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderTitle",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/ChordTrainer/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.jsx",
+      "dependencies": [
+        {
+          "module": "@components/Listbox",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Listbox",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.jsx",
+      "dependencies": [
+        {
+          "module": "../../components/MIDIInputHandler",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.js",
+      "dependencies": [
+        {
+          "module": "@utils/ChordTrainer/GameLogics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/ChordTrainer/GameLogics",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/Intro.jsx",
+      "dependencies": [],
+      "dependents": [
+        "src/pages/WebRoutes.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/ChordTrainer/components/Settings/index.jsx",
+      "dependencies": [
+        {
+          "module": "@components/Settings/SoundSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Settings/SoundSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@styles/scrollbar.css",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@styles/scrollbar.css",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/Settings/SoundSettings",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/components/Settings/index.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/index.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@styles/scrollbar.css",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/ChordTrainer/components/Settings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/CardStack.jsx",
+      "dependencies": [
+        {
+          "module": "@components/Button",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Button",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
+      "dependencies": [
+        {
+          "module": "./MIDIInputHandler",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/MIDIInputHandler.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/DraggableWindow",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/DraggableWindow",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/Header",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Header",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/HeaderButton",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderButton",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/HeaderButtons",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderButtons",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/HeaderTitle",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderTitle",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/LanguageSwitcher",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/LanguageSwitcher",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/PianoVisualizer",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/PianoVisualizer",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/ChordColorTrainer/CardStack",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/ChordColorTrainer/CardStack",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/ChordColorTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/ChordColorTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/ChordColorTrainer/ReplayButtons",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/ChordColorTrainer/ReplayButtons",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/ChordColorTrainer/Settings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/ChordColorTrainer/Settings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/ChordColorTrainer/useChordColorTrainer",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/ChordColorTrainer/useChordColorTrainer",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/chordColorTrainerSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/chordColorTrainerSettingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/i18nStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/i18nStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/soundSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/soundSettingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/DraggableWindow",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/LanguageSwitcher",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/ChordColorTrainer/CardStack",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/ChordColorTrainer/Constants",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/PracticeSettings.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.js",
+        "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.js",
+        "src/stores/chordColorTrainerSettingsStore.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/ChordColorTrainer/ReplayButtons",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/ChordColorTrainer/Settings",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/ChordColorTrainer/useChordColorTrainer",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@stores/chordColorTrainerSettingsStore",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/PracticeSettings.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/StatisticsSettings.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/VolumeSettings.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/MIDIInputHandler.jsx",
+      "dependencies": [
+        {
+          "module": "./PianoVisualizer",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/PianoVisualizer.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/soundSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/soundSettingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/ChordTrainer/GameLogics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/ChordTrainer/GameLogics",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Tone/samplers",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/samplers",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/PianoVisualizer.jsx",
+      "dependencies": [
+        {
+          "module": "@stores/soundSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/soundSettingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Tone/playbacks",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/playbacks",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/MIDIInputHandler.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@utils/Tone/playbacks",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/PianoVisualizer.jsx",
+        "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.js",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer.js",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/Constants.d.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/Constants.js",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/ReplayButtons.jsx",
+      "dependencies": [
+        {
+          "module": "@components/Button",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Button",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/MotionButton",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/MotionButton",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/i18nStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/i18nStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/MotionButton",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/ReplayButtons.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/Settings/PracticeSettings.jsx",
+      "dependencies": [
+        {
+          "module": "@components/slider/RangeSlider",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/slider/RangeSlider",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/ValueAdjuster",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/ValueAdjuster",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/ChordColorTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/ChordColorTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/chordColorTrainerSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/chordColorTrainerSettingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/i18nStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/i18nStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/ValueAdjuster",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/PracticeSettings.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/Settings/StatisticsSettings.jsx",
+      "dependencies": [
+        {
+          "module": "@stores/chordColorTrainerSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/chordColorTrainerSettingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/i18nStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/i18nStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/Settings/VolumeSettings.jsx",
+      "dependencies": [
+        {
+          "module": "@components/slider/HorizontalSlider",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/slider/HorizontalSlider",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/chordColorTrainerSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/chordColorTrainerSettingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/i18nStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/i18nStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/Settings/index.jsx",
+      "dependencies": [
+        {
+          "module": "./PracticeSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Settings/PracticeSettings.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./StatisticsSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Settings/StatisticsSettings.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./VolumeSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Settings/VolumeSettings.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/Settings/SettingsPanel",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Settings/SettingsPanel",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/Settings/SoundSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Settings/SoundSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/i18nStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/i18nStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@components/Settings/SettingsPanel",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/Settings/index.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.js",
+      "dependencies": [
+        {
+          "module": "./useChordColorTrainerSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/ChordColorTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/ChordColorTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/ChordTrainer/GameLogics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/ChordTrainer/GameLogics",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Tone/playbacks",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/playbacks",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Tone/samplers",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/samplers",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@utils/Constants",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.js",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.js",
+      "dependencies": [
+        {
+          "module": "../../../stores/chordColorTrainerSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/stores/chordColorTrainerSettingsStore.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/ChordColorTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/ChordColorTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/soundSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/soundSettingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/stores/chordColorTrainerSettingsStore.ts",
+      "dependencies": [
+        {
+          "module": "@EarTrainers/ChordColorTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/ChordColorTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/ChallengeSettings.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx",
+      "dependencies": [
+        {
+          "module": "./Settings/GameSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/GameSettings/index.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./Settings/PracticeSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./Settings/Statistics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/index.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./Settings/VolumeSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/Header",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Header",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/HeaderButton",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderButton",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/HeaderButtons",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderButtons",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/HeaderTitle",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/HeaderTitle",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/LanguageSwitcher",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/LanguageSwitcher",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/Settings/SettingsPanel",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Settings/SettingsPanel",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/Settings/SoundSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Settings/SoundSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Games/Challenge",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Games/Challenge",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Games/Free",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Games/Free",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/i18nStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/i18nStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/DegreeTrainer/Constants",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer.js",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Free/FreeSettings.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer.js",
+        "src/utils/GameLogics.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/DegreeTrainer/Games/Challenge",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/DegreeTrainer/Games/Free",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/GameSettings/index.jsx",
+      "dependencies": [
+        {
+          "module": "@EarTrainers/DegreeTrainer/Games/Challenge/ChallengeSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Games/Challenge/ChallengeSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Games/Free/FreeSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Games/Free/FreeSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/DegreeTrainer/Games/Challenge/ChallengeSettings",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Settings/GameSettings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/DegreeTrainer/Games/Free/FreeSettings",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Settings/GameSettings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx",
+      "dependencies": [
+        {
+          "module": "@components/slider/RangeSlider",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/slider/RangeSlider",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/ValueAdjuster",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/ValueAdjuster",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Tone/samplers",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/samplers",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/index.jsx",
+      "dependencies": [
+        {
+          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx",
+      "dependencies": [
+        {
+          "module": "@components/slider/HorizontalSlider",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/slider/HorizontalSlider",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Settings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/ChallengeSettings.jsx",
+      "dependencies": [
+        {
+          "module": "../../Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.jsx",
+      "dependencies": [
+        {
+          "module": "../Shared/CardStack",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../Shared/StartButtons",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/StartButtons.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/soundSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/soundSettingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.jsx",
+      "dependencies": [
+        {
+          "module": "@components/Button",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Button",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/GameLogics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/GameLogics",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@utils/GameLogics",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer.js",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/StartButtons.jsx",
+      "dependencies": [
+        {
+          "module": "./AudioWave",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioWave.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@components/Button",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@components/Button",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.jsx",
+        "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioWave.jsx",
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Games/Shared/StartButtons.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer.js",
+      "dependencies": [
+        {
+          "module": "@EarTrainers/DegreeTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/GameLogics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/GameLogics",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Tone/playbacks",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/playbacks",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Tone/samplers",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/samplers",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Free/FreeSettings.jsx",
+      "dependencies": [
+        {
+          "module": "./presets",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Free/presets.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Free/presets.js",
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Games/Free/FreeSettings.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.jsx",
+      "dependencies": [
+        {
+          "module": "../Shared/AudioPitchDetector",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../Shared/CardStack",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../Shared/StartButtons",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/StartButtons.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stores/soundSettingsStore",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@stores/soundSettingsStore",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.jsx",
+      "dependencies": [
+        {
+          "module": "./ThresholdSlider",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/ChordTrainer/GameLogics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/ChordTrainer/GameLogics",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/GameLogics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/GameLogics",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.jsx",
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer.js",
+      "dependencies": [
+        {
+          "module": "@EarTrainers/DegreeTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/GameLogics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/GameLogics",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Tone/playbacks",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/playbacks",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Tone/samplers",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/samplers",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/usePracticeSettings.js",
+      "dependencies": [
+        {
+          "module": "@utils/Tone/samplers",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/samplers",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/useStatistics.js",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/useVolumeSettings.js",
+      "dependencies": [
+        {
+          "module": "@utils/Tone/samplers",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/samplers",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/index.jsx",
+      "dependencies": [
+        {
+          "module": "../../../../Components/SharedComponents/Settings/SettingsPanel",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "../../../../Components/SharedComponents/Settings/SettingsPanel",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../../../../Components/SharedComponents/Settings/SoundSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "../../../../Components/SharedComponents/Settings/SoundSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./GameSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/GameSettings/index.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./PracticeSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./Statistics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/index.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./VolumeSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "../../../../Components/SharedComponents/Settings/SettingsPanel",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Settings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "../../../../Components/SharedComponents/Settings/SoundSettings",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Settings/index.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.jsx",
+      "dependencies": [
+        {
+          "module": "@EarTrainers/DegreeTrainer/Settings/PracticeSettings/usePracticeSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Settings/PracticeSettings/usePracticeSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Settings/Statistics/useStatistics",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Settings/Statistics/useStatistics",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@EarTrainers/DegreeTrainer/Settings/VolumeSettings/useVolumeSettings",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Settings/VolumeSettings/useVolumeSettings",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/DegreeTrainer/Settings/PracticeSettings/usePracticeSettings",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/DegreeTrainer/Settings/Statistics/useStatistics",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@EarTrainers/DegreeTrainer/Settings/VolumeSettings/useVolumeSettings",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.jsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/stores/i18nStore.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/stores/soundSettingsStore.ts",
+      "dependencies": [
+        {
+          "module": "@utils/Tone/samplers",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/samplers",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/utils/ChordTrainer/Constants.js",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/utils/ChordTrainer/GameLogics.js",
+      "dependencies": [
+        {
+          "module": "@utils/ChordTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/ChordTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/utils/Constants.js",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/utils/GameLogics.js",
+      "dependencies": [
+        {
+          "module": "@EarTrainers/DegreeTrainer/Constants",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@EarTrainers/DegreeTrainer/Constants",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@utils/Tone/samplers",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/samplers",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/utils/Tone/SampleLibrary.d.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/utils/Tone/SampleLibrary.js",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/utils/Tone/playbacks.legacy.js",
+      "dependencies": [
+        {
+          "module": "./samplers",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/utils/Tone/samplers.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/utils/Tone/samplers.ts",
+      "dependencies": [
+        {
+          "module": "@utils/Tone/SampleLibrary",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/SampleLibrary",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/utils/Tone/playbacks.legacy.js",
+        "src/utils/Tone/playbacks.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@utils/Tone/SampleLibrary",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/utils/Tone/samplers.ts",
+        "src/utils/Tone/samplers.legacy.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/utils/Tone/playbacks.ts",
+      "dependencies": [
+        {
+          "module": "./samplers",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/utils/Tone/samplers.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/utils/Tone/samplers.legacy.js",
+      "dependencies": [
+        {
+          "module": "@utils/Tone/SampleLibrary",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@utils/Tone/SampleLibrary",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    }
+  ],
+  "summary": {
+    "violations": [],
+    "error": 0,
+    "warn": 0,
+    "info": 0,
+    "ignore": 0,
+    "totalCruised": 137,
+    "totalDependenciesCruised": 184,
+    "optionsUsed": {
+      "baseDir": "/mnt/ssd/lzl/code/js/ChordTrainer",
+      "combinedDependencies": false,
+      "detectJSDocImports": false,
+      "exclude": {
+        "path": "node_modules|src/assets"
+      },
+      "exoticRequireStrings": [],
+      "externalModuleResolutionStrategy": "node_modules",
+      "metrics": false,
+      "moduleSystems": [
+        "es6",
+        "cjs",
+        "tsd",
+        "amd"
+      ],
+      "outputTo": "dependencies.json",
+      "outputType": "json",
+      "preserveSymlinks": false,
+      "skipAnalysisNotInRules": false,
+      "tsPreCompilationDeps": false,
+      "args": "src"
+    }
+  }
+}
