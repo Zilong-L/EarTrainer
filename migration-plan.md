@@ -6,33 +6,33 @@ This document outlines the phased plan for migrating the ChordTrainer project fr
 
 ### Phase 1: Foundational Utilities & Constants
 *These files have no internal JavaScript dependencies and can be migrated first.*
-- [ ] `src/i18n.js`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Constants.js`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Games/Free/presets.js`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/usePracticeSettings.js`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/useStatistics.js`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/useVolumeSettings.js`
-- [ ] `src/utils/ChordTrainer/Constants.js`
-- [ ] `src/utils/Constants.js`
-- [ ] `src/utils/Tone/SampleLibrary.js`
+- [x] `src/i18n.js`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Constants.js`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Games/Free/presets.js`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/usePracticeSettings.js`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/useStatistics.js`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/useVolumeSettings.js`
+- [x] `src/utils/ChordTrainer/Constants.js`
+- [x] `src/utils/Constants.js`
+- [x] `src/utils/Tone/SampleLibrary.js`
 
 ### Phase 2: Core Logic & Hooks
 *These files depend only on modules from Phase 1.*
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.jsx`
-- [ ] `src/utils/ChordTrainer/GameLogics.js`
-- [ ] `src/utils/GameLogics.js`
-- [ ] `src/utils/Tone/samplers.legacy.js`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.jsx`
+- [x] `src/utils/ChordTrainer/GameLogics.js`
+- [x] `src/utils/GameLogics.js`
+- [x] `src/utils/Tone/samplers.legacy.js`
 
 ### Phase 3: Components & Settings
 *These files depend on modules from the previous phases.*
-- [ ] `src/components/Settings/SettingsPanel.jsx`
-- [ ] `src/components/Settings/SoundSettings/useSoundSettings.js`
-- [ ] `src/components/slider/RangeSlider.jsx`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Games/Challenge/ChallengeSettings.jsx`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer.js`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Games/Free/FreeSettings.jsx`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer.js`
-- [ ] `src/utils/Tone/playbacks.legacy.js`
+- [x] `src/components/Settings/SettingsPanel.tsx`
+- [x] `src/components/Settings/SoundSettings/useSoundSettings.ts`
+- [x] `src/components/slider/RangeSlider.tsx`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Games/Challenge/ChallengeSettings.tsx`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer.ts`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Games/Free/FreeSettings.tsx`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer.ts`
+- [x] `src/utils/Tone/playbacks.ts` (already migrated)
 
 ### Phase 4: More Components & Settings
 - [ ] `src/components/Settings/SoundSettings/index.jsx`

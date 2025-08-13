@@ -57,6 +57,7 @@
     "include": [
         "src/**/*.ts",
         "src/**/*.tsx",
+        "src/types/**/*.d.ts",
         "src/Components/SharedComponents/HeaderTitle.jsx",
         "src/pages/ChordTrainer/components/Settings/index.jsx"
     ]

@@ -1,33 +1,39 @@
 import React from 'react';
 import './rangeSlider.css';
 
-function RangeSlider({ value, onChange, min, max, step = 1, label, displayFunction }) {
+interface RangeSliderProps {
+    value: [number, number];
+    onChange: (next: [number, number]) => void;
+    min: number;
+    max: number;
+    step?: number;
+    label?: string;
+    displayFunction?: (n: number) => string | number;
+}
+
+function RangeSlider({ value, onChange, min, max, step = 1, label, displayFunction }: RangeSliderProps) {
     const [start, end] = value;
 
-    const handleStartChange = (e) => {
-        const newStart = parseInt(e.target.value);
+    const handleStartChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newStart = parseInt(e.target.value, 10);
         if (Math.abs(newStart - end) >= step && newStart < end) {
             onChange([newStart, end]);
         }
     };
 
-    const handleEndChange = (e) => {
-        const newEnd = parseInt(e.target.value);
+    const handleEndChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newEnd = parseInt(e.target.value, 10);
         if (Math.abs(newEnd - start) >= step && newEnd > start) {
             onChange([start, newEnd]);
         }
     };
 
-    const getPercentage = (value) => {
-        return ((value - min) / (max - min)) * 100;
-    };
+    const getPercentage = (val: number) => ((val - min) / (max - min)) * 100;
 
     return (
         <div className="space-y-2">
             <div className="flex justify-between items-center">
-                <label className="block text-sm font-medium text-text-primary">
-                    {label}
-                </label>
+                <label className="block text-sm font-medium text-text-primary">{label}</label>
                 <span className="text-sm text-text-secondary">
                     {displayFunction ? displayFunction(start) : start} - {displayFunction ? displayFunction(end) : end}
                 </span>
@@ -42,7 +48,7 @@ function RangeSlider({ value, onChange, min, max, step = 1, label, displayFuncti
                             position: 'absolute',
                             height: '100%',
                             width: `${getPercentage(end) - getPercentage(start)}%`,
-                            left: `${getPercentage(start)}%`
+                            left: `${getPercentage(start)}%`,
                         }}
                     />
                     <input
@@ -52,14 +58,7 @@ function RangeSlider({ value, onChange, min, max, step = 1, label, displayFuncti
                         value={start}
                         onChange={handleStartChange}
                         className="thumb thumb--left"
-                        style={{
-                            position: 'absolute',
-                            width: '100%',
-                            height: '100%',
-                            opacity: 0,
-                            cursor: 'pointer',
-                            zIndex: getPercentage(start) > 75 ? "5" : "3"
-                        }}
+                        style={{ position: 'absolute', width: '100%', height: '100%', opacity: 0, cursor: 'pointer', zIndex: getPercentage(start) > 75 ? 5 : 3 }}
                     />
                     <input
                         type="range"
@@ -68,13 +67,7 @@ function RangeSlider({ value, onChange, min, max, step = 1, label, displayFuncti
                         value={end}
                         onChange={handleEndChange}
                         className="thumb thumb--right"
-                        style={{
-                            position: 'absolute',
-                            width: '100%',
-                            height: '100%',
-                            opacity: 0,
-                            cursor: 'pointer'
-                        }}
+                        style={{ position: 'absolute', width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }}
                     />
                 </div>
             </div>
@@ -82,4 +75,4 @@ function RangeSlider({ value, onChange, min, max, step = 1, label, displayFuncti
     );
 }
 
-export default RangeSlider; 
+export default RangeSlider;

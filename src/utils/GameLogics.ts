@@ -2,7 +2,7 @@ import * as Tone from 'tone';
 import { degrees } from '@EarTrainers/DegreeTrainer/Constants';
 import { Note, Range } from 'tonal';
 import { preloadAudio } from '@utils/Tone/samplers';
-
+import { Dispatch,SetStateAction } from 'react';
 const getNextNote = (possibleNotesInRange: string[], currentNote: string | null): string | null => {
   if (possibleNotesInRange.length === 0) return null;
   let nextNote: string | null = null;
@@ -104,7 +104,7 @@ const handleNoteGuess = (
 const advanceGame = (
   possibleNotesInRange: string[],
   currentNote: string | null,
-  setCurrentNote: (n: string | null) => void,
+  setCurrentNote: Dispatch<SetStateAction<string >>,
   playNote: (note: string, dur?: number, velocity?: number) => void,
   setDisabledNotes: (v: string[]) => void,
   setIsAdvance: (v: 'Ready' | 'Next' | 'No' | 'Now') => void,
@@ -112,6 +112,7 @@ const advanceGame = (
   bpm: number
 ) => {
   const nextNote = getNextNote(possibleNotesInRange, currentNote);
+  if( !nextNote) return;
   setCurrentNote(nextNote);
   if (nextNote) {
     if (jCutMode) {
@@ -144,7 +145,7 @@ function handleGameLogic({
   currentNote: string | null;
   rootNote: string;
   possibleNotesInRange: string[];
-  setCurrentNote: (n: string | null) => void;
+  setCurrentNote: Dispatch<SetStateAction<string>>;
   playNote: (n: string, dur?: number, velocity?: number) => void;
   setDisabledNotes: (v: string[]) => void;
   setIsAdvance: (v: 'Ready' | 'Next' | 'No' | 'Now') => void;
