@@ -2,9 +2,12 @@ import { useTranslation } from 'react-i18next';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import HorizontalSlider from '@components/slider/HorizontalSlider';
 
-function VolumeSettings() {
+function VolumeSettings(): JSX.Element {
+    // Keep Tone.js volumes in sync with settings
+
     const { t } = useTranslation('degreeTrainer');
     const { volume: { droneVolume, setDroneVolume, pianoVolume, setPianoVolume, answerVolume, setAnswerVolume } } = useDegreeTrainerSettings();
+    console.log(pianoVolume);
 
     return (
         <div className="p-6 space-y-12">

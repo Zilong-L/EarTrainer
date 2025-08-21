@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import WebRoutes from './pages/WebRoutes.tsx';
+import WebRoutes from './pages/WebRoutes';
 import './i18n'; // 确保 i18n 被引入到项目中
 import './styles/themes.css';
 import './styles/index.css';
