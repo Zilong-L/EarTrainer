@@ -1,4 +1,8 @@
 {
+  "buttons": {
+    "diatonic": "调内和弦",
+    "chord-practice": "自由练习"
+  },
   "settings": {
     "home": "首页",
     "drillModes": {
@@ -48,6 +52,7 @@
     },
     "title": "设置",
     "modes": {
+      "game": "游戏设置",
       "chordpractice": "和弦练习",
       "diatonic": "调内和弦",
       "progression": "和弦进行",
