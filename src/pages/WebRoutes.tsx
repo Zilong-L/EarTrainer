@@ -1,10 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'motion/react';
 import { useLocalStorage } from '@uidotdev/usehooks';
 import Button from '@components/Button';
-import RangeSlider from '@components/slider/RangeSlider';
 
 // Lazy load components
 const ChordTrainer = lazy(() => import('./ChordTrainer'));
@@ -33,7 +32,7 @@ const LanguageSwitcher = () => {
   useEffect(() => {
     i18n.changeLanguage(language);
   }, [language])
-  const changeLanguage = (lng) => {
+  const changeLanguage = (lng: string) => {
     setLanguage(lng);
     console.log("切换前的当前语言:", i18n.language); // 打印切换前的语言
     i18n.changeLanguage(lng).then(() => {
