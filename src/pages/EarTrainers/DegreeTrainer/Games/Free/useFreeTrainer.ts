@@ -16,7 +16,7 @@ const useFreeTrainer = () => {
   const [currentNote, setCurrentNote] = useState<string>('');
   const [isPlayingSound, setIsPlayingSound] = useState(false);
   const [disabledNotes, setDisabledNotes] = useState<string[]>([]);
-  const [gameState, setGameState] = useState<'end' | 'start' | 'playing'>('end');
+  const [gameState, setGameState] = useState<'end' | 'start' | 'playing' | 'paused'>('end');
   const [activeNote, setActiveNote] = useState<string | null>(null);
   const [isAdvance, setIsAdvance] = useState<'No' | 'Ready' | 'Next' | 'Now'>('No');
   const [customNotes, _setCustomNotes] = useState(degrees);

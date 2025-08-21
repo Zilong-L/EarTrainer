@@ -94,7 +94,7 @@ const useChallengeTrainer = () => {
 
   const [currentNote, setCurrentNote] = useState<string>('');
   const [disabledNotes, setDisabledNotes] = useState<string[]>([]);
-  const [gameState, setGameState] = useState<'end' | 'start' | 'playing'>('end');
+  const [gameState, setGameState] = useState<'end' | 'start' | 'playing' | 'paused'>('end');
   const [activeNote, setActiveNote] = useState<string | null>(null);
   const [isAdvance, setIsAdvance] = useState<'No' | 'Ready' | 'Next' | 'Now'>('No');
 
