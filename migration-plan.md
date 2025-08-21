@@ -46,8 +46,8 @@ This document outlines the phased plan for migrating the ChordTrainer project fr
 - [x] `src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/index.jsx` ✅ **COMPLETED**
 
 ### Phase 6: Game Logic & Entry Points
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioWave.jsx`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Settings/GameSettings/index.jsx`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioWave.jsx`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Settings/GameSettings/index.jsx`
 
 ### Phase 7: Core UI Components
 - [ ] `src/pages/EarTrainers/DegreeTrainer/Games/Shared/StartButtons.jsx`
