@@ -35,13 +35,14 @@ This document outlines the phased plan for migrating the ChordTrainer project fr
 - [x] `src/utils/Tone/playbacks.ts` (already migrated)
 
 ### Phase 4: More Components & Settings
-- [ ] `src/components/Settings/SoundSettings/index.jsx`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.jsx`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx`
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx`
+- [x] `src/components/Settings/SoundSettings/index.tsx`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.tsx`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.tsx`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.tsx`
 
 ### Phase 5: Higher-Level Components
-- [ ] `src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.jsx`
+- [x] `src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.tsx` (TypeScript version created)
+- [x] `src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.d.ts` (TypeScript definitions added)
 - [ ] `src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/index.jsx`
 
 ### Phase 6: Game Logic & Entry Points
