@@ -2,7 +2,7 @@
   {
     "file": "src/components/Settings/SoundSettings/index.tsx",
     "imports": [
-      "src/components/slider/HorizontalSlider.jsx",
+      "src/components/slider/HorizontalSlider.tsx",
       "src/stores/soundSettingsStore.ts"
     ],
     "isTs": true,
@@ -17,15 +17,15 @@
     "needsMigration": false
   },
   {
-    "file": "src/main.tsx",
+    "file": "src/main.jsx",
     "imports": [
       "src/i18n.ts",
-      "src/pages/WebRoutes.tsx",
+      "src/pages/WebRoutes.jsx",
       "src/styles/index.css",
       "src/styles/themes.css"
     ],
-    "isTs": true,
-    "needsMigration": false
+    "isTs": false,
+    "needsMigration": true
   },
   {
     "file": "src/i18n.ts",
@@ -40,18 +40,12 @@
     "needsMigration": false
   },
   {
-    "file": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
-    "imports": [],
-    "isTs": true,
-    "needsMigration": false
-  },
-  {
     "file": "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.tsx",
     "imports": [
       "src/pages/EarTrainers/DegreeTrainer/Settings/GameSettings/index.tsx",
       "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx",
       "src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/index.tsx",
-      "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx",
+      "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.tsx",
       "src/components/Header.tsx",
       "src/components/HeaderButton.tsx",
       "src/components/HeaderButtons.tsx",
@@ -59,7 +53,7 @@
       "src/components/LanguageSwitcher.tsx",
       "src/components/Settings/SettingsPanel.tsx",
       "src/components/Settings/SoundSettings/index.jsx",
-      "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+      "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
       "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.jsx",
       "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer.ts",
       "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.jsx",
@@ -73,7 +67,7 @@
   {
     "file": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.d.ts",
     "imports": [
-      "src/pages/EarTrainers/DegreeTrainer/Constants.js"
+      "src/pages/EarTrainers/DegreeTrainer/Constants.ts"
     ],
     "isTs": true,
     "needsMigration": false
@@ -81,7 +75,7 @@
   {
     "file": "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.d.ts",
     "imports": [
-      "src/pages/EarTrainers/DegreeTrainer/Constants.js"
+      "src/pages/EarTrainers/DegreeTrainer/Constants.ts"
     ],
     "isTs": true,
     "needsMigration": false
@@ -90,7 +84,7 @@
     "file": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.tsx",
     "imports": [
       "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.jsx",
-      "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+      "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
       "src/utils/ChordTrainer/GameLogics.ts",
       "src/utils/Constants.ts",
       "src/utils/GameLogics.ts"
@@ -122,21 +116,12 @@
     "needsMigration": false
   },
   {
-    "file": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.tsx",
-    "imports": [
-      "src/components/slider/HorizontalSlider.jsx",
-      "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.tsx"
-    ],
-    "isTs": true,
-    "needsMigration": false
-  },
-  {
     "file": "src/pages/EarTrainers/DegreeTrainer/Settings/index.tsx",
     "imports": [
       "src/pages/EarTrainers/DegreeTrainer/Settings/GameSettings/index.tsx",
       "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx",
       "src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/index.tsx",
-      "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx",
+      "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.tsx",
       "src/components/Settings/SettingsPanel.tsx",
       "src/components/Settings/SoundSettings/index.jsx"
     ],
@@ -144,17 +129,17 @@
     "needsMigration": false
   },
   {
-    "file": "src/pages/WebRoutes.tsx",
+    "file": "src/pages/WebRoutes.jsx",
     "imports": [
       "src/pages/ChordTrainer/index.jsx",
-      "src/pages/Intro.jsx",
+      "src/pages/Intro.tsx",
       "src/components/Button.tsx",
       "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
       "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx",
       "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.tsx"
     ],
-    "isTs": true,
-    "needsMigration": false
+    "isTs": false,
+    "needsMigration": true
   },
   {
     "file": "src/pages/ChordTrainer/index.jsx",
@@ -314,7 +299,7 @@
       "src/components/LanguageSwitcher.tsx",
       "src/components/PianoVisualizer.tsx",
       "src/pages/EarTrainers/ChordColorTrainer/CardStack.jsx",
-      "src/pages/EarTrainers/ChordColorTrainer/Constants.js",
+      "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
       "src/pages/EarTrainers/ChordColorTrainer/ReplayButtons.jsx",
       "src/pages/EarTrainers/ChordColorTrainer/Settings/index.jsx",
       "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.js",
@@ -399,7 +384,7 @@
     "imports": [
       "src/components/slider/RangeSlider.tsx",
       "src/components/ValueAdjuster/index.jsx",
-      "src/pages/EarTrainers/ChordColorTrainer/Constants.js",
+      "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
       "src/stores/chordColorTrainerSettingsStore.ts",
       "src/stores/i18nStore.ts"
     ],
@@ -418,7 +403,7 @@
   {
     "file": "src/pages/EarTrainers/ChordColorTrainer/Settings/VolumeSettings.jsx",
     "imports": [
-      "src/components/slider/HorizontalSlider.jsx",
+      "src/components/slider/HorizontalSlider.tsx",
       "src/stores/chordColorTrainerSettingsStore.ts",
       "src/stores/i18nStore.ts"
     ],
@@ -429,7 +414,7 @@
     "file": "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.js",
     "imports": [
       "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.js",
-      "src/pages/EarTrainers/ChordColorTrainer/Constants.js",
+      "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
       "src/utils/ChordTrainer/GameLogics.ts",
       "src/utils/Constants.ts",
       "src/utils/Tone/playbacks.ts",
@@ -442,7 +427,7 @@
     "file": "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.js",
     "imports": [
       "src/stores/chordColorTrainerSettingsStore.ts",
-      "src/pages/EarTrainers/ChordColorTrainer/Constants.js",
+      "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
       "src/stores/soundSettingsStore.ts"
     ],
     "isTs": false,
@@ -454,7 +439,7 @@
       "src/pages/EarTrainers/DegreeTrainer/Settings/GameSettings/index.tsx",
       "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx",
       "src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/index.tsx",
-      "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx",
+      "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.tsx",
       "src/components/Header.tsx",
       "src/components/HeaderButton.tsx",
       "src/components/HeaderButtons.tsx",
@@ -462,7 +447,7 @@
       "src/components/LanguageSwitcher.tsx",
       "src/components/Settings/SettingsPanel.tsx",
       "src/components/Settings/SoundSettings/index.jsx",
-      "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+      "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
       "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.jsx",
       "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer.ts",
       "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.jsx",
@@ -522,7 +507,7 @@
   {
     "file": "src/components/Settings/SoundSettings/index.jsx",
     "imports": [
-      "src/components/slider/HorizontalSlider.jsx",
+      "src/components/slider/HorizontalSlider.tsx",
       "src/stores/soundSettingsStore.ts"
     ],
     "isTs": false,
@@ -541,7 +526,7 @@
   {
     "file": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer.ts",
     "imports": [
-      "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+      "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
       "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.tsx",
       "src/utils/GameLogics.ts",
       "src/utils/Tone/playbacks.ts",
@@ -564,7 +549,7 @@
   {
     "file": "src/pages/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer.ts",
     "imports": [
-      "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+      "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
       "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.tsx",
       "src/utils/GameLogics.ts",
       "src/utils/Tone/playbacks.ts",
@@ -577,7 +562,7 @@
     "file": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.jsx",
     "imports": [
       "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.jsx",
-      "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+      "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
       "src/utils/ChordTrainer/GameLogics.ts",
       "src/utils/Constants.ts",
       "src/utils/GameLogics.ts"
@@ -589,7 +574,7 @@
     "file": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.jsx",
     "imports": [
       "src/components/Button.tsx",
-      "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+      "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
       "src/utils/GameLogics.ts"
     ],
     "isTs": false,
@@ -635,7 +620,7 @@
   {
     "file": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/ChallengeSettings.tsx",
     "imports": [
-      "src/pages/EarTrainers/DegreeTrainer/Constants.js"
+      "src/pages/EarTrainers/DegreeTrainer/Constants.ts"
     ],
     "isTs": true,
     "needsMigration": false
@@ -644,7 +629,7 @@
     "file": "src/pages/EarTrainers/DegreeTrainer/Games/Free/FreeSettings.tsx",
     "imports": [
       "src/pages/EarTrainers/DegreeTrainer/Games/Free/presets.ts",
-      "src/pages/EarTrainers/DegreeTrainer/Constants.js"
+      "src/pages/EarTrainers/DegreeTrainer/Constants.ts"
     ],
     "isTs": true,
     "needsMigration": false
@@ -696,19 +681,19 @@
     "needsMigration": false
   },
   {
-    "file": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx",
+    "file": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.tsx",
     "imports": [
-      "src/components/slider/HorizontalSlider.jsx",
+      "src/components/slider/HorizontalSlider.tsx",
       "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.tsx"
     ],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
-    "file": "src/components/slider/HorizontalSlider.jsx",
+    "file": "src/components/slider/HorizontalSlider.tsx",
     "imports": [],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
     "file": "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.tsx",
@@ -743,24 +728,24 @@
     "needsMigration": false
   },
   {
-    "file": "src/pages/Intro.jsx",
+    "file": "src/pages/Intro.tsx",
     "imports": [],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
     "file": "src/stores/chordColorTrainerSettingsStore.ts",
     "imports": [
-      "src/pages/EarTrainers/ChordColorTrainer/Constants.js"
+      "src/pages/EarTrainers/ChordColorTrainer/Constants.ts"
     ],
     "isTs": true,
     "needsMigration": false
   },
   {
-    "file": "src/pages/EarTrainers/ChordColorTrainer/Constants.js",
+    "file": "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
     "imports": [],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
     "file": "src/stores/i18nStore.ts",
@@ -829,17 +814,17 @@
   {
     "file": "src/utils/GameLogics.ts",
     "imports": [
-      "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+      "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
       "src/utils/Tone/samplers.ts"
     ],
     "isTs": true,
     "needsMigration": false
   },
   {
-    "file": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+    "file": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
     "imports": [],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
     "file": "src/utils/Tone/playbacks.ts",

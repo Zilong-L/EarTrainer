@@ -135,7 +135,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/components/slider/HorizontalSlider.jsx",
+          "resolved": "src/components/slider/HorizontalSlider.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -168,7 +168,7 @@
       "valid": true
     },
     {
-      "source": "src/components/slider/HorizontalSlider.jsx",
+      "source": "src/components/slider/HorizontalSlider.tsx",
       "dependencies": [],
       "orphan": false,
       "valid": true
@@ -248,7 +248,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/components/slider/HorizontalSlider.jsx",
+          "resolved": "src/components/slider/HorizontalSlider.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -358,12 +358,12 @@
       "valid": true
     },
     {
-      "source": "src/main.tsx",
+      "source": "src/main.jsx",
       "dependencies": [
         {
-          "dynamic": false,
           "module": "./i18n",
           "moduleSystem": "es6",
+          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
@@ -378,15 +378,15 @@
           "valid": true
         },
         {
-          "dynamic": false,
-          "module": "./pages/WebRoutes.tsx",
+          "module": "./pages/WebRoutes",
           "moduleSystem": "es6",
+          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
             "import"
           ],
-          "resolved": "src/pages/WebRoutes.tsx",
+          "resolved": "src/pages/WebRoutes.jsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -395,9 +395,9 @@
           "valid": true
         },
         {
-          "dynamic": false,
           "module": "./styles/index.css",
           "moduleSystem": "es6",
+          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
@@ -412,9 +412,9 @@
           "valid": true
         },
         {
-          "dynamic": false,
           "module": "./styles/themes.css",
           "moduleSystem": "es6",
+          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
@@ -461,12 +461,12 @@
       "valid": true
     },
     {
-      "source": "src/pages/WebRoutes.tsx",
+      "source": "src/pages/WebRoutes.jsx",
       "dependencies": [
         {
-          "dynamic": true,
           "module": "./ChordTrainer",
           "moduleSystem": "es6",
+          "dynamic": true,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
@@ -481,15 +481,15 @@
           "valid": true
         },
         {
-          "dynamic": true,
           "module": "./Intro",
           "moduleSystem": "es6",
+          "dynamic": true,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
             "dynamic-import"
           ],
-          "resolved": "src/pages/Intro.jsx",
+          "resolved": "src/pages/Intro.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -498,9 +498,9 @@
           "valid": true
         },
         {
-          "dynamic": false,
           "module": "@components/Button",
           "moduleSystem": "es6",
+          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -518,9 +518,9 @@
           "valid": true
         },
         {
-          "dynamic": true,
           "module": "@EarTrainers/ChordColorTrainer/ChordColorTrainer",
           "moduleSystem": "es6",
+          "dynamic": true,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -538,9 +538,9 @@
           "valid": true
         },
         {
-          "dynamic": true,
           "module": "@EarTrainers/DegreeTrainer/DegreeTrainer",
           "moduleSystem": "es6",
+          "dynamic": true,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -558,9 +558,9 @@
           "valid": true
         },
         {
-          "dynamic": true,
           "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
           "moduleSystem": "es6",
+          "dynamic": true,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -1449,7 +1449,7 @@
       "valid": true
     },
     {
-      "source": "src/pages/Intro.jsx",
+      "source": "src/pages/Intro.tsx",
       "dependencies": [],
       "orphan": false,
       "valid": true
@@ -1646,7 +1646,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -1961,7 +1961,7 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/ChordColorTrainer/Constants.js",
+      "source": "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
       "dependencies": [],
       "orphan": false,
       "valid": true
@@ -2206,7 +2206,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2273,7 +2273,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2347,7 +2347,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/components/slider/HorizontalSlider.jsx",
+          "resolved": "src/components/slider/HorizontalSlider.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2431,7 +2431,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2555,7 +2555,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2656,7 +2656,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2816,7 +2816,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3027,7 +3027,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3040,7 +3040,7 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+      "source": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
       "dependencies": [],
       "orphan": false,
       "valid": true
@@ -3077,7 +3077,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3355,12 +3355,12 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx",
+      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.tsx",
       "dependencies": [
         {
+          "dynamic": false,
           "module": "@components/slider/HorizontalSlider",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3369,7 +3369,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/components/slider/HorizontalSlider.jsx",
+          "resolved": "src/components/slider/HorizontalSlider.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3378,9 +3378,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3497,7 +3497,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3544,7 +3544,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3641,7 +3641,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3843,7 +3843,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3936,7 +3936,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -4035,18 +4035,6 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
-      "dependencies": [],
-      "orphan": true,
-      "valid": false,
-      "rules": [
-        {
-          "severity": "warn",
-          "name": "no-orphans"
-        }
-      ]
-    },
-    {
       "source": "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.tsx",
       "dependencies": [
         {
@@ -4109,7 +4097,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -4269,7 +4257,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -4416,7 +4404,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -4443,7 +4431,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -4487,7 +4475,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.js",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -4665,53 +4653,6 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.tsx",
-      "dependencies": [
-        {
-          "dynamic": false,
-          "module": "@components/slider/HorizontalSlider",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/components/slider/HorizontalSlider.jsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
       "source": "src/pages/EarTrainers/DegreeTrainer/Settings/index.tsx",
       "dependencies": [
         {
@@ -4774,7 +4715,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -4843,15 +4784,6 @@
     "violations": [
       {
         "type": "module",
-        "from": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
-        "to": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
-        "rule": {
-          "severity": "warn",
-          "name": "no-orphans"
-        }
-      },
-      {
-        "type": "module",
         "from": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.tsx",
         "to": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.tsx",
         "rule": {
@@ -4861,11 +4793,11 @@
       }
     ],
     "error": 0,
-    "warn": 2,
+    "warn": 1,
     "info": 0,
     "ignore": 0,
-    "totalCruised": 98,
-    "totalDependenciesCruised": 215,
+    "totalCruised": 96,
+    "totalDependenciesCruised": 213,
     "optionsUsed": {
       "baseDir": "/mnt/ssd/lzl/code/js/ChordTrainer",
       "combinedDependencies": false,
