@@ -6,10 +6,10 @@ import { strangeChords } from '@utils/ChordTrainer/Constants'
 import { useChordPracticeStore } from "../../stores/chordPracticeStore";
 
 const useChordPracticeGame = () => {
-  const [targetChord, setTargetChord] = useState("");
-  const [detectedChords, setDetectedChords] = useState([]);
-  const [activeNotes, setActiveNotes] = useState([]);
-  const [sustainedNotes, setSustainedNotes] = useState([]);
+  const [targetChord, setTargetChord] = useState<string>("");
+  const [detectedChords, setDetectedChords] = useState<string[]>([]);
+  const [activeNotes, setActiveNotes] = useState<number[]>([]);
+  const [sustainedNotes, setSustainedNotes] = useState<number[]>([]);
 
   const {
     selectedInversions,
@@ -23,20 +23,20 @@ const useChordPracticeGame = () => {
     setTargetChord(prevTargetChord => {
       const chordType = selectedChordTypes[Math.floor(Math.random() * selectedChordTypes.length)];
       let currentRoot = prevTargetChord ? Chord.get(prevTargetChord).tonic : 'C';
-      let newRoot;
+      let newRoot: string;
 
       switch (drillMode) {
         case 'circle_fifths':
-          newRoot = Note.simplify(Note.transpose(currentRoot, "P5"));
+          newRoot = Note.simplify(Note.transpose(currentRoot || 'C', "P5"));
           break;
         case 'circle_fourths':
-          newRoot = Note.simplify(Note.transpose(currentRoot, "P4"));
+          newRoot = Note.simplify(Note.transpose(currentRoot || 'C', "P4"));
           break;
         case 'semitone_up':
-          newRoot = Note.simplify(Note.transpose(currentRoot, "m2"));
+          newRoot = Note.simplify(Note.transpose(currentRoot || 'C', "m2"));
           break;
         case 'semitone_down':
-          newRoot = Note.simplify(Note.transpose(currentRoot, "-m2"));
+          newRoot = Note.simplify(Note.transpose(currentRoot || 'C', "-m2"));
           break;
         case 'random':
         default:
@@ -48,7 +48,7 @@ const useChordPracticeGame = () => {
 
       const maxInversion = chordType.includes('7') ? 3 : 2;
       const selectedInversion = selectedInversions[Math.floor(Math.random() * selectedInversions.length)];
-      let position;
+      let position: number;
       switch (selectedInversion) {
         case "root": position = 0; break;
         case "first": position = 1; break;
@@ -58,7 +58,7 @@ const useChordPracticeGame = () => {
         default: position = 0;
       }
 
-      return getInversion(newRoot, chordType, position);
+      return getInversion(newRoot, chordType, position) as string;
     });
   }, [drillMode, JSON.stringify(selectedChordTypes), JSON.stringify(selectedInversions), notes]);
 
@@ -67,7 +67,7 @@ const useChordPracticeGame = () => {
       setDetectedChords([]);
       return;
     };
-    const notesString = activeNotes.map((note) => Midi.midiToNoteName(note));
+    const notesString = activeNotes.map((note) => Midi.midiToNoteName(note) || '');
     let chordResult = detect(notesString, { assumePerfectFifth: true });
     if (!chordResult) {
       setDetectedChords([]);

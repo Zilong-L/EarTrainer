@@ -1,11 +1,12 @@
 import React from 'react';
+// @ts-ignore
 import Settings from '@ChordTrainer/components/Settings';
 import useChordPracticeGame from './useChordPracticeGame';
 import ChordPracticeSettings from './ChordPracticeSettings';
 import GameDisplay from './GameDisplay';
 import useSettingsModalStore from '@ChordTrainer/stores/settingsStore';
 
-const ChordPracticeGame = () => {
+const ChordPracticeGame: React.FC = () => {
     const { isOpen, setIsOpen } = useSettingsModalStore();
     const chordPracticeGame = useChordPracticeGame();
 

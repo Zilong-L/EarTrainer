@@ -1,7 +1,12 @@
 import React from 'react';
 import MIDIInputHandler from '../../components/MIDIInputHandler';
 import { getNiceChordName } from '@utils/ChordTrainer/GameLogics';
-const GameDisplay = ({ chordPracticeGameSettings }) => {
+
+interface GameDisplayProps {
+  chordPracticeGameSettings: any;
+}
+
+const GameDisplay: React.FC<GameDisplayProps> = ({ chordPracticeGameSettings }) => {
   const { targetChord, detectedChords, activeNotes, setActiveNotes, sustainedNotes, setSustainedNotes } = chordPracticeGameSettings;
 
   return (
@@ -19,6 +24,8 @@ const GameDisplay = ({ chordPracticeGameSettings }) => {
           detectedChords={detectedChords}
           sustainedNotes={sustainedNotes}
           setSustainedNotes={setSustainedNotes}
+          showDegree={false}
+          setShowDegree={() => {}}
         />
       </div>
     </div>

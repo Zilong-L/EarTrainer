@@ -12,7 +12,7 @@ const chordTypes = {
 const inversions = ['random', 'root', 'first', 'second', 'third'];
 const drillModes = ['random', 'circle_fifths', 'circle_fourths', 'semitone_up', 'semitone_down'];
 
-const ChordPracticeSettings = () => {
+const ChordPracticeSettings: React.FC = () => {
   const chordTypesAll = ChordType.names();
   const { t } = useTranslation('chordGame');
   const {
@@ -26,7 +26,7 @@ const ChordPracticeSettings = () => {
     setSelectedInversions
   } = useChordPracticeStore();
 
-  const handleChordSelect = (chord) => {
+  const handleChordSelect = (chord: string) => {
     const alias = ChordType.get(chord.toLowerCase()).aliases[0];
     const newSelectedChords = selectedChordTypes.includes(alias)
       ? selectedChordTypes.filter((c) => c !== alias)
@@ -37,7 +37,7 @@ const ChordPracticeSettings = () => {
     }
   };
 
-  const handleInversionSelect = (inversion) => {
+  const handleInversionSelect = (inversion: string) => {
     const newSelectedInversions = selectedInversions.includes(inversion)
       ? selectedInversions.filter((i) => i !== inversion)
       : [...selectedInversions, inversion];

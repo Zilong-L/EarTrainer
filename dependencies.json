@@ -753,12 +753,12 @@
         "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
         "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
         "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
-        "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+        "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
         "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.jsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.jsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.js",
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.tsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.tsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.ts",
         "node_modules/@uidotdev/usehooks/index.js",
         "src/pages/ChordTrainer/components/Settings/index.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/CardStack.jsx",
@@ -1422,10 +1422,8 @@
         "src/pages/ChordTrainer/index.jsx",
         "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
         "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
-        "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.jsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.jsx",
+        "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.tsx",
         "src/pages/ChordTrainer/components/Settings/index.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/MIDIInputHandler.jsx",
@@ -7915,7 +7913,6 @@
         "src/components/ValueAdjuster/index.tsx",
         "src/pages/ChordTrainer/index.jsx",
         "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
         "src/pages/ChordTrainer/components/Settings/index.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/ReplayButtons.jsx",
@@ -31942,10 +31939,10 @@
       "dependents": [
         "src/components/PianoVisualizer.tsx",
         "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
-        "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+        "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
         "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
-        "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.jsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.js",
+        "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.tsx",
+        "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.ts",
         "src/pages/EarTrainers/ChordColorTrainer/MIDIInputHandler.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.ts",
         "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.tsx",
@@ -32338,7 +32335,7 @@
       "dependents": [
         "node_modules/@tonaljs/chord/dist/index.js",
         "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
-        "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.js"
+        "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.ts"
       ],
       "orphan": false,
       "valid": true
@@ -81949,7 +81946,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
+          "resolved": "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -82203,7 +82200,6 @@
       "dependencies": [],
       "dependents": [
         "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
         "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.tsx"
       ],
@@ -82222,7 +82218,6 @@
       "dependencies": [],
       "dependents": [
         "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
         "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.tsx"
       ],
@@ -82241,7 +82236,6 @@
       "dependencies": [],
       "dependents": [
         "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
         "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.tsx"
       ],
@@ -82260,7 +82254,6 @@
       "dependencies": [],
       "dependents": [
         "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
         "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.tsx"
       ],
@@ -82448,7 +82441,6 @@
         "src/pages/WebRoutes.jsx",
         "src/pages/ChordTrainer/index.jsx",
         "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
         "src/pages/Intro.tsx",
         "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
         "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.tsx"
@@ -82885,7 +82877,7 @@
       "dependencies": [],
       "dependents": [
         "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx"
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx"
       ],
       "orphan": false,
       "valid": true
@@ -82902,7 +82894,7 @@
       "dependencies": [],
       "dependents": [
         "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx"
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx"
       ],
       "orphan": false,
       "valid": true
@@ -83013,7 +83005,7 @@
       "dependencies": [],
       "dependents": [
         "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.jsx"
+        "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.tsx"
       ],
       "orphan": false,
       "valid": true
@@ -83087,7 +83079,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+          "resolved": "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -83147,9 +83139,9 @@
       "dependencies": [],
       "dependents": [
         "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
-        "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+        "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
         "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
-        "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.js",
+        "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.ts",
         "src/pages/EarTrainers/ChordColorTrainer/MIDIInputHandler.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.ts",
         "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.tsx"
@@ -83158,7 +83150,7 @@
       "valid": true
     },
     {
-      "source": "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+      "source": "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
       "dependencies": [
         {
           "module": "@components/PianoVisualizer",
@@ -83262,7 +83254,7 @@
       ],
       "dependents": [
         "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
-        "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.jsx"
+        "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.tsx"
       ],
       "orphan": false,
       "valid": true
@@ -83278,7 +83270,7 @@
       ],
       "dependencies": [],
       "dependents": [
-        "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+        "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
         "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx"
       ],
       "orphan": false,
@@ -83295,7 +83287,7 @@
       ],
       "dependencies": [],
       "dependents": [
-        "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+        "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
         "src/pages/EarTrainers/ChordColorTrainer/MIDIInputHandler.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.ts",
         "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.tsx",
@@ -83437,7 +83429,7 @@
       "valid": true
     },
     {
-      "source": "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
+      "source": "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx",
       "dependencies": [
         {
           "module": "./DiatonicSettings",
@@ -83448,7 +83440,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.jsx",
+          "resolved": "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -83465,7 +83457,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.jsx",
+          "resolved": "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -83482,7 +83474,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.js",
+          "resolved": "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -83523,87 +83515,6 @@
           "valid": true
         },
         {
-          "module": "@components/Header",
-          "moduleSystem": "es6",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "unknown"
-          ],
-          "resolved": "@components/Header",
-          "coreModule": false,
-          "followable": false,
-          "couldNotResolve": true,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "@components/HeaderButton",
-          "moduleSystem": "es6",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "unknown"
-          ],
-          "resolved": "@components/HeaderButton",
-          "coreModule": false,
-          "followable": false,
-          "couldNotResolve": true,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "@components/HeaderButtons",
-          "moduleSystem": "es6",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "unknown"
-          ],
-          "resolved": "@components/HeaderButtons",
-          "coreModule": false,
-          "followable": false,
-          "couldNotResolve": true,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "@components/HeaderTitle",
-          "moduleSystem": "es6",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "unknown"
-          ],
-          "resolved": "@components/HeaderTitle",
-          "coreModule": false,
-          "followable": false,
-          "couldNotResolve": true,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "@heroicons/react/24/solid",
-          "moduleSystem": "es6",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "npm",
-            "import"
-          ],
-          "resolved": "node_modules/@heroicons/react/24/solid/index.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
           "module": "react",
           "moduleSystem": "es6",
           "dynamic": false,
@@ -83619,40 +83530,6 @@
           "matchesDoNotFollow": false,
           "circular": false,
           "valid": true
-        },
-        {
-          "module": "react-i18next",
-          "moduleSystem": "es6",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "npm",
-            "import"
-          ],
-          "resolved": "node_modules/react-i18next/dist/commonjs/index.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "react-router-dom",
-          "moduleSystem": "es6",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "npm",
-            "import"
-          ],
-          "resolved": "node_modules/react-router-dom/dist/main.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
         }
       ],
       "dependents": [
@@ -83662,7 +83539,7 @@
       "valid": true
     },
     {
-      "source": "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.jsx",
+      "source": "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.tsx",
       "dependencies": [
         {
           "module": "@components/Listbox",
@@ -83716,13 +83593,13 @@
         }
       ],
       "dependents": [
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx"
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.jsx",
+      "source": "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.tsx",
       "dependencies": [
         {
           "module": "../../components/MIDIInputHandler",
@@ -83733,7 +83610,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+          "resolved": "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -83751,23 +83628,6 @@
             "import"
           ],
           "resolved": "node_modules/react/index.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "react-i18next",
-          "moduleSystem": "es6",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "npm",
-            "import"
-          ],
-          "resolved": "node_modules/react-i18next/dist/commonjs/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -83794,13 +83654,13 @@
         }
       ],
       "dependents": [
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx"
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.js",
+      "source": "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.ts",
       "dependencies": [
         {
           "module": "@tonaljs/chord-detect",
@@ -83871,7 +83731,7 @@
         }
       ],
       "dependents": [
-        "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx"
+        "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx"
       ],
       "orphan": false,
       "valid": true
@@ -109752,7 +109612,7 @@
     "info": 0,
     "ignore": 0,
     "totalCruised": 1792,
-    "totalDependenciesCruised": 5197,
+    "totalDependenciesCruised": 5189,
     "optionsUsed": {
       "baseDir": "/mnt/ssd/lzl/code/js/ChordTrainer",
       "combinedDependencies": false,

@@ -416,7 +416,7 @@
     "imports": [
       "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
       "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
-      "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx"
+      "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx"
     ],
     "isTs": false,
     "needsMigration": true
@@ -451,7 +451,7 @@
   {
     "file": "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
     "imports": [
-      "src/pages/ChordTrainer/components/MIDIInputHandler.jsx"
+      "src/pages/ChordTrainer/components/MIDIInputHandler.tsx"
     ],
     "isTs": false,
     "needsMigration": true
@@ -465,40 +465,40 @@
     "needsMigration": true
   },
   {
-    "file": "src/pages/ChordTrainer/pages/DiatonicGame/index.jsx",
+    "file": "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx",
     "imports": [
-      "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.jsx",
-      "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.jsx",
-      "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.js"
+      "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.tsx",
+      "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.tsx",
+      "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.ts"
     ],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
-    "file": "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.jsx",
+    "file": "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.tsx",
     "imports": [],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
-    "file": "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.jsx",
+    "file": "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.tsx",
     "imports": [
-      "src/pages/ChordTrainer/components/MIDIInputHandler.jsx"
+      "src/pages/ChordTrainer/components/MIDIInputHandler.tsx"
     ],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
-    "file": "src/pages/ChordTrainer/components/MIDIInputHandler.jsx",
+    "file": "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
     "imports": [],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
-    "file": "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.js",
+    "file": "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.ts",
     "imports": [],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
     "file": "src/pages/ChordTrainer/stores/chordPracticeStore.ts",

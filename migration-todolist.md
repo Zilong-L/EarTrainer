@@ -2,7 +2,7 @@
 
 ## 当前状态
 - **总待迁移文件**: 46 个 js/jsx 文件
-- **已完成迁移**: 25 个文件
+- **已完成迁移**: 30 个文件
 
 ## 第一次迁移 ✅ 已完成
 本次迁移（从依赖最少开始）：
@@ -73,6 +73,23 @@
 **重点任务**:
 1. 迁移 DiatonicGame 相关组件
 2. 迁移 MIDIInputHandler 组件
+3. 添加完整的类型注解
+4. 确保 TypeScript 编译通过
+
+## 第六次迁移批次
+**状态**: ✅ 已完成
+**剩余文件数量**: 8
+
+**本批次文件**:
+1. `src/pages/ChordTrainer/index.jsx` → `.tsx`
+2. `src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx` → `.tsx`
+3. `src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx` → `.tsx`
+4. `src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx` → `.tsx`
+5. `src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js` → `.ts`
+
+**重点任务**:
+1. 迁移 ChordPracticeGame 相关组件
+2. 迁移主要的 ChordTrainer index 文件
 3. 添加完整的类型注解
 4. 确保 TypeScript 编译通过
 
