@@ -121,12 +121,12 @@
       "valid": true
     },
     {
-      "source": "src/components/Settings/SoundSettings/index.jsx",
+      "source": "src/components/Settings/SoundSettings/index.tsx",
       "dependencies": [
         {
+          "dynamic": false,
           "module": "@components/slider/HorizontalSlider",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -144,9 +144,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@stores/soundSettingsStore",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -230,53 +230,6 @@
     {
       "source": "src/utils/Tone/SampleLibrary.ts",
       "dependencies": [],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "src/components/Settings/SoundSettings/index.tsx",
-      "dependencies": [
-        {
-          "dynamic": false,
-          "module": "@components/slider/HorizontalSlider",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/components/slider/HorizontalSlider.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@stores/soundSettingsStore",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/stores/soundSettingsStore.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
       "orphan": false,
       "valid": true
     },
@@ -518,6 +471,26 @@
           "valid": true
         },
         {
+          "module": "@components/slider/RangeSlider",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "aliased",
+            "aliased-tsconfig",
+            "aliased-tsconfig-paths",
+            "local",
+            "import"
+          ],
+          "resolved": "src/components/slider/RangeSlider.tsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
           "module": "@EarTrainers/ChordColorTrainer/ChordColorTrainer",
           "moduleSystem": "es6",
           "dynamic": true,
@@ -549,7 +522,7 @@
             "local",
             "dynamic-import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -1143,7 +1116,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/components/Settings/SoundSettings/index.jsx",
+          "resolved": "src/components/Settings/SoundSettings/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2119,7 +2092,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/components/Settings/SoundSettings/index.jsx",
+          "resolved": "src/components/Settings/SoundSettings/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2411,7 +2384,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.js",
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2524,7 +2497,7 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.js",
+      "source": "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.ts",
       "dependencies": [
         {
           "dynamic": false,
@@ -2594,12 +2567,12 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.jsx",
+      "source": "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.tsx",
       "dependencies": [
         {
+          "dynamic": false,
           "module": "./Settings/GameSettings",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
@@ -2614,9 +2587,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "./Settings/PracticeSettings",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
@@ -2631,9 +2604,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "./Settings/Statistics",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
@@ -2648,9 +2621,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "./Settings/VolumeSettings",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
@@ -2665,9 +2638,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@components/Header",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2685,9 +2658,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@components/HeaderButton",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2705,9 +2678,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@components/HeaderButtons",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2725,9 +2698,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@components/HeaderTitle",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2745,9 +2718,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@components/LanguageSwitcher",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2765,9 +2738,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@components/Settings/SettingsPanel",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2785,9 +2758,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@components/Settings/SoundSettings",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2796,7 +2769,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/components/Settings/SoundSettings/index.jsx",
+          "resolved": "src/components/Settings/SoundSettings/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2805,9 +2778,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@EarTrainers/DegreeTrainer/Constants",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2825,9 +2798,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@EarTrainers/DegreeTrainer/Games/Challenge",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2836,7 +2809,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2845,9 +2818,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2865,9 +2838,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@EarTrainers/DegreeTrainer/Games/Free",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2876,7 +2849,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2885,9 +2858,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2905,9 +2878,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -2925,9 +2898,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@stores/i18nStore",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3402,12 +3375,12 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.jsx",
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.tsx",
       "dependencies": [
         {
+          "dynamic": false,
           "module": "../Shared/CardStack",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
@@ -3422,9 +3395,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "../Shared/StartButtons",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
@@ -3439,9 +3412,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@stores/soundSettingsStore",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3734,29 +3707,12 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.jsx",
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.tsx",
       "dependencies": [
         {
-          "module": "../Shared/AudioPitchDetector",
-          "moduleSystem": "es6",
           "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
           "module": "../Shared/CardStack",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
@@ -3771,9 +3727,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "../Shared/StartButtons",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
@@ -3788,9 +3744,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@stores/soundSettingsStore",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3800,6 +3756,173 @@
             "import"
           ],
           "resolved": "src/stores/soundSettingsStore.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer.ts",
+      "dependencies": [
+        {
+          "dynamic": false,
+          "module": "@EarTrainers/DegreeTrainer/Constants",
+          "moduleSystem": "es6",
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "aliased",
+            "aliased-tsconfig",
+            "aliased-tsconfig-paths",
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "dynamic": false,
+          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
+          "moduleSystem": "es6",
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "aliased",
+            "aliased-tsconfig",
+            "aliased-tsconfig-paths",
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.tsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "dynamic": false,
+          "module": "@utils/GameLogics",
+          "moduleSystem": "es6",
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "aliased",
+            "aliased-tsconfig",
+            "aliased-tsconfig-paths",
+            "local",
+            "import"
+          ],
+          "resolved": "src/utils/GameLogics.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "dynamic": false,
+          "module": "@utils/Tone/playbacks",
+          "moduleSystem": "es6",
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "aliased",
+            "aliased-tsconfig",
+            "aliased-tsconfig-paths",
+            "local",
+            "import"
+          ],
+          "resolved": "src/utils/Tone/playbacks.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "dynamic": false,
+          "module": "@utils/Tone/samplers",
+          "moduleSystem": "es6",
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "aliased",
+            "aliased-tsconfig",
+            "aliased-tsconfig-paths",
+            "local",
+            "import"
+          ],
+          "resolved": "src/utils/Tone/samplers.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/Constants.d.ts",
+      "dependencies": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.d.ts",
+      "dependencies": [
+        {
+          "dynamic": false,
+          "module": "@EarTrainers/DegreeTrainer/Constants",
+          "moduleSystem": "es6",
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "aliased",
+            "aliased-tsconfig",
+            "aliased-tsconfig-paths",
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.d.ts",
+      "dependencies": [
+        {
+          "dynamic": false,
+          "module": "@EarTrainers/DegreeTrainer/Constants",
+          "moduleSystem": "es6",
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "aliased",
+            "aliased-tsconfig",
+            "aliased-tsconfig-paths",
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3922,592 +4045,6 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer.ts",
-      "dependencies": [
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Constants",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@utils/GameLogics",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/utils/GameLogics.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@utils/Tone/playbacks",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/utils/Tone/playbacks.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@utils/Tone/samplers",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/utils/Tone/samplers.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "src/pages/EarTrainers/ChordColorTrainer/Constants.d.ts",
-      "dependencies": [],
-      "orphan": true,
-      "valid": true
-    },
-    {
-      "source": "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.ts",
-      "dependencies": [
-        {
-          "dynamic": false,
-          "module": "../../../stores/chordColorTrainerSettingsStore",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "import"
-          ],
-          "resolved": "src/stores/chordColorTrainerSettingsStore.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/ChordColorTrainer/Constants",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@stores/soundSettingsStore",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/stores/soundSettingsStore.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.tsx",
-      "dependencies": [
-        {
-          "dynamic": false,
-          "module": "./Settings/GameSettings",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/GameSettings/index.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "./Settings/PracticeSettings",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "./Settings/Statistics",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/Statistics/index.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "./Settings/VolumeSettings",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/VolumeSettings/index.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@components/Header",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/components/Header.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@components/HeaderButton",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/components/HeaderButton.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@components/HeaderButtons",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/components/HeaderButtons.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@components/HeaderTitle",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/components/HeaderTitle.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@components/LanguageSwitcher",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/components/LanguageSwitcher.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@components/Settings/SettingsPanel",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/components/Settings/SettingsPanel.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@components/Settings/SoundSettings",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/components/Settings/SoundSettings/index.jsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Constants",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Games/Challenge",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.jsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/useChallengeTrainer.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Games/Free",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.jsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@stores/i18nStore",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/stores/i18nStore.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Challenge/index.d.ts",
-      "dependencies": [
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Constants",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Free/index.d.ts",
-      "dependencies": [
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Constants",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
       "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.d.ts",
       "dependencies": [],
       "orphan": true,
@@ -4616,7 +4153,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/components/Settings/SoundSettings/index.jsx",
+          "resolved": "src/components/Settings/SoundSettings/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -4647,8 +4184,8 @@
     "warn": 0,
     "info": 0,
     "ignore": 0,
-    "totalCruised": 94,
-    "totalDependenciesCruised": 207,
+    "totalCruised": 91,
+    "totalDependenciesCruised": 184,
     "optionsUsed": {
       "baseDir": "/mnt/ssd/lzl/code/js/ChordTrainer",
       "combinedDependencies": false,

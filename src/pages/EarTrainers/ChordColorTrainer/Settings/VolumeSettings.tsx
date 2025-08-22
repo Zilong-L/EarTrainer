@@ -1,10 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import HorizontalSlider from '@components/slider/HorizontalSlider';
-import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
 import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
 import useI18nStore from '@stores/i18nStore';
-function VolumeSettings({ setShowVolumeSettings }) {
+interface VolumeSettingsProps {
+  setShowVolumeSettings?: (show: boolean) => void;
+}
+
+const VolumeSettings: React.FC<VolumeSettingsProps> = () => {
 
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
@@ -37,7 +40,6 @@ function VolumeSettings({ setShowVolumeSettings }) {
                 min={0}
                 max={1}
                 step={0.01}
-                className="flex-1"
               />
 
             </div>
@@ -57,7 +59,6 @@ function VolumeSettings({ setShowVolumeSettings }) {
                 min={0}
                 max={1}
                 step={0.01}
-                className="flex-1"
               />
 
             </div>
@@ -66,6 +67,6 @@ function VolumeSettings({ setShowVolumeSettings }) {
       </div>
     </div>
   );
-}
+};
 
 export default VolumeSettings;

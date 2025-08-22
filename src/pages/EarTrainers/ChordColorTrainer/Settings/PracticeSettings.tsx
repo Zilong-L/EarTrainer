@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as Tone from 'tone';
 import { CHORD_TYPES, chordPreset } from '@EarTrainers/ChordColorTrainer/Constants';
 import { useTranslation } from 'react-i18next';
 import ValueAdjuster from '@components/ValueAdjuster';
 import RangeSlider from '@components/slider/RangeSlider';
-import { Midi, Note } from "tonal";
-import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
-import { Disclosure } from '@headlessui/react'; // Import Disclosure
+
 import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
 import useI18nStore from '@stores/i18nStore';
 
-function PracticeSettings() {
+const PracticeSettings: React.FC = () => {
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
   const {
@@ -29,24 +27,24 @@ function PracticeSettings() {
 
   } = useChordColorTrainerSettingsStore();
   const [newPresetName, setNewPresetName] = useState('');
-  const [editingPreset, setEditingPreset] = useState(null);
+  const [editingPreset, setEditingPreset] = useState<string | null>(null);
 
 
 
-  const handleChordTypeToggle = (degreeIndex, chordType) => {
+  const handleChordTypeToggle = (degreeIndex: number, chordType: string) => {
 
     const newDegreeChordTypes = [...degreeChordTypes];
-    const chordTypes = newDegreeChordTypes[degreeIndex].chordTypes;
-    if (chordTypes.includes(chordType)) {
+    const chordTypes = newDegreeChordTypes[degreeIndex]?.chordTypes;
+    if (chordTypes?.includes(chordType)) {
       newDegreeChordTypes[degreeIndex].chordTypes = chordTypes.filter((type) => type !== chordType);
     } else {
-      newDegreeChordTypes[degreeIndex].chordTypes.push(chordType);
+      newDegreeChordTypes[degreeIndex]?.chordTypes?.push(chordType);
     }
     setDegreeChordTypes(newDegreeChordTypes);
-    setCustomPresets({ ...customPresets, [preset]: newDegreeChordTypes });
+    setCustomPresets({ ...customPresets, [preset]: newDegreeChordTypes as any });
   };
 
-  const handlePresetChange = (presetValue) => {
+  const handlePresetChange = (presetValue: string) => {
     setPreset(presetValue);
     if (presetValue === 'custom') {
       let newPresetNameValue = t('practiceSettings.custom') + '1';
@@ -55,21 +53,21 @@ function PracticeSettings() {
         counter++;
         newPresetNameValue = `${t('practiceSettings.custom')}${counter}`;
       }
-      const updatedCustomPresets = { ...customPresets, [newPresetNameValue]: chordPreset['custom'] };
+      const updatedCustomPresets = { ...customPresets, [newPresetNameValue]: chordPreset['custom'] as any };
       setCustomPresets(updatedCustomPresets);
       setPreset(newPresetNameValue);
     }
   };
 
-  const handleCopyPreset = (presetName) => {
+  const handleCopyPreset = (presetName: string) => {
     const newPresetNameValue = `Copy of ${presetName}`;
     const deepCopiedDegreeChordTypes = structuredClone(degreeChordTypes);
-    const updatedCustomPresets = { ...customPresets, [newPresetNameValue]: deepCopiedDegreeChordTypes };
+    const updatedCustomPresets = { ...customPresets, [newPresetNameValue]: deepCopiedDegreeChordTypes as any };
     setCustomPresets(updatedCustomPresets);
     setPreset(newPresetNameValue);
   };
 
-  const handleDeleteCustomPreset = (presetName) => {
+  const handleDeleteCustomPreset = (presetName: string) => {
     const updatedCustomPresets = { ...customPresets };
     delete updatedCustomPresets[presetName];
     setCustomPresets(updatedCustomPresets);
@@ -79,13 +77,13 @@ function PracticeSettings() {
     }
   };
 
-  const handleEditPresetName = (presetName) => {
+  const handleEditPresetName = (presetName: string) => {
     setEditingPreset(presetName);
     setNewPresetName(presetName);
   };
 
   const handleSavePresetName = () => {
-    if (newPresetName && newPresetName !== editingPreset) {
+    if (newPresetName && newPresetName !== editingPreset && editingPreset) {
       const updatedCustomPresets = { ...customPresets };
       updatedCustomPresets[newPresetName] = updatedCustomPresets[editingPreset];
       delete updatedCustomPresets[editingPreset];
@@ -225,6 +223,6 @@ function PracticeSettings() {
       )}
     </div>
   );
-}
+};
 
 export default PracticeSettings;

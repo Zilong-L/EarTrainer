@@ -6,11 +6,17 @@ import Statistics from './StatisticsSettings';
 import SoundSettings from '@components/Settings/SoundSettings';
 import SettingsPanel from '@components/Settings/SettingsPanel';
 import useI18nStore from '@stores/i18nStore';
-function ChordColorTrainerSettings({
+interface ChordColorTrainerSettingsProps {
+  isSettingsOpen: boolean;
+  setIsSettingsOpen: (open: boolean) => void;
+  playChord: () => void;
+}
+
+const ChordColorTrainerSettings: React.FC<ChordColorTrainerSettingsProps> = ({
   isSettingsOpen,
   setIsSettingsOpen,
   playChord,
-}) {
+}) => {
   const { namespace } = useI18nStore()
   const { t } = useTranslation(namespace);
 
@@ -50,6 +56,6 @@ function ChordColorTrainerSettings({
       title={t('settingsMenu.settings')}
     />
   );
-}
+};
 
 export default ChordColorTrainerSettings;

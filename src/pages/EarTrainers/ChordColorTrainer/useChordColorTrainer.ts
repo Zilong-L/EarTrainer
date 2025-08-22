@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 import { DegreeToDistance } from '@utils/Constants';
-import { defaultDegreeChordTypes, VoicingDictionary } from '@EarTrainers/ChordColorTrainer/Constants';
+import { VoicingDictionary } from '@EarTrainers/ChordColorTrainer/Constants';
 import { getSamplerInstance, getDroneInstance } from '@utils/Tone/samplers';  // Added scheduleNotes
 import { scheduleNotes } from '@utils/Tone/playbacks';  // Added scheduleNotes
-import { Chord, Voicing, Interval, Note, VoiceLeading, Midi } from 'tonal';
+import { Chord, Voicing, Interval, Note, Midi } from 'tonal';
 import { playNotesTogether, playNotes } from '@utils/Tone/playbacks';
 import useChordColorTrainerSettings from './useChordColorTrainerSettings';
 import { getChords, compareChords } from '@utils/ChordTrainer/GameLogics';
 
-const useChordColorTrainer = (chordPlayOption) => {
+const useChordColorTrainer = (chordPlayOption: string) => {
   const {
     bpm,
     droneVolume,
@@ -18,16 +18,16 @@ const useChordColorTrainer = (chordPlayOption) => {
     range,
     degreeChordTypes,
     updatePracticeRecords,
-    selectedInstrument,
+    // selectedInstrument,
   } = useChordColorTrainerSettings();
 
-  const [currentChord, setCurrentChord] = useState('');
-  const [disabledChords, setDisabledChords] = useState([]);
+  const [currentChord, setCurrentChord] = useState<any>('');
+  const [disabledChords, setDisabledChords] = useState<string[]>([]);
   const [gameStarted, setGameStarted] = useState(false);
-  const [filteredChords, setFilteredChords] = useState([]);
+  const [filteredChords, setFilteredChords] = useState<any[]>([]);
   const [activeChord, setActiveChord] = useState('');
-  const [activeNotes, setActiveNotes] = useState([]); // Define activeNotes state
-  const [isAdvance, setIsAdvance] = useState('No');
+  const [activeNotes, setActiveNotes] = useState<string[]>([]); // Define activeNotes state
+  const [isAdvance, setIsAdvance] = useState<string>('No');
 
   const piano = getSamplerInstance();
   const drone = getDroneInstance();
@@ -78,22 +78,22 @@ const useChordColorTrainer = (chordPlayOption) => {
     playNotesTogether(rootNote, 0.05, bpm);
   };
 
-  const playChord = (notes = null, delay = 0.05) => {
+  const playChord = (notes: string[] | null = null, delay = 0.05) => {
     if (!notes) {
       notes = currentChord.notes;
     }
-    playNotesTogether(notes, delay, bpm);
+    if (notes) playNotesTogether(notes, delay, bpm);
   };
 
-  const playBrokenChord = (notes = null, delay = 0.05) => {
+  const playBrokenChord = (notes: string[] | null = null, delay = 0.05) => {
     if (!notes) {
       notes = currentChord.notes;
     }
-    playNotes(notes, delay, bpm);
+    if (notes) playNotes(notes, delay, bpm);
   };
 
   // New function for the specific playback pattern using scheduleNotes exclusively
-  const playChordColorPattern = (notes) => {
+  const playChordColorPattern = (notes: string[]) => {
     if (!notes || notes.length === 0) {
       notes = currentChord.notes;
     }
@@ -184,13 +184,13 @@ const useChordColorTrainer = (chordPlayOption) => {
     }
 
     if (activeNotes && activeNotes.length > 0) {
-      const detectedChords = getChords(activeNotes);
+      const detectedChords = getChords(activeNotes as any);
       if (detectedChords && detectedChords.length > 0) {
-        const steps = DegreeToDistance[currentChord.degree] || 0;
-        const note = Midi.midiToNoteName(Midi.toMidi(rootNote) + steps).slice(0, -1);
-        const chordType = currentChord.chordType;
+        const steps = DegreeToDistance[currentChord?.degree] || 0;
+        const note = (Midi.midiToNoteName(Midi.toMidi(rootNote || 'C4') + steps) || '').slice(0, -1);
+        const chordType = currentChord?.chordType || '';
         const chord = note + chordType;
-        const isCorrect = compareChords(detectedChords, chord);
+        const isCorrect = compareChords(detectedChords as any, chord);
         if (isCorrect) {
           if (activeNotes.length >= 6) {
             setIsAdvance('Pending');  // Changed from 'Now' to 'Pending'
@@ -202,32 +202,32 @@ const useChordColorTrainer = (chordPlayOption) => {
     }
   }, [activeNotes, currentChord, rootNote, isAdvance]);  // Added isAdvance to dependencies
 
-  const getNotesForChord = (numeral) => {
+  const getNotesForChord = (numeral: string) => {
 
-    const numeralDegree = /([IV]+)([b#]?)/.exec(numeral)[0]
+    const numeralDegree = /([IV]+)([b#]?)/.exec(numeral)?.[0] || ''
     const steps = DegreeToDistance[numeralDegree] || 0;
-    const note = Midi.midiToNoteName(Midi.toMidi(rootNote) + steps).slice(0, -1);
+    const note = (Midi.midiToNoteName(Midi.toMidi(rootNote || 'C4') + steps) || '').slice(0, -1);
 
     const chordType = numeral.slice(numeralDegree.length);
     const chord = Chord.get(note + chordType);
     const chordRange = [
       range[0],
-      Note.fromMidi(Note.midi(range[1]) + Interval.semitones('P8')),
+      Note.fromMidi((Note.midi(range[1]) || 0) + Interval.semitones('P8')),
     ];
     const dictionary = VoicingDictionary.rootPosition;
-    const possibleChords = Voicing.search(chord.symbol, chordRange, dictionary);
+    const possibleChords = Voicing.search(chord.symbol, chordRange, dictionary as any);
     const notes = possibleChords[
       Math.floor(Math.random() * possibleChords.length)
     ];
     return notes;
   };
 
-  const handleChordGuess = (guessedChord) => {
+  const handleChordGuess = (guessedChord: string) => {
     // If in 'Ready' state, just play the sound for comparison, don't guess/record/disable
     if (isAdvance !== 'No') {
       const notes = getNotesForChord(guessedChord);
       playChordColorPattern(notes);
-      setActiveChord(null); // Reset active chord after playing
+      setActiveChord(''); // Reset active chord after playing
       return; // Exit early, skip guessing logic
     }
 
@@ -245,7 +245,7 @@ const useChordColorTrainer = (chordPlayOption) => {
       const notes = getNotesForChord(guessedChord);
       playChordColorPattern(notes);
     }
-    setActiveChord(null);
+    setActiveChord('');
   };
 
   const endGame = () => {
@@ -261,8 +261,8 @@ const useChordColorTrainer = (chordPlayOption) => {
   // 将 degreeChordTypes 对象转换为数组并过滤掉空的级数和弦组合
   useEffect(() => {
     if (degreeChordTypes) {
-      const allCombinations = degreeChordTypes.flatMap((chord) =>
-        chord.chordTypes.map((chordType) => ({ degree: chord.degree, chordType }))
+      const allCombinations = degreeChordTypes.flatMap((chord: any) =>
+        chord.chordTypes?.map((chordType: any) => ({ degree: chord.degree, chordType })) || []
       );
       setFilteredChords(allCombinations);
     }

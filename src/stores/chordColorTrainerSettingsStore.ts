@@ -22,7 +22,7 @@ interface DegreeInfo {
     degree?: string;
     distance: number;
     enable?: boolean;
-    chordTypes?: string[];
+    chordTypes: string[];
 }
 
 interface ChordColorTrainerState {

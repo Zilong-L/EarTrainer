@@ -2,17 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import uPlot from 'uplot';
 import 'uplot/dist/uPlot.min.css';
 import { useTranslation } from 'react-i18next';
-import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
 import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
 import useI18nStore from '@stores/i18nStore';
-function Statistics({ setShowStatistics }) {
+
+
+const Statistics: React.FC = () => {
   const { practiceRecords, isStatOpen, setPracticeRecords, setIsStatOpen } = useChordColorTrainerSettingsStore();
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
-  const chartRef = useRef(null);
-  const plotInstance = useRef(null);
+  const chartRef = useRef<HTMLDivElement>(null);
+  const plotInstance = useRef<any>(null);
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
-  const calculateAccuracy = (record) => {
+  const calculateAccuracy = (record: any) => {
     return record.total > 0 ? (record.correct / record.total) * 100 : 0;
   };
 
@@ -51,14 +52,14 @@ function Statistics({ setShowStatistics }) {
       axes: [
         {
           scale: 'x',
-          values: (_, vals) => labels,
+          values: (_: any) => labels,
           size: 40,
           gap: 5,
           grid: { show: true },
         },
         {
           scale: 'y',
-          values: (_, vals) => vals.map(v => v + '%'),
+          values: (_: any, vals: any) => vals.map((v: any) => v + '%'),
           size: 40,
           gap: 5,
           grid: { show: true },
@@ -88,7 +89,7 @@ function Statistics({ setShowStatistics }) {
             fill: 'white',
             size: 4,
           },
-          value: (_, v) => v.toFixed(1) + '%',
+          value: (_: any, v: any) => v.toFixed(1) + '%',
         },
       ],
     };
@@ -180,6 +181,6 @@ function Statistics({ setShowStatistics }) {
       )}
     </div>
   );
-}
+};
 
 export default Statistics;

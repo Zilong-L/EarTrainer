@@ -2,7 +2,7 @@
 
 ## 当前状态
 - **总待迁移文件**: 46 个 js/jsx 文件
-- **已完成迁移**: 15 个文件
+- **已完成迁移**: 20 个文件
 
 ## 第一次迁移 ✅ 已完成
 本次迁移（从依赖最少开始）：
@@ -37,7 +37,18 @@
 --------
 **迁移完成时间**: 2025-08-22 21:15
 
-## 第四次迁移
+## 第四次迁移 ✅ 已完成
+本次迁移（从依赖最少开始）：
+1. ✅ `src/pages/EarTrainers/ChordColorTrainer/Settings/index.tsx` (删除.jsx)
+2. ✅ `src/pages/EarTrainers/ChordColorTrainer/Settings/PracticeSettings.tsx` (删除.jsx)
+3. ✅ `src/pages/EarTrainers/ChordColorTrainer/Settings/StatisticsSettings.tsx` (删除.jsx)
+4. ✅ `src/pages/EarTrainers/ChordColorTrainer/Settings/VolumeSettings.tsx` (删除.jsx)
+5. ✅ `src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.ts` (删除.js)
+
+--------
+**迁移完成时间**: 2025-08-22 21:49
+
+## 第五次迁移
 （待运行 pick-next-batch 选择下一批文件）
 
 ### 🔧 建议的迁移流程
