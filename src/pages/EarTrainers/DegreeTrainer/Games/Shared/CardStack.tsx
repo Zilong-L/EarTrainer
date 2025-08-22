@@ -30,7 +30,7 @@ const CardStack: React.FC<CardStackProps> = ({
     isAdvance,
     setActiveNote,
     rootNote,
-    isHandfree,
+    // isHandfree,
     useSolfege,
     bpm,
     gameState
@@ -99,7 +99,7 @@ const CardStack: React.FC<CardStackProps> = ({
                 </div>
             </div>
             <div className={`flex flex-wrap  gap-3 mb-4 lg:hidden ${gameState == 'end' ? 'hidden' : ''}`}>
-                {filteredNotes.map((note, index) => {
+                {filteredNotes.map((note) => {
                     const noteName = Tone.Frequency(Tone.Frequency(rootNote).toMidi() + note.distance, 'midi').toNote();
                     const isCorrectAnswer = isCorrect(noteName, currentNote) && isAdvance !== 'No';
                     const isDisabled = disabledNotes.some(disabledNote =>

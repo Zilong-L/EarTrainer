@@ -2,35 +2,55 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CardStack from '../Shared/CardStack';
 import { DesktopStartButton, PhoneStartButton } from '../Shared/StartButtons';
-import AudioPitchDetector from '../Shared/AudioPitchDetector';
 import { useSoundSettingsStore } from '@stores/soundSettingsStore'; // Import the sampler store
-const FreeMode = ({ FreeTrainerSettings }) => {
+interface ChallengeModeProps {
+  ChallengeTrainerSettings: any;
+}
+
+const ChallengeMode: React.FC<ChallengeModeProps> = ({ ChallengeTrainerSettings }) => {
   const {
     currentNote,
     disabledNotes,
     filteredNotes,
     isAdvance,
-    setIsAdvance,
     setActiveNote,
     playNote,
-    bpm,
     gameState,
     setGameState,
     rootNote,
-    isHandfree,
+    currentPracticeRecords,
+    currentLevel,
+    userProgress,
+    bpm,
+    setIsAdvance,
     useSolfege,
+    isHandfree,
     isPlayingSound,
-  } = FreeTrainerSettings;
+  } = ChallengeTrainerSettings;
   const { t } = useTranslation('degreeTrainer');
   const isLoadingInstrument = useSoundSettingsStore(state => state.isLoadingInstrument); // Get sampler loading state
 
-  const handleButton = () => {
-    // Prevent action if sampler is loading
-    if (isLoadingInstrument) {
-      console.log("loading!")
-      return;
-    }
 
+  const renderRecords = () => {
+    const totalResults = currentPracticeRecords;
+    const accuracy = totalResults.total > 0
+      ? Math.round((totalResults.correct / totalResults.total) * 100)
+      : 0;
+
+    return (
+      <div className="space-y-3 text-text-primary md:space-y-4">
+        <p className="text-lg md:text-2xl">{t('home.level')}: {currentLevel + 1}</p>
+        <p className="text-lg md:text-2xl">{t('home.totalAttempts')} {totalResults.total} / {userProgress[currentLevel].minTests}</p>
+        <p className="text-lg md:text-2xl">{t('home.correctCount')} {totalResults.correct}</p>
+        <p className="text-2xl md:text-4xl">
+          {accuracy >= 90 ? '⭐⭐⭐' :
+            accuracy >= 80 ? '⭐⭐' :
+              accuracy >= 70 ? '⭐' : ''}
+        </p>
+      </div>
+    );
+  };
+  const handleButton = () => {
     if (gameState === 'end') {
       setGameState('start');
     } else {
@@ -43,18 +63,7 @@ const FreeMode = ({ FreeTrainerSettings }) => {
   }
   return (
     <div className="flex flex-col justify-end h-full mb-8">
-      {/* <AudioPitchDetector
-        currentNote={currentNote}
-        disabledNotes={disabledNotes}
-        filteredNotes={filteredNotes}
-        isAdvance={isAdvance}
-        setActiveNote={setActiveNote}
-        rootNote={rootNote}
-        isHandfree={isHandfree}
-        useSolfege={useSolfege}
-        bpm={bpm}
-        gameState={gameState}
-      /> */}
+      {renderRecords()}
       <div className="flex-grow" />
       <CardStack
         currentNote={currentNote}
@@ -69,7 +78,6 @@ const FreeMode = ({ FreeTrainerSettings }) => {
         gameState={gameState}
       >
       </CardStack>
-      {/* 新增：桌面端大圆形按钮（lg 以上显示） */}
       {isHandfree ? <></> : (<div
         className="
           hidden
@@ -89,7 +97,7 @@ const FreeMode = ({ FreeTrainerSettings }) => {
           isAdvance={isAdvance}
           isPlayingSound={isPlayingSound}
           onClick={handleButton}
-          isLoadingInstrument={isLoadingInstrument} // Pass sampler loading state
+          isLoadingInstrument={isLoadingInstrument}
         />
       </div>)}
       <PhoneStartButton
@@ -97,10 +105,10 @@ const FreeMode = ({ FreeTrainerSettings }) => {
         isAdvance={isAdvance}
         onClick={handleButton}
         isPlayingSound={isPlayingSound}
-        isLoadingInstrument={isLoadingInstrument} // Pass sampler loading state
+        isLoadingInstrument={isLoadingInstrument}
       />
     </div>
   );
 };
 
-export default FreeMode;
+export default ChallengeMode;

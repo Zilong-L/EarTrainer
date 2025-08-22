@@ -308,7 +308,7 @@
       "valid": true
     },
     {
-      "source": "src/components/ValueAdjuster/index.jsx",
+      "source": "src/components/ValueAdjuster/index.tsx",
       "dependencies": [],
       "orphan": false,
       "valid": true
@@ -2186,7 +2186,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/components/ValueAdjuster/index.jsx",
+          "resolved": "src/components/ValueAdjuster/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -2622,7 +2622,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3223,12 +3223,12 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx",
+      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.tsx",
       "dependencies": [
         {
+          "dynamic": false,
           "module": "@components/slider/RangeSlider",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3246,9 +3246,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@components/ValueAdjuster",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3257,7 +3257,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/components/ValueAdjuster/index.jsx",
+          "resolved": "src/components/ValueAdjuster/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3266,9 +3266,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3286,9 +3286,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@utils/Tone/samplers",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3413,7 +3413,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3463,12 +3463,12 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.jsx",
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.tsx",
       "dependencies": [
         {
+          "dynamic": false,
           "module": "@components/Button",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3486,9 +3486,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@EarTrainers/DegreeTrainer/Constants",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3506,9 +3506,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@utils/GameLogics",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3745,7 +3745,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3762,7 +3762,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/CardStack.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3812,18 +3812,18 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.jsx",
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.tsx",
       "dependencies": [
         {
+          "dynamic": false,
           "module": "./ThresholdSlider",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -3832,9 +3832,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@EarTrainers/DegreeTrainer/Constants",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3852,9 +3852,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@utils/ChordTrainer/GameLogics",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3872,9 +3872,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@utils/Constants",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3892,9 +3892,9 @@
           "valid": true
         },
         {
+          "dynamic": false,
           "module": "@utils/GameLogics",
           "moduleSystem": "es6",
-          "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
             "aliased",
@@ -3916,7 +3916,7 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.jsx",
+      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.tsx",
       "dependencies": [],
       "orphan": false,
       "valid": true
@@ -4035,6 +4035,70 @@
       "valid": true
     },
     {
+      "source": "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainerSettings.ts",
+      "dependencies": [
+        {
+          "dynamic": false,
+          "module": "../../../stores/chordColorTrainerSettingsStore",
+          "moduleSystem": "es6",
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/stores/chordColorTrainerSettingsStore.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "dynamic": false,
+          "module": "@EarTrainers/ChordColorTrainer/Constants",
+          "moduleSystem": "es6",
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "aliased",
+            "aliased-tsconfig",
+            "aliased-tsconfig-paths",
+            "local",
+            "import"
+          ],
+          "resolved": "src/pages/EarTrainers/ChordColorTrainer/Constants.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "dynamic": false,
+          "module": "@stores/soundSettingsStore",
+          "moduleSystem": "es6",
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "aliased",
+            "aliased-tsconfig",
+            "aliased-tsconfig-paths",
+            "local",
+            "import"
+          ],
+          "resolved": "src/stores/soundSettingsStore.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
       "source": "src/pages/EarTrainers/DegreeTrainer/DegreeTrainer.tsx",
       "dependencies": [
         {
@@ -4063,7 +4127,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -4444,212 +4508,9 @@
       "valid": true
     },
     {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/AudioPitchDetector.tsx",
-      "dependencies": [
-        {
-          "dynamic": false,
-          "module": "./ThresholdSlider",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.jsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Constants",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Constants.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@utils/ChordTrainer/GameLogics",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/utils/ChordTrainer/GameLogics.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@utils/Constants",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/utils/Constants.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@utils/GameLogics",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/utils/GameLogics.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
       "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.d.ts",
       "dependencies": [],
       "orphan": true,
-      "valid": true
-    },
-    {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.tsx",
-      "dependencies": [],
-      "orphan": true,
-      "valid": false,
-      "rules": [
-        {
-          "severity": "warn",
-          "name": "no-orphans"
-        }
-      ]
-    },
-    {
-      "source": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.tsx",
-      "dependencies": [
-        {
-          "dynamic": false,
-          "module": "@components/slider/RangeSlider",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/components/slider/RangeSlider.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@components/ValueAdjuster",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/components/ValueAdjuster/index.jsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings.tsx",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "dynamic": false,
-          "module": "@utils/Tone/samplers",
-          "moduleSystem": "es6",
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "aliased",
-            "aliased-tsconfig",
-            "aliased-tsconfig-paths",
-            "local",
-            "import"
-          ],
-          "resolved": "src/utils/Tone/samplers.ts",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "orphan": false,
       "valid": true
     },
     {
@@ -4681,7 +4542,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.jsx",
+          "resolved": "src/pages/EarTrainers/DegreeTrainer/Settings/PracticeSettings/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -4781,23 +4642,13 @@
     }
   ],
   "summary": {
-    "violations": [
-      {
-        "type": "module",
-        "from": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.tsx",
-        "to": "src/pages/EarTrainers/DegreeTrainer/Games/Shared/ThresholdSlider.tsx",
-        "rule": {
-          "severity": "warn",
-          "name": "no-orphans"
-        }
-      }
-    ],
+    "violations": [],
     "error": 0,
-    "warn": 1,
+    "warn": 0,
     "info": 0,
     "ignore": 0,
-    "totalCruised": 96,
-    "totalDependenciesCruised": 213,
+    "totalCruised": 94,
+    "totalDependenciesCruised": 207,
     "optionsUsed": {
       "baseDir": "/mnt/ssd/lzl/code/js/ChordTrainer",
       "combinedDependencies": false,

@@ -3,6 +3,7 @@ import { chordPreset } from "@EarTrainers/ChordColorTrainer/Constants";
 import { CHORD_TYPES } from "@EarTrainers/ChordColorTrainer/Constants";
 import useChordColorTrainerSettingsStore from '../../../stores/chordColorTrainerSettingsStore';
 import { useSoundSettingsStore } from '@stores/soundSettingsStore';
+
 const useChordColorTrainerSettings = () => {
   const {
     bpm,
@@ -31,15 +32,16 @@ const useChordColorTrainerSettings = () => {
     setMuteDrone,
     setIsStatOpen,
   } = useChordColorTrainerSettingsStore();
-  const { selectedInstrument } = useSoundSettingsStore((state) => state.selectedInstrument);
+  const { selectedInstrument } = useSoundSettingsStore();
 
   useEffect(() => {
-    const storedRecords = JSON.parse(localStorage.getItem('ChordColorTrainerRecords')) || {};
+    const storedRecords = JSON.parse(localStorage.getItem('ChordColorTrainerRecords') || '{}');
     setPracticeRecords(storedRecords);
   }, [setPracticeRecords]);
+  
   useEffect(() => {
     setDegreeChordTypes(customPresets[preset] || chordPreset[preset] || degreeChordTypes);
-  }, [preset, customPresets, setDegreeChordTypes]);
+  }, [preset, customPresets, setDegreeChordTypes, degreeChordTypes]);
 
   return {
     bpm,
