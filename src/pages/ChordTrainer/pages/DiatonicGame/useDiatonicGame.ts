@@ -1,30 +1,31 @@
 import { useState, useEffect } from "react";
-import { Chord, Key, Midi, Note, Progression } from "tonal";
+import { Key, Midi } from "tonal";
 import { detect } from "@tonaljs/chord-detect";
 import { compareChords } from '@utils/ChordTrainer/GameLogics';
-const useDiatonicGame = () => {
-  const [targetChord, setTargetChord] = useState("");
-  const [detectedChords, setDetectedChords] = useState([]);
-  const [activeNotes, setActiveNotes] = useState([]);
-  const [sustainedNotes, setSustainedNotes] = useState([]);
 
-  const [chordPool, setChordPool] = useState([]);
-  const [rootNote, setRootNote] = useState("C");
-  const [scaleType, setScaleType] = useState("major");
-  const [ignoreTranspose, setIgnoreTranspose] = useState(true);
-  const [chordType, setChordType] = useState('triads');
-  const [showDegree, setShowDegree] = useState(false);
+const useDiatonicGame = () => {
+  const [targetChord, setTargetChord] = useState<string>("");
+  const [detectedChords, setDetectedChords] = useState<string[]>([]);
+  const [activeNotes, setActiveNotes] = useState<number[]>([]);
+  const [sustainedNotes, setSustainedNotes] = useState<number[]>([]);
+
+  const [chordPool, setChordPool] = useState<string[]>([]);
+  const [rootNote, setRootNote] = useState<string>("C");
+  const [scaleType, setScaleType] = useState<string>("major");
+  const [ignoreTranspose, setIgnoreTranspose] = useState<boolean>(true);
+  const [chordType, setChordType] = useState<string>('triads');
+  const [showDegree, setShowDegree] = useState<boolean>(false);
 
   useEffect(() => {
     if (!activeNotes) return;
-    const notesString = activeNotes.map((note) => Midi.midiToNoteName(note));
+    const notesString = activeNotes.map((note) => Midi.midiToNoteName(note) || '');
     const chordResult = detect(notesString, { assumePerfectFifth: true });
     setDetectedChords(chordResult);
   }, [activeNotes]);
 
   // Generate the chord pool whenever rootNote or scaleType changes
   useEffect(() => {
-    let key;
+    let key: any;
     // Determine the key based on scale type
     console.log(scaleType)
     if (scaleType === "major") {
@@ -41,7 +42,7 @@ const useDiatonicGame = () => {
     }
     if (!key) return;
     console.log(key);
-    let chords = [];
+    let chords: string[] = [];
     // Get chords based on chord type selection
     if (chordType === 'triads') {
       chords = key.triads;
@@ -67,7 +68,7 @@ const useDiatonicGame = () => {
     if (chordPool.length === 0) {
       return;
     }
-    let randomChord;
+    let randomChord: string;
     do {
       randomChord = chordPool[Math.floor(Math.random() * chordPool.length)];
 
@@ -88,7 +89,6 @@ const useDiatonicGame = () => {
     detectedChords,
     activeNotes,
     chordPool, // The available diatonic chords
-    targetChord, // The currently selected chord
     rootNote, // The root note of the scale
     scaleType, // The type of scale (major, minor, harmonic, melodic)
     ignoreTranspose, // Whether to ignore transposition when comparing chords

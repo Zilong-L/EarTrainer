@@ -66,7 +66,10 @@ const useChordColorTrainerSettingsStore = create<ChordColorTrainerState & ChordC
             rootNote: 'C3',
             range: [Tone.Frequency('C3').toNote(), Tone.Frequency('C4').toNote()],
             practiceRecords: {},
-            currentNotes: degrees,
+            currentNotes: degrees.map(degree => ({
+                ...degree,
+                chordTypes: []
+            })),
             preset: 'major',
             customPresets: {},
             muteDrone: false,

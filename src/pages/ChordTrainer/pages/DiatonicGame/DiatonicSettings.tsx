@@ -6,7 +6,11 @@ const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', '
 const chordTypes = ['triads', 'sevenths', 'mixed'];
 const scaleTypes = ['major', 'harmonic', 'melodic', 'natural'];
 
-const DiatonicSettings = ({ diatonicGameSettings }) => {
+interface DiatonicSettingsProps {
+  diatonicGameSettings: any;
+}
+
+const DiatonicSettings: React.FC<DiatonicSettingsProps> = ({ diatonicGameSettings }) => {
   const { t } = useTranslation('chordGame');
   console.log(diatonicGameSettings)
   const {
@@ -15,18 +19,8 @@ const DiatonicSettings = ({ diatonicGameSettings }) => {
     scaleType,
     setScaleType,
     chordType,
-    setChordType,
-    showDegree,
-    setShowDegree
+    setChordType
   } = diatonicGameSettings;
-
-  const handleRootNoteChange = (e) => {
-    setRootNote(e.target.value);
-  };
-
-  const handleScaleTypeChange = (e) => {
-    setScaleType(e.target.value);
-  };
 
   return (
     <div className="space-y-6 px-6 pb-6 bg-bg-main">

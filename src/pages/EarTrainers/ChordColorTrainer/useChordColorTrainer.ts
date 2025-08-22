@@ -187,7 +187,9 @@ const useChordColorTrainer = (chordPlayOption: string) => {
       const detectedChords = getChords(activeNotes as any);
       if (detectedChords && detectedChords.length > 0) {
         const steps = DegreeToDistance[currentChord?.degree] || 0;
-        const note = (Midi.midiToNoteName(Midi.toMidi(rootNote || 'C4') + steps) || '').slice(0, -1);
+        const midiNote = Midi.toMidi(rootNote || 'C4');
+        const noteName = midiNote ? Midi.midiToNoteName(midiNote + steps) : null;
+        const note = (noteName || '').slice(0, -1);
         const chordType = currentChord?.chordType || '';
         const chord = note + chordType;
         const isCorrect = compareChords(detectedChords as any, chord);
@@ -206,7 +208,9 @@ const useChordColorTrainer = (chordPlayOption: string) => {
 
     const numeralDegree = /([IV]+)([b#]?)/.exec(numeral)?.[0] || ''
     const steps = DegreeToDistance[numeralDegree] || 0;
-    const note = (Midi.midiToNoteName(Midi.toMidi(rootNote || 'C4') + steps) || '').slice(0, -1);
+    const midiNote = Midi.toMidi(rootNote || 'C4');
+    const noteName = midiNote ? Midi.midiToNoteName(midiNote + steps) : null;
+    const note = (noteName || '').slice(0, -1);
 
     const chordType = numeral.slice(numeralDegree.length);
     const chord = Chord.get(note + chordType);

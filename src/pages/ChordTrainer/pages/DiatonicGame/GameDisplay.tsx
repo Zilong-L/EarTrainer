@@ -1,9 +1,12 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Progression } from 'tonal';
 import MIDIInputHandler from '../../components/MIDIInputHandler';
 
-const GameDisplay = ({ diatonicGameSettings }) => {
+interface GameDisplayProps {
+  diatonicGameSettings: any;
+}
+
+const GameDisplay: React.FC<GameDisplayProps> = ({ diatonicGameSettings }) => {
   const {
     targetChord,
     activeNotes,

@@ -12,9 +12,12 @@ function buildGraph() {
     const graph = new Map();
     deps.modules.forEach(mod => {
         const file = mod.source;
+        // 只处理 src/ 目录下的文件
+        if (!file.startsWith('src/')) return;
+        
         if (!graph.has(file)) graph.set(file, new Set());
         (mod.dependencies || []).forEach(dep => {
-            if (dep.resolved) {
+            if (dep.resolved && dep.resolved.startsWith('src/')) {
                 if (!graph.has(file)) graph.set(file, new Set());
                 if (!graph.has(dep.resolved)) graph.set(dep.resolved, new Set());
                 graph.get(file).add(dep.resolved);

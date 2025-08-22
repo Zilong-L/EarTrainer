@@ -2,7 +2,7 @@
 
 ## 当前状态
 - **总待迁移文件**: 46 个 js/jsx 文件
-- **已完成迁移**: 20 个文件
+- **已完成迁移**: 25 个文件
 
 ## 第一次迁移 ✅ 已完成
 本次迁移（从依赖最少开始）：
@@ -58,6 +58,23 @@
 4. 选择批次：`node scripts/pick-next-batch.cjs`
 5. 迁移文件（添加类型注解，修复错误）
 6. 删除旧文件，提交更改
+
+## 第五次迁移批次
+**状态**: ✅ 已完成
+**剩余文件数量**: 13
+
+**本批次文件**:
+1. `src/pages/ChordTrainer/pages/DiatonicGame/index.jsx` → `.tsx`
+2. `src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.jsx` → `.tsx`
+3. `src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.jsx` → `.tsx`
+4. `src/pages/ChordTrainer/components/MIDIInputHandler.jsx` → `.tsx`
+5. `src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.js` → `.ts`
+
+**重点任务**:
+1. 迁移 DiatonicGame 相关组件
+2. 迁移 MIDIInputHandler 组件
+3. 添加完整的类型注解
+4. 确保 TypeScript 编译通过
 
 ## 后续批次
 （按依赖顺序继续处理剩余文件）

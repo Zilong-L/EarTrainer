@@ -1,16 +1,28 @@
 import React, { useEffect } from 'react';
 import PianoVisualizer from '@components/PianoVisualizer';
-import { Chord, Note } from 'tonal';
+import { Note } from 'tonal';
 import { getSamplerInstance } from '@utils/Tone/samplers';
 import { useTranslation } from 'react-i18next';
 import { getNiceChordName } from '@utils/ChordTrainer/GameLogics'
-const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord, detectedChords, sustainedNotes, setSustainedNotes, showDegree, setShowDegree }) => {
+
+interface MIDIInputHandlerProps {
+  activeNotes: number[];
+  setActiveNotes: (notes: number[]) => void;
+  targetChord: string;
+  detectedChords: string[];
+  sustainedNotes: number[];
+  setSustainedNotes: (notes: number[]) => void;
+  showDegree: boolean;
+  setShowDegree: (show: boolean) => void;
+}
+
+const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({ activeNotes, setActiveNotes, targetChord, detectedChords, showDegree, setShowDegree }) => {
   const { t } = useTranslation('chordGame');
   let sustainActive = false;
-  let sustainedNotesSet = new Set();
-  let pressingNotes = new Set();
+  let sustainedNotesSet = new Set<number>();
+  let pressingNotes = new Set<number>();
 
-  const midiMessageHandler = (message) => {
+  const midiMessageHandler = (message: any) => {
     const [command, note, velocity] = message.data;
     const pianoSampler = getSamplerInstance().sampler;
 
@@ -43,17 +55,17 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes, targetChord, detectedCh
   };
 
   useEffect(() => {
-    let inputs = [];
+    let inputs: any[] = [];
     const setupMIDI = async () => {
-      if (navigator.requestMIDIAccess == null) {
+      if ((navigator as any).requestMIDIAccess == null) {
         console.warn(t('midi.noAccess'));
         return;
       }
-      const midi = await navigator.requestMIDIAccess();
+      const midi = await (navigator as any).requestMIDIAccess();
       console.log(t('midi.loaded'));
       inputs = Array.from(midi.inputs.values());
       for (let input of inputs) {
-        input.onmidimessage = (message) => midiMessageHandler(message);
+        input.onmidimessage = (message: any) => midiMessageHandler(message);
       }
     };
 
