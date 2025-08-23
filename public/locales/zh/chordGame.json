@@ -1,74 +1,67 @@
 {
   "buttons": {
+    "chord-practice": "自由练习",
     "diatonic": "调内和弦",
-    "chord-practice": "自由练习"
+    "help": ""
   },
+  "chordGame": {
+    "chord": "和弦",
+    "midi": {
+      "chordDetected": "检测到和弦",
+      "connected": "已连接MIDI",
+      "loaded": "MIDI已加载",
+      "noAccess": "无法访问MIDI"
+    },
+    "notes": "音符"
+  },
+  "detectedChords": "",
+  "midi": {
+    "loaded": "",
+    "noAccess": ""
+  },
+  "notes": "",
   "settings": {
-    "home": "首页",
-    "drillModes": {
-      "title": "练习模式",
-      "random": "随机",
-      "circle_fifths": "五度循环 (上)",
-      "circle_fourths": "五度循环 (下)",
-      "semitone_up": "半音上行",
-      "semitone_down": "半音下行"
-    },
     "SoundSettings": "音色设置",
-    "qualityLabel": "选择音质",
-    "quality": {
-      "low": "流畅",
-      "medium": "中等",
-      "high": "高质量",
-      "full": "无损"
-    },
     "basicChords": "基础和弦",
-    "moreChords": "更多和弦",
     "chordCategories": {
-      "Triads": "三和弦",
       "Sevenths": "七和弦",
+      "Triads": "三和弦",
       "mixed": "混合"
     },
-    "inversions": {
-      "title": "转位模式",
-      "random": "随机",
-      "root": "原位",
-      "first": "第一转位",
-      "second": "第二转位",
-      "third": "第三转位"
-    },
-    "diatonic": {
-      "title": "调内和弦设置",
-      "rootNote": "根音",
-      "scaleType": "音阶类型",
-      "major": "大调",
-      "harmonic": "和声小调",
-      "melodic": "旋律小调",
-      "natural": "自然小调",
-      "chordType": "和弦类型",
-      "triads": "三和弦",
-      "sevenths": "七和弦",
-      "mixed": "混合",
-      "showDegrees": "显示级数而非和弦名称"
-    },
-    "title": "设置",
-    "modes": {
-      "game": "游戏设置",
-      "chordpractice": "和弦练习",
-      "diatonic": "调内和弦",
-      "progression": "和弦进行",
-      "soundSettings": "音色设置"
-    },
     "chords": {
-      "Major": "大三和弦",
-      "Minor": "小三和弦",
-      "Diminished": "减三和弦",
       "Augmented": "增三和弦",
-      "Major seventh": "大七和弦",
-      "Minor seventh": "小七和弦",
+      "Diminished": "减三和弦",
+      "Diminished seventh": "减七和弦",
       "Dominant seventh": "属七和弦",
       "Half-Diminished": "半减七和弦",
-      "Diminished seventh": "减七和弦"
+      "Major": "大三和弦",
+      "Major seventh": "大七和弦",
+      "Minor": "小三和弦",
+      "Minor seventh": "小七和弦"
     },
+    "diatonic": {
+      "chordType": "和弦类型",
+      "harmonic": "和声小调",
+      "major": "大调",
+      "melodic": "旋律小调",
+      "mixed": "混合",
+      "natural": "自然小调",
+      "rootNote": "根音",
+      "scaleType": "音阶类型",
+      "sevenths": "七和弦",
+      "showDegrees": "显示级数而非和弦名称",
+      "title": "调内和弦设置",
+      "triads": "三和弦"
+    },
+    "drillModes": {
+      "circle_fifths": "五度循环 (上)",
+      "circle_fourths": "五度循环 (下)",
+      "random": "随机",
+      "semitone_down": "半音下行",
+      "semitone_up": "半音上行",
+      "title": "练习模式"
+    },
+    "home": "首页",
     "instruments": {
       "bass-electric": "电贝斯",
       "bassoon": "巴松管",
@@ -90,24 +83,38 @@
       "tuba": "大号",
       "violin": "小提琴",
       "xylophone": "木琴"
-    }
-  },
-  "chordGame": {
-    "chord": "和弦",
-    "notes": "音符",
-    "midi": {
-      "noAccess": "无法访问MIDI",
-      "loaded": "MIDI已加载",
-      "connected": "已连接MIDI",
-      "chordDetected": "检测到和弦"
-    }
+    },
+    "inversions": {
+      "first": "第一转位",
+      "random": "随机",
+      "root": "原位",
+      "second": "第二转位",
+      "third": "第三转位",
+      "title": "转位模式"
+    },
+    "modes": {
+      "chordpractice": "和弦练习",
+      "diatonic": "调内和弦",
+      "game": "游戏设置",
+      "progression": "和弦进行",
+      "soundSettings": "音色设置"
+    },
+    "moreChords": "更多和弦",
+    "quality": {
+      "full": "无损",
+      "high": "高质量",
+      "low": "流畅",
+      "medium": "中等"
+    },
+    "qualityLabel": "选择音质",
+    "title": "设置"
   },
   "trainer": {
-    "title": "和弦训练器",
     "apps": {
-      "earTrainer": "听音训练",
-      "chordTrainer": "和弦训练"
+      "chordTrainer": "和弦训练",
+      "earTrainer": "听音训练"
     },
-    "settings": "设置"
+    "settings": "设置",
+    "title": "和弦训练器"
   }
 }

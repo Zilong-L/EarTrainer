@@ -1,69 +1,70 @@
 {
   "app": {
-    "title": "Ear Trainer",
-    "settings": "Settings"
+    "settings": "Settings",
+    "title": "Ear Trainer"
+  },
+  "buttons": {
+    "cancel": "Cancel",
+    "chord": "Chord",
+    "chordTrainer": "Chord Trainer",
+    "delete": "Delete",
+    "earTrainer": "Ear Trainer",
+    "help": "",
+    "home": "Home",
+    "muteDrone": "Mute Drone",
+    "next": "Next",
+    "playTonic": "Play Tonic Note",
+    "replay": "Replay",
+    "save": "Save",
+    "settings": "Settings",
+    "start": "Start",
+    "startPractice": "Start Practice",
+    "unmuteDrone": "Unmute Drone"
   },
   "introModal": {
-    "welcomeTitle": "Welcome to Chord Color Trainer",
     "description": "You will hear a chord. You need to select the corresponding chord color based on what you hear. You can adjust the volume and practice content in the settings at the top right corner.",
-    "startPractice": "Start Practice"
+    "startPractice": "Start Practice",
+    "welcomeTitle": "Welcome to Chord Color Trainer"
   },
-  "statistics": {
-    "chordAccuracy": "Chord Accuracy Statistics",
-    "statistics": "Statistics",
-    "chartLabel": "Chord Accuracy",
-    "deleteLocalData": "Delete Local Statistics Data",
-    "confirmDeleteTitle": "Confirm Delete",
-    "confirmDeleteDescription": "Are you sure you want to delete all local statistics data? This action cannot be undone.",
+  "labels": {
+    "accuracyRate": "Accuracy Rate",
+    "correctCount": "Correct Count",
+    "totalAttempts": "Total Attempts"
+  },
+  "messages": {
+    "deleteConfirmation": "Are you sure you want to delete all local statistics data? This action cannot be undone."
+  },
+  "practiceSettings": {
+    "bpm": "BPM",
+    "chordTypes": "Chord Types",
+    "custom": "Custom",
+    "degrees": "Degrees",
     "delete": "Delete",
-    "cancel": "Cancel"
+    "editPreset": "Edit Preset",
+    "noteRange": "Note Range",
+    "rootNote": "Root Note",
+    "save": "Save",
+    "selectPreset": "Select Preset"
   },
   "settingsMenu": {
-    "settings": "Settings",
     "practiceSettings": "Practice Settings",
-    "volumeSettings": "Volume Settings",
+    "settings": "Settings",
+    "soundSettings": "Sound Settings",
     "statistics": "Statistics",
-    "soundSettings": "Sound Settings"
+    "volumeSettings": "Volume Settings"
+  },
+  "statistics": {
+    "cancel": "Cancel",
+    "chartLabel": "Chord Accuracy",
+    "chordAccuracy": "Chord Accuracy Statistics",
+    "confirmDeleteDescription": "Are you sure you want to delete all local statistics data? This action cannot be undone.",
+    "confirmDeleteTitle": "Confirm Delete",
+    "delete": "Delete",
+    "deleteLocalData": "Delete Local Statistics Data",
+    "statistics": "Statistics"
   },
   "volumeSettings": {
     "droneVolume": "Drone Volume",
     "pianoVolume": "Piano Volume"
-  },
-  "practiceSettings": {
-    "noteRange": "Note Range",
-    "rootNote": "Root Note",
-    "bpm": "BPM",
-    "selectPreset": "Select Preset",
-    "editPreset": "Edit Preset",
-    "custom": "Custom",
-    "save": "Save",
-    "delete": "Delete",
-    "degrees": "Degrees",
-    "chordTypes": "Chord Types"
-  },
-  "labels": {
-    "totalAttempts": "Total Attempts",
-    "correctCount": "Correct Count",
-    "accuracyRate": "Accuracy Rate"
-  },
-  "buttons": {
-    "startPractice": "Start Practice",
-    "replay": "Replay",
-    "settings": "Settings",
-    "delete": "Delete",
-    "cancel": "Cancel",
-    "save": "Save",
-    "home": "Home",
-    "earTrainer": "Ear Trainer",
-    "chordTrainer": "Chord Trainer",
-    "muteDrone": "Mute Drone",
-    "unmuteDrone": "Unmute Drone",
-    "playTonic": "Play Tonic Note",
-    "chord": "Chord",
-    "next": "Next",
-    "start": "Start"
-  },
-  "messages": {
-    "deleteConfirmation": "Are you sure you want to delete all local statistics data? This action cannot be undone."
   }
 }

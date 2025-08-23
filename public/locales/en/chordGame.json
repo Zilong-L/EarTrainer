@@ -1,69 +1,67 @@
 {
+  "buttons": {
+    "chord-practice": "",
+    "diatonic": "",
+    "help": ""
+  },
+  "chordGame": {
+    "chord": "Chord",
+    "midi": {
+      "chordDetected": "Chord Detected",
+      "connected": "Connected to MIDI",
+      "loaded": "MIDI loaded",
+      "noAccess": "MIDI Access Not Available"
+    },
+    "notes": "Notes"
+  },
+  "detectedChords": "",
+  "midi": {
+    "loaded": "",
+    "noAccess": ""
+  },
+  "notes": "",
   "settings": {
-    "home": "Home",
-    "drillModes": {
-      "title": "Drill Mode",
-      "random": "Random",
-      "circle_fifths": "Circle of Fifths (Up)",
-      "circle_fourths": "Circle of Fifths (Down)",
-      "semitone_up": "Semitone Up",
-      "semitone_down": "Semitone Down"
-    },
     "SoundSettings": "Sound Settings",
-    "qualityLabel": "Select Quality",
-    "quality": {
-      "low": "Low",
-      "medium": "Medium",
-      "high": "High",
-      "full": "Full"
-    },
     "basicChords": "Basic Chords",
-    "moreChords": "More Chords",
     "chordCategories": {
-      "Triads": "Triads", 
       "Sevenths": "Sevenths",
+      "Triads": "Triads",
       "mixed": "Mixed"
     },
-    "inversions": {
-      "title": "Inversion Mode",
-      "random": "Random",
-      "root": "Root Position",
-      "first": "First Inversion",
-      "second": "Second Inversion",
-      "third": "Third Inversion"
+    "chords": {
+      "Augmented": "Augmented",
+      "Diminished": "Diminished",
+      "Diminished seventh": "Diminished Seventh",
+      "Dominant seventh": "Dominant Seventh",
+      "Half-Diminished": "Half-Diminished Seventh",
+      "Major": "Major",
+      "Major seventh": "Major Seventh",
+      "Minor": "Minor",
+      "Minor seventh": "Minor Seventh"
     },
     "diatonic": {
-      "title": "Diatonic Chord Settings",
+      "chordType": "Chord Type",
+      "harmonic": "Harmonic Minor",
+      "major": "Major",
+      "melodic": "Melodic Minor",
+      "mixed": "Mixed",
+      "natural": "Natural Minor",
       "rootNote": "Root Note",
       "scaleType": "Scale Type",
-      "major": "Major",
-      "harmonic": "Harmonic Minor",
-      "melodic": "Melodic Minor", 
-      "natural": "Natural Minor",
-      "chordType": "Chord Type",
-      "triads": "Triads",
       "sevenths": "Sevenths",
-      "mixed": "Mixed",
-      "showDegrees": "Show Degrees Instead of Chord Names"
+      "showDegrees": "Show Degrees Instead of Chord Names",
+      "title": "Diatonic Chord Settings",
+      "triads": "Triads"
     },
-  "title": "Settings",
-  "modes": {
-    "chordpractice": "Chord Practice",
-    "diatonic": "Diatonic",
-    "progression": "Progression",
-    "soundSettings": "Sound Settings"
-  },
-  "chords": {
-    "Major": "Major",
-    "Minor": "Minor",
-    "Diminished": "Diminished",
-    "Augmented": "Augmented",
-    "Major seventh": "Major Seventh",
-    "Minor seventh": "Minor Seventh", 
-    "Dominant seventh": "Dominant Seventh",
-    "Half-Diminished": "Half-Diminished Seventh",
-    "Diminished seventh": "Diminished Seventh"
-  },
+    "drillModes": {
+      "circle_fifths": "Circle of Fifths (Up)",
+      "circle_fourths": "Circle of Fifths (Down)",
+      "random": "Random",
+      "semitone_down": "Semitone Down",
+      "semitone_up": "Semitone Up",
+      "title": "Drill Mode"
+    },
+    "home": "Home",
     "instruments": {
       "bass-electric": "Electric Bass",
       "bassoon": "Bassoon",
@@ -78,35 +76,49 @@
       "harmonium": "Harmonium",
       "harp": "Harp",
       "organ": "Organ",
+      "pad": "Pad",
       "piano": "Piano",
+      "sawtooth": "Sawtooth",
       "saxophone": "Saxophone",
+      "square": "Square",
+      "triangle": "Triangle",
       "trombone": "Trombone",
       "trumpet": "Trumpet",
       "tuba": "Tuba",
       "violin": "Violin",
-      "xylophone": "Xylophone",
-      "triangle": "Triangle",
-      "square": "Square",
-      "sawtooth": "Sawtooth",
-      "pad": "Pad"
-    }
-  },
-  "chordGame": {
-    "chord": "Chord",
-    "notes": "Notes",
-    "midi": {
-      "noAccess": "MIDI Access Not Available",
-      "loaded": "MIDI loaded",
-      "connected": "Connected to MIDI",
-      "chordDetected": "Chord Detected"
-    }
+      "xylophone": "Xylophone"
+    },
+    "inversions": {
+      "first": "First Inversion",
+      "random": "Random",
+      "root": "Root Position",
+      "second": "Second Inversion",
+      "third": "Third Inversion",
+      "title": "Inversion Mode"
+    },
+    "modes": {
+      "chordpractice": "Chord Practice",
+      "diatonic": "Diatonic",
+      "game": "",
+      "progression": "Progression",
+      "soundSettings": "Sound Settings"
+    },
+    "moreChords": "More Chords",
+    "quality": {
+      "full": "Full",
+      "high": "High",
+      "low": "Low",
+      "medium": "Medium"
+    },
+    "qualityLabel": "Select Quality",
+    "title": "Settings"
   },
   "trainer": {
-    "title": "Chord Trainer",
     "apps": {
-      "earTrainer": "Ear Trainer",
-      "chordTrainer": "Chord Trainer"
+      "chordTrainer": "Chord Trainer",
+      "earTrainer": "Ear Trainer"
     },
-    "settings": "Settings"
+    "settings": "Settings",
+    "title": "Chord Trainer"
   }
 }
