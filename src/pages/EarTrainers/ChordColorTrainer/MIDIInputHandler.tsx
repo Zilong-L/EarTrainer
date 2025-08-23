@@ -1,35 +1,37 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Note, Chord } from 'tonal';
+import { Note } from 'tonal';
 import { getSamplerInstance } from '@utils/Tone/samplers';
 import { useTranslation } from 'react-i18next';
-import { getChords, getNiceChordName } from '@utils/ChordTrainer/GameLogics';
+import { getChords } from '@utils/ChordTrainer/GameLogics';
 import { Portal } from '@headlessui/react';
 import { useSoundSettingsStore } from '@stores/soundSettingsStore';
 import PianoVisualizer from './PianoVisualizer';
-const MIDIInputHandler = ({ activeNotes, setActiveNotes }) => {
+
+interface MIDIInputHandlerProps {
+  activeNotes: number[];
+  setActiveNotes: (notes: number[]) => void;
+}
+
+const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({ activeNotes, setActiveNotes }) => {
 
   const playMidiSounds = useSoundSettingsStore((state) => state.playMidiSounds);
-  const setPlayMidiSounds = useSoundSettingsStore((state) => state.setPlayMidiSounds);
   const playMidiSoundsRef = useRef(playMidiSounds);
   useEffect(() => {
     playMidiSoundsRef.current = playMidiSounds;
   }, [playMidiSounds]);
-
-  // Removed duplicate declaration to fix TypeScript error
-  const [showDegree, setShowDegree] = useState(false);
   const { t } = useTranslation('chordGame');
   let sustainActive = false;
-  let sustainedNotesSet = new Set();
-  let pressingNotes = new Set();
-  const [detectedChords, setDetectedChords] = useState([]);
+  let sustainedNotesSet = new Set<number>();
+  let pressingNotes = new Set<number>();
+  const [detectedChords, setDetectedChords] = useState<string[]>([]);
 
   useEffect(() => {
-    if (!activeNotes) return;
+    if (!activeNotes || activeNotes.length === 0) return;
     const chordResult = getChords(activeNotes);
-    setDetectedChords(chordResult);
+    setDetectedChords(chordResult || []);
   }, [activeNotes]);
 
-  const midiMessageHandler = (message) => {
+  const midiMessageHandler = (message: any) => {
     const [command, note, velocity] = message.data;
     const pianoSampler = getSamplerInstance().sampler;
 
@@ -69,17 +71,17 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes }) => {
   };
 
   useEffect(() => {
-    let inputs = [];
+    let inputs: any[] = [];
     const setupMIDI = async () => {
-      if (navigator.requestMIDIAccess == null) {
+      if ((navigator as any).requestMIDIAccess == null) {
         console.warn(t('midi.noAccess'));
         return;
       }
-      const midi = await navigator.requestMIDIAccess();
+      const midi = await (navigator as any).requestMIDIAccess();
       console.log(t('midi.loaded'));
       inputs = Array.from(midi.inputs.values());
       for (let input of inputs) {
-        input.onmidimessage = (message) => midiMessageHandler(message);
+        input.onmidimessage = (message: any) => midiMessageHandler(message);
       }
     };
 
@@ -103,4 +105,3 @@ const MIDIInputHandler = ({ activeNotes, setActiveNotes }) => {
 };
 
 export default MIDIInputHandler;
-

@@ -55,6 +55,7 @@ interface ChordColorTrainerActions {
     setMuteDrone: (muteDrone: boolean) => void;
     setIsStatOpen: (isStatOpen: boolean) => void;
     setDegreeChordTypes: (degreeChordTypes: DegreeInfo[]) => void;
+    setChordPlayOption: (chordPlayOption: string) => void;
 }
 
 const useChordColorTrainerSettingsStore = create<ChordColorTrainerState & ChordColorTrainerActions>()(

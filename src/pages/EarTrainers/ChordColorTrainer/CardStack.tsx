@@ -2,26 +2,38 @@ import React, { useState } from 'react';
 import Button from '@components/Button';
 import { motion } from "motion/react";
 
-const isCorrect = (chordName, currentChord) => {
+interface Chord {
+    degree: string;
+    chordType: string;
+}
+
+interface CardStackProps {
+    currentChord: Chord | null;
+    disabledChords: string[];
+    filteredChords: Chord[];
+    setActiveChord: (chordName: string) => void;
+    isAdvance: string;
+    gameStarted: boolean;
+}
+
+const isCorrect = (chordName: string, currentChord: Chord | null): boolean => {
     if (!currentChord) return false;
     return chordName === `${currentChord.degree}${currentChord.chordType}`;
 };
 
-const CardStack = ({
+const CardStack: React.FC<CardStackProps> = ({
     currentChord,
     disabledChords,
     filteredChords,
     setActiveChord,
-    rootNote,
     isAdvance,
-    gameState,
     gameStarted
 }) => {
-    const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     if (!gameStarted) return null;
     return (
         <div>
-            <div className={`hidden lg:${gameState === 'end' ? 'hidden' : ''} lg:flex items-center justify-center h-64 mb-4 relative`}>
+            <div className={`hidden lg:flex items-center justify-center h-64 mb-4 relative`}>
                 <div className="flex h-full items-center" style={{ width: `${filteredChords.length * 15}%` }}>
                     {filteredChords.map((chord, index) => {
                         console.log('calculate')
@@ -81,7 +93,7 @@ const CardStack = ({
                     })}
                 </div>
             </div>
-            <div className={`grid grid-cols-3 gap-4 mb-4 justify-start lg:hidden ${gameState === 'end' ? 'hidden' : ''} `}>
+            <div className={`grid grid-cols-3 gap-4 mb-4 justify-start lg:hidden`}>
                 {filteredChords.map((chord) => {
                     // const noteName = Tone.Frequency(rootNote + chord.distance, 'midi').toNote().slice(0, -1);
                     const chordName = `${chord.degree}${chord.chordType}`;

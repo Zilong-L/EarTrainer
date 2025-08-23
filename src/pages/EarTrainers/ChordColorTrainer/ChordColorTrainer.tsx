@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import * as Tone from 'tone';
 import { Cog6ToothIcon, BookOpenIcon } from '@heroicons/react/24/solid';
 import { useSoundSettingsStore } from '@stores/soundSettingsStore';
 import Header from '@components/Header';
@@ -12,21 +11,17 @@ import { Toaster } from 'react-hot-toast';
 import ChordColorTrainerSettings from '@EarTrainers/ChordColorTrainer/Settings';
 import useChordColorTrainer from '@EarTrainers/ChordColorTrainer/useChordColorTrainer';
 import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
-import { apps, keyMap, degrees } from '@EarTrainers/ChordColorTrainer/Constants';
 import CardStack from '@EarTrainers/ChordColorTrainer/CardStack';
 import { DesktopReplayButtons, PhoneReplayButtons } from '@EarTrainers/ChordColorTrainer/ReplayButtons';
 import LanguageSwitcher from '@components/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 import useI18nStore from "@stores/i18nStore";
 import MIDIInputHandler from './MIDIInputHandler';
-import PianoVisualizer from '@components/PianoVisualizer';
-import DraggableWindow from '@components/DraggableWindow';
 
-const EarTrainer = () => {
+const EarTrainer: React.FC = () => {
   const { t, i18n } = useTranslation('chordColorTrainer');
   const setNamespace = useI18nStore((state) => state.setNamespace);
   const {
-    rootNote,
     chordPlayOption
   } = useChordColorTrainerSettingsStore();
   const {
@@ -47,8 +42,8 @@ const EarTrainer = () => {
   } = useChordColorTrainer(chordPlayOption);
 
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
 
 
   const isLoadingInstrument = useSoundSettingsStore(state => state.isLoadingInstrument);
@@ -109,7 +104,7 @@ const EarTrainer = () => {
 
   const handlePlayChordColorPattern = async () => {
     if (isLoadingInstrument) return;
-    await playChordColorPattern();
+    await playChordColorPattern(currentChord?.notes || []);
   }
   const handlePlayChord = async () => {
     if (isLoadingInstrument) return;
@@ -157,7 +152,7 @@ const EarTrainer = () => {
               id="chordPlayOption"
               className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
               value={chordPlayOption}
-              onChange={(e) => useChordColorTrainerSettingsStore.getState().setChordPlayOption(e.target.value)}
+              onChange={(e) => useChordColorTrainerSettingsStore.getState().setChordPlayOption!(e.target.value)}
             >
               <option value="default">Default</option>
               <option value="block">Block</option>
@@ -174,7 +169,7 @@ const EarTrainer = () => {
             <ChordColorTrainerSettings
               isSettingsOpen={isSettingsOpen}
               setIsSettingsOpen={closeSettings}
-              playChord={playChordColorPattern}
+              playChord={() => playChordColorPattern(currentChord?.notes || [])}
             />
           </div>
 
@@ -189,7 +184,6 @@ const EarTrainer = () => {
               disabledChords={disabledChords}
               filteredChords={filteredChords}
               setActiveChord={setActiveChord}
-              rootNote={rootNote}
               isAdvance={isAdvance}
               gameStarted={gameStarted}
             />
