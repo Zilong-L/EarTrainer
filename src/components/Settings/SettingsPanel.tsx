@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import useI18nStore from '@stores/i18nStore';
-
+import '@styles/scrollbar.css';
 // Class name constants for reuse
 const NAV_BUTTON_BASE = 'text-left rounded-lg transition-colors';
 const NAV_BUTTON_ACTIVE = 'bg-notification-bg text-notification-text';
@@ -25,13 +25,13 @@ function SettingsPanel({ isOpen, onClose, components, title = 'settings.Settings
     const { namespace } = useI18nStore();
     const { t } = useTranslation(namespace);
     const [currentPage, setCurrentPage] = useState<string>('home');
-
+    console.log(namespace)
     useEffect(() => {
         if (isOpen) {
-            document.body.classList.add('modal-open');
+            document.documentElement.classList.add('modal-open');
         }
         return () => {
-            document.body.classList.remove('modal-open');
+            document.documentElement.classList.remove('modal-open');
         };
     }, [isOpen]);
 
@@ -87,9 +87,9 @@ function SettingsPanel({ isOpen, onClose, components, title = 'settings.Settings
                     </div>
 
                     {/* Content Area */}
-                    <div className="flex-1 flex flex-col pb-6 bg-bg-common">
+                    <div className="flex-1 flex flex-col pb-6 bg-bg-main">
                         <div
-                            className="p-6 overflow-y-auto h-full box-border scrollbar-hide bg-bg-common"
+                            className="p-6 overflow-y-auto h-full box-border  bg-bg-main"
                             style={{ paddingBottom: '0', scrollbarGutter: 'stable' }}
                         >
                             {/* Home content - Different for mobile and desktop */}

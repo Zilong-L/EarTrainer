@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 import HorizontalSlider from '@components/slider/HorizontalSlider';
 const instrumentsList = [
   'bass-electric', 'bassoon', 'cello', 'clarinet', 'contrabass', 'flute',
@@ -9,7 +10,8 @@ const instrumentsList = [
 ];
 import { useSoundSettingsStore } from '@stores/soundSettingsStore';
 const SoundSettings: React.FC = () => {
-  const { t } = useTranslation('degreeTrainer');
+  const { namespace } = useI18nStore();
+  const { t } = useTranslation(namespace);
   const {
     selectedInstrument,
     isLoadingInstrument,
