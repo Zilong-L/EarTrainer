@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 import { modes } from './presets';
 import { degrees } from '@EarTrainers/DegreeTrainer/Constants';
 
@@ -13,7 +14,8 @@ type FreeTrainerSettingsShape = {
 
 function FreeSettings({ FreeTrainerSettings }: { FreeTrainerSettings: FreeTrainerSettingsShape }) {
     const { customNotes, handleDegreeToggle, setCustomNotes, selectedMode, setSelectedMode } = FreeTrainerSettings;
-    const { t } = useTranslation('degreeTrainer');
+    const { namespace } = useI18nStore();
+    const { t } = useTranslation(namespace);
 
     const handleModeSelect = (modeName: string) => {
         setSelectedMode(modeName);

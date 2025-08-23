@@ -1,7 +1,7 @@
 import React from 'react';
 
-// @ts-ignore
-import Settings from '@ChordTrainer/components/Settings';
+import SettingsPanel from '@components/Settings/SettingsPanel';
+import SoundSettings from '@components/Settings/SoundSettings';
 import DiatonicSettings from './DiatonicSettings';
 import useDiatonicGame from './useDiatonicGame'
 import GameDisplay from './GameDisplay'
@@ -17,10 +17,23 @@ const DiatonicGame: React.FC = () => {
                     <GameDisplay diatonicGameSettings={DiatonicGame} />
                 </div>
             </div>
-            <Settings
+            <SettingsPanel
                 isOpen={isOpen}
-                setIsOpen={setIsOpen}
-                gameSettingsComponent={<DiatonicSettings diatonicGameSettings={DiatonicGame} />}
+                onClose={() => setIsOpen(false)}
+                title="settings.title"
+                components={[
+                    {
+                        id: 'game',
+                        label: 'settings.modes.game',
+                        component: DiatonicSettings,
+                        props: { diatonicGameSettings: DiatonicGame }
+                    },
+                    {
+                        id: 'sound',
+                        label: 'settings.modes.soundSettings',
+                        component: SoundSettings
+                    }
+                ]}
             />
         </main>
     );

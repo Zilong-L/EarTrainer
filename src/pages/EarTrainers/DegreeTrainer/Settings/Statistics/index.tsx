@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import uPlot from 'uplot';
 import 'uplot/dist/uPlot.min.css';
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import type { DegreeRecord } from './useStatistics';
 
@@ -10,7 +11,8 @@ interface StatisticsProps {
 }
 
 const Statistics: React.FC<StatisticsProps> = () => {
-    const { t } = useTranslation('degreeTrainer');
+    const { namespace } = useI18nStore();
+    const { t } = useTranslation(namespace);
     const { stats: { practiceRecords, setPracticeRecords } } = useDegreeTrainerSettings();
     const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState<boolean>(false);
     const chartRef = useRef<HTMLDivElement>(null);

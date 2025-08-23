@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 import FreeSettings from '@EarTrainers/DegreeTrainer/Games/Free/FreeSettings';
 import ChallengeSettings from '@EarTrainers/DegreeTrainer/Games/Challenge/ChallengeSettings';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
@@ -40,7 +41,8 @@ function GameSettings({ currentGameSettings }: GameSettingsProps) {
         }
     } = useDegreeTrainerSettings();
 
-    const { t } = useTranslation('degreeTrainer');
+    const { namespace } = useI18nStore();
+    const { t } = useTranslation(namespace);
 
     return (
         <div className="p-6 space-y-12">

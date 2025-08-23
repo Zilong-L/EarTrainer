@@ -3,6 +3,7 @@ import PianoVisualizer from '@components/PianoVisualizer';
 import { Note } from 'tonal';
 import { getSamplerInstance } from '@utils/Tone/samplers';
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 import { getNiceChordName } from '@utils/ChordTrainer/GameLogics'
 
 interface MIDIInputHandlerProps {
@@ -17,7 +18,8 @@ interface MIDIInputHandlerProps {
 }
 
 const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({ activeNotes, setActiveNotes, targetChord, detectedChords, showDegree, setShowDegree }) => {
-  const { t } = useTranslation('chordGame');
+  const { namespace } = useI18nStore();
+  const { t } = useTranslation(namespace);
   let sustainActive = false;
   let sustainedNotesSet = new Set<number>();
   let pressingNotes = new Set<number>();

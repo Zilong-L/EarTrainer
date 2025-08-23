@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 import { Midi, Note } from 'tonal';
 import { getDroneInstance } from '@utils/Tone/samplers';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
@@ -7,7 +8,8 @@ import ValueAdjuster from '@components/ValueAdjuster';
 import RangeSlider from '@components/slider/RangeSlider';
 
 function PracticeSettings() {
-    const { t } = useTranslation('degreeTrainer');
+    const { namespace } = useI18nStore();
+    const { t } = useTranslation(namespace);
     const [isReady, setIsReady] = useState(false);
     const {
         practice: {

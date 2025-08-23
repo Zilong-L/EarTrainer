@@ -19,8 +19,9 @@ import useI18nStore from "@stores/i18nStore";
 import MIDIInputHandler from './MIDIInputHandler';
 
 const EarTrainer: React.FC = () => {
-  const { t, i18n } = useTranslation('chordColorTrainer');
   const setNamespace = useI18nStore((state) => state.setNamespace);
+  const { namespace } = useI18nStore();
+  const { t, i18n } = useTranslation(namespace);
   const {
     chordPlayOption
   } = useChordColorTrainerSettingsStore();
@@ -60,12 +61,10 @@ const EarTrainer: React.FC = () => {
 
   const openSettings = () => {
     setIsSettingsOpen(true);
-    document.body.classList.add('modal-open');
   };
 
   const closeSettings = () => {
     setIsSettingsOpen(false);
-    document.body.classList.remove('modal-open');
   };
 
   useEffect(() => {

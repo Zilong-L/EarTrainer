@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Note } from 'tonal';
 import { getSamplerInstance } from '@utils/Tone/samplers';
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 import { getChords } from '@utils/ChordTrainer/GameLogics';
 import { Portal } from '@headlessui/react';
 import { useSoundSettingsStore } from '@stores/soundSettingsStore';
@@ -19,7 +20,8 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({ activeNotes, setAct
   useEffect(() => {
     playMidiSoundsRef.current = playMidiSounds;
   }, [playMidiSounds]);
-  const { t } = useTranslation('chordGame');
+  const { namespace } = useI18nStore();
+  const { t } = useTranslation(namespace);
   let sustainActive = false;
   let sustainedNotesSet = new Set<number>();
   let pressingNotes = new Set<number>();

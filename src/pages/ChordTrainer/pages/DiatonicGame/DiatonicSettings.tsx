@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 import CustomListbox from '@components/Listbox';
 
 const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
@@ -11,7 +12,8 @@ interface DiatonicSettingsProps {
 }
 
 const DiatonicSettings: React.FC<DiatonicSettingsProps> = ({ diatonicGameSettings }) => {
-  const { t } = useTranslation('chordGame');
+  const { namespace } = useI18nStore();
+  const { t } = useTranslation(namespace);
   console.log(diatonicGameSettings)
   const {
     rootNote,

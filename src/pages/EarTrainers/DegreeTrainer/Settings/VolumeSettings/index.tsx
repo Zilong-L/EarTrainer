@@ -1,11 +1,13 @@
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import HorizontalSlider from '@components/slider/HorizontalSlider';
 
 function VolumeSettings(): JSX.Element {
     // Keep Tone.js volumes in sync with settings
 
-    const { t } = useTranslation('degreeTrainer');
+    const { namespace } = useI18nStore();
+    const { t } = useTranslation(namespace);
     const { volume: { droneVolume, setDroneVolume, pianoVolume, setPianoVolume, answerVolume, setAnswerVolume } } = useDegreeTrainerSettings();
     console.log(pianoVolume);
 

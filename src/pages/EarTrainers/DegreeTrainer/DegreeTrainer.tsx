@@ -33,9 +33,10 @@ import GameSettings from './Settings/GameSettings';
 const EarTrainer: React.FC = () => {
   const globalSettings = useDegreeTrainerSettings();
   const setNamespace = useI18nStore(state => state.setNamespace);
+  const { namespace } = useI18nStore();
   const FreeTrainerSettings = useFreeTrainer();
   const ChallengeTrainerSettings = useChallengeTrainer();
-  const { t, i18n } = useTranslation('degreeTrainer');
+  const { t, i18n } = useTranslation(namespace);
 
   const {
     isHandfree,
@@ -61,13 +62,11 @@ const EarTrainer: React.FC = () => {
   const openSettings = () => {
     setIsSettingsOpen(true);
     setGameState((prev) => prev === 'playing' ? 'paused' : prev);
-    document.body.classList.add('modal-open');
   };
 
   const closeSettings = () => {
     setIsSettingsOpen(false);
     setGameState((prev) => prev === 'paused' ? 'playing' : prev);
-    document.body.classList.remove('modal-open');
   };
 
   useEffect(() => {

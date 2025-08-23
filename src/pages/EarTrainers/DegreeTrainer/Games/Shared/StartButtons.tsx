@@ -3,6 +3,7 @@ import { AudioBars } from './AudioWave';
 import { ArrowPathIcon, ForwardIcon } from '@heroicons/react/24/solid';
 import Button from '@components/Button';
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 
 interface StartButtonProps {
     gameState: string;
@@ -20,7 +21,8 @@ const DesktopStartButton = ({
     isPlayingSound,
     isLoadingInstrument
 }: StartButtonProps) => {
-    const { t } = useTranslation('degreeTrainer');
+    const { namespace } = useI18nStore();
+    const { t } = useTranslation(namespace);
     let content;
 
     if (isLoadingInstrument) {
@@ -61,7 +63,8 @@ const PhoneStartButton = ({
     isPlayingSound,
     isLoadingInstrument
 }: StartButtonProps) => {
-    const { t } = useTranslation('degreeTrainer');
+    const { namespace } = useI18nStore();
+    const { t } = useTranslation(namespace);
     console.log('is loading', isLoadingInstrument);
 
     return (

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 import { AnimatePresence, motion } from 'motion/react';
 import { useLocalStorage } from '@uidotdev/usehooks';
 import Button from '@components/Button';
@@ -59,9 +60,9 @@ const LanguageSwitcher: React.FC = () => {
 
 const ThemedContent: React.FC = () => {
   const location = useLocation();
-  const { t } = useTranslation('musicTrainer');
+  const { namespace } = useI18nStore();
+  const { t, i18n } = useTranslation(namespace);
   const [isDark, setIsDark] = useLocalStorage('isdark', false);
-  const { i18n } = useTranslation();
   useEffect(() => {
     if (!isDark) {
       document.body.classList.add('light');
@@ -76,7 +77,7 @@ const ThemedContent: React.FC = () => {
   };
 
   return (
-    <div className={`${i18n.language === 'zh' ? 'font-chinese' : 'font-chewy'}`}>
+    <div className={`${i18n.language === 'zh' ? 'font-chinese' : 'font-chewy'} relative`} >
 
       <AnimatePresence mode="wait">
         <Suspense fallback={<LoadingSpinner />}>
@@ -139,14 +140,7 @@ const ThemedContent: React.FC = () => {
         </Suspense>
       </AnimatePresence>
 
-      <div className='text-center p-2 bg-black'>
-        <p>
-          <a href="https://github.com/Zilong-L/EarTrainer/issues" target="_blank" rel="noopener noreferrer" style={{ color: 'lightblue' }}>
-            {t('Open Source Message')}
-          </a>
-        </p>
-        <LanguageSwitcher />
-      </div>
+
 
       {
         location.pathname !== '/' && location.pathname !== '/ear-trainer' && (
@@ -154,7 +148,7 @@ const ThemedContent: React.FC = () => {
             onClick={toggleTheme}
             style={{
               position: 'absolute',
-              bottom: '10px',
+              bottom: '100px',
               right: '10px',
               background: 'none',
               border: 'none',
@@ -166,6 +160,14 @@ const ThemedContent: React.FC = () => {
           </button>
         )
       }
+      <div className='text-center p-2 bg-black'>
+        <p>
+          <a href="https://github.com/Zilong-L/EarTrainer/issues" target="_blank" rel="noopener noreferrer" style={{ color: 'lightblue' }}>
+            {t('Open Source Message')}
+          </a>
+        </p>
+        <LanguageSwitcher />
+      </div>
     </div>
   )
 }

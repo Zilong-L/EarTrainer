@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 import { ChordType } from 'tonal';
 import CustomListbox from '@components/Listbox';
 import { useChordPracticeStore } from '../../stores/chordPracticeStore';
@@ -14,7 +15,8 @@ const drillModes = ['random', 'circle_fifths', 'circle_fourths', 'semitone_up', 
 
 const ChordPracticeSettings: React.FC = () => {
   const chordTypesAll = ChordType.names();
-  const { t } = useTranslation('chordGame');
+  const { namespace } = useI18nStore();
+  const { t } = useTranslation(namespace);
   const {
     selectedChordTypes,
     setSelectedChordTypes,

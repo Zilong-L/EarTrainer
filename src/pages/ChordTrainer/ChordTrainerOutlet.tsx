@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
+
 import { Link, Outlet } from 'react-router-dom';
 import { Cog6ToothIcon, BookOpenIcon } from '@heroicons/react/24/solid';
 
@@ -10,7 +12,8 @@ import HeaderButton from '@components/HeaderButton';
 import useSettingsStore from './stores/settingsStore';
 import { GAMES } from './utils/routes/constants';
 function ChordTrainerOutlet() {
-    const { t, i18n } = useTranslation('chordGame');
+    const { namespace } = useI18nStore();
+    const { t, i18n } = useTranslation(namespace);
     const { openModal } = useSettingsStore();
     return (<div className="flex flex-col h-[100vh]">
         <Header>

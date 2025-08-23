@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import useI18nStore from '@stores/i18nStore';
 import CardStack from '../Shared/CardStack';
 import { DesktopStartButton, PhoneStartButton } from '../Shared/StartButtons';
 import { useSoundSettingsStore } from '@stores/soundSettingsStore'; // Import the sampler store
@@ -27,7 +28,8 @@ const ChallengeMode: React.FC<ChallengeModeProps> = ({ ChallengeTrainerSettings 
     isHandfree,
     isPlayingSound,
   } = ChallengeTrainerSettings;
-  const { t } = useTranslation('degreeTrainer');
+  const { namespace } = useI18nStore();
+  const { t } = useTranslation(namespace);
   const isLoadingInstrument = useSoundSettingsStore(state => state.isLoadingInstrument); // Get sampler loading state
 
 
