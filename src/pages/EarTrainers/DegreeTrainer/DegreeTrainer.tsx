@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { Toaster } from 'react-hot-toast';
 import { keyMap, degrees } from '@EarTrainers/DegreeTrainer/Constants';
 import { Note } from 'tonal';
-import * as Tone from 'tone';
+import { Frequency } from 'tone';
 import useI18nStore from "@stores/i18nStore";
 let midi: MIDIAccess | null = null;
 import useFreeTrainer from '@EarTrainers/DegreeTrainer/Games/Free/useFreeTrainer';
@@ -132,7 +132,7 @@ const EarTrainer: React.FC = () => {
     const midiMessageHandler = (message: MIDIMessageEvent) => {
       const [command, note, velocity] = message.data ? Array.from(message.data) : [0, 0, 0];
       if (command === 144 && velocity > 0) {
-        const noteName = Tone.Frequency(note, 'midi').toNote(); // 获取当前音符名称
+        const noteName = Frequency(note, 'midi').toNote(); // 获取当前音符名称
         setActiveNote(noteName)
       }
       console.log('message', message);

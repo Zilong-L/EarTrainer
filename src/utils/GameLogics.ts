@@ -1,4 +1,4 @@
-import * as Tone from 'tone';
+import { Frequency, isNumber, now } from 'tone';
 import { degrees } from '@EarTrainers/DegreeTrainer/Constants';
 import { Note, Range } from 'tonal';
 import { preloadAudio } from '@utils/Tone/samplers';
@@ -14,29 +14,29 @@ const getNextNote = (possibleNotesInRange: string[], currentNote: string | null)
 
 const calculateDegree = (guessedNote: string | number, targetNote: string): string => {
   let guessedNoteMidi: number;
-  if (!Tone.isNumber(guessedNote)) {
-    guessedNoteMidi = Tone.Frequency(guessedNote).toMidi();
+  if (!isNumber(guessedNote)) {
+    guessedNoteMidi = Frequency(guessedNote).toMidi();
   } else {
     guessedNoteMidi = guessedNote;
   }
-  const interval = ((guessedNoteMidi - Tone.Frequency(targetNote).toMidi()) % 12 + 12) % 12;
+  const interval = ((guessedNoteMidi - Frequency(targetNote).toMidi()) % 12 + 12) % 12;
   return degrees.find(degree => degree.distance === interval)?.name || 'Unknown';
 };
 
 const calculateInterval = (guessedNote: string | number, targetNote: string): number => {
   let guessedNoteMidi: number;
-  if (!Tone.isNumber(guessedNote)) {
-    guessedNoteMidi = Tone.Frequency(guessedNote).toMidi();
+  if (!isNumber(guessedNote)) {
+    guessedNoteMidi = Frequency(guessedNote).toMidi();
   } else {
     guessedNoteMidi = guessedNote;
   }
-  const interval = ((guessedNoteMidi - Tone.Frequency(targetNote).toMidi()) % 12 + 12) % 12;
+  const interval = ((guessedNoteMidi - Frequency(targetNote).toMidi()) % 12 + 12) % 12;
   return interval;
 };
 
 const isCorrect = (guessedNote: string, currentNote: string): boolean => {
-  const guessedNoteMidi = Tone.Frequency(guessedNote).toMidi();
-  const currentNoteMidi = Tone.Frequency(currentNote).toMidi();
+  const guessedNoteMidi = Frequency(guessedNote).toMidi();
+  const currentNoteMidi = Frequency(currentNote).toMidi();
   return guessedNoteMidi % 12 === currentNoteMidi % 12;
 };
 
@@ -157,7 +157,7 @@ function handleGameLogic({
 
     if (player && player.loaded) {
       const offset = calculateOffset(currentNote!, rootNote);
-      player.start(Tone.now(), offset, 1.0);
+      player.start(now(), offset, 1.0);
     }
     setIsAdvance('Next');
   };

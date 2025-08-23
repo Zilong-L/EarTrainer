@@ -1,5 +1,5 @@
 import { SampleLibrary } from '@utils/Tone/SampleLibrary';
-import * as Tone from 'tone';
+import { Gain, Chorus, getDestination, getContext, loaded, now, Filter, Panner, Player } from 'tone';
 import { Note } from 'tonal';
 
 
@@ -12,23 +12,23 @@ interface DroneInstance {
     updateRoot: (rootNote: number | string) => void;
 }
 
-let answerGainNode: Tone.Gain = new Tone.Gain(0.5).toDestination();
+let answerGainNode: Gain = new Gain(0.5).toDestination();
 
-let globalChorous: Tone.Chorus = new Tone.Chorus({
+let globalChorous: Chorus = new Chorus({
     frequency: 0.1,
     delayTime: 10,
     depth: 0.71,
     feedback: 0.47,
     spread: 181,
     wet: 1.0
-}).connect(Tone.getDestination());
-Tone.getContext().lookAhead = 0;
+}).connect(getDestination());
+getContext().lookAhead = 0;
 
 class SamplerManager {
-    sampler: Tone.Sampler;
-    filter: Tone.Filter;
-    gainNode: Tone.Gain;
-    panner: Tone.Panner;
+    sampler: any;
+    filter: Filter;
+    gainNode: Gain;
+    panner: Panner;
 
     constructor(instrument: string = "triangle", quality: string = "medium", filterFreq: number = 1200, panVal: number = 0) {
         console.log(`Loading ${instrument} sampler...`);
@@ -38,9 +38,9 @@ class SamplerManager {
             quality: quality
         });
 
-        this.filter = new Tone.Filter({ frequency: filterFreq, type: "lowpass", rolloff: -12 });
-        this.gainNode = new Tone.Gain(0.5);
-        this.panner = new Tone.Panner(panVal);
+        this.filter = new Filter({ frequency: filterFreq, type: "lowpass", rolloff: -12 });
+        this.gainNode = new Gain(0.5);
+        this.panner = new Panner(panVal);
 
         this.sampler.chain(this.filter, this.panner, this.gainNode, globalChorous);
     }
@@ -69,8 +69,8 @@ class SamplerManager {
             quality: quality
         });
 
-        await Tone.loaded();
-        console.log(`${instrumentName} sampler loaded (via Tone.loaded).`);
+        await loaded();
+        console.log(`${instrumentName} sampler loaded (via loaded).`);
         this.sampler.disconnect();
         newSampler.chain(this.filter, this.panner, this.gainNode, globalChorous);
         this.sampler.dispose();
@@ -102,29 +102,29 @@ const getDroneInstance = ((): () => DroneInstance => {
             function start(): void {
                 if (!rootPlaying) {
                     rootPlaying = true;
-                    droneSynth.triggerAttack(currentRoot, Tone.now());
+                    droneSynth.triggerAttack(currentRoot, now());
                 }
             }
 
             function stop(): void {
                 if (rootPlaying) {
-                    droneSynth.triggerRelease(currentRoot, Tone.now());
+                    droneSynth.triggerRelease(currentRoot, now());
                     rootPlaying = false;
                 }
             }
 
             function playOnce(): void {
-                droneSynth.triggerAttackRelease(currentRoot, 1, Tone.now());
+                droneSynth.triggerAttackRelease(currentRoot, 1, now());
             }
 
             function updateRoot(rootNote: number | string): void {
                 if (typeof rootNote === "number") {
                     rootNote = Note.fromMidi(rootNote);
                 }
-                droneSynth.triggerRelease(currentRoot, Tone.now());
+                droneSynth.triggerRelease(currentRoot, now());
                 currentRoot = rootNote as string;
                 if (!rootPlaying) { return; }
-                droneSynth.triggerAttack(rootNote as string, Tone.now());
+                droneSynth.triggerAttack(rootNote as string, now());
             }
 
             droneInstance = {
@@ -140,21 +140,21 @@ const getDroneInstance = ((): () => DroneInstance => {
     };
 })();
 
-const preloadAudio = ((): (path: string) => Tone.Player | null => {
-    let cache: Record<string, Tone.Player> = {};
-    return (path: string): Tone.Player | null => {
+const preloadAudio = ((): (path: string) => Player | null => {
+    let cache: Record<string, Player> = {};
+    return (path: string): Player | null => {
         if (!path) {
             return null;
         }
         if (cache[path]) {
             return cache[path];
         }
-        cache[path] = new Tone.Player(path).connect(answerGainNode);
+        cache[path] = new Player(path).connect(answerGainNode);
         return cache[path];
     };
 })();
 
-const getAnswerGainNode = (): Tone.Gain => {
+const getAnswerGainNode = (): Gain => {
     return answerGainNode;
 };
 

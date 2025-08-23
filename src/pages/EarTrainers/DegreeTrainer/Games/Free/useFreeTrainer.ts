@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
-import * as Tone from 'tone';
+import { Transport } from 'tone';
 import { degrees } from '@EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance } from '@utils/Tone/samplers';
 import { playNotes } from '@utils/Tone/playbacks';
@@ -110,13 +110,13 @@ const useFreeTrainer = () => {
 
   useEffect(() => {
     if (gameState == 'start') {
-      Tone.getTransport().stop();
-      Tone.getTransport().position = 0 as any;
-      Tone.getTransport().cancel();
+      Transport.stop();
+      Transport.position = 0 as any;
+      Transport.cancel();
       setDisabledNotes([]);
       const droneInst = drone;
       droneInst.start();
-      Tone.getTransport().start();
+      Transport.start();
       setGameState('playing');
     }
   }, [gameState, currentNote]);
@@ -130,9 +130,9 @@ const useFreeTrainer = () => {
   }, []);
 
   const endGame = () => {
-    Tone.getTransport().stop();
-    Tone.getTransport().position = 0 as any;
-    Tone.getTransport().cancel();
+    Transport.stop();
+    Transport.position = 0 as any;
+    Transport.cancel();
     setGameState('end');
     setDisabledNotes([]);
     drone.stop();

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as Tone from 'tone';
+import { Frequency } from 'tone';
 import { isCorrect } from '@utils/GameLogics';
 import { SolfegeMapping, shortcuts } from '@EarTrainers/DegreeTrainer/Constants';
 import Button from '@components/Button';
@@ -42,7 +42,7 @@ const CardStack: React.FC<CardStackProps> = ({
             <div className={`hidden lg:${gameState == 'end' ? 'hidden' : ''} lg:flex items-center justify-center h-64 mb-4 relative`}>
                 <div className="flex h-full items-center" style={{ width: `${Math.min(filteredNotes.length, 12) * 15}%` }}>
                     {filteredNotes.slice(0, 12).map((note, index) => {
-                        const noteName = Tone.Frequency(Tone.Frequency(rootNote).toMidi() + note.distance, "midi").toNote();
+                        const noteName = Frequency(Frequency(rootNote).toMidi() + note.distance, "midi").toNote();
                         const isCorrectAnswer = isCorrect(noteName, currentNote);
                         const isDisabled = disabledNotes.some((disabledNote) => noteName.slice(0, -1) === disabledNote.slice(0, -1));
                         const totalCards = filteredNotes.length;
@@ -100,7 +100,7 @@ const CardStack: React.FC<CardStackProps> = ({
             </div>
             <div className={`flex flex-wrap  gap-3 mb-4 lg:hidden ${gameState == 'end' ? 'hidden' : ''}`}>
                 {filteredNotes.map((note) => {
-                    const noteName = Tone.Frequency(Tone.Frequency(rootNote).toMidi() + note.distance, 'midi').toNote();
+                    const noteName = Frequency(Frequency(rootNote).toMidi() + note.distance, 'midi').toNote();
                     const isCorrectAnswer = isCorrect(noteName, currentNote) && isAdvance !== 'No';
                     const isDisabled = disabledNotes.some(disabledNote =>
                         noteName.slice(0, -1) === disabledNote.slice(0, -1)

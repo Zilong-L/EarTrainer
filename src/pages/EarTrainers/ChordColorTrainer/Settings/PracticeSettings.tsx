@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import * as Tone from 'tone';
+import { Frequency } from 'tone';
 import { CHORD_TYPES, chordPreset } from '@EarTrainers/ChordColorTrainer/Constants';
 import { useTranslation } from 'react-i18next';
 import ValueAdjuster from '@components/ValueAdjuster';
@@ -97,17 +97,17 @@ const PracticeSettings: React.FC = () => {
     <div className="space-y-6 relative ">
       {/* Note Range */}
       <RangeSlider
-        value={[Tone.Frequency(range[0]).toMidi(), Tone.Frequency(range[1]).toMidi()]}
+        value={[Frequency(range[0]).toMidi(), Frequency(range[1]).toMidi()]}
         onChange={(value) => setRange([
-          Tone.Frequency(value[0], 'midi').toNote(),
-          Tone.Frequency(value[1], 'midi').toNote()
+          Frequency(value[0], 'midi').toNote(),
+          Frequency(value[1], 'midi').toNote()
         ])}
-        min={Tone.Frequency('C2').toMidi()}
-        max={Tone.Frequency('C6').toMidi()}
+        min={Frequency('C2').toMidi()}
+        max={Frequency('C6').toMidi()}
         step={1}
         minDistance={12}
         label={t('practiceSettings.noteRange')}
-        displayFunction={(value) => Tone.Frequency(value, 'midi').toNote()}
+        displayFunction={(value) => Frequency(value, 'midi').toNote()}
       />
 
       {/* BPM and Root Note Controls */}
@@ -124,12 +124,12 @@ const PracticeSettings: React.FC = () => {
 
         <ValueAdjuster
           title={t('practiceSettings.rootNote')}
-          value={Tone.Frequency(rootNote).toMidi()}
-          setValue={(value) => setRootNote(Tone.Frequency(value, 'midi').toNote())}
-          min={Tone.Frequency('C2').toMidi()}
-          max={Tone.Frequency('C6').toMidi()}
+          value={Frequency(rootNote).toMidi()}
+          setValue={(value) => setRootNote(Frequency(value, 'midi').toNote())}
+          min={Frequency('C2').toMidi()}
+          max={Frequency('C6').toMidi()}
           step={1}
-          displayFunction={(value) => Tone.Frequency(value, 'midi').toNote()}
+          displayFunction={(value) => Frequency(value, 'midi').toNote()}
         />
       </div>
 

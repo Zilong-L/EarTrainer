@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, PersistOptions } from 'zustand/middleware';
-import * as Tone from 'tone';
+import { Frequency } from 'tone';
 import { degrees, defaultDegreeChordTypes } from "@EarTrainers/ChordColorTrainer/Constants";
 
 interface PracticeRecord {
@@ -65,7 +65,7 @@ const useChordColorTrainerSettingsStore = create<ChordColorTrainerState & ChordC
             droneVolume: 0.3,
             pianoVolume: 1.0,
             rootNote: 'C3',
-            range: [Tone.Frequency('C3').toNote(), Tone.Frequency('C4').toNote()],
+            range: [Frequency('C3').toNote(), Frequency('C4').toNote()],
             practiceRecords: {},
             currentNotes: degrees.map(degree => ({
                 ...degree,

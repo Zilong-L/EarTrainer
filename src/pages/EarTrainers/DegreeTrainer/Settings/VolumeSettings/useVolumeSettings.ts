@@ -1,7 +1,7 @@
 import { useLocalStorage } from '@uidotdev/usehooks';
 import { getDroneInstance, getSamplerInstance, getAnswerGainNode } from '@utils/Tone/samplers';
 import { useEffect } from 'react';
-import * as Tone from 'tone';
+import { Gain } from 'tone';
 
 const useVolumeSettings = () => {
   const [droneVolume, setDroneVolume] = useLocalStorage<number>('degreeTrainerDroneVolume', 0.5);
@@ -23,7 +23,7 @@ const useVolumeSettings = () => {
     }
   }, [pianoVolume, sampler]);
 
-  const answerGainNode: Tone.Gain | null = getAnswerGainNode();
+  const answerGainNode: Gain | null = getAnswerGainNode();
   useEffect(() => {
     if (answerGainNode) {
       answerGainNode.gain.value = answerVolume;

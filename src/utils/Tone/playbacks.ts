@@ -1,4 +1,4 @@
-import * as Tone from 'tone';
+import { Transport, Frequency } from 'tone';
 import { getSamplerInstance } from './samplers';
 
 interface NoteEvent {
@@ -12,7 +12,7 @@ function playNotes(
     delay: number = 0.05,
     bpm: number = 60
 ): number {
-    const activeTransport = Tone.getTransport();
+    const activeTransport = Transport;
     if (activeTransport) {
         activeTransport.stop();
         activeTransport.cancel();
@@ -26,7 +26,7 @@ function playNotes(
             if (sampler.name === "PolySynth" || sampler.name === "Synth" ||
                 (sampler as any)._buffers?.loaded) {
                 if (typeof note === 'number') {
-                    sampler.triggerAttackRelease([Tone.Frequency(note, 'midi').toNote()], 60 / bpm, time);
+                    sampler.triggerAttackRelease([Frequency(note, 'midi').toNote()], 60 / bpm, time);
                 } else {
                     sampler.triggerAttackRelease([note], 60 / bpm, time);
                 }
@@ -43,7 +43,7 @@ function playNotesTogether(
     delay: number = 10,
     bpm: number = 60
 ): number {
-    const activeTransport = Tone.getTransport();
+    const activeTransport = Transport;
     if (activeTransport) {
         activeTransport.stop();
         activeTransport.cancel();
@@ -57,7 +57,7 @@ function playNotesTogether(
             (sampler as any)._buffers?.loaded) {
             notes.forEach(note => {
                 if (typeof note === 'number') {
-                    sampler.triggerAttackRelease([Tone.Frequency(note, 'midi').toNote()], 60 / bpm, time);
+                    sampler.triggerAttackRelease([Frequency(note, 'midi').toNote()], 60 / bpm, time);
                 } else {
                     sampler.triggerAttackRelease([note], 60 / bpm, time);
                 }
@@ -70,7 +70,7 @@ function playNotesTogether(
 }
 
 function cancelAllSounds(): void {
-    const activeTransport = Tone.getTransport();
+    const activeTransport = Transport;
     if (activeTransport) {
         activeTransport.stop();
         activeTransport.cancel();
@@ -78,7 +78,7 @@ function cancelAllSounds(): void {
 }
 
 function scheduleNotes(events: NoteEvent[]): void {
-    const activeTransport = Tone.getTransport();
+    const activeTransport = Transport;
     if (activeTransport) {
         activeTransport.stop();
         activeTransport.cancel();
@@ -90,7 +90,7 @@ function scheduleNotes(events: NoteEvent[]): void {
         const { note, time, duration } = event;
         activeTransport.schedule((transportTime) => {
             if (typeof note === 'number') {
-                sampler.triggerAttackRelease(Tone.Frequency(note, 'midi').toNote(), duration, transportTime);
+                sampler.triggerAttackRelease(Frequency(note, 'midi').toNote(), duration, transportTime);
             } else {
                 sampler.triggerAttackRelease(note, duration, transportTime);
             }
@@ -112,7 +112,7 @@ function playNotesAdditive(
 
     if (sampler.name === "PolySynth" || sampler.name === "Synth" || (sampler as any)._buffers?.loaded) {
         const notesToPlay = notes.map(note =>
-            typeof note === 'number' ? Tone.Frequency(note, 'midi').toNote() : note
+            typeof note === 'number' ? Frequency(note, 'midi').toNote() : note
         );
         sampler.triggerAttackRelease(notesToPlay, duration);
     }

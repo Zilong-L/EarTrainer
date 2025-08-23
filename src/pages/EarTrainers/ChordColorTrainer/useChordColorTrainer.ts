@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import * as Tone from 'tone';
+import { getTransport } from 'tone';
 import { DegreeToDistance } from '@utils/Constants';
 import { VoicingDictionary } from '@EarTrainers/ChordColorTrainer/Constants';
 import { getSamplerInstance, getDroneInstance } from '@utils/Tone/samplers';  // Added scheduleNotes
@@ -66,12 +66,12 @@ const useChordColorTrainer = (chordPlayOption: string) => {
     playChordColorPattern(nextChord.notes);
   };
   const startGame = () => {
-    Tone.getTransport().stop();
-    Tone.getTransport().position = 0;
-    Tone.getTransport().cancel();
+    getTransport().stop();
+    getTransport().position = 0;
+    getTransport().cancel();
     setGameStarted(true);
     playChordColorPattern(currentChord.notes);
-    Tone.getTransport().start();
+    getTransport().start();
   };
 
   const playTonic = () => {
@@ -253,9 +253,9 @@ const useChordColorTrainer = (chordPlayOption: string) => {
   };
 
   const endGame = () => {
-    Tone.getTransport().stop();
-    Tone.getTransport().position = 0;
-    Tone.getTransport().cancel();
+    getTransport().stop();
+    getTransport().position = 0;
+    getTransport().cancel();
     setGameStarted(false);
     setDisabledChords([]);
     setIsAdvance('No');

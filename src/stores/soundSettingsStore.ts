@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { getSamplerInstance } from '@utils/Tone/samplers';
-import * as Tone from 'tone'; // Import Tone types needed for the interface
+import { Sampler, PolySynth, Synth, Filter, Gain, Panner } from 'tone';
 
 // Define the state and actions types
 interface SoundSettingsState {
@@ -23,10 +23,10 @@ interface SoundSettingsState {
 // Define the interface for the object returned by getSamplerInstance
 // Based on the SamplerManager class in ToneInstance.js
 interface SamplerManagerInstance {
-    sampler: Tone.Sampler | Tone.PolySynth | Tone.Synth | any; // The actual sampler instance (Tone.Sampler or potentially others)
-    filter: Tone.Filter;
-    gainNode: Tone.Gain;
-    panner: Tone.Panner;
+    sampler: Sampler | PolySynth | Synth | any; // The actual sampler instance (Tone.Sampler or potentially others)
+    filter: Filter;
+    gainNode: Gain;
+    panner: Panner;
     setSamplerLoading?: (loading: boolean) => void; // Made optional to resolve TS inference issue
     setVolume: (value: number) => void;
     setFilterFrequency: (freq: number) => void;

@@ -4,7 +4,7 @@
 * @author N.P. Brosowsky (nbrosowsky@gmail.com)
 * https://github.com/nbrosowsky/tonejs-instruments
 */
-import * as Tone from 'tone';
+import { PolySynth, Synth, Sampler } from 'tone';
 
 export type Quality = 'low' | 'medium' | 'high' | 'full';
 
@@ -42,28 +42,28 @@ const SampleLibrary: any = {
   },
 
   loadSynth(type: string) {
-    let synth: Tone.PolySynth | undefined;
+    let synth: PolySynth | undefined;
     switch (type) {
       case 'triangle':
-        synth = new Tone.PolySynth(Tone.Synth, {
+        synth = new PolySynth(Synth, {
           oscillator: { type: 'triangle' },
           envelope: { attack: 0.05, decay: 0.1, sustain: 1, release: 0.5 },
         });
         break;
       case 'square':
-        synth = new Tone.PolySynth(Tone.Synth, {
+        synth = new PolySynth(Synth, {
           oscillator: { type: 'square' },
           envelope: { attack: 0.02, decay: 0.15, sustain: 0.8, release: 0.5 },
         });
         break;
       case 'sawtooth':
-        synth = new Tone.PolySynth(Tone.Synth, {
+        synth = new PolySynth(Synth, {
           oscillator: { type: 'sawtooth' },
           envelope: { attack: 0.1, decay: 0.2, sustain: 0.7, release: 0.5 },
         });
         break;
       case 'pad':
-        synth = new Tone.PolySynth(Tone.Synth, {
+        synth = new PolySynth(Synth, {
           oscillator: { type: 'sine' },
           envelope: { attack: 0.5, decay: 0.5, sustain: 0.9, release: 2 },
         });
@@ -120,14 +120,14 @@ const SampleLibrary: any = {
     const buildSampler = (instrument: string) => {
       const source = this[instrument] as SampleMap;
       const filtered = minifySamples(source, t.quality);
-      return new Tone.Sampler(filtered, {
+      return new Sampler(filtered, {
         baseUrl: `${t.baseUrl}${instrument}/`,
         onload: t.onload,
       });
     };
 
     if (Array.isArray(t.instruments)) {
-      const rt: Record<string, Tone.Sampler> = {};
+      const rt: Record<string, Sampler> = {};
       for (let i = 0; i <= t.instruments.length - 1; i++) {
         rt[t.instruments[i]] = buildSampler(t.instruments[i]);
       }
