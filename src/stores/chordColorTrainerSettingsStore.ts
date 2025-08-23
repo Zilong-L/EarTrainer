@@ -22,7 +22,7 @@ interface DegreeInfo {
     degree?: string;
     distance: number;
     enable?: boolean;
-    chordTypes?: string[];
+    chordTypes: string[];
 }
 
 interface ChordColorTrainerState {
@@ -55,6 +55,7 @@ interface ChordColorTrainerActions {
     setMuteDrone: (muteDrone: boolean) => void;
     setIsStatOpen: (isStatOpen: boolean) => void;
     setDegreeChordTypes: (degreeChordTypes: DegreeInfo[]) => void;
+    setChordPlayOption: (chordPlayOption: string) => void;
 }
 
 const useChordColorTrainerSettingsStore = create<ChordColorTrainerState & ChordColorTrainerActions>()(
@@ -66,7 +67,10 @@ const useChordColorTrainerSettingsStore = create<ChordColorTrainerState & ChordC
             rootNote: 'C3',
             range: [Tone.Frequency('C3').toNote(), Tone.Frequency('C4').toNote()],
             practiceRecords: {},
-            currentNotes: degrees,
+            currentNotes: degrees.map(degree => ({
+                ...degree,
+                chordTypes: []
+            })),
             preset: 'major',
             customPresets: {},
             muteDrone: false,

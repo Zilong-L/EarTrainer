@@ -4,6 +4,7 @@ interface HeaderButtonProps {
   onClick?: () => void;
   children: React.ReactNode;
   className?: string;
+  title?: string;
 }
 
 const HeaderButton: React.FC<HeaderButtonProps> = ({ onClick, children, className = '' }) => {
