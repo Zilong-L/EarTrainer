@@ -2,7 +2,7 @@
   "buttons": {
     "chord-practice": "自由练习",
     "diatonic": "调内和弦",
-    "help": ""
+    "help": "❔"
   },
   "chordGame": {
     "chord": "和弦",
@@ -14,12 +14,12 @@
     },
     "notes": "音符"
   },
-  "detectedChords": "",
+  "detectedChords": "检测到的和弦",
   "midi": {
-    "loaded": "",
-    "noAccess": ""
+    "loaded": "已加载",
+    "noAccess": "无法访问"
   },
-  "notes": "",
+  "notes": "音符",
   "settings": {
     "SoundSettings": "音色设置",
     "basicChords": "基础和弦",

@@ -6,7 +6,7 @@
     "handfreeOff": "关闭免提模式",
     "handfreeOn": "打开免提模式",
     "help": "❔",
-    "loading": "",
+    "loading": "加载中...",
     "settings": "设置"
   },
   "home": {
@@ -40,7 +40,7 @@
     "PracticeSettings": "练习设置",
     "RootNote": "主音",
     "SelectDegrees": "选择练习级数",
-    "SelectMode": "",
+    "SelectMode": "选择模式",
     "Settings": "设置",
     "SoundSettings": "音色设置",
     "Statistics": "统计",

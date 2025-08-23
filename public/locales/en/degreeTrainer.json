@@ -6,7 +6,7 @@
     "handfreeOff": "Turn off Handfree Mode",
     "handfreeOn": "Turn on Handfree Mode",
     "help": "❔",
-    "loading": "",
+    "loading": "Loading...",
     "settings": "Settings"
   },
   "home": {
@@ -91,7 +91,7 @@
     },
     "qualityLabel": "Audio Quality",
     "repeatWhenAdvance": "Repeat Current Note When Answered Correctly",
-    "selectMode": "",
+    "selectMode": "Select Mode",
     "selectSetting": "Select a setting from the left",
     "solfege": {
       "1": "Do",

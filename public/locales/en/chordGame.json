@@ -1,8 +1,8 @@
 {
   "buttons": {
-    "chord-practice": "",
-    "diatonic": "",
-    "help": ""
+    "chord-practice": "Free Practice",
+    "diatonic": "Diatonic Chords",
+    "help": "❔"
   },
   "chordGame": {
     "chord": "Chord",
@@ -14,12 +14,12 @@
     },
     "notes": "Notes"
   },
-  "detectedChords": "",
+  "detectedChords": "Detected Chords",
   "midi": {
-    "loaded": "",
-    "noAccess": ""
+    "loaded": "Loaded",
+    "noAccess": "No Access"
   },
-  "notes": "",
+  "notes": "Notes",
   "settings": {
     "SoundSettings": "Sound Settings",
     "basicChords": "Basic Chords",
@@ -99,7 +99,7 @@
     "modes": {
       "chordpractice": "Chord Practice",
       "diatonic": "Diatonic",
-      "game": "",
+      "game": "Game Settings",
       "progression": "Progression",
       "soundSettings": "Sound Settings"
     },
