@@ -90,7 +90,7 @@ const SoundSettings: React.FC = () => {
               step={1}
               setState={setDroneFilter}
               value={droneFilter}
-              mapFunction={(value) => Math.round(value)}
+              mapFunction={(value) => Math.round(value).toString()}
             />
           </div>
         </div>
