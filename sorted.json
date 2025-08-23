@@ -405,21 +405,21 @@
   {
     "file": "src/pages/WebRoutes.jsx",
     "imports": [
-      "src/pages/ChordTrainer/index.jsx",
+      "src/pages/ChordTrainer/index.tsx",
       "src/pages/Intro.tsx"
     ],
     "isTs": false,
     "needsMigration": true
   },
   {
-    "file": "src/pages/ChordTrainer/index.jsx",
+    "file": "src/pages/ChordTrainer/index.tsx",
     "imports": [
       "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
-      "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
+      "src/pages/ChordTrainer/pages/ChordPracticeGame/index.tsx",
       "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx"
     ],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
     "file": "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
@@ -431,38 +431,38 @@
     "needsMigration": false
   },
   {
-    "file": "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
+    "file": "src/pages/ChordTrainer/pages/ChordPracticeGame/index.tsx",
     "imports": [
-      "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
-      "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
-      "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js"
+      "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.tsx",
+      "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.tsx",
+      "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.ts"
     ],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
-    "file": "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
+    "file": "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.tsx",
     "imports": [
       "src/pages/ChordTrainer/stores/chordPracticeStore.ts"
     ],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
-    "file": "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
+    "file": "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.tsx",
     "imports": [
       "src/pages/ChordTrainer/components/MIDIInputHandler.tsx"
     ],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
-    "file": "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
+    "file": "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.ts",
     "imports": [
       "src/pages/ChordTrainer/stores/chordPracticeStore.ts"
     ],
-    "isTs": false,
-    "needsMigration": true
+    "isTs": true,
+    "needsMigration": false
   },
   {
     "file": "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx",

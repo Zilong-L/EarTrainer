@@ -744,17 +744,17 @@
         "src/components/slider/RangeSlider.tsx",
         "src/main.jsx",
         "src/pages/WebRoutes.jsx",
-        "src/pages/ChordTrainer/index.jsx",
+        "src/pages/ChordTrainer/index.tsx",
         "node_modules/zustand/react.js",
         "node_modules/react-router-dom/dist/umd/react-router-dom.development.js",
         "node_modules/react-router/dist/umd/react-router.development.js",
         "node_modules/react-router/dist/umd/react-router.production.min.js",
         "node_modules/react-router-dom/dist/umd/react-router-dom.production.min.js",
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.tsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.tsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.tsx",
         "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.ts",
         "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx",
         "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.tsx",
         "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.tsx",
@@ -1419,9 +1419,8 @@
         "src/components/Settings/SoundSettings/index.tsx",
         "src/i18n.ts",
         "src/pages/WebRoutes.jsx",
-        "src/pages/ChordTrainer/index.jsx",
         "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.tsx",
         "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
         "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.tsx",
         "src/pages/ChordTrainer/components/Settings/index.jsx",
@@ -7911,7 +7910,6 @@
       "dependents": [
         "src/components/LanguageSwitcher.tsx",
         "src/components/ValueAdjuster/index.tsx",
-        "src/pages/ChordTrainer/index.jsx",
         "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
         "src/pages/ChordTrainer/components/Settings/index.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
@@ -31938,9 +31936,9 @@
       ],
       "dependents": [
         "src/components/PianoVisualizer.tsx",
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.tsx",
         "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.ts",
         "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.tsx",
         "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.ts",
         "src/pages/EarTrainers/ChordColorTrainer/MIDIInputHandler.jsx",
@@ -32334,7 +32332,7 @@
       ],
       "dependents": [
         "node_modules/@tonaljs/chord/dist/index.js",
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.ts",
         "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.ts"
       ],
       "orphan": false,
@@ -81610,7 +81608,7 @@
             "local",
             "dynamic-import"
           ],
-          "resolved": "src/pages/ChordTrainer/index.jsx",
+          "resolved": "src/pages/ChordTrainer/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -81901,7 +81899,7 @@
       "valid": true
     },
     {
-      "source": "src/pages/ChordTrainer/index.jsx",
+      "source": "src/pages/ChordTrainer/index.tsx",
       "dependencies": [
         {
           "module": "./ChordTrainerOutlet",
@@ -81929,7 +81927,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
+          "resolved": "src/pages/ChordTrainer/pages/ChordPracticeGame/index.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -81955,23 +81953,6 @@
           "valid": true
         },
         {
-          "module": "@heroicons/react/24/solid",
-          "moduleSystem": "es6",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "npm",
-            "import"
-          ],
-          "resolved": "node_modules/@heroicons/react/24/solid/index.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
           "module": "react",
           "moduleSystem": "es6",
           "dynamic": false,
@@ -81981,23 +81962,6 @@
             "import"
           ],
           "resolved": "node_modules/react/index.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "react-i18next",
-          "moduleSystem": "es6",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "npm",
-            "import"
-          ],
-          "resolved": "node_modules/react-i18next/dist/commonjs/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -82183,7 +82147,7 @@
         }
       ],
       "dependents": [
-        "src/pages/ChordTrainer/index.jsx"
+        "src/pages/ChordTrainer/index.tsx"
       ],
       "orphan": false,
       "valid": true
@@ -82439,7 +82403,7 @@
       ],
       "dependents": [
         "src/pages/WebRoutes.jsx",
-        "src/pages/ChordTrainer/index.jsx",
+        "src/pages/ChordTrainer/index.tsx",
         "src/pages/ChordTrainer/ChordTrainerOutlet.tsx",
         "src/pages/Intro.tsx",
         "src/pages/EarTrainers/ChordColorTrainer/ChordColorTrainer.jsx",
@@ -82756,7 +82720,7 @@
       "valid": true
     },
     {
-      "source": "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
+      "source": "src/pages/ChordTrainer/pages/ChordPracticeGame/index.tsx",
       "dependencies": [
         {
           "module": "./ChordPracticeSettings",
@@ -82767,7 +82731,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
+          "resolved": "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -82784,7 +82748,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
+          "resolved": "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.tsx",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -82801,7 +82765,7 @@
             "local",
             "import"
           ],
-          "resolved": "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
+          "resolved": "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.ts",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -82860,7 +82824,7 @@
         }
       ],
       "dependents": [
-        "src/pages/ChordTrainer/index.jsx"
+        "src/pages/ChordTrainer/index.tsx"
       ],
       "orphan": false,
       "valid": true
@@ -82876,7 +82840,7 @@
       ],
       "dependencies": [],
       "dependents": [
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.tsx",
         "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx"
       ],
       "orphan": false,
@@ -82893,14 +82857,14 @@
       ],
       "dependencies": [],
       "dependents": [
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.tsx",
         "src/pages/ChordTrainer/pages/DiatonicGame/index.tsx"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
+      "source": "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.tsx",
       "dependencies": [
         {
           "module": "../../stores/chordPracticeStore",
@@ -82988,7 +82952,7 @@
         }
       ],
       "dependents": [
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx"
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.tsx"
       ],
       "orphan": false,
       "valid": true
@@ -83004,7 +82968,7 @@
       ],
       "dependencies": [],
       "dependents": [
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.tsx",
         "src/pages/ChordTrainer/pages/DiatonicGame/DiatonicSettings.tsx"
       ],
       "orphan": false,
@@ -83049,8 +83013,8 @@
         }
       ],
       "dependents": [
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.jsx",
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js"
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/ChordPracticeSettings.tsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.ts"
       ],
       "orphan": false,
       "valid": true
@@ -83068,7 +83032,7 @@
       "valid": true
     },
     {
-      "source": "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
+      "source": "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.tsx",
       "dependencies": [
         {
           "module": "../../components/MIDIInputHandler",
@@ -83122,7 +83086,7 @@
         }
       ],
       "dependents": [
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx"
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.tsx"
       ],
       "orphan": false,
       "valid": true
@@ -83138,9 +83102,9 @@
       ],
       "dependencies": [],
       "dependents": [
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.tsx",
         "src/pages/ChordTrainer/components/MIDIInputHandler.tsx",
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.ts",
         "src/pages/ChordTrainer/pages/DiatonicGame/useDiatonicGame.ts",
         "src/pages/EarTrainers/ChordColorTrainer/MIDIInputHandler.jsx",
         "src/pages/EarTrainers/ChordColorTrainer/useChordColorTrainer.ts",
@@ -83253,7 +83217,7 @@
         }
       ],
       "dependents": [
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.jsx",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/GameDisplay.tsx",
         "src/pages/ChordTrainer/pages/DiatonicGame/GameDisplay.tsx"
       ],
       "orphan": false,
@@ -83302,7 +83266,7 @@
       "valid": true
     },
     {
-      "source": "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
+      "source": "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.ts",
       "dependencies": [
         {
           "module": "../../stores/chordPracticeStore",
@@ -83406,7 +83370,7 @@
         }
       ],
       "dependents": [
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.jsx"
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/index.tsx"
       ],
       "orphan": false,
       "valid": true
@@ -83422,7 +83386,7 @@
       ],
       "dependencies": [],
       "dependents": [
-        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.js",
+        "src/pages/ChordTrainer/pages/ChordPracticeGame/useChordPracticeGame.ts",
         "src/utils/ChordTrainer/GameLogics.ts"
       ],
       "orphan": false,
@@ -83533,7 +83497,7 @@
         }
       ],
       "dependents": [
-        "src/pages/ChordTrainer/index.jsx"
+        "src/pages/ChordTrainer/index.tsx"
       ],
       "orphan": false,
       "valid": true
@@ -109612,7 +109576,7 @@
     "info": 0,
     "ignore": 0,
     "totalCruised": 1792,
-    "totalDependenciesCruised": 5189,
+    "totalDependenciesCruised": 5187,
     "optionsUsed": {
       "baseDir": "/mnt/ssd/lzl/code/js/ChordTrainer",
       "combinedDependencies": false,

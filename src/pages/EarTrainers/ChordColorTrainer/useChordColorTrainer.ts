@@ -26,7 +26,7 @@ const useChordColorTrainer = (chordPlayOption: string) => {
   const [gameStarted, setGameStarted] = useState(false);
   const [filteredChords, setFilteredChords] = useState<any[]>([]);
   const [activeChord, setActiveChord] = useState('');
-  const [activeNotes, setActiveNotes] = useState<string[]>([]); // Define activeNotes state
+  const [activeNotes, setActiveNotes] = useState<number[]>([]); // Define activeNotes state
   const [isAdvance, setIsAdvance] = useState<string>('No');
 
   const piano = getSamplerInstance();
@@ -184,7 +184,7 @@ const useChordColorTrainer = (chordPlayOption: string) => {
     }
 
     if (activeNotes && activeNotes.length > 0) {
-      const detectedChords = getChords(activeNotes as any);
+      const detectedChords = getChords(activeNotes);
       if (detectedChords && detectedChords.length > 0) {
         const steps = DegreeToDistance[currentChord?.degree] || 0;
         const midiNote = Midi.toMidi(rootNote || 'C4');
