@@ -26,5 +26,7 @@
   background: #334155;
 }
 
-/* Modal open state - hide scrollbar and add padding */
-
+.modal-open {
+  overflow: hidden;
+  padding-right: 8px !important;
+}
