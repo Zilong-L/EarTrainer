@@ -1,12 +1,18 @@
-import { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import '@styles/scrollbar.css';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useTranslation } from 'react-i18next';
 import SoundSettings from '@components/Settings/SoundSettings';
 
-const Settings = ({ isOpen, setIsOpen, gameSettingsComponent }) => {
+interface SettingsProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  gameSettingsComponent: React.ReactNode;
+}
+
+const Settings: React.FC<SettingsProps> = ({ isOpen, setIsOpen, gameSettingsComponent }) => {
   const { t } = useTranslation('chordGame');
-  const [currentTab, setCurrentTab] = useState('game');
+  const [currentTab, setCurrentTab] = useState<string>('game');
 
 
   useLayoutEffect(() => {
