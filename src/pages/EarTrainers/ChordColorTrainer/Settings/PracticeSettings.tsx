@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as Tone from 'tone';
 import { CHORD_TYPES, chordPreset } from '@EarTrainers/ChordColorTrainer/Constants';
 import { useTranslation } from 'react-i18next';
@@ -104,7 +104,8 @@ const PracticeSettings: React.FC = () => {
         ])}
         min={Tone.Frequency('C2').toMidi()}
         max={Tone.Frequency('C6').toMidi()}
-        step={12}
+        step={1}
+        minDistance={12}
         label={t('practiceSettings.noteRange')}
         displayFunction={(value) => Tone.Frequency(value, 'midi').toNote()}
       />

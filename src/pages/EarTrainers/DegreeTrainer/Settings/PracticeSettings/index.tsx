@@ -30,7 +30,7 @@ function PracticeSettings() {
 
     const drone = getDroneInstance();
     const midiMin = Midi.toMidi('C2')!;
-    const midiMax = Midi.toMidi('C4')!;
+    const midiMax = Midi.toMidi('C5')!;
 
     useEffect(() => {
         if (drone && midiMin !== undefined && midiMax !== undefined) {
@@ -121,7 +121,8 @@ function PracticeSettings() {
                 onChange={setRange}
                 min={midiMin}
                 max={midiMax}
-                step={12}
+                step={1}
+                minDistance={12}
                 label={t('settings.NoteRange') as string}
                 displayFunction={(value: number) => Midi.midiToNoteName(value) as string}
             />
