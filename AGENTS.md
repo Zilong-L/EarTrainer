@@ -46,6 +46,8 @@ Notes: Use Node 22 (see `README.md`). After build, `scripts/update-html.sh` upda
 - Only push/merge after explicit approval. If requested, include the exact `git` commands you plan to run.
 - Merge policy: for branches, perform a merge commit (no fast-forward) so history shows branch work: `git checkout main && git merge --no-ff <branch>`.
 - Avoid rewriting published history. If a merge commit is desired for an already fast-forwarded merge, ask before proposing a history rewrite.
+- After merging to `main`: immediately switch back to the original working branch to avoid occupying `main` in other worktrees.
+  - Example: `orig=$(git rev-parse --abbrev-ref HEAD); git checkout main && git merge --no-ff <branch> && git push && git checkout "$orig"`.
 
 ## Security & Configuration Tips
 - Avoid committing large binaries; place stable assets under `public/` or `src/assets/`.
