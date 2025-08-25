@@ -6,7 +6,7 @@ import Header from '@components/Header';
 import HeaderTitle from '@components/HeaderTitle';
 import HeaderButtons from '@components/HeaderButtons';
 import HeaderButton from '@components/HeaderButton';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 
 import ChordColorTrainerSettings from '@EarTrainers/ChordColorTrainer/Settings';
 import useChordColorTrainer from '@EarTrainers/ChordColorTrainer/useChordColorTrainer';
@@ -69,6 +69,11 @@ const EarTrainer: React.FC = () => {
 
   useEffect(() => {
     setNamespace('chordColorTrainer');
+    // Clear lingering settings-error toasts across route changes
+    toast.dismiss('settings-error');
+    return () => {
+      toast.dismiss('settings-error');
+    };
   }, [setNamespace]);
 
   // useEffect(() => {

@@ -13,7 +13,7 @@ import SettingsPanel from '@components/Settings/SettingsPanel';
 import LanguageSwitcher from '@components/LanguageSwitcher';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import { useTranslation } from 'react-i18next';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 import { keyMap, degrees } from '@EarTrainers/DegreeTrainer/Constants';
 import { Note } from 'tonal';
 import { Frequency } from 'tone';
@@ -64,6 +64,8 @@ const EarTrainer: React.FC = () => {
 
   useEffect(() => {
     setNamespace('degreeTrainer');
+    // Clear lingering settings-error toasts across route changes
+    toast.dismiss('settings-error');
   }, [setNamespace]);
   // Start game based on mode when component mounts
 
