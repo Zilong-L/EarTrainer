@@ -55,15 +55,30 @@ const ChordPracticeSettings: React.FC = () => {
   };
 
   const handleInversionSelect = (inversion: string) => {
-    const newSelectedInversions = selectedInversions.includes(inversion)
-      ? selectedInversions.filter(i => i !== inversion)
-      : [...selectedInversions, inversion];
-
-    if (newSelectedInversions.length === 0) {
-      toast.error('至少保留一个转位', { id: 'settings-error' });
+    if (inversion === 'random') {
+      // Selecting 'random' makes it exclusive
+      if (!selectedInversions.includes('random')) {
+        setSelectedInversions(['random']);
+      } else {
+        // Toggle off 'random' only if there are other selections (keep current behavior otherwise)
+        const rest = selectedInversions.filter(i => i !== 'random');
+        if (rest.length > 0) {
+          setSelectedInversions(rest);
+        }
+      }
       return;
     }
-    setSelectedInversions(newSelectedInversions);
+
+    // Selecting a specific inversion removes 'random' if present
+    const base = selectedInversions.filter(i => i !== 'random');
+    const exists = base.includes(inversion);
+    const next = exists
+      ? base.filter(i => i !== inversion)
+      : [...base, inversion];
+
+    if (next.length > 0) {
+      setSelectedInversions(next);
+    }
   };
 
   const isSeventhSelected = selectedChordTypes.some(
