@@ -35,16 +35,17 @@ Notes: Use Node 22 (see `README.md`). After build, `scripts/update-html.sh` upda
 - If adding tests, prefer Vitest + React Testing Library; name files `*.test.ts(x)` next to source.
 
 ## Commit & PR Workflow
-- Solo development: merge to `main` and push directly is OK.
-- Branches (optional for risky work): `git checkout -b feat/xyz`; merge back with `git merge --ff-only feat/xyz` or rebase; `git push origin main`.
+- Branch-first: create a feature branch for any non-trivial change (`git checkout -b feat/xyz`).
+- Merge strategy: prefer merge commits to preserve branch history — use `git merge --no-ff feat/xyz` (or PR with "Create a merge commit"). Avoid squashing/rebasing for feature branches unless requested.
+- Main branch: avoid committing directly to `main` except trivial docs/typos. Push updates via merging the feature branch.
 - Commits: use Conventional Commits (e.g., `feat: ...`, `fix: ...`, `refactor: ...`).
-- PRs: optional; if used, keep small and add screenshots for UI changes.
 - Quality gate: run `npm run lint` and `npm run format:check`; ensure `npm run build` succeeds locally.
 
 ## Agent Instructions
 - After code changes: do not push immediately. First, summarize what changed (files, rationale, notable UX/behavior), then wait for the maintainer to verify.
 - Only push/merge after explicit approval. If requested, include the exact `git` commands you plan to run.
-- For risky ops (history rewrites, deletes), ask before committing. Prefer fast‑forward merges to `main`.
+- Merge policy: for branches, perform a merge commit (no fast-forward) so history shows branch work: `git checkout main && git merge --no-ff <branch>`.
+- Avoid rewriting published history. If a merge commit is desired for an already fast-forwarded merge, ask before proposing a history rewrite.
 
 ## Security & Configuration Tips
 - Avoid committing large binaries; place stable assets under `public/` or `src/assets/`.
