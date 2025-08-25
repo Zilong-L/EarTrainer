@@ -64,11 +64,13 @@ public/
   - Local state → React hooks or feature-specific stores
 
 ### Coding Standards
-- **Prioritize TypeScript** for new components and utilities
-- **Use Tailwind CSS** utility classes for styling
-- **Leverage path aliases** for clean imports (@components, @utils, @stores, @pages)
-- **Follow React best practices**: functional components, hooks, proper prop types
-- **Run `npm run lint`** before committing changes
+- **Language**: TypeScript preferred for new code; React 18
+- **Lint/format**: ESLint v9 (flat config) + Prettier. 2 spaces, single quotes, semicolons, LF
+- **Components/hooks**: PascalCase for components, `useX` for hooks
+- **Stores**: Zustand stores in `src/stores` or feature stores under feature dirs; file names like `somethingStore.ts`
+- **Imports**: Use aliases from `vite.config.ts` (@components, @utils, @stores, @EarTrainers, @ChordTrainer)
+- **Styling**: Prefer Tailwind utility classes; place global styles in `src/styles`
+- **Quality checks**: Run `npm run lint`, `npm run format:check`, and `npm run build` before committing
 
 ### Audio Implementation Notes
 - Audio is central to the application - handle with care
@@ -114,7 +116,29 @@ public/
 5. **Linting**: Run `npm run lint` to ensure code quality
 6. **Documentation**: Update relevant docs if adding significant features
 
+## Git Workflow & Agent Instructions
+- **Branch-first workflow**: Create feature branches for non-trivial changes (`git checkout -b feat/xyz`)
+- **Merge strategy**: Prefer merge commits to preserve branch history — use `git merge --no-ff feat/xyz`
+- **Main branch**: Avoid direct commits to `main` except trivial docs/typos
+- **Quality gate**: Ensure `npm run lint`, `npm run format:check`, and `npm run build` succeed locally
+
+### Agent Behavior Guidelines
+- **After code changes**: Do not push immediately. First, summarize what changed (files, rationale, notable UX/behavior), then wait for maintainer verification
+- **Only push/merge after explicit approval**. If requested, include the exact `git` commands planned
+- **Merge policy**: For branches, perform merge commits (no fast-forward) to preserve branch history
+- **Post-merge cleanup**: After merging to `main`, immediately switch back to original working branch to avoid occupying `main` in other worktrees
+  - Example: `orig=$(git rev-parse --abbrev-ref HEAD); git checkout main && git merge --no-ff <branch> && git push && git checkout "$orig"`
+- **Avoid rewriting published history** without explicit permission
+
+## Build Commands
+- `npm run dev`: Start Vite dev server (with `--host`)
+- `npm run build`: Production build. Runs `postbuild` to tweak `dist/index.html`
+- `npm run preview`: Preview the built app locally
+- `npm run lint` | `npm run lint:fix`: Check/fix ESLint issues
+- `npm run format` | `npm run format:check`: Prettier write/check
+
 ## Key Files to Reference
+- `AGENTS.md`: Repository guidelines and agent instructions
 - `GEMINI.md`: Original project instructions
 - `vite.config.js`: Path aliases and build configuration
 - `src/utils/Tone/`: Audio implementation patterns
