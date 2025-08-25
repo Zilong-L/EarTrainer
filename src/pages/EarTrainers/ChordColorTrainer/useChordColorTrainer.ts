@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getTransport } from 'tone';
 import { DegreeToDistance } from '@utils/Constants';
 import { VoicingDictionary } from '@EarTrainers/ChordColorTrainer/Constants';
@@ -260,7 +260,7 @@ const useChordColorTrainer = (chordPlayOption: string) => {
     setActiveChord('');
   };
 
-  const endGame = () => {
+  const endGame = useCallback(() => {
     getTransport().stop();
     getTransport().position = 0;
     getTransport().cancel();
@@ -268,7 +268,14 @@ const useChordColorTrainer = (chordPlayOption: string) => {
     setDisabledChords([]);
     setIsAdvance('No');
     drone.stop();
-  };
+  }, [drone]);
+
+  // Auto-cleanup on unmount so pages don't need to call endGame explicitly
+  useEffect(() => {
+    return () => {
+      endGame();
+    };
+  }, [endGame]);
 
   // 将 degreeChordTypes 对象转换为数组并过滤掉空的级数和弦组合
   useEffect(() => {
@@ -312,7 +319,6 @@ const useChordColorTrainer = (chordPlayOption: string) => {
     setActiveChord,
     startGame,
     playChord,
-    endGame,
     playTonic,
     playBrokenChord,
     playChordColorPattern,

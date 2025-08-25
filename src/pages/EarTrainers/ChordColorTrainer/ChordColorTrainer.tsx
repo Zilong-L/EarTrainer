@@ -33,7 +33,6 @@ const EarTrainer: React.FC = () => {
     filteredChords,
     setActiveChord,
     startGame,
-    endGame,
     playChordColorPattern,
     playChord,
     playTonic,
@@ -70,10 +69,7 @@ const EarTrainer: React.FC = () => {
 
   useEffect(() => {
     setNamespace('chordColorTrainer');
-    return () => {
-      endGame();
-    };
-  }, [setNamespace, endGame]);
+  }, [setNamespace]);
 
   // useEffect(() => {
   //   const handleKeyPress = (event) => {

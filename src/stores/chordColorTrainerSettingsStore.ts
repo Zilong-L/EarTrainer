@@ -76,7 +76,8 @@ const useChordColorTrainerSettingsStore = create<
         ...degree,
         chordTypes: [],
       })),
-      preset: 'major',
+      // Use Chinese preset keys to match Constants.chordPreset
+      preset: '大调',
       customPresets: {},
       muteDrone: false,
       isStatOpen: true,
@@ -115,7 +116,14 @@ const useChordColorTrainerSettingsStore = create<
       name: 'ChordColorTrainerSettings',
       onRehydrateStorage: () => state => {
         if (state) {
-          state.setPreset(state.preset || 'major');
+          const migratePreset = (p?: string) => {
+            if (!p) return '大调';
+            if (p === 'major') return '大调';
+            if (p === 'minor') return '小调';
+            if (p === 'basic' || p === 'basic-color') return '基础色彩';
+            return p;
+          };
+          state.setPreset(migratePreset(state.preset));
         }
       },
     } as PersistOptions<ChordColorTrainerState & ChordColorTrainerActions>
