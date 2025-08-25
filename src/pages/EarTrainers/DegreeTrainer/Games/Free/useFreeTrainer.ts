@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
+import toast from 'react-hot-toast';
 import { Transport } from 'tone';
 import { degrees } from '@EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance } from '@utils/Tone/samplers';
@@ -38,6 +39,14 @@ const useFreeTrainer = () => {
   };
   const handleDegreeToggle = (index: number) => {
     const newCustomNotes = [...(customNotes as any)];
+    const isCurrentlyEnabled = !!newCustomNotes[index].enable;
+    if (isCurrentlyEnabled) {
+      const enabledCount = newCustomNotes.filter(n => n.enable).length;
+      if (enabledCount <= 1) {
+        toast.error('至少保留一个音级');
+        return; // disallow disabling the last one
+      }
+    }
     newCustomNotes[index].enable = !newCustomNotes[index].enable;
     setCustomNotes(newCustomNotes);
   };

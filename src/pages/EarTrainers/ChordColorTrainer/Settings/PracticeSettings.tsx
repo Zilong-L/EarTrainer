@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { Frequency } from 'tone';
 import {
   CHORD_TYPES,
@@ -33,14 +34,28 @@ const PracticeSettings: React.FC = () => {
 
   const handleChordTypeToggle = (degreeIndex: number, chordType: string) => {
     const newDegreeChordTypes = [...degreeChordTypes];
-    const chordTypes = newDegreeChordTypes[degreeIndex]?.chordTypes;
-    if (chordTypes?.includes(chordType)) {
+    const chordTypes = newDegreeChordTypes[degreeIndex]?.chordTypes || [];
+    const isRemoving = chordTypes.includes(chordType);
+
+    if (isRemoving) {
+      const totalSelected = newDegreeChordTypes.reduce(
+        (sum, d) => sum + (d.chordTypes?.length || 0),
+        0
+      );
+      if (totalSelected <= 1) {
+        toast.error('至少保留一个和弦类型');
+        return; // disallow removing the last remaining selection
+      }
       newDegreeChordTypes[degreeIndex].chordTypes = chordTypes.filter(
         type => type !== chordType
       );
     } else {
-      newDegreeChordTypes[degreeIndex]?.chordTypes?.push(chordType);
+      newDegreeChordTypes[degreeIndex].chordTypes = [
+        ...chordTypes,
+        chordType,
+      ];
     }
+
     setDegreeChordTypes(newDegreeChordTypes);
     setCustomPresets({
       ...customPresets,
