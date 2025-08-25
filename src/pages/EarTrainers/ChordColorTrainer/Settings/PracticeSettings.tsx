@@ -50,10 +50,7 @@ const PracticeSettings: React.FC = () => {
         type => type !== chordType
       );
     } else {
-      newDegreeChordTypes[degreeIndex].chordTypes = [
-        ...chordTypes,
-        chordType,
-      ];
+      newDegreeChordTypes[degreeIndex].chordTypes = [...chordTypes, chordType];
     }
 
     setDegreeChordTypes(newDegreeChordTypes);

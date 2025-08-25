@@ -1,4 +1,4 @@
-import { useLocalStorage } from '@uidotdev/usehooks';
+import useSafeLocalStorage from '../../hooks/useSafeLocalStorage';
 import {
   getDroneInstance,
   getSamplerInstance,
@@ -8,15 +8,15 @@ import { useEffect } from 'react';
 import { Gain } from 'tone';
 
 const useVolumeSettings = () => {
-  const [droneVolume, setDroneVolume] = useLocalStorage<number>(
+  const [droneVolume, setDroneVolume] = useSafeLocalStorage<number>(
     'degreeTrainerDroneVolume',
     0.5
   );
-  const [pianoVolume, setPianoVolume] = useLocalStorage<number>(
+  const [pianoVolume, setPianoVolume] = useSafeLocalStorage<number>(
     'degreeTrainerPianoVolume',
     0.5
   );
-  const [answerVolume, setAnswerVolume] = useLocalStorage<number>(
+  const [answerVolume, setAnswerVolume] = useSafeLocalStorage<number>(
     'degreeTrainerAnswerVolume',
     0.2
   );
