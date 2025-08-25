@@ -7,11 +7,23 @@ import { useChordPracticeStore } from '../../stores/chordPracticeStore';
 
 const chordTypes = {
   Triads: ['Major', 'Minor', 'Diminished', 'Augmented'],
-  Sevenths: ['Major seventh', 'Minor seventh', 'Dominant seventh', 'Half-Diminished', 'Diminished seventh'],
+  Sevenths: [
+    'Major seventh',
+    'Minor seventh',
+    'Dominant seventh',
+    'Half-Diminished',
+    'Diminished seventh',
+  ],
 };
 
 const inversions = ['random', 'root', 'first', 'second', 'third'];
-const drillModes = ['random', 'circle_fifths', 'circle_fourths', 'semitone_up', 'semitone_down'];
+const drillModes = [
+  'random',
+  'circle_fifths',
+  'circle_fourths',
+  'semitone_up',
+  'semitone_down',
+];
 
 const ChordPracticeSettings: React.FC = () => {
   const chordTypesAll = ChordType.names();
@@ -25,13 +37,13 @@ const ChordPracticeSettings: React.FC = () => {
     drillMode,
     setDrillMode,
     selectedInversions,
-    setSelectedInversions
+    setSelectedInversions,
   } = useChordPracticeStore();
 
   const handleChordSelect = (chord: string) => {
     const alias = ChordType.get(chord.toLowerCase()).aliases[0];
     const newSelectedChords = selectedChordTypes.includes(alias)
-      ? selectedChordTypes.filter((c) => c !== alias)
+      ? selectedChordTypes.filter(c => c !== alias)
       : [...selectedChordTypes, alias];
 
     if (newSelectedChords.length > 0) {
@@ -41,7 +53,7 @@ const ChordPracticeSettings: React.FC = () => {
 
   const handleInversionSelect = (inversion: string) => {
     const newSelectedInversions = selectedInversions.includes(inversion)
-      ? selectedInversions.filter((i) => i !== inversion)
+      ? selectedInversions.filter(i => i !== inversion)
       : [...selectedInversions, inversion];
 
     if (newSelectedInversions.length > 0) {
@@ -49,8 +61,9 @@ const ChordPracticeSettings: React.FC = () => {
     }
   };
 
-  const isSeventhSelected = selectedChordTypes.some(type => type.includes('7') || type.includes('M7') || type.includes('m7'));
-
+  const isSeventhSelected = selectedChordTypes.some(
+    type => type.includes('7') || type.includes('M7') || type.includes('m7')
+  );
 
   return (
     <div className="space-y-6 px-6">
@@ -69,14 +82,15 @@ const ChordPracticeSettings: React.FC = () => {
             <div className="grid grid-cols-2 gap-2">
               {inversions
                 .filter(inv => inv !== 'third' || isSeventhSelected)
-                .map((inversion) => (
+                .map(inversion => (
                   <button
                     key={inversion}
                     onClick={() => handleInversionSelect(inversion)}
-                    className={`w-full px-4 py-2 text-center rounded-lg transition-all ${selectedInversions.includes(inversion)
+                    className={`w-full px-4 py-2 text-center rounded-lg transition-all ${
+                      selectedInversions.includes(inversion)
                         ? 'bg-notification-bg text-notification-text'
                         : 'bg-bg-common text-text-primary'
-                      }`}
+                    }`}
                   >
                     {t(`settings.inversions.${inversion}`)}
                   </button>
@@ -118,45 +132,52 @@ const ChordPracticeSettings: React.FC = () => {
         </div>
       </div>
 
-
       {/* Chord Selector */}
       <div className="space-y-4 pt-4">
-        {proMode
-          ? <div className='grid grid-cols-2 md:grid-cols-3 gap-2'>
-            {chordTypesAll.map((chord) => (
+        {proMode ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {chordTypesAll.map(chord => (
               <button
                 key={chord}
                 onClick={() => handleChordSelect(chord)}
-                className={`w-full px-4 py-2 text-left rounded-lg transition-all ${selectedChordTypes.includes(ChordType.get(chord.toLocaleLowerCase()).aliases[0])
+                className={`w-full px-4 py-2 text-left rounded-lg transition-all ${
+                  selectedChordTypes.includes(
+                    ChordType.get(chord.toLocaleLowerCase()).aliases[0]
+                  )
                     ? 'bg-notification-bg text-notification-text'
                     : 'bg-bg-common text-text-primary'
-                  }`}
+                }`}
               >
                 {chord}
               </button>
             ))}
           </div>
-          : Object.entries(chordTypes).map(([category, chords]) => (
+        ) : (
+          Object.entries(chordTypes).map(([category, chords]) => (
             <div key={category}>
               <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
                 {t(`settings.chordCategories.${category}`)}
               </h4>
               <div className="grid grid-cols-2 gap-2">
-                {chords.map((chord) => (
+                {chords.map(chord => (
                   <button
                     key={chord}
                     onClick={() => handleChordSelect(chord)}
-                    className={`w-full px-4 py-2 text-left rounded-lg transition-all ${selectedChordTypes.includes(ChordType.get(chord.toLocaleLowerCase()).aliases[0])
+                    className={`w-full px-4 py-2 text-left rounded-lg transition-all ${
+                      selectedChordTypes.includes(
+                        ChordType.get(chord.toLocaleLowerCase()).aliases[0]
+                      )
                         ? 'bg-notification-bg text-notification-text'
                         : 'bg-bg-common text-text-primary'
-                      }`}
+                    }`}
                   >
                     {t(`settings.chords.${chord}`)}
                   </button>
                 ))}
               </div>
             </div>
-          ))}
+          ))
+        )}
       </div>
     </div>
   );

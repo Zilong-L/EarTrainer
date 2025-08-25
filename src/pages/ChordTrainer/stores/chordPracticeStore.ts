@@ -6,7 +6,7 @@ const DRILL_MODES = {
   CIRCLE_FIFTHS: 'circle_fifths',
   CIRCLE_FOURTHS: 'circle_fourths',
   SEMITONE_UP: 'semitone_up',
-  SEMITONE_DOWN: 'semitone_down'
+  SEMITONE_DOWN: 'semitone_down',
 };
 
 interface ChordPracticeState {
@@ -22,15 +22,16 @@ interface ChordPracticeState {
 
 export const useChordPracticeStore = create<ChordPracticeState>()(
   persist(
-    (set) => ({
-      selectedInversions: ["random"],
-      selectedChordTypes: ["M"],
+    set => ({
+      selectedInversions: ['random'],
+      selectedChordTypes: ['M'],
       proMode: false,
       drillMode: DRILL_MODES.RANDOM,
-      setSelectedInversions: (inversions) => set({ selectedInversions: inversions }),
-      setSelectedChordTypes: (types) => set({ selectedChordTypes: types }),
-      setProMode: (proMode) => set({ proMode }),
-      setDrillMode: (drillMode) => set({ drillMode }),
+      setSelectedInversions: inversions =>
+        set({ selectedInversions: inversions }),
+      setSelectedChordTypes: types => set({ selectedChordTypes: types }),
+      setProMode: proMode => set({ proMode }),
+      setDrillMode: drillMode => set({ drillMode }),
     }),
     {
       name: 'chord-practice-settings', // unique name for local storage

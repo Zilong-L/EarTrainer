@@ -6,8 +6,17 @@ interface GameDisplayProps {
   chordPracticeGameSettings: any;
 }
 
-const GameDisplay: React.FC<GameDisplayProps> = ({ chordPracticeGameSettings }) => {
-  const { targetChord, detectedChords, activeNotes, setActiveNotes, sustainedNotes, setSustainedNotes } = chordPracticeGameSettings;
+const GameDisplay: React.FC<GameDisplayProps> = ({
+  chordPracticeGameSettings,
+}) => {
+  const {
+    targetChord,
+    detectedChords,
+    activeNotes,
+    setActiveNotes,
+    sustainedNotes,
+    setSustainedNotes,
+  } = chordPracticeGameSettings;
 
   return (
     <div className="h-[65vh]  flex flex-col justify-center">

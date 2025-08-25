@@ -15,7 +15,12 @@ interface MotionButtonProps {
   whileHover?: TargetAndTransition | VariantLabels;
   whileTap?: TargetAndTransition | VariantLabels;
   drag?: boolean;
-  dragConstraints?: { left?: number; right?: number; top?: number; bottom?: number };
+  dragConstraints?: {
+    left?: number;
+    right?: number;
+    top?: number;
+    bottom?: number;
+  };
   title?: string;
 }
 
@@ -25,13 +30,17 @@ const MotionButton: React.FC<MotionButtonProps> = ({
   className = '',
   isDisabled = false,
   initial = { scale: 0 } as TargetAndTransition,
-  animate = { x: 0, scale: 1, transition: { duration: 0.5, bounce: 0.3, type: 'spring' } } as TargetAndTransition,
+  animate = {
+    x: 0,
+    scale: 1,
+    transition: { duration: 0.5, bounce: 0.3, type: 'spring' },
+  } as TargetAndTransition,
   exit = { scale: 0 } as TargetAndTransition,
   whileHover = { scale: 1.05 } as TargetAndTransition,
   whileTap = { scale: 0.95 } as TargetAndTransition,
   drag = false,
   dragConstraints = { left: 0, right: 0, top: 0, bottom: 0 },
-  title = ''
+  title = '',
 }) => {
   return (
     <motion.button

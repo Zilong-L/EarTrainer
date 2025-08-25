@@ -22,12 +22,27 @@ export interface PracticeSettings {
 
 const usePracticeSettings = (): PracticeSettings => {
   const [bpm, setBpm] = useLocalStorage<number>('degreeTrainerBPM', 60);
-  const [rootNote, setRootNote] = useLocalStorage<string>('degreeTrainerRootNote', 'C2');
+  const [rootNote, setRootNote] = useLocalStorage<string>(
+    'degreeTrainerRootNote',
+    'C2'
+  );
   const [range, _setRange] = useState<[number, number]>([36, 48]);
-  const [autoAdvance, setAutoAdvance] = useLocalStorage<boolean>('degreeTrainerAutoAdvance', true);
-  const [useSolfege, setUseSolfege] = useLocalStorage<boolean>('degreeTrainerUseSolfege', true);
-  const [autoChangeRoot, setAutoChangeRoot] = useLocalStorage<boolean>('degreeTrainerAutoChangeRoot', false);
-  const [changeInterval, setChangeInterval] = useLocalStorage<number>('degreeTrainerChangeInterval', 120); // seconds
+  const [autoAdvance, setAutoAdvance] = useLocalStorage<boolean>(
+    'degreeTrainerAutoAdvance',
+    true
+  );
+  const [useSolfege, setUseSolfege] = useLocalStorage<boolean>(
+    'degreeTrainerUseSolfege',
+    true
+  );
+  const [autoChangeRoot, setAutoChangeRoot] = useLocalStorage<boolean>(
+    'degreeTrainerAutoChangeRoot',
+    false
+  );
+  const [changeInterval, setChangeInterval] = useLocalStorage<number>(
+    'degreeTrainerChangeInterval',
+    120
+  ); // seconds
 
   const setRange = (newRange: [number, number]) => {
     _setRange(newRange);

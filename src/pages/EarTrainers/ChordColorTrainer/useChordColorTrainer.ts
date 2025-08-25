@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { getTransport } from 'tone';
 import { DegreeToDistance } from '@utils/Constants';
 import { VoicingDictionary } from '@EarTrainers/ChordColorTrainer/Constants';
-import { getSamplerInstance, getDroneInstance } from '@utils/Tone/samplers';  // Added scheduleNotes
-import { scheduleNotes } from '@utils/Tone/playbacks';  // Added scheduleNotes
+import { getSamplerInstance, getDroneInstance } from '@utils/Tone/samplers'; // Added scheduleNotes
+import { scheduleNotes } from '@utils/Tone/playbacks'; // Added scheduleNotes
 import { Chord, Voicing, Interval, Note, Midi } from 'tonal';
 import { playNotesTogether, playNotes } from '@utils/Tone/playbacks';
 import useChordColorTrainerSettings from './useChordColorTrainerSettings';
@@ -37,7 +37,6 @@ const useChordColorTrainer = (chordPlayOption: string) => {
     drone.setVolume(droneVolume);
     piano.setVolume(pianoVolume);
   }, [droneVolume, pianoVolume, rootNote]);
-
 
   useEffect(() => {
     const newChord = generateRandomChord();
@@ -139,7 +138,7 @@ const useChordColorTrainer = (chordPlayOption: string) => {
         }));
 
         // 2. First full chord
-        const firstFullChordEvents = notes.map((note) => ({
+        const firstFullChordEvents = notes.map(note => ({
           note: note,
           time: 2 * t, // After upscale
           duration: 2 * t,
@@ -154,17 +153,22 @@ const useChordColorTrainer = (chordPlayOption: string) => {
         }));
 
         // 4. Second full chord
-        const secondFullChordEvents = notes.map((note) => ({
+        const secondFullChordEvents = notes.map(note => ({
           note: note,
           time: 6 * t, // After downscale
           duration: 2 * t,
         }));
 
-        events = [...upscaleArpeggioEvents, ...firstFullChordEvents, ...downscaleArpeggioEvents, ...secondFullChordEvents];
+        events = [
+          ...upscaleArpeggioEvents,
+          ...firstFullChordEvents,
+          ...downscaleArpeggioEvents,
+          ...secondFullChordEvents,
+        ];
         break;
       case 'block':
         // Implement block chord play logic
-        events = notes.map((note) => ({
+        events = notes.map(note => ({
           note: note,
           time: 0, // All notes at the same time
           duration: 2 * t, // Sustain notes
@@ -180,7 +184,7 @@ const useChordColorTrainer = (chordPlayOption: string) => {
       if (activeNotes.length === 0) {
         setIsAdvance('Now');
       }
-      return;  // Early return
+      return; // Early return
     }
 
     if (activeNotes && activeNotes.length > 0) {
@@ -188,25 +192,26 @@ const useChordColorTrainer = (chordPlayOption: string) => {
       if (detectedChords && detectedChords.length > 0) {
         const steps = DegreeToDistance[currentChord?.degree] || 0;
         const midiNote = Midi.toMidi(rootNote || 'C4');
-        const noteName = midiNote ? Midi.midiToNoteName(midiNote + steps) : null;
+        const noteName = midiNote
+          ? Midi.midiToNoteName(midiNote + steps)
+          : null;
         const note = (noteName || '').slice(0, -1);
         const chordType = currentChord?.chordType || '';
         const chord = note + chordType;
         const isCorrect = compareChords(detectedChords as any, chord);
         if (isCorrect) {
           if (activeNotes.length >= 6) {
-            setIsAdvance('Pending');  // Changed from 'Now' to 'Pending'
+            setIsAdvance('Pending'); // Changed from 'Now' to 'Pending'
           } else {
-            setIsAdvance('Ready');  // Unchanged
+            setIsAdvance('Ready'); // Unchanged
           }
         }
       }
     }
-  }, [activeNotes, currentChord, rootNote, isAdvance]);  // Added isAdvance to dependencies
+  }, [activeNotes, currentChord, rootNote, isAdvance]); // Added isAdvance to dependencies
 
   const getNotesForChord = (numeral: string) => {
-
-    const numeralDegree = /([IV]+)([b#]?)/.exec(numeral)?.[0] || ''
+    const numeralDegree = /([IV]+)([b#]?)/.exec(numeral)?.[0] || '';
     const steps = DegreeToDistance[numeralDegree] || 0;
     const midiNote = Midi.toMidi(rootNote || 'C4');
     const noteName = midiNote ? Midi.midiToNoteName(midiNote + steps) : null;
@@ -219,10 +224,13 @@ const useChordColorTrainer = (chordPlayOption: string) => {
       Note.fromMidi((Note.midi(range[1]) || 0) + Interval.semitones('P8')),
     ];
     const dictionary = VoicingDictionary.rootPosition;
-    const possibleChords = Voicing.search(chord.symbol, chordRange, dictionary as any);
-    const notes = possibleChords[
-      Math.floor(Math.random() * possibleChords.length)
-    ];
+    const possibleChords = Voicing.search(
+      chord.symbol,
+      chordRange,
+      dictionary as any
+    );
+    const notes =
+      possibleChords[Math.floor(Math.random() * possibleChords.length)];
     return notes;
   };
 
@@ -243,7 +251,7 @@ const useChordColorTrainer = (chordPlayOption: string) => {
       updatePracticeRecords(guessedChord, isCorrect);
       playChordColorPattern(currentChord.notes); // Play current chord on correct guess
     } else {
-      setDisabledChords((prev) => [...prev, guessedChord]);
+      setDisabledChords(prev => [...prev, guessedChord]);
       updatePracticeRecords(guessedChord, isCorrect);
       // Play the guessed chord's notes on incorrect guess
       const notes = getNotesForChord(guessedChord);
@@ -265,8 +273,12 @@ const useChordColorTrainer = (chordPlayOption: string) => {
   // 将 degreeChordTypes 对象转换为数组并过滤掉空的级数和弦组合
   useEffect(() => {
     if (degreeChordTypes) {
-      const allCombinations = degreeChordTypes.flatMap((chord: any) =>
-        chord.chordTypes?.map((chordType: any) => ({ degree: chord.degree, chordType })) || []
+      const allCombinations = degreeChordTypes.flatMap(
+        (chord: any) =>
+          chord.chordTypes?.map((chordType: any) => ({
+            degree: chord.degree,
+            chordType,
+          })) || []
       );
       setFilteredChords(allCombinations);
     }
@@ -282,7 +294,9 @@ const useChordColorTrainer = (chordPlayOption: string) => {
     if (!RomanNumeral) {
       return null;
     }
-    const notes = getNotesForChord(RomanNumeral.degree + RomanNumeral.chordType);
+    const notes = getNotesForChord(
+      RomanNumeral.degree + RomanNumeral.chordType
+    );
     return { ...RomanNumeral, notes: notes };
   };
 

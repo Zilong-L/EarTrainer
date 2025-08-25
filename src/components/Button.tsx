@@ -21,21 +21,24 @@ const Button: React.FC<ButtonProps> = ({
   type = 'button',
   ...props
 }) => {
-  const baseStyles = 'rounded-lg font-medium transition-all duration-200 focus:outline-none shadow-sm hover:shadow-md';
+  const baseStyles =
+    'rounded-lg font-medium transition-all duration-200 focus:outline-none shadow-sm hover:shadow-md';
 
   const variants = {
     primary: 'bg-bg-accent text-text-primary ',
     secondary: 'bg-bg-accent text-text-primary',
-    outline: 'border border-bg-accent text-text-primary'
+    outline: 'border border-bg-accent text-text-primary',
   };
 
   const sizes = {
     sm: 'px-3 py-1.5 text-sm',
     md: 'px-4 py-2 text-base',
-    lg: 'px-6 py-3 text-lg'
+    lg: 'px-6 py-3 text-lg',
   };
 
-  const disabledStyles = disabled ? 'opacity-50 cursor-not-allowed' : 'shadow-sm hover:shadow';
+  const disabledStyles = disabled
+    ? 'opacity-50 cursor-not-allowed'
+    : 'shadow-sm hover:shadow';
 
   return (
     <button

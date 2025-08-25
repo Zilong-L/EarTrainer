@@ -17,7 +17,7 @@ const ChordColorTrainerSettings: React.FC<ChordColorTrainerSettingsProps> = ({
   setIsSettingsOpen,
   playChord,
 }) => {
-  const { namespace } = useI18nStore()
+  const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
 
   const closeSettings = () => {

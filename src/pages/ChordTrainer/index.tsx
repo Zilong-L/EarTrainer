@@ -7,14 +7,14 @@ import DiatonicGame from './pages/DiatonicGame';
 import ChordPracticeGame from './pages/ChordPracticeGame';
 
 const ChordTrainer: React.FC = () => {
-  const setNamespace = useI18nStore((state) => state.setNamespace);
+  const setNamespace = useI18nStore(state => state.setNamespace);
   useEffect(() => {
-    setNamespace('chordGame')
-  }, [setNamespace])
+    setNamespace('chordGame');
+  }, [setNamespace]);
   return (
     <div className="flex flex-col h-[100vh]">
       <Routes>
-        <Route path='/' element={<ChordTrainerOutlet />}>
+        <Route path="/" element={<ChordTrainerOutlet />}>
           <Route path="chord-practice" element={<ChordPracticeGame />} />
           <Route path="diatonic" element={<DiatonicGame />} />
           <Route path="" element={<ChordPracticeGame />} />

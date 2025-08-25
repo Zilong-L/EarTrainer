@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
 import useI18nStore from '@stores/i18nStore';
 
-
 const Statistics: React.FC = () => {
-  const { practiceRecords, isStatOpen, setPracticeRecords, setIsStatOpen } = useChordColorTrainerSettingsStore();
+  const { practiceRecords, isStatOpen, setPracticeRecords, setIsStatOpen } =
+    useChordColorTrainerSettingsStore();
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const chartRef = useRef<HTMLDivElement>(null);
   const plotInstance = useRef<any>(null);
@@ -23,7 +23,7 @@ const Statistics: React.FC = () => {
       if (plotInstance.current && chartRef.current) {
         plotInstance.current.setSize({
           width: chartRef.current.offsetWidth,
-          height: 256
+          height: 256,
         });
       }
     };
@@ -36,7 +36,9 @@ const Statistics: React.FC = () => {
     if (!chartRef.current) return;
 
     const labels = Object.keys(practiceRecords);
-    const data = labels.map((degree) => calculateAccuracy(practiceRecords[degree]));
+    const data = labels.map(degree =>
+      calculateAccuracy(practiceRecords[degree])
+    );
 
     const opts = {
       width: chartRef.current.offsetWidth,
@@ -47,7 +49,7 @@ const Statistics: React.FC = () => {
         points: {
           show: true,
           size: 5,
-        }
+        },
       },
       axes: [
         {
@@ -100,10 +102,14 @@ const Statistics: React.FC = () => {
     }
 
     // Create new instance
-    plotInstance.current = new uPlot(opts, [
-      Array.from({ length: labels.length }, (_, i) => i),  // x values as indices
-      data,
-    ], chartRef.current);
+    plotInstance.current = new uPlot(
+      opts,
+      [
+        Array.from({ length: labels.length }, (_, i) => i), // x values as indices
+        data,
+      ],
+      chartRef.current
+    );
 
     return () => {
       if (plotInstance.current) {

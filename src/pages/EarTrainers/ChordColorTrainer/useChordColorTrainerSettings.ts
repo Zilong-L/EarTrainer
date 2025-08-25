@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { chordPreset } from "@EarTrainers/ChordColorTrainer/Constants";
-import { CHORD_TYPES } from "@EarTrainers/ChordColorTrainer/Constants";
+import { chordPreset } from '@EarTrainers/ChordColorTrainer/Constants';
+import { CHORD_TYPES } from '@EarTrainers/ChordColorTrainer/Constants';
 import useChordColorTrainerSettingsStore from '../../../stores/chordColorTrainerSettingsStore';
 import { useSoundSettingsStore } from '@stores/soundSettingsStore';
 
@@ -35,12 +35,16 @@ const useChordColorTrainerSettings = () => {
   const { selectedInstrument } = useSoundSettingsStore();
 
   useEffect(() => {
-    const storedRecords = JSON.parse(localStorage.getItem('ChordColorTrainerRecords') || '{}');
+    const storedRecords = JSON.parse(
+      localStorage.getItem('ChordColorTrainerRecords') || '{}'
+    );
     setPracticeRecords(storedRecords);
   }, [setPracticeRecords]);
-  
+
   useEffect(() => {
-    setDegreeChordTypes(customPresets[preset] || chordPreset[preset] || degreeChordTypes);
+    setDegreeChordTypes(
+      customPresets[preset] || chordPreset[preset] || degreeChordTypes
+    );
   }, [preset, customPresets, setDegreeChordTypes, degreeChordTypes]);
 
   return {
@@ -70,7 +74,7 @@ const useChordColorTrainerSettings = () => {
     setMuteDrone,
     isStatOpen,
     setIsStatOpen,
-    selectedInstrument
+    selectedInstrument,
   };
 };
 export default useChordColorTrainerSettings;

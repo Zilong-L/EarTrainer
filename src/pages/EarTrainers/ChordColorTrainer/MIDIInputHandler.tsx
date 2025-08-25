@@ -13,9 +13,11 @@ interface MIDIInputHandlerProps {
   setActiveNotes: (notes: number[]) => void;
 }
 
-const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({ activeNotes, setActiveNotes }) => {
-
-  const playMidiSounds = useSoundSettingsStore((state) => state.playMidiSounds);
+const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({
+  activeNotes,
+  setActiveNotes,
+}) => {
+  const playMidiSounds = useSoundSettingsStore(state => state.playMidiSounds);
   const playMidiSoundsRef = useRef(playMidiSounds);
   useEffect(() => {
     playMidiSoundsRef.current = playMidiSounds;
@@ -23,8 +25,8 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({ activeNotes, setAct
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
   let sustainActive = false;
-  let sustainedNotesSet = new Set<number>();
-  let pressingNotes = new Set<number>();
+  const sustainedNotesSet = new Set<number>();
+  const pressingNotes = new Set<number>();
   const [detectedChords, setDetectedChords] = useState<string[]>([]);
 
   useEffect(() => {
@@ -41,7 +43,7 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({ activeNotes, setAct
       sustainActive = velocity > 0;
 
       if (!sustainActive) {
-        sustainedNotesSet.forEach((n) => {
+        sustainedNotesSet.forEach(n => {
           if (!pressingNotes.has(n)) {
             if (playMidiSoundsRef.current) {
               pianoSampler.triggerRelease(Note.fromMidi(n));
@@ -49,11 +51,15 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({ activeNotes, setAct
           }
         });
         sustainedNotesSet.clear();
-        pressingNotes.forEach((n) => sustainedNotesSet.add(n));
+        pressingNotes.forEach(n => sustainedNotesSet.add(n));
       }
     } else if (command === 144 && velocity > 0) {
       if (playMidiSoundsRef.current) {
-        pianoSampler.triggerAttack(Note.fromMidi(note), undefined, velocity / 128);
+        pianoSampler.triggerAttack(
+          Note.fromMidi(note),
+          undefined,
+          velocity / 128
+        );
       }
 
       pressingNotes.add(note);
@@ -69,7 +75,6 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({ activeNotes, setAct
     }
 
     setActiveNotes(Array.from(sustainedNotesSet).sort((a, b) => a - b));
-
   };
 
   useEffect(() => {
@@ -82,7 +87,7 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({ activeNotes, setAct
       const midi = await (navigator as any).requestMIDIAccess();
       console.log(t('midi.loaded'));
       inputs = Array.from(midi.inputs.values());
-      for (let input of inputs) {
+      for (const input of inputs) {
         input.onmidimessage = (message: any) => midiMessageHandler(message);
       }
     };
@@ -91,7 +96,7 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({ activeNotes, setAct
 
     return () => {
       // Unsubscribe message handlers when component unmounts
-      for (let input of inputs) {
+      for (const input of inputs) {
         input.onmidimessage = null;
       }
     };
@@ -100,9 +105,12 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({ activeNotes, setAct
   return (
     <div className="w-full space-y-4 ">
       <Portal>
-        <PianoVisualizer detectedChords={detectedChords} activeNotes={activeNotes} />
+        <PianoVisualizer
+          detectedChords={detectedChords}
+          activeNotes={activeNotes}
+        />
       </Portal>
-    </div >
+    </div>
   );
 };
 

@@ -2,35 +2,51 @@ import { Frequency, isNumber, now } from 'tone';
 import { degrees } from '@EarTrainers/DegreeTrainer/Constants';
 import { Note, Range } from 'tonal';
 import { preloadAudio } from '@utils/Tone/samplers';
-import { Dispatch,SetStateAction } from 'react';
-const getNextNote = (possibleNotesInRange: string[], currentNote: string | null): string | null => {
+import { Dispatch, SetStateAction } from 'react';
+const getNextNote = (
+  possibleNotesInRange: string[],
+  currentNote: string | null
+): string | null => {
   if (possibleNotesInRange.length === 0) return null;
   let nextNote: string | null = null;
   do {
-    nextNote = possibleNotesInRange[Math.floor(Math.random() * possibleNotesInRange.length)] ?? null;
+    nextNote =
+      possibleNotesInRange[
+        Math.floor(Math.random() * possibleNotesInRange.length)
+      ] ?? null;
   } while (nextNote === currentNote && possibleNotesInRange.length < 3);
   return nextNote;
 };
 
-const calculateDegree = (guessedNote: string | number, targetNote: string): string => {
+const calculateDegree = (
+  guessedNote: string | number,
+  targetNote: string
+): string => {
   let guessedNoteMidi: number;
   if (!isNumber(guessedNote)) {
     guessedNoteMidi = Frequency(guessedNote).toMidi();
   } else {
     guessedNoteMidi = guessedNote;
   }
-  const interval = ((guessedNoteMidi - Frequency(targetNote).toMidi()) % 12 + 12) % 12;
-  return degrees.find(degree => degree.distance === interval)?.name || 'Unknown';
+  const interval =
+    (((guessedNoteMidi - Frequency(targetNote).toMidi()) % 12) + 12) % 12;
+  return (
+    degrees.find(degree => degree.distance === interval)?.name || 'Unknown'
+  );
 };
 
-const calculateInterval = (guessedNote: string | number, targetNote: string): number => {
+const calculateInterval = (
+  guessedNote: string | number,
+  targetNote: string
+): number => {
   let guessedNoteMidi: number;
   if (!isNumber(guessedNote)) {
     guessedNoteMidi = Frequency(guessedNote).toMidi();
   } else {
     guessedNoteMidi = guessedNote;
   }
-  const interval = ((guessedNoteMidi - Frequency(targetNote).toMidi()) % 12 + 12) % 12;
+  const interval =
+    (((guessedNoteMidi - Frequency(targetNote).toMidi()) % 12) + 12) % 12;
   return interval;
 };
 
@@ -46,17 +62,27 @@ const getPossibleNotesInRange = (
   degreesSetting: { enable: boolean; interval: string }[]
 ): string[] => {
   if (!rootNote || !range || !degreesSetting) return [];
-  const enabledIntervals = degreesSetting.filter(d => d.enable).map(d => d.interval);
-  const scaleNotes = enabledIntervals.map(interval => Note.transpose(rootNote, interval)).filter((note): note is string => Boolean(note));
+  const enabledIntervals = degreesSetting
+    .filter(d => d.enable)
+    .map(d => d.interval);
+  const scaleNotes = enabledIntervals
+    .map(interval => Note.transpose(rootNote, interval))
+    .filter((note): note is string => Boolean(note));
   const scaleNoteSet = new Set<string>();
   scaleNotes.forEach(note => {
     scaleNoteSet.add(Note.pitchClass(note));
     scaleNoteSet.add(Note.enharmonic(Note.pitchClass(note)));
   });
-  const allNotesInRange = Range.chromatic([Note.fromMidi(range[0]), Note.fromMidi(range[1])]);
+  const allNotesInRange = Range.chromatic([
+    Note.fromMidi(range[0]),
+    Note.fromMidi(range[1]),
+  ]);
   const possibleNotesInRange = allNotesInRange.filter(note => {
     const pitchClass = Note.pitchClass(note);
-    return scaleNoteSet.has(pitchClass) || scaleNoteSet.has(Note.enharmonic(pitchClass));
+    return (
+      scaleNoteSet.has(pitchClass) ||
+      scaleNoteSet.has(Note.enharmonic(pitchClass))
+    );
   });
   return possibleNotesInRange;
 };
@@ -93,7 +119,7 @@ const handleNoteGuess = (
     }
   } else {
     if (!disabledNotes.includes(activeNote)) {
-      setDisabledNotes((prev) => [...prev, activeNote]);
+      setDisabledNotes(prev => [...prev, activeNote]);
       updatePracticeRecords(guessedDegree, correct);
     }
     playNote(activeNote);
@@ -104,7 +130,7 @@ const handleNoteGuess = (
 const advanceGame = (
   possibleNotesInRange: string[],
   currentNote: string | null,
-  setCurrentNote: Dispatch<SetStateAction<string >>,
+  setCurrentNote: Dispatch<SetStateAction<string>>,
   playNote: (note: string, dur?: number, velocity?: number) => void,
   setDisabledNotes: (v: string[]) => void,
   setIsAdvance: (v: 'Ready' | 'Next' | 'No' | 'Now') => void,
@@ -112,7 +138,7 @@ const advanceGame = (
   bpm: number
 ) => {
   const nextNote = getNextNote(possibleNotesInRange, currentNote);
-  if( !nextNote) return;
+  if (!nextNote) return;
   setCurrentNote(nextNote);
   if (nextNote) {
     if (jCutMode) {
@@ -164,13 +190,32 @@ function handleGameLogic({
 
   if (isAdvance == 'Next') {
     const timer = setTimeout(
-      () => advanceGame(possibleNotesInRange, currentNote, setCurrentNote, playNote, setDisabledNotes, setIsAdvance, false, bpm),
+      () =>
+        advanceGame(
+          possibleNotesInRange,
+          currentNote,
+          setCurrentNote,
+          playNote,
+          setDisabledNotes,
+          setIsAdvance,
+          false,
+          bpm
+        ),
       timerDuration
     );
     return () => clearTimeout(timer);
   }
   if (isAdvance == 'Now') {
-    advanceGame(possibleNotesInRange, currentNote, setCurrentNote, playNote, setDisabledNotes, setIsAdvance, false, bpm);
+    advanceGame(
+      possibleNotesInRange,
+      currentNote,
+      setCurrentNote,
+      playNote,
+      setDisabledNotes,
+      setIsAdvance,
+      false,
+      bpm
+    );
   } else if (isHandfree && gameState === 'playing') {
     const timer = setTimeout(handfreeGame, timerDuration);
     return () => clearTimeout(timer);
@@ -192,4 +237,12 @@ const calculateOffset = (currentNote: string, rootNote: string): number => {
   return soundOffset;
 };
 
-export { getNextNote, isCorrect, calculateDegree, getPossibleNotesInRange, handleNoteGuess, handleGameLogic, advanceGame };
+export {
+  getNextNote,
+  isCorrect,
+  calculateDegree,
+  getPossibleNotesInRange,
+  handleNoteGuess,
+  handleGameLogic,
+  advanceGame,
+};

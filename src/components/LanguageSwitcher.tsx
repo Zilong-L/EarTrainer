@@ -11,14 +11,14 @@ const LanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
 
   const changeLanguage = (lng: string) => {
-    console.log("切换前的当前语言:", i18n.language);
+    console.log('切换前的当前语言:', i18n.language);
     i18n
       .changeLanguage(lng)
       .then(() => {
-        console.log("切换后的当前语言:", i18n.language);
+        console.log('切换后的当前语言:', i18n.language);
       })
-      .catch((err) => {
-        console.error("语言切换失败:", err);
+      .catch(err => {
+        console.error('语言切换失败:', err);
       });
   };
 
@@ -29,7 +29,7 @@ const LanguageSwitcher: React.FC = () => {
 
   return (
     <HeaderListButton
-      buttonLabel={<LanguageIcon className='w-6 h-6' />} // You can customize the button label as needed
+      buttonLabel={<LanguageIcon className="w-6 h-6" />} // You can customize the button label as needed
       items={languageOptions}
     />
   );

@@ -10,10 +10,16 @@ interface HeaderListButtonProps {
   className?: string;
 }
 
-const HeaderListButton: React.FC<HeaderListButtonProps> = ({ buttonLabel, items, className = '' }) => {
+const HeaderListButton: React.FC<HeaderListButtonProps> = ({
+  buttonLabel,
+  items,
+  className = '',
+}) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <MenuButton className={`p-2 rounded-md text-text-secondary hover:shadow-md ${className}`}>
+      <MenuButton
+        className={`p-2 rounded-md text-text-secondary hover:shadow-md ${className}`}
+      >
         {buttonLabel}
       </MenuButton>
       <MenuItems className="absolute right-0 mt-2 w-48 origin-top-right bg-bg-main border border-gray-200 rounded-md shadow-lg focus:outline-none z-10">

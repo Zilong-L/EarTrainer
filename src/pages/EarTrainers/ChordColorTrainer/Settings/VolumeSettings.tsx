@@ -8,16 +8,11 @@ interface VolumeSettingsProps {
 }
 
 const VolumeSettings: React.FC<VolumeSettingsProps> = () => {
-
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
 
-  const {
-    droneVolume,
-    pianoVolume,
-    setDroneVolume,
-    setPianoVolume,
-  } = useChordColorTrainerSettingsStore();
+  const { droneVolume, pianoVolume, setDroneVolume, setPianoVolume } =
+    useChordColorTrainerSettingsStore();
 
   return (
     <div className="relative">
@@ -31,7 +26,6 @@ const VolumeSettings: React.FC<VolumeSettingsProps> = () => {
               <h2 className="text-2xl font-bold text-text-primary">
                 {t('volumeSettings.droneVolume')}
               </h2>
-
             </div>
             <div className="flex items-center space-x-4">
               <HorizontalSlider
@@ -41,7 +35,6 @@ const VolumeSettings: React.FC<VolumeSettingsProps> = () => {
                 max={1}
                 step={0.01}
               />
-
             </div>
           </div>
 
@@ -50,7 +43,6 @@ const VolumeSettings: React.FC<VolumeSettingsProps> = () => {
               <h2 className="text-2xl font-bold text-text-primary">
                 {t('volumeSettings.pianoVolume')}
               </h2>
-
             </div>
             <div className="flex items-center space-x-4">
               <HorizontalSlider
@@ -60,7 +52,6 @@ const VolumeSettings: React.FC<VolumeSettingsProps> = () => {
                 max={1}
                 step={0.01}
               />
-
             </div>
           </div>
         </div>

@@ -23,12 +23,14 @@ const FreeMode: React.FC<FreeModeProps> = ({ FreeTrainerSettings }) => {
     useSolfege,
     isPlayingSound,
   } = FreeTrainerSettings;
-  const isLoadingInstrument = useSoundSettingsStore(state => state.isLoadingInstrument); // Get sampler loading state
+  const isLoadingInstrument = useSoundSettingsStore(
+    state => state.isLoadingInstrument
+  ); // Get sampler loading state
 
   const handleButton = () => {
     // Prevent action if sampler is loading
     if (isLoadingInstrument) {
-      console.log("loading!")
+      console.log('loading!');
       return;
     }
 
@@ -41,7 +43,7 @@ const FreeMode: React.FC<FreeModeProps> = ({ FreeTrainerSettings }) => {
         playNote(currentNote);
       }
     }
-  }
+  };
   return (
     <div className="flex flex-col justify-end h-full mb-8">
       {/* <AudioPitchDetector
@@ -68,11 +70,13 @@ const FreeMode: React.FC<FreeModeProps> = ({ FreeTrainerSettings }) => {
         useSolfege={useSolfege}
         bpm={bpm}
         gameState={gameState}
-      >
-      </CardStack>
+      ></CardStack>
       {/* 新增：桌面端大圆形按钮（lg 以上显示） */}
-      {isHandfree ? <></> : (<div
-        className="
+      {isHandfree ? (
+        <></>
+      ) : (
+        <div
+          className="
           hidden
           lg:flex
           items-center
@@ -84,15 +88,16 @@ const FreeMode: React.FC<FreeModeProps> = ({ FreeTrainerSettings }) => {
           -translate-x-1/2
           -translate-y-1/2
         "
-      >
-        <DesktopStartButton
-          gameState={gameState}
-          isAdvance={isAdvance}
-          isPlayingSound={isPlayingSound}
-          onClick={handleButton}
-          isLoadingInstrument={isLoadingInstrument} // Pass sampler loading state
-        />
-      </div>)}
+        >
+          <DesktopStartButton
+            gameState={gameState}
+            isAdvance={isAdvance}
+            isPlayingSound={isPlayingSound}
+            onClick={handleButton}
+            isLoadingInstrument={isLoadingInstrument} // Pass sampler loading state
+          />
+        </div>
+      )}
       <PhoneStartButton
         gameState={gameState}
         isAdvance={isAdvance}

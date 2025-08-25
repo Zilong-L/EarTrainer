@@ -1,11 +1,21 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { Transport } from 'tone';
-import { degrees, initialUserProgress, DEGREES_MAP, type UserProgress } from '@EarTrainers/DegreeTrainer/Constants';
+import {
+  degrees,
+  initialUserProgress,
+  DEGREES_MAP,
+  type UserProgress,
+} from '@EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance } from '@utils/Tone/samplers';
 import { playNotes } from '@utils/Tone/playbacks';
 import toast from 'react-hot-toast';
 import { useLocalStorage } from '@uidotdev/usehooks';
-import { getNextNote, getPossibleNotesInRange, handleNoteGuess, handleGameLogic } from '@utils/GameLogics';
+import {
+  getNextNote,
+  getPossibleNotesInRange,
+  handleNoteGuess,
+  handleGameLogic,
+} from '@utils/GameLogics';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 
 const useChallengeTrainer = () => {
@@ -13,12 +23,25 @@ const useChallengeTrainer = () => {
     isHandfree,
     mode,
     practice: { bpm, rootNote, range, autoAdvance, useSolfege },
-    stats: { updatePracticeRecords, currentPracticeRecords, setCurrentPracticeRecords },
+    stats: {
+      updatePracticeRecords,
+      currentPracticeRecords,
+      setCurrentPracticeRecords,
+    },
   } = useDegreeTrainerSettings();
 
-  const [currentLevel, setCurrentLevel] = useLocalStorage<number>('degreeTrainerCurrentLevel', 1);
-  const [userProgress, setUserProgress] = useLocalStorage<UserProgress[]>('degreeTrainerUserProgress', initialUserProgress);
-  const [progressVersion, setProgressVersion] = useLocalStorage<number>('degreeTrainerProgressVersion', 0);
+  const [currentLevel, setCurrentLevel] = useLocalStorage<number>(
+    'degreeTrainerCurrentLevel',
+    1
+  );
+  const [userProgress, setUserProgress] = useLocalStorage<UserProgress[]>(
+    'degreeTrainerUserProgress',
+    initialUserProgress
+  );
+  const [progressVersion, setProgressVersion] = useLocalStorage<number>(
+    'degreeTrainerProgressVersion',
+    0
+  );
   const [isPlayingSound, setIsPlayingSound] = useState(false);
   const playNoteTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -62,7 +85,9 @@ const useChallengeTrainer = () => {
     const currentLevelData = userProgress[currentLevel];
     const totalTests = currentPracticeRecords.total;
     if (totalTests >= currentLevelData.minTests) {
-      const correctRate = Math.round((currentPracticeRecords.correct / totalTests) * 100);
+      const correctRate = Math.round(
+        (currentPracticeRecords.correct / totalTests) * 100
+      );
       if (correctRate > currentLevelData.best) {
         const newUserProgress = [...userProgress];
         newUserProgress[currentLevel].best = correctRate;
@@ -71,7 +96,10 @@ const useChallengeTrainer = () => {
 
       if (correctRate >= 70) {
         const nextLevel = currentLevel + 1;
-        if (nextLevel <= userProgress.length - 1 && !userProgress[nextLevel].unlocked) {
+        if (
+          nextLevel <= userProgress.length - 1 &&
+          !userProgress[nextLevel].unlocked
+        ) {
           const newUserProgress = [...userProgress];
           newUserProgress[nextLevel].unlocked = true;
           setUserProgress(newUserProgress);
@@ -81,9 +109,12 @@ const useChallengeTrainer = () => {
 
       const newUserProgress = [...userProgress];
       const currentStars = newUserProgress[currentLevel].stars;
-      if (correctRate >= 90 && currentStars < 3) newUserProgress[currentLevel].stars = 3;
-      else if (correctRate >= 80 && currentStars < 2) newUserProgress[currentLevel].stars = 2;
-      else if (correctRate >= 70 && currentStars < 1) newUserProgress[currentLevel].stars = 1;
+      if (correctRate >= 90 && currentStars < 3)
+        newUserProgress[currentLevel].stars = 3;
+      else if (correctRate >= 80 && currentStars < 2)
+        newUserProgress[currentLevel].stars = 2;
+      else if (correctRate >= 70 && currentStars < 1)
+        newUserProgress[currentLevel].stars = 1;
 
       if (newUserProgress[currentLevel].stars !== currentStars) {
         setUserProgress(newUserProgress);
@@ -94,14 +125,21 @@ const useChallengeTrainer = () => {
 
   const [currentNote, setCurrentNote] = useState<string>('');
   const [disabledNotes, setDisabledNotes] = useState<string[]>([]);
-  const [gameState, setGameState] = useState<'end' | 'start' | 'playing' | 'paused'>('end');
+  const [gameState, setGameState] = useState<
+    'end' | 'start' | 'playing' | 'paused'
+  >('end');
   const [activeNote, setActiveNote] = useState<string | null>(null);
-  const [isAdvance, setIsAdvance] = useState<'No' | 'Ready' | 'Next' | 'Now'>('No');
+  const [isAdvance, setIsAdvance] = useState<'No' | 'Ready' | 'Next' | 'Now'>(
+    'No'
+  );
 
   const drone = getDroneInstance();
 
   const currentNotes = useMemo(() => {
-    return degrees.map((note, index) => ({ ...note, enable: DEGREES_MAP['LEVEL_' + (currentLevel + 1)][index] }));
+    return degrees.map((note, index) => ({
+      ...note,
+      enable: DEGREES_MAP['LEVEL_' + (currentLevel + 1)][index],
+    }));
   }, [currentLevel]);
 
   useEffect(() => {
@@ -117,7 +155,7 @@ const useChallengeTrainer = () => {
       playNote,
       setDisabledNotes,
       setIsAdvance,
-    } );
+    });
   }, [isAdvance, gameState, isHandfree]);
 
   useEffect(() => {
@@ -132,9 +170,17 @@ const useChallengeTrainer = () => {
     }
   }, [gameState, currentNote]);
 
-  useEffect(() => () => { endGame(); }, []);
+  useEffect(
+    () => () => {
+      endGame();
+    },
+    []
+  );
 
-  const filteredNotes = useMemo(() => currentNotes.filter((note) => note.enable), [currentNotes]);
+  const filteredNotes = useMemo(
+    () => currentNotes.filter(note => note.enable),
+    [currentNotes]
+  );
 
   const possibleNotesInRange = useMemo(() => {
     return getPossibleNotesInRange(rootNote, range, currentNotes);
@@ -164,10 +210,13 @@ const useChallengeTrainer = () => {
     if (playNoteTimeoutRef.current) clearTimeout(playNoteTimeoutRef.current);
     playNotes(noteToPlay, delay, bpm / time);
     setIsPlayingSound(true);
-    playNoteTimeoutRef.current = setTimeout(() => {
-      setIsPlayingSound(false);
-      playNoteTimeoutRef.current = null;
-    }, (60 / (bpm / time)) * 1000);
+    playNoteTimeoutRef.current = setTimeout(
+      () => {
+        setIsPlayingSound(false);
+        playNoteTimeoutRef.current = null;
+      },
+      (60 / (bpm / time)) * 1000
+    );
   };
 
   useEffect(() => {
@@ -177,7 +226,7 @@ const useChallengeTrainer = () => {
       currentNote,
       rootNote,
       disabledNotes,
-      setDisabledNotes ,
+      setDisabledNotes,
       isAdvance,
       setIsAdvance,
       updatePracticeRecords,

@@ -9,17 +9,18 @@ export interface DegreeRecord {
 export type PracticeRecords = Record<string, DegreeRecord>;
 const useStatistics = () => {
   const [practiceRecords, setPracticeRecords] = useState<PracticeRecords>({});
-  const [currentPracticeRecords, setCurrentPracticeRecords] = useState<DegreeRecord>({ total: 0, correct: 0 });
+  const [currentPracticeRecords, setCurrentPracticeRecords] =
+    useState<DegreeRecord>({ total: 0, correct: 0 });
 
   // Load from IndexedDB initially
   useEffect(() => {
-    get<PracticeRecords>('degreeTrainerRecords').then((data) => {
+    get<PracticeRecords>('degreeTrainerRecords').then(data => {
       if (data) setPracticeRecords(data);
     });
   }, []);
 
   const updatePracticeRecords = (degree: string, isCorrect: boolean) => {
-    setPracticeRecords((prevRecords) => {
+    setPracticeRecords(prevRecords => {
       const newRecords: PracticeRecords = { ...prevRecords };
       if (!newRecords[degree]) {
         newRecords[degree] = { total: 0, correct: 0 };
@@ -34,7 +35,7 @@ const useStatistics = () => {
       return newRecords;
     });
 
-    setCurrentPracticeRecords((prev) => ({
+    setCurrentPracticeRecords(prev => ({
       total: prev.total + 1,
       correct: prev.correct + (isCorrect ? 1 : 0),
     }));

@@ -7,7 +7,11 @@ interface HeaderButtonProps {
   title?: string;
 }
 
-const HeaderButton: React.FC<HeaderButtonProps> = ({ onClick, children, className = '' }) => {
+const HeaderButton: React.FC<HeaderButtonProps> = ({
+  onClick,
+  children,
+  className = '',
+}) => {
   return (
     <button
       onClick={onClick}

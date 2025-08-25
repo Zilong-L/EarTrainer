@@ -1,24 +1,26 @@
-import { useState, useEffect } from "react";
-import { Key, Midi } from "tonal";
-import { detect } from "@tonaljs/chord-detect";
+import { useState, useEffect } from 'react';
+import { Key, Midi } from 'tonal';
+import { detect } from '@tonaljs/chord-detect';
 import { compareChords } from '@utils/ChordTrainer/GameLogics';
 
 const useDiatonicGame = () => {
-  const [targetChord, setTargetChord] = useState<string>("");
+  const [targetChord, setTargetChord] = useState<string>('');
   const [detectedChords, setDetectedChords] = useState<string[]>([]);
   const [activeNotes, setActiveNotes] = useState<number[]>([]);
   const [sustainedNotes, setSustainedNotes] = useState<number[]>([]);
 
   const [chordPool, setChordPool] = useState<string[]>([]);
-  const [rootNote, setRootNote] = useState<string>("C");
-  const [scaleType, setScaleType] = useState<string>("major");
+  const [rootNote, setRootNote] = useState<string>('C');
+  const [scaleType, setScaleType] = useState<string>('major');
   const [ignoreTranspose, setIgnoreTranspose] = useState<boolean>(true);
   const [chordType, setChordType] = useState<string>('triads');
   const [showDegree, setShowDegree] = useState<boolean>(false);
 
   useEffect(() => {
     if (!activeNotes) return;
-    const notesString = activeNotes.map((note) => Midi.midiToNoteName(note) || '');
+    const notesString = activeNotes.map(
+      note => Midi.midiToNoteName(note) || ''
+    );
     const chordResult = detect(notesString, { assumePerfectFifth: true });
     setDetectedChords(chordResult);
   }, [activeNotes]);
@@ -27,16 +29,16 @@ const useDiatonicGame = () => {
   useEffect(() => {
     let key: any;
     // Determine the key based on scale type
-    console.log(scaleType)
-    if (scaleType === "major") {
+    console.log(scaleType);
+    if (scaleType === 'major') {
       key = Key.majorKey(rootNote);
     } else {
       const minorKey = Key.minorKey(rootNote);
-      if (scaleType === "harmonic") {
+      if (scaleType === 'harmonic') {
         key = minorKey.harmonic;
-      } else if (scaleType === "melodic") {
+      } else if (scaleType === 'melodic') {
         key = minorKey.melodic;
-      } else if (scaleType === "natural") {
+      } else if (scaleType === 'natural') {
         key = minorKey.natural;
       }
     }
@@ -54,7 +56,6 @@ const useDiatonicGame = () => {
     }
 
     setChordPool(chords);
-
   }, [rootNote, scaleType, chordType]);
 
   useEffect(() => {
@@ -71,8 +72,7 @@ const useDiatonicGame = () => {
     let randomChord: string;
     do {
       randomChord = chordPool[Math.floor(Math.random() * chordPool.length)];
-
-    } while (randomChord === targetChord)
+    } while (randomChord === targetChord);
     setTargetChord(randomChord);
   };
 

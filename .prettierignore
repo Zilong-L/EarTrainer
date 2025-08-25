@@ -1,0 +1,8 @@
+dist/
+node_modules/
+public/
+*.config.js
+*.config.ts
+scripts/
+*.md
+*.json

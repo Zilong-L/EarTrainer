@@ -8,7 +8,9 @@ interface ChallengeModeProps {
   ChallengeTrainerSettings: any;
 }
 
-const ChallengeMode: React.FC<ChallengeModeProps> = ({ ChallengeTrainerSettings }) => {
+const ChallengeMode: React.FC<ChallengeModeProps> = ({
+  ChallengeTrainerSettings,
+}) => {
   const {
     currentNote,
     disabledNotes,
@@ -30,24 +32,37 @@ const ChallengeMode: React.FC<ChallengeModeProps> = ({ ChallengeTrainerSettings 
   } = ChallengeTrainerSettings;
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
-  const isLoadingInstrument = useSoundSettingsStore(state => state.isLoadingInstrument); // Get sampler loading state
-
+  const isLoadingInstrument = useSoundSettingsStore(
+    state => state.isLoadingInstrument
+  ); // Get sampler loading state
 
   const renderRecords = () => {
     const totalResults = currentPracticeRecords;
-    const accuracy = totalResults.total > 0
-      ? Math.round((totalResults.correct / totalResults.total) * 100)
-      : 0;
+    const accuracy =
+      totalResults.total > 0
+        ? Math.round((totalResults.correct / totalResults.total) * 100)
+        : 0;
 
     return (
       <div className="space-y-3 text-text-primary md:space-y-4">
-        <p className="text-lg md:text-2xl">{t('home.level')}: {currentLevel + 1}</p>
-        <p className="text-lg md:text-2xl">{t('home.totalAttempts')} {totalResults.total} / {userProgress[currentLevel].minTests}</p>
-        <p className="text-lg md:text-2xl">{t('home.correctCount')} {totalResults.correct}</p>
+        <p className="text-lg md:text-2xl">
+          {t('home.level')}: {currentLevel + 1}
+        </p>
+        <p className="text-lg md:text-2xl">
+          {t('home.totalAttempts')} {totalResults.total} /{' '}
+          {userProgress[currentLevel].minTests}
+        </p>
+        <p className="text-lg md:text-2xl">
+          {t('home.correctCount')} {totalResults.correct}
+        </p>
         <p className="text-2xl md:text-4xl">
-          {accuracy >= 90 ? '⭐⭐⭐' :
-            accuracy >= 80 ? '⭐⭐' :
-              accuracy >= 70 ? '⭐' : ''}
+          {accuracy >= 90
+            ? '⭐⭐⭐'
+            : accuracy >= 80
+              ? '⭐⭐'
+              : accuracy >= 70
+                ? '⭐'
+                : ''}
         </p>
       </div>
     );
@@ -62,7 +77,7 @@ const ChallengeMode: React.FC<ChallengeModeProps> = ({ ChallengeTrainerSettings 
         playNote(currentNote);
       }
     }
-  }
+  };
   return (
     <div className="flex flex-col justify-end h-full mb-8">
       {renderRecords()}
@@ -78,10 +93,12 @@ const ChallengeMode: React.FC<ChallengeModeProps> = ({ ChallengeTrainerSettings 
         useSolfege={useSolfege}
         bpm={bpm}
         gameState={gameState}
-      >
-      </CardStack>
-      {isHandfree ? <></> : (<div
-        className="
+      ></CardStack>
+      {isHandfree ? (
+        <></>
+      ) : (
+        <div
+          className="
           hidden
           lg:flex
           items-center
@@ -93,15 +110,16 @@ const ChallengeMode: React.FC<ChallengeModeProps> = ({ ChallengeTrainerSettings 
           -translate-x-1/2
           -translate-y-1/2
         "
-      >
-        <DesktopStartButton
-          gameState={gameState}
-          isAdvance={isAdvance}
-          isPlayingSound={isPlayingSound}
-          onClick={handleButton}
-          isLoadingInstrument={isLoadingInstrument}
-        />
-      </div>)}
+        >
+          <DesktopStartButton
+            gameState={gameState}
+            isAdvance={isAdvance}
+            isPlayingSound={isPlayingSound}
+            onClick={handleButton}
+            isLoadingInstrument={isLoadingInstrument}
+          />
+        </div>
+      )}
       <PhoneStartButton
         gameState={gameState}
         isAdvance={isAdvance}

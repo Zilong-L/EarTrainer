@@ -3,7 +3,20 @@ import { useTranslation } from 'react-i18next';
 import useI18nStore from '@stores/i18nStore';
 import CustomListbox from '@components/Listbox';
 
-const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+const flatNotes = [
+  'C',
+  'Db',
+  'D',
+  'Eb',
+  'E',
+  'F',
+  'Gb',
+  'G',
+  'Ab',
+  'A',
+  'Bb',
+  'B',
+];
 const chordTypes = ['triads', 'sevenths', 'mixed'];
 const scaleTypes = ['major', 'harmonic', 'melodic', 'natural'];
 
@@ -11,17 +24,19 @@ interface DiatonicSettingsProps {
   diatonicGameSettings: any;
 }
 
-const DiatonicSettings: React.FC<DiatonicSettingsProps> = ({ diatonicGameSettings }) => {
+const DiatonicSettings: React.FC<DiatonicSettingsProps> = ({
+  diatonicGameSettings,
+}) => {
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
-  console.log(diatonicGameSettings)
+  console.log(diatonicGameSettings);
   const {
     rootNote,
     setRootNote,
     scaleType,
     setScaleType,
     chordType,
-    setChordType
+    setChordType,
   } = diatonicGameSettings;
 
   return (

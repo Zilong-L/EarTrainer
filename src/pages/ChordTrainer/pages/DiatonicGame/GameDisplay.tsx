@@ -16,7 +16,7 @@ const GameDisplay: React.FC<GameDisplayProps> = ({ diatonicGameSettings }) => {
     rootNote,
     sustainedNotes,
     setSustainedNotes,
-    setShowDegree
+    setShowDegree,
   } = diatonicGameSettings;
 
   return (
@@ -33,7 +33,9 @@ const GameDisplay: React.FC<GameDisplayProps> = ({ diatonicGameSettings }) => {
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-slate-900"></div>
               </div>
             </div>
-          ) : targetChord}
+          ) : (
+            targetChord
+          )}
         </h1>
       </div>
       <div className="w-full">

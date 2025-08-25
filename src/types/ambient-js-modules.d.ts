@@ -1,4 +1,3 @@
-
 declare module 'uplot' {
   class uPlot {
     constructor(opts: any, data: any[][], target: HTMLElement);

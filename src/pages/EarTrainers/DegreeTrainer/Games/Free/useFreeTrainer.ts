@@ -3,7 +3,12 @@ import { Transport } from 'tone';
 import { degrees } from '@EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance } from '@utils/Tone/samplers';
 import { playNotes } from '@utils/Tone/playbacks';
-import { getNextNote, getPossibleNotesInRange, handleNoteGuess, handleGameLogic } from '@utils/GameLogics';
+import {
+  getNextNote,
+  getPossibleNotesInRange,
+  handleNoteGuess,
+  handleGameLogic,
+} from '@utils/GameLogics';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 
 const useFreeTrainer = () => {
@@ -16,9 +21,13 @@ const useFreeTrainer = () => {
   const [currentNote, setCurrentNote] = useState<string>('');
   const [isPlayingSound, setIsPlayingSound] = useState(false);
   const [disabledNotes, setDisabledNotes] = useState<string[]>([]);
-  const [gameState, setGameState] = useState<'end' | 'start' | 'playing' | 'paused'>('end');
+  const [gameState, setGameState] = useState<
+    'end' | 'start' | 'playing' | 'paused'
+  >('end');
   const [activeNote, setActiveNote] = useState<string | null>(null);
-  const [isAdvance, setIsAdvance] = useState<'No' | 'Ready' | 'Next' | 'Now'>('No');
+  const [isAdvance, setIsAdvance] = useState<'No' | 'Ready' | 'Next' | 'Now'>(
+    'No'
+  );
   const [customNotes, _setCustomNotes] = useState(degrees);
   const [selectedMode, setSelectedMode] = useState('');
 
@@ -44,9 +53,12 @@ const useFreeTrainer = () => {
 
   const drone = getDroneInstance();
   const currentNotes = customNotes;
-  const filteredNotes = currentNotes.filter((note) => note.enable);
+  const filteredNotes = currentNotes.filter(note => note.enable);
 
-  const possibleNotesInRange = useMemo(() => getPossibleNotesInRange(rootNote, range, currentNotes), [rootNote, range, currentNotes]);
+  const possibleNotesInRange = useMemo(
+    () => getPossibleNotesInRange(rootNote, range, currentNotes),
+    [rootNote, range, currentNotes]
+  );
 
   useEffect(() => {
     if (!activeNote) return;
@@ -102,10 +114,13 @@ const useFreeTrainer = () => {
     if (playNoteTimeoutRef.current) clearTimeout(playNoteTimeoutRef.current);
     playNotes(noteToPlay, delay, bpm / time);
     setIsPlayingSound(true);
-    playNoteTimeoutRef.current = setTimeout(() => {
-      setIsPlayingSound(false);
-      playNoteTimeoutRef.current = null;
-    }, (60 / (bpm / time)) * 1000);
+    playNoteTimeoutRef.current = setTimeout(
+      () => {
+        setIsPlayingSound(false);
+        playNoteTimeoutRef.current = null;
+      },
+      (60 / (bpm / time)) * 1000
+    );
   };
 
   useEffect(() => {

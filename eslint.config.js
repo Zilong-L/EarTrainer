@@ -4,6 +4,8 @@ import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
 import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginReactRefresh from "eslint-plugin-react-refresh";
+import prettier from "eslint-plugin-prettier";
+import prettierConfig from "eslint-config-prettier";
 
 export default tseslint.config(
   { ignores: ["dist", "node_modules", "public", "scripts/**/*", "*.config.js", "*.config.ts"] },
@@ -29,11 +31,15 @@ export default tseslint.config(
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    plugins: {
+      prettier: prettier,
+    },
     rules: {
-      "@typescript-eslint/no-explicit-any": "warn", // Make any usage a warning instead of error
+      "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-unused-expressions": "warn",
       "@typescript-eslint/no-empty-object-type": "warn",
-      "indent": ["error", 2], // 2个空格缩进
+      ...prettierConfig.rules,
+      "prettier/prettier": "error",
     },
   },
   
@@ -44,15 +50,18 @@ export default tseslint.config(
       react: pluginReact,
       "react-hooks": pluginReactHooks,
       "react-refresh": pluginReactRefresh,
+      prettier: prettier,
     },
     rules: {
       ...pluginReact.configs.recommended.rules,
       ...pluginReact.configs["jsx-runtime"].rules,
       ...pluginReactHooks.configs.recommended.rules,
+      ...prettierConfig.rules,
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },
       ],
+      "prettier/prettier": "error",
     },
     settings: {
       react: { version: "18.3" },

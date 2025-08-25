@@ -12,19 +12,20 @@ import ChordColorTrainerSettings from '@EarTrainers/ChordColorTrainer/Settings';
 import useChordColorTrainer from '@EarTrainers/ChordColorTrainer/useChordColorTrainer';
 import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
 import CardStack from '@EarTrainers/ChordColorTrainer/CardStack';
-import { DesktopReplayButtons, PhoneReplayButtons } from '@EarTrainers/ChordColorTrainer/ReplayButtons';
+import {
+  DesktopReplayButtons,
+  PhoneReplayButtons,
+} from '@EarTrainers/ChordColorTrainer/ReplayButtons';
 import LanguageSwitcher from '@components/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
-import useI18nStore from "@stores/i18nStore";
+import useI18nStore from '@stores/i18nStore';
 import MIDIInputHandler from './MIDIInputHandler';
 
 const EarTrainer: React.FC = () => {
-  const setNamespace = useI18nStore((state) => state.setNamespace);
+  const setNamespace = useI18nStore(state => state.setNamespace);
   const { namespace } = useI18nStore();
   const { t, i18n } = useTranslation(namespace);
-  const {
-    chordPlayOption
-  } = useChordColorTrainerSettingsStore();
+  const { chordPlayOption } = useChordColorTrainerSettingsStore();
   const {
     currentChord,
     disabledChords,
@@ -42,12 +43,12 @@ const EarTrainer: React.FC = () => {
     setActiveNotes,
   } = useChordColorTrainer(chordPlayOption);
 
-
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
 
-
-  const isLoadingInstrument = useSoundSettingsStore(state => state.isLoadingInstrument);
+  const isLoadingInstrument = useSoundSettingsStore(
+    state => state.isLoadingInstrument
+  );
 
   const handleStartGame = () => {
     if (isLoadingInstrument) return;
@@ -104,7 +105,7 @@ const EarTrainer: React.FC = () => {
   const handlePlayChordColorPattern = async () => {
     if (isLoadingInstrument) return;
     await playChordColorPattern(currentChord?.notes || []);
-  }
+  };
   const handlePlayChord = async () => {
     if (isLoadingInstrument) return;
     await playChord();
@@ -146,12 +147,20 @@ const EarTrainer: React.FC = () => {
       <div className="h-[calc(100svh-64px)] bg-bg-main ">
         <div className="max-w-2xl mx-auto h-full flex flex-col justify-between py-4 px-6 relative">
           <div className="mb-4">
-            <label htmlFor="chordPlayOption" className="block text-sm font-medium text-gray-700">Chord Play Option:</label>
+            <label
+              htmlFor="chordPlayOption"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Chord Play Option:
+            </label>
             <select
               id="chordPlayOption"
               className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
               value={chordPlayOption}
-              onChange={(e) => useChordColorTrainerSettingsStore.getState().setChordPlayOption!(e.target.value)}
+              onChange={e =>
+                useChordColorTrainerSettingsStore.getState()
+                  .setChordPlayOption!(e.target.value)
+              }
             >
               <option value="default">Default</option>
               <option value="block">Block</option>
@@ -173,7 +182,6 @@ const EarTrainer: React.FC = () => {
           </div>
 
           {/* Add the new button as a fixed element on the right */}
-
 
           {/* {gameStarted && isStatOpen && renderRecords()} */}
           <div className="flex flex-col justify-end">
