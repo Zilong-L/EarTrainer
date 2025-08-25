@@ -14,7 +14,7 @@
 }
 
 .dark {
-  --bg-main: #1A1A1A;
+  --bg-main: #1a1a1a;
   --bg-common: #292929;
   --bg-accent: #404040;
   --text-primary: #eeeeee;
@@ -27,7 +27,7 @@
 }
 
 :root {
-  --bg-main: #1A1A1A;
+  --bg-main: #1a1a1a;
   --bg-common: #292929;
   --bg-accent: #404040;
   --text-primary: #eeeeee;
@@ -38,4 +38,3 @@
   --notification-text: #444444;
   --notification-bg: #d7d7d7;
 }
-

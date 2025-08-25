@@ -1,58 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no, viewport-fit=cover"
+    />
+    <meta name="description" content="" />
+    <title></title>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
-  <meta name="description" content="">
-  <title></title>
+    <!-- Themes (light + dark) -->
+    <link
+      rel="stylesheet"
+      media="(prefers-color-scheme: dark)"
+      href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css"
+    />
+    <link
+      rel="stylesheet"
+      media="(prefers-color-scheme: light)"
+      href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css"
+    />
 
-  <!-- Themes (light + dark) -->
-  <link rel="stylesheet" media="(prefers-color-scheme: dark)"
-    href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
-  <link rel="stylesheet" media="(prefers-color-scheme: light)"
-    href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+    <!-- Custom Styles -->
+    <style>
+      :root {
+        /* --theme-hue: 325; */
+      }
+    </style>
+  </head>
 
-  <!-- Custom Styles -->
-  <style>
-    :root {
-      /* --theme-hue: 325; */
-    }
-  </style>
-</head>
+  <body>
+    <div id="app"></div>
+    <script>
+      window.$docsify = {
+        name: 'EarTrainer',
+        repo: 'https://github.com/Zilong-L/EarTrainer.git',
+        loadSidebar: true,
+        loadNavbar: true,
+        alias: {
+          '/zh/.*/_sidebar.md': '/zh/_sidebar.md',
+          '/zh/(.*)': '/zh/$1',
+          '/en/.*/_sidebar.md': '/en/_sidebar.md',
+          '/en/(.*)': '/en/$1',
+          '/.*/_sidebar.md': '/en/_sidebar.md', // fallback
+          '/(.*)': '/en/$1',
+        },
+        subMaxLevel: 5,
+        sidebarDisplayLevel: 2,
+        maxLevel: 5,
+        autoHeader: true,
+      };
+    </script>
 
-<body>
-  <div id="app"></div>
-  <script>
-    window.$docsify = {
-      name: 'EarTrainer',
-      repo: 'https://github.com/Zilong-L/EarTrainer.git',
-      loadSidebar: true,
-      loadNavbar: true,
-      alias: {
-        '/zh/.*/_sidebar.md': '/zh/_sidebar.md',
-        '/zh/(.*)': '/zh/$1',
-        '/en/.*/_sidebar.md': '/en/_sidebar.md',
-        '/en/(.*)': '/en/$1',
-        '/.*/_sidebar.md': '/en/_sidebar.md',  // fallback
-        '/(.*)': '/en/$1'
-      },
-      subMaxLevel: 5,
-      sidebarDisplayLevel: 2,
-      maxLevel: 5,
-      autoHeader: true
-    }
-  </script>
+    <!-- Required -->
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
 
-  <!-- Required -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
-
-  <!-- Recommended -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
-</body>
-
+    <!-- Recommended -->
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
+  </body>
 </html>

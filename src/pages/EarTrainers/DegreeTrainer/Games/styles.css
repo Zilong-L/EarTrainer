@@ -49,6 +49,6 @@
   border-radius: 50%;
   width: 100%;
   padding-bottom: 100%;
-  animation: circularFill calc(var(--animation-duration) * 1.0) ease-out forwards;
+  animation: circularFill calc(var(--animation-duration) * 1) ease-out forwards;
   z-index: 0;
 }

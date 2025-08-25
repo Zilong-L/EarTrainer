@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import uPlot from 'uplot';
 import 'uplot/dist/uPlot.min.css';
 import { useTranslation } from 'react-i18next';
@@ -127,7 +127,11 @@ const Statistics: React.FC<StatisticsProps> = () => {
   }, [practiceRecords]);
 
   const handleDeleteConfirm = (): void => {
-    localStorage.removeItem('degreeTrainerRecords');
+    try {
+      localStorage.removeItem('degreeTrainerRecords');
+    } catch (error) {
+      console.warn('Failed to remove records from localStorage:', error);
+    }
     setPracticeRecords({});
     setIsDeleteConfirmOpen(false);
   };

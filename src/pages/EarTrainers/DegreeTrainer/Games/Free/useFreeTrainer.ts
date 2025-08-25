@@ -35,7 +35,12 @@ const useFreeTrainer = () => {
   const playNoteTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const setCustomNotes = (notes: typeof degrees) => {
     _setCustomNotes(notes as any);
-    localStorage.setItem('degreeTrainerCustomNotes', JSON.stringify(notes));
+    try {
+      localStorage.setItem('degreeTrainerCustomNotes', JSON.stringify(notes));
+    } catch (error) {
+      console.warn('Failed to save custom notes to localStorage:', error);
+      // 继续执行，仅内存状态生效
+    }
   };
   const handleDegreeToggle = (index: number) => {
     const newCustomNotes = [...(customNotes as any)];
@@ -52,12 +57,19 @@ const useFreeTrainer = () => {
   };
 
   useEffect(() => {
-    const cached = localStorage.getItem('degreeTrainerCustomNotes');
-    if (!cached) return;
     try {
-      const parsed = JSON.parse(cached);
-      setCustomNotes(parsed);
-    } catch {}
+      const cached = localStorage.getItem('degreeTrainerCustomNotes');
+      if (!cached) return;
+      try {
+        const parsed = JSON.parse(cached);
+        setCustomNotes(parsed);
+      } catch {
+        // ignore corrupt value
+      }
+    } catch (error) {
+      console.warn('Failed to read custom notes from localStorage:', error);
+      // 使用默认值，继续执行
+    }
   }, []);
 
   const drone = getDroneInstance();

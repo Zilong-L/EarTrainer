@@ -6,6 +6,7 @@ import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginReactRefresh from "eslint-plugin-react-refresh";
 import prettier from "eslint-plugin-prettier";
 import prettierConfig from "eslint-config-prettier";
+import unusedImports from "eslint-plugin-unused-imports";
 
 export default tseslint.config(
   { ignores: ["dist", "node_modules", "public", "scripts/**/*", "*.config.js", "*.config.ts"] },
@@ -33,11 +34,23 @@ export default tseslint.config(
     },
     plugins: {
       prettier: prettier,
+      "unused-imports": unusedImports,
     },
     rules: {
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-unused-expressions": "warn",
       "@typescript-eslint/no-empty-object-type": "warn",
+      "@typescript-eslint/no-unused-vars": "off", // 关闭默认规则，使用 unused-imports 插件
+      "unused-imports/no-unused-imports": "error",
+      "unused-imports/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+          "caughtErrorsIgnorePattern": "^_",
+          "ignoreRestSiblings": true
+        }
+      ],
       ...prettierConfig.rules,
       "prettier/prettier": "error",
     },

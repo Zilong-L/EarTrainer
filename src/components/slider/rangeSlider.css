@@ -57,15 +57,15 @@
 
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
-  input[type="range"] {
+  input[type='range'] {
     background: var(--bg-common);
   }
 
-  input[type="range"]::-webkit-slider-runnable-track {
+  input[type='range']::-webkit-slider-runnable-track {
     background: var(--bg-common);
   }
 
-  input[type="range"]::-moz-range-track {
+  input[type='range']::-moz-range-track {
     background: var(--bg-common);
   }
 }
@@ -92,7 +92,7 @@
 }
 
 .range-values:before {
-  content: "";
+  content: '';
   position: absolute;
   height: 0;
   width: 0;
@@ -183,13 +183,10 @@
 
 /* Modal scrollbar handling */
 
-
 /* Focus styles */
 .range-slider:focus {
   outline: none;
 }
-
-
 
 .range-slider:focus::-moz-range-thumb {
   outline: 2px solid var(--notification-bg);

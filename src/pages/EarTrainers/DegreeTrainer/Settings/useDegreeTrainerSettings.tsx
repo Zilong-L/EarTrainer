@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
-import { useLocalStorage } from '@uidotdev/usehooks';
+import useSafeLocalStorage from '../hooks/useSafeLocalStorage';
 import useVolumeSettings from '@EarTrainers/DegreeTrainer/Settings/VolumeSettings/useVolumeSettings';
 import usePracticeSettings from '@EarTrainers/DegreeTrainer/Settings/PracticeSettings/usePracticeSettings';
 import useStatistics from '@EarTrainers/DegreeTrainer/Settings/Statistics/useStatistics';
@@ -34,7 +34,10 @@ export const DegreeTrainerSettingsProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [mode, setMode] = useLocalStorage<string>('degreeTrainerMode', 'free');
+  const [mode, setMode] = useSafeLocalStorage<string>(
+    'degreeTrainerMode',
+    'free'
+  );
   const [isHandfree, setIsHandfree] = useState(false);
   const volume = useVolumeSettings();
   const practice = usePracticeSettings();
