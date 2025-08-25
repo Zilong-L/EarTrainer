@@ -33,6 +33,7 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "warn", // Make any usage a warning instead of error
       "@typescript-eslint/no-unused-expressions": "warn",
       "@typescript-eslint/no-empty-object-type": "warn",
+      "indent": ["error", 2], // 2个空格缩进
     },
   },
   

@@ -71,7 +71,7 @@ const EarTrainer: React.FC = () => {
 
   useEffect(() => {
     setNamespace('degreeTrainer')
-  }, [])
+  }, [setNamespace])
   // Start game based on mode when component mounts
 
   const components = [

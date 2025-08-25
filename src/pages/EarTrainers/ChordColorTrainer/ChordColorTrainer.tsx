@@ -72,7 +72,7 @@ const EarTrainer: React.FC = () => {
     return () => {
       endGame();
     };
-  }, []);
+  }, [setNamespace, endGame]);
 
   // useEffect(() => {
   //   const handleKeyPress = (event) => {

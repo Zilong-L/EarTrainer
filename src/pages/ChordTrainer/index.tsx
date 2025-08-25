@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import useI18nStore from '@stores/i18nStore';
 
@@ -8,7 +8,9 @@ import ChordPracticeGame from './pages/ChordPracticeGame';
 
 const ChordTrainer: React.FC = () => {
   const setNamespace = useI18nStore((state) => state.setNamespace);
-  setNamespace('chordGame')
+  useEffect(() => {
+    setNamespace('chordGame')
+  }, [setNamespace])
   return (
     <div className="flex flex-col h-[100vh]">
       <Routes>
