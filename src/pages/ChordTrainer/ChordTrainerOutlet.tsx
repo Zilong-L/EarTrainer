@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Toaster } from 'react-hot-toast';
 import useI18nStore from '@stores/i18nStore';
 
 import { Link, Outlet } from 'react-router-dom';
@@ -51,6 +52,7 @@ function ChordTrainerOutlet() {
       <div className="flex-1 pt-20 overflow-y-auto bg-bg-main">
         <Outlet />
       </div>
+      <Toaster />
     </div>
   );
 }
