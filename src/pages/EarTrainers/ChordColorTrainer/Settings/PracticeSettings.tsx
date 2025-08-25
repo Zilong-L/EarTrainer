@@ -43,7 +43,7 @@ const PracticeSettings: React.FC = () => {
         0
       );
       if (totalSelected <= 1) {
-        toast.error('至少保留一个和弦类型');
+        toast.error('至少保留一个和弦类型', { id: 'settings-error' });
         return; // disallow removing the last remaining selection
       }
       newDegreeChordTypes[degreeIndex].chordTypes = chordTypes.filter(

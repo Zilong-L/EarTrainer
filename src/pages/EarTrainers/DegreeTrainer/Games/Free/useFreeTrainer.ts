@@ -43,7 +43,7 @@ const useFreeTrainer = () => {
     if (isCurrentlyEnabled) {
       const enabledCount = newCustomNotes.filter(n => n.enable).length;
       if (enabledCount <= 1) {
-        toast.error('至少保留一个音级');
+        toast.error('至少保留一个音级', { id: 'settings-error' });
         return; // disallow disabling the last one
       }
     }
