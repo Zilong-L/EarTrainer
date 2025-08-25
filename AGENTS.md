@@ -34,10 +34,12 @@ Notes: Use Node 22 (see `README.md`). After build, `scripts/update-html.sh` upda
   - `npm run preview` to test production build behavior.
 - If adding tests, prefer Vitest + React Testing Library; name files `*.test.ts(x)` next to source.
 
-## Commit & Pull Request Guidelines
-- Commits: Follow Conventional Commits (e.g., `feat: ...`, `fix: ...`, `refactor: ...`).
-- PRs: Small, focused changes. Include description, linked issues, screenshots/GIFs for UI changes, and notes on i18n or audio impacts.
-- Quality gate: Run `npm run lint` and `npm run format:check`; ensure build passes.
+## Commit & PR Workflow
+- Solo development: merge to `main` and push directly is OK.
+- Branches (optional for risky work): `git checkout -b feat/xyz`; merge back with `git merge --ff-only feat/xyz` or rebase; `git push origin main`.
+- Commits: use Conventional Commits (e.g., `feat: ...`, `fix: ...`, `refactor: ...`).
+- PRs: optional; if used, keep small and add screenshots for UI changes.
+- Quality gate: run `npm run lint` and `npm run format:check`; ensure `npm run build` succeeds locally.
 
 ## Security & Configuration Tips
 - Avoid committing large binaries; place stable assets under `public/` or `src/assets/`.
