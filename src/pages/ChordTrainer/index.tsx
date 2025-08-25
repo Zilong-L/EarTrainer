@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import { Routes, Route } from 'react-router-dom';
 import useI18nStore from '@stores/i18nStore';
 
@@ -10,6 +11,11 @@ const ChordTrainer: React.FC = () => {
   const setNamespace = useI18nStore(state => state.setNamespace);
   useEffect(() => {
     setNamespace('chordGame');
+    // Clear lingering settings-error toasts when entering ChordTrainer
+    toast.dismiss('settings-error');
+    return () => {
+      toast.dismiss('settings-error');
+    };
   }, [setNamespace]);
   return (
     <div className="flex flex-col h-[100vh]">

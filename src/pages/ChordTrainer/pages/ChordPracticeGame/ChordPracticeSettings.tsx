@@ -1,4 +1,5 @@
 import React from 'react';
+import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import useI18nStore from '@stores/i18nStore';
 import { ChordType } from 'tonal';
@@ -46,9 +47,11 @@ const ChordPracticeSettings: React.FC = () => {
       ? selectedChordTypes.filter(c => c !== alias)
       : [...selectedChordTypes, alias];
 
-    if (newSelectedChords.length > 0) {
-      setSelectedChordTypes(newSelectedChords);
+    if (newSelectedChords.length === 0) {
+      toast.error('至少保留一个和弦类型', { id: 'settings-error' });
+      return;
     }
+    setSelectedChordTypes(newSelectedChords);
   };
 
   const handleInversionSelect = (inversion: string) => {
@@ -56,9 +59,11 @@ const ChordPracticeSettings: React.FC = () => {
       ? selectedInversions.filter(i => i !== inversion)
       : [...selectedInversions, inversion];
 
-    if (newSelectedInversions.length > 0) {
-      setSelectedInversions(newSelectedInversions);
+    if (newSelectedInversions.length === 0) {
+      toast.error('至少保留一个转位', { id: 'settings-error' });
+      return;
     }
+    setSelectedInversions(newSelectedInversions);
   };
 
   const isSeventhSelected = selectedChordTypes.some(
