@@ -41,6 +41,11 @@ Notes: Use Node 22 (see `README.md`). After build, `scripts/update-html.sh` upda
 - PRs: optional; if used, keep small and add screenshots for UI changes.
 - Quality gate: run `npm run lint` and `npm run format:check`; ensure `npm run build` succeeds locally.
 
+## Agent Instructions
+- After code changes: do not push immediately. First, summarize what changed (files, rationale, notable UX/behavior), then wait for the maintainer to verify.
+- Only push/merge after explicit approval. If requested, include the exact `git` commands you plan to run.
+- For risky ops (history rewrites, deletes), ask before committing. Prefer fast‑forward merges to `main`.
+
 ## Security & Configuration Tips
 - Avoid committing large binaries; place stable assets under `public/` or `src/assets/`.
 - No runtime secrets; keep console/debugger out of production (esbuild drops them in build).
