@@ -117,18 +117,56 @@ public/
 6. **Documentation**: Update relevant docs if adding significant features
 
 ## Git Workflow & Agent Instructions
+
+### Complete Feature Development Workflow
+1. **Feature Branch Creation**
+   ```bash
+   git checkout -b feat/feature-name
+   ```
+
+2. **Development Phase**
+   - Make changes and commits on the feature branch
+   - Ensure code quality: `npm run lint`, `npm run format:check`, `npm run build`
+   - Test functionality thoroughly
+
+3. **Feature Completion & Merge**
+   ```bash
+   # Save current branch name
+   orig=$(git rev-parse --abbrev-ref HEAD)
+   
+   # Switch to main and merge with --no-ff
+   git checkout main
+   git merge --no-ff feat/feature-name
+   
+   # Push to remote
+   git push
+   
+   # CRITICAL: Immediately switch back to original branch
+   git checkout "$orig"
+   ```
+
+4. **Branch Cleanup** (optional)
+   ```bash
+   # Delete the merged feature branch
+   git branch -d feat/feature-name
+   ```
+
+### Branch Strategy Guidelines
 - **Branch-first workflow**: Create feature branches for non-trivial changes (`git checkout -b feat/xyz`)
-- **Merge strategy**: Prefer merge commits to preserve branch history — use `git merge --no-ff feat/xyz`
+- **Merge strategy**: Always use merge commits to preserve branch history (`git merge --no-ff`)
 - **Main branch**: Avoid direct commits to `main` except trivial docs/typos
 - **Quality gate**: Ensure `npm run lint`, `npm run format:check`, and `npm run build` succeed locally
 
 ### Agent Behavior Guidelines
 - **After code changes**: Do not push immediately. First, summarize what changed (files, rationale, notable UX/behavior), then wait for maintainer verification
 - **Only push/merge after explicit approval**. If requested, include the exact `git` commands planned
-- **Merge policy**: For branches, perform merge commits (no fast-forward) to preserve branch history
-- **Post-merge cleanup**: After merging to `main`, immediately switch back to original working branch to avoid occupying `main` in other worktrees
-  - Example: `orig=$(git rev-parse --abbrev-ref HEAD); git checkout main && git merge --no-ff <branch> && git push && git checkout "$orig"`
+- **Post-merge cleanup**: **CRITICAL** - After merging to `main`, immediately switch back to original working branch to avoid occupying `main` in other worktrees
 - **Avoid rewriting published history** without explicit permission
+
+### Why Switch Back After Merge?
+- Multiple worktrees may be using the same repository
+- Staying on `main` after merge blocks other agents/developers from working on `main`
+- Always return to the original working branch to maintain workflow isolation
 
 ## Build Commands
 - `npm run dev`: Start Vite dev server (with `--host`)
