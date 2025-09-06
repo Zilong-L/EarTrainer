@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Frequency } from 'tone';
 import {
@@ -11,6 +11,7 @@ import RangeSlider from '@components/slider/RangeSlider';
 
 import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
 import useI18nStore from '@stores/i18nStore';
+import CustomListbox from '@components/Listbox';
 
 const PracticeSettings: React.FC = () => {
   const { namespace } = useI18nStore();
@@ -31,6 +32,14 @@ const PracticeSettings: React.FC = () => {
   } = useChordColorTrainerSettingsStore();
   const [newPresetName, setNewPresetName] = useState('');
   const [editingPreset, setEditingPreset] = useState<string | null>(null);
+  const presetOptions = useMemo(
+    () => [
+      ...Object.keys(chordPreset).filter(presetName => presetName !== 'custom'),
+      ...Object.keys(customPresets),
+      'custom',
+    ],
+    [customPresets]
+  );
 
   const handleChordTypeToggle = (degreeIndex: number, chordType: string) => {
     const newDegreeChordTypes = [...degreeChordTypes];
@@ -159,11 +168,11 @@ const PracticeSettings: React.FC = () => {
 
       {/* Preset Selector */}
       <div className="space-y-2 ">
-        <label className="block text-sm font-medium text-text-primary">
-          {t('practiceSettings.selectPreset')}
-        </label>
         {editingPreset === preset ? (
           <div className="flex items-center space-x-2">
+            <label className="block text-sm font-medium text-text-primary">
+              {t('practiceSettings.selectPreset')}
+            </label>
             <input
               type="text"
               value={newPresetName}
@@ -178,25 +187,15 @@ const PracticeSettings: React.FC = () => {
             </button>
           </div>
         ) : (
-          <select
+          <CustomListbox
             value={preset}
-            onChange={e => handlePresetChange(e.target.value)}
-            className="w-full px-4 py-2 border border-bg-accent rounded-lg bg-bg-main text-text-primary focus:ring-2 focus:ring-accent focus:border-accent"
-          >
-            {Object.keys(chordPreset)
-              .filter(presetName => presetName !== 'custom')
-              .map(presetName => (
-                <option key={presetName} value={presetName}>
-                  {presetName}
-                </option>
-              ))}
-            {Object.keys(customPresets).map(presetName => (
-              <option key={presetName} value={presetName}>
-                {presetName}
-              </option>
-            ))}
-            <option value="custom">{t('practiceSettings.custom')}</option>
-          </select>
+            onChange={handlePresetChange}
+            options={presetOptions}
+            label={t('practiceSettings.selectPreset')}
+            getLabel={(opt: string) =>
+              opt === 'custom' ? (t('practiceSettings.custom') as string) : opt
+            }
+          />
         )}
         <div className="flex items-center space-x-2  right-0 top-8">
           <button
