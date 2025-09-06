@@ -1,5 +1,5 @@
 import { Frequency, isNumber, now } from 'tone';
-import { degrees } from '@EarTrainers/DegreeTrainer/Constants';
+import { degrees, ORDERED_DEGREES } from '@EarTrainers/DegreeTrainer/Constants';
 import { Note, Range } from 'tonal';
 import { preloadAudio } from '@utils/Tone/samplers';
 import { Dispatch, SetStateAction } from 'react';
@@ -14,7 +14,7 @@ const getNextNote = (
       possibleNotesInRange[
         Math.floor(Math.random() * possibleNotesInRange.length)
       ] ?? null;
-  } while (nextNote === currentNote && possibleNotesInRange.length < 3);
+  } while (nextNote === currentNote && possibleNotesInRange.length >= 3);
   return nextNote;
 };
 
@@ -30,9 +30,8 @@ const calculateDegree = (
   }
   const interval =
     (((guessedNoteMidi - Frequency(targetNote).toMidi()) % 12) + 12) % 12;
-  return (
-    degrees.find(degree => degree.distance === interval)?.name || 'Unknown'
-  );
+  const found = ORDERED_DEGREES.find(d => degrees[d].distance === interval);
+  return found ? degrees[found].symbol : 'Unknown';
 };
 
 const calculateInterval = (

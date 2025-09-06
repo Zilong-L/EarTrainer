@@ -9,7 +9,7 @@ import Button from '@components/Button';
 import { motion } from 'motion/react';
 
 interface Note {
-  name: string;
+  symbol: string;
   distance: number;
 }
 
@@ -127,12 +127,12 @@ const CardStack: React.FC<CardStackProps> = ({
                 <span className="select-none">
                   {useSolfege
                     ? SolfegeMapping[
-                        note.name as keyof typeof SolfegeMapping
-                      ] || note.name
-                    : note.name}
+                        note.symbol as keyof typeof SolfegeMapping
+                      ] || note.symbol
+                    : note.symbol}
                 </span>
                 <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm font-medium">
-                  {shortcuts[note.name as keyof typeof shortcuts]}
+                  {shortcuts[note.symbol as keyof typeof shortcuts]}
                 </div>
               </motion.div>
             );
@@ -155,7 +155,7 @@ const CardStack: React.FC<CardStackProps> = ({
 
           return (
             <motion.div
-              key={note.name}
+              key={note.symbol}
               initial={{ scale: 1 }}
               whileTap={{ scale: 0.95 }}
               className="w-[30%]"
@@ -177,9 +177,10 @@ const CardStack: React.FC<CardStackProps> = ({
                 data-note={noteName.slice(0, -1)}
               >
                 {useSolfege
-                  ? SolfegeMapping[note.name as keyof typeof SolfegeMapping] ||
-                    note.name
-                  : note.name}
+                  ? SolfegeMapping[
+                      note.symbol as keyof typeof SolfegeMapping
+                    ] || note.symbol
+                  : note.symbol}
               </Button>
             </motion.div>
           );

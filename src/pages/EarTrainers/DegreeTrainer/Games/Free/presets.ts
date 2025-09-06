@@ -1,51 +1,148 @@
-export interface ModeDef {
-  name: string;
-  intervals: number[]; // semitone offsets within scale
-}
+import { DegreePreset, ScaleDegree } from '@EarTrainers/DegreeTrainer/utils/presets';
 
-export const modes: Record<string, ModeDef> = {
-  // Major modes
+// Define modes directly with semantic ScaleDegree lists for clarity
+export const freeModePresets: Record<string, DegreePreset> = {
   ionian: {
+    id: 'ionian',
     name: 'Ionian (Major)',
-    intervals: [0, 2, 4, 5, 7, 9, 11],
+    enabledDegrees: [
+      ScaleDegree.First,
+      ScaleDegree.Two,
+      ScaleDegree.Three,
+      ScaleDegree.Fourth,
+      ScaleDegree.Fifth,
+      ScaleDegree.Six,
+      ScaleDegree.Seven,
+    ],
+    source: 'free',
   },
   dorian: {
+    id: 'dorian',
     name: 'Dorian',
-    intervals: [0, 2, 3, 5, 7, 9, 10],
+    enabledDegrees: [
+      ScaleDegree.First,
+      ScaleDegree.Two,
+      ScaleDegree.FlatThree,
+      ScaleDegree.Fourth,
+      ScaleDegree.Fifth,
+      ScaleDegree.Six,
+      ScaleDegree.FlatSeven,
+    ],
+    source: 'free',
   },
   phrygian: {
+    id: 'phrygian',
     name: 'Phrygian',
-    intervals: [0, 1, 3, 5, 7, 8, 10],
+    enabledDegrees: [
+      ScaleDegree.First,
+      ScaleDegree.FlatTwo,
+      ScaleDegree.FlatThree,
+      ScaleDegree.Fourth,
+      ScaleDegree.Fifth,
+      ScaleDegree.FlatSix,
+      ScaleDegree.FlatSeven,
+    ],
+    source: 'free',
   },
   lydian: {
+    id: 'lydian',
     name: 'Lydian',
-    intervals: [0, 2, 4, 6, 7, 9, 11],
+    enabledDegrees: [
+      ScaleDegree.First,
+      ScaleDegree.Two,
+      ScaleDegree.Three,
+      ScaleDegree.FlatFifth,
+      ScaleDegree.Fifth,
+      ScaleDegree.Six,
+      ScaleDegree.Seven,
+    ],
+    source: 'free',
   },
   mixolydian: {
+    id: 'mixolydian',
     name: 'Mixolydian',
-    intervals: [0, 2, 4, 5, 7, 9, 10],
+    enabledDegrees: [
+      ScaleDegree.First,
+      ScaleDegree.Two,
+      ScaleDegree.Three,
+      ScaleDegree.Fourth,
+      ScaleDegree.Fifth,
+      ScaleDegree.Six,
+      ScaleDegree.FlatSeven,
+    ],
+    source: 'free',
   },
   aeolian: {
+    id: 'aeolian',
     name: 'Aeolian (Natural Minor)',
-    intervals: [0, 2, 3, 5, 7, 8, 10],
+    enabledDegrees: [
+      ScaleDegree.First,
+      ScaleDegree.Two,
+      ScaleDegree.FlatThree,
+      ScaleDegree.Fourth,
+      ScaleDegree.Fifth,
+      ScaleDegree.FlatSix,
+      ScaleDegree.FlatSeven,
+    ],
+    source: 'free',
   },
   locrian: {
+    id: 'locrian',
     name: 'Locrian',
-    intervals: [0, 1, 3, 5, 6, 8, 10],
+    enabledDegrees: [
+      ScaleDegree.First,
+      ScaleDegree.FlatTwo,
+      ScaleDegree.FlatThree,
+      ScaleDegree.Fourth,
+      ScaleDegree.FlatFifth,
+      ScaleDegree.FlatSix,
+      ScaleDegree.FlatSeven,
+    ],
+    source: 'free',
   },
-
   naturalMinor: {
+    id: 'naturalMinor',
     name: 'Natural Minor',
-    intervals: [0, 2, 3, 5, 7, 8, 10],
+    enabledDegrees: [
+      ScaleDegree.First,
+      ScaleDegree.Two,
+      ScaleDegree.FlatThree,
+      ScaleDegree.Fourth,
+      ScaleDegree.Fifth,
+      ScaleDegree.FlatSix,
+      ScaleDegree.FlatSeven,
+    ],
+    source: 'free',
   },
   harmonicMinor: {
+    id: 'harmonicMinor',
     name: 'Harmonic Minor',
-    intervals: [0, 2, 3, 5, 7, 8, 11],
+    enabledDegrees: [
+      ScaleDegree.First,
+      ScaleDegree.Two,
+      ScaleDegree.FlatThree,
+      ScaleDegree.Fourth,
+      ScaleDegree.Fifth,
+      ScaleDegree.FlatSix,
+      ScaleDegree.Seven,
+    ],
+    source: 'free',
   },
-
-  // Melodic minor modes
   melodicMinor: {
+    id: 'melodicMinor',
     name: 'Melodic Minor',
-    intervals: [0, 2, 3, 5, 7, 9, 11],
+    enabledDegrees: [
+      ScaleDegree.First,
+      ScaleDegree.Two,
+      ScaleDegree.FlatThree,
+      ScaleDegree.Fourth,
+      ScaleDegree.Fifth,
+      ScaleDegree.Six,
+      ScaleDegree.Seven,
+    ],
+    source: 'free',
   },
 };
+
+export const getPresetById = (id: string): DegreePreset | undefined =>
+  freeModePresets[id];

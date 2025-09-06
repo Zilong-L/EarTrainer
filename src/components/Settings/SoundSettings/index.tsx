@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import useI18nStore from '@stores/i18nStore';
 import HorizontalSlider from '@components/slider/HorizontalSlider';
+import CustomListbox from '@components/Listbox';
 const instrumentsList = [
   'bass-electric',
   'bassoon',
@@ -67,22 +68,14 @@ const SoundSettings: React.FC = () => {
     <div className="p-6 space-y-12 max-w-[800px] mx-auto">
       {/* Quality Selector */}
       <div className="space-y-3">
-        <label className="block text-sm font-medium text-text-primary mb-2">
-          {t('settings.qualityLabel')}
-        </label>
-        <select
+        <CustomListbox
           value={selectedQuality}
-          onChange={event =>
-            changeInstrument(selectedInstrument, event.target.value)
-          }
-          disabled={isLoadingInstrument}
-          className="w-full px-4 py-2 border border-bg-accent rounded-lg bg-bg-main text-text-primary focus:ring-2 focus:ring-accent focus:border-accent disabled:opacity-50"
-        >
-          <option value="low">{t('settings.quality.low')}</option>
-          <option value="medium">{t('settings.quality.medium')}</option>
-          <option value="high">{t('settings.quality.high')}</option>
-          <option value="full">{t('settings.quality.full')}</option>
-        </select>
+          onChange={value => changeInstrument(selectedInstrument, value)}
+          options={['low', 'medium', 'high', 'full']}
+          label={t('settings.qualityLabel')}
+          t={t}
+          translationPath="settings.quality"
+        />
       </div>
 
       {/* Drone Effects */}

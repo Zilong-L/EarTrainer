@@ -8,6 +8,7 @@ interface CustomListboxProps {
   label: string;
   t?: (key: string) => string;
   translationPath?: string;
+  getLabel?: (value: string) => string;
 }
 
 function classNames(...classes: string[]) {
@@ -21,6 +22,7 @@ const CustomListbox = ({
   label,
   t,
   translationPath,
+  getLabel,
 }: CustomListboxProps) => {
   return (
     <Listbox value={value} onChange={onChange}>
@@ -32,9 +34,11 @@ const CustomListbox = ({
           <div className="relative">
             <Listbox.Button className="relative w-full cursor-default rounded-lg bg-bg-common py-3 pl-3 pr-10 text-left text-text-primary shadow-sm ring-1 ring-inset ring-bg-accent focus:outline-none focus:ring-2 focus:ring-notification-bg sm:text-sm sm:leading-6">
               <span className="block truncate">
-                {translationPath && t
-                  ? t(`${translationPath}.${value}`)
-                  : value}
+                {getLabel
+                  ? getLabel(value)
+                  : translationPath && t
+                    ? t(`${translationPath}.${value}`)
+                    : value}
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronUpDownIcon
@@ -66,9 +70,11 @@ const CustomListbox = ({
                           'block truncate'
                         )}
                       >
-                        {translationPath && t
-                          ? t(`${translationPath}.${option}`)
-                          : option}
+                        {getLabel
+                          ? getLabel(option)
+                          : translationPath && t
+                            ? t(`${translationPath}.${option}`)
+                            : option}
                       </span>
                     </>
                   )}

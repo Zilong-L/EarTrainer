@@ -14,7 +14,11 @@ import LanguageSwitcher from '@components/LanguageSwitcher';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import { useTranslation } from 'react-i18next';
 import { Toaster, toast } from 'react-hot-toast';
-import { keyMap, degrees } from '@EarTrainers/DegreeTrainer/Constants';
+import {
+  keyMap,
+  degrees,
+  ORDERED_DEGREES,
+} from '@EarTrainers/DegreeTrainer/Constants';
 import { Note } from 'tonal';
 import { Frequency } from 'tone';
 import useI18nStore from '@stores/i18nStore';
@@ -102,8 +106,9 @@ const EarTrainer: React.FC = () => {
         degreeIndex = keyMap[key];
       }
       if (degreeIndex !== undefined) {
+        const degEnum = ORDERED_DEGREES[degreeIndex];
         const noteName = Note.pitchClass(
-          Note.transpose(rootNote, degrees[degreeIndex].interval)
+          Note.transpose(rootNote, degrees[degEnum].interval)
         ); // 获取对应的音符名称
         const enharmonicNote = Note.enharmonic(noteName); // 获取对应的音符名称
 

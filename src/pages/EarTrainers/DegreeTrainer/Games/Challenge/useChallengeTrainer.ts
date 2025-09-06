@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { Transport } from 'tone';
 import {
   degrees,
+  ORDERED_DEGREES,
   initialUserProgress,
   DEGREES_MAP,
   type UserProgress,
@@ -9,7 +10,7 @@ import {
 import { getDroneInstance } from '@utils/Tone/samplers';
 import { playNotes } from '@utils/Tone/playbacks';
 import toast from 'react-hot-toast';
-import { useLocalStorage } from '@uidotdev/usehooks';
+import useChallengeStore from './stores/challengeStore';
 import {
   getNextNote,
   getPossibleNotesInRange,
@@ -30,18 +31,15 @@ const useChallengeTrainer = () => {
     },
   } = useDegreeTrainerSettings();
 
-  const [currentLevel, setCurrentLevel] = useLocalStorage<number>(
-    'degreeTrainerCurrentLevel',
-    1
-  );
-  const [userProgress, setUserProgress] = useLocalStorage<UserProgress[]>(
-    'degreeTrainerUserProgress',
-    initialUserProgress
-  );
-  const [progressVersion, setProgressVersion] = useLocalStorage<number>(
-    'degreeTrainerProgressVersion',
-    0
-  );
+  const {
+    currentLevel,
+    setCurrentLevel,
+    userProgress,
+    setUserProgress,
+    progressVersion,
+    setProgressVersion,
+    resetUserProgress,
+  } = useChallengeStore();
   const [isPlayingSound, setIsPlayingSound] = useState(false);
   const playNoteTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -67,10 +65,7 @@ const useChallengeTrainer = () => {
     });
   };
 
-  const resetUserProgress = () => {
-    setUserProgress(initialUserProgress);
-    setCurrentLevel(0);
-  };
+  // resetUserProgress provided by store
 
   useEffect(() => {
     if (progressVersion === 0) {
@@ -136,9 +131,12 @@ const useChallengeTrainer = () => {
   const drone = getDroneInstance();
 
   const currentNotes = useMemo(() => {
-    return degrees.map((note, index) => ({
-      ...note,
-      enable: DEGREES_MAP['LEVEL_' + (currentLevel + 1)][index],
+    const mask = DEGREES_MAP['LEVEL_' + (currentLevel + 1)];
+    return ORDERED_DEGREES.map((deg, index) => ({
+      symbol: degrees[deg].symbol,
+      distance: degrees[deg].distance,
+      interval: degrees[deg].interval,
+      enable: mask[index],
     }));
   }, [currentLevel]);
 
