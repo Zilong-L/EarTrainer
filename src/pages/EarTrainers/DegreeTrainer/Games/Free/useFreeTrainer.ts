@@ -9,12 +9,8 @@ import {
   handleGameLogic,
 } from '@utils/GameLogics';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
-import useDegreeFreeTrainerStore from '@stores/degreeFreeTrainerStore';
-import {
-  applyPresetToDegrees,
-  ScaleDegree,
-} from '@utils/DegreeTrainer/presets';
-import { ORDERED_DEGREES } from '@EarTrainers/DegreeTrainer/Constants';
+import useDegreeFreeTrainerStore from './stores/degreeFreeTrainerStore';
+import { applyPresetToDegrees, ScaleDegree } from '@EarTrainers/DegreeTrainer/utils/presets';
 
 const useFreeTrainer = () => {
   const {
@@ -42,9 +38,8 @@ const useFreeTrainer = () => {
   } = useDegreeFreeTrainerStore();
 
   const playNoteTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const handleDegreeToggle = (index: number) => {
-    const degreeEnum = ORDERED_DEGREES[index] as ScaleDegree;
-    toggleDegree(degreeEnum);
+  const handleDegreeToggle = (degree: ScaleDegree) => {
+    toggleDegree(degree);
   };
 
   // Custom notes persistence handled by Zustand store; no localStorage reads here

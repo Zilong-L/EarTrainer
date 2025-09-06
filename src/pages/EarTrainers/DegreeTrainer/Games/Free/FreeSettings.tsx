@@ -1,12 +1,17 @@
 import { useTranslation } from 'react-i18next';
 import useI18nStore from '@stores/i18nStore';
 import { freeModePresets, getPresetById } from './presets';
-import { ScaleDegree } from '@utils/DegreeTrainer/presets';
+import { ScaleDegree } from '@EarTrainers/DegreeTrainer/utils/presets';
 
-type DegreeNote = { symbol: string; distance: number; enable: boolean };
+type DegreeNote = {
+  degree: ScaleDegree;
+  symbol: string;
+  distance: number;
+  enable: boolean;
+};
 type FreeTrainerSettingsShape = {
   customNotes: DegreeNote[];
-  handleDegreeToggle: (index: number) => void;
+  handleDegreeToggle: (degree: ScaleDegree) => void;
   setEnabledDegrees: (enabled: ScaleDegree[]) => void;
   selectedMode: string;
   setSelectedMode: (v: string) => void;
@@ -60,10 +65,10 @@ function FreeSettings({
           {t('settings.SelectDegrees')}
         </label>
         <div className="grid grid-cols-3 gap-3">
-          {customNotes.map((note, index) => (
+          {customNotes.map((note) => (
             <div
               key={note.symbol}
-              onClick={() => handleDegreeToggle(index)}
+              onClick={() => handleDegreeToggle(note.degree)}
               className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-bg-main rounded"
             >
               <input

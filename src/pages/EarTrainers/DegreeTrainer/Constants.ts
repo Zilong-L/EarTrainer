@@ -3,7 +3,7 @@ interface App {
   path: string;
 }
 
-import { ScaleDegree } from '@utils/DegreeTrainer/presets';
+import { ScaleDegree } from '@EarTrainers/DegreeTrainer/utils/presets';
 
 interface Degree {
   degree: ScaleDegree; // semantic enum name

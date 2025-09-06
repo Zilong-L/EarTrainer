@@ -1,4 +1,4 @@
-import { DegreePreset, ScaleDegree } from '@utils/DegreeTrainer/presets';
+import { DegreePreset, ScaleDegree } from '@EarTrainers/DegreeTrainer/utils/presets';
 
 // Define modes directly with semantic ScaleDegree lists for clarity
 export const freeModePresets: Record<string, DegreePreset> = {

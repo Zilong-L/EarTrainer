@@ -2,7 +2,10 @@ import { create } from 'zustand';
 import { persist, PersistOptions } from 'zustand/middleware';
 import toast from 'react-hot-toast';
 import { DEFAULT_ENABLED_DEGREES } from '@EarTrainers/DegreeTrainer/Constants';
-import { ScaleDegree, distanceToDegree } from '@utils/DegreeTrainer/presets';
+import {
+  ScaleDegree,
+  distanceToDegree,
+} from '@EarTrainers/DegreeTrainer/utils/presets';
 
 interface FreeTrainerState {
   selectedMode: string;
