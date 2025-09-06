@@ -3,8 +3,11 @@ interface App {
   path: string;
 }
 
+import { ScaleDegree } from '@utils/DegreeTrainer/presets';
+
 interface Degree {
-  name: string;
+  degree: ScaleDegree; // semantic enum name
+  symbol: string; // display symbol like I, IIb, V etc.
   distance: number;
   enable: boolean;
   interval: string;
@@ -56,19 +59,42 @@ const shortcuts: Shortcuts = {
   VIIb: 'g',
 };
 
-const degrees: Degree[] = [
-  { name: 'I', distance: 0, enable: true, interval: '1P' }, // Perfect Unison
-  { name: 'IIb', distance: 1, enable: false, interval: '2m' }, // Minor Second
-  { name: 'II', distance: 2, enable: true, interval: '2M' }, // Major Second
-  { name: 'IIIb', distance: 3, enable: false, interval: '3m' }, // Minor Third
-  { name: 'III', distance: 4, enable: true, interval: '3M' }, // Major Third
-  { name: 'IV', distance: 5, enable: false, interval: '4P' }, // Perfect Fourth
-  { name: 'Vb', distance: 6, enable: false, interval: '4A' }, // Augmented Fourth (Tritone)
-  { name: 'V', distance: 7, enable: false, interval: '5P' }, // Perfect Fifth
-  { name: 'VIb', distance: 8, enable: false, interval: '6m' }, // Minor Sixth
-  { name: 'VI', distance: 9, enable: false, interval: '6M' }, // Major Sixth
-  { name: 'VIIb', distance: 10, enable: false, interval: '7m' }, // Minor Seventh
-  { name: 'VII', distance: 11, enable: false, interval: '7M' }, // Major Seventh
+const degrees: Record<ScaleDegree, Omit<Degree, 'degree' | 'enable'>> = {
+  [ScaleDegree.First]: { symbol: 'I', distance: 0, interval: '1P' },
+  [ScaleDegree.FlatTwo]: { symbol: 'IIb', distance: 1, interval: '2m' },
+  [ScaleDegree.Two]: { symbol: 'II', distance: 2, interval: '2M' },
+  [ScaleDegree.FlatThree]: { symbol: 'IIIb', distance: 3, interval: '3m' },
+  [ScaleDegree.Three]: { symbol: 'III', distance: 4, interval: '3M' },
+  [ScaleDegree.Fourth]: { symbol: 'IV', distance: 5, interval: '4P' },
+  [ScaleDegree.FlatFifth]: { symbol: 'Vb', distance: 6, interval: '4A' },
+  [ScaleDegree.Fifth]: { symbol: 'V', distance: 7, interval: '5P' },
+  [ScaleDegree.FlatSix]: { symbol: 'VIb', distance: 8, interval: '6m' },
+  [ScaleDegree.Six]: { symbol: 'VI', distance: 9, interval: '6M' },
+  [ScaleDegree.FlatSeven]: { symbol: 'VIIb', distance: 10, interval: '7m' },
+  [ScaleDegree.Seven]: { symbol: 'VII', distance: 11, interval: '7M' },
+};
+
+// Canonical order used across UI and masks
+const ORDERED_DEGREES: ScaleDegree[] = [
+  ScaleDegree.First,
+  ScaleDegree.FlatTwo,
+  ScaleDegree.Two,
+  ScaleDegree.FlatThree,
+  ScaleDegree.Three,
+  ScaleDegree.Fourth,
+  ScaleDegree.FlatFifth,
+  ScaleDegree.Fifth,
+  ScaleDegree.FlatSix,
+  ScaleDegree.Six,
+  ScaleDegree.FlatSeven,
+  ScaleDegree.Seven,
+];
+
+// Default enabled set (matches old defaults: I, II, III)
+const DEFAULT_ENABLED_DEGREES: ScaleDegree[] = [
+  ScaleDegree.First,
+  ScaleDegree.Two,
+  ScaleDegree.Three,
 ];
 
 const initialUserProgress: UserProgress[] = [
@@ -539,6 +565,8 @@ export {
   apps,
   keyMap,
   degrees,
+  ORDERED_DEGREES,
+  DEFAULT_ENABLED_DEGREES,
   initialUserProgress,
   SolfegeMapping,
   shortcuts,

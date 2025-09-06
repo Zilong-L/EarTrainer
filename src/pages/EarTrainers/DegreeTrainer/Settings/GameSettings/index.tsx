@@ -4,11 +4,11 @@ import FreeSettings from '@EarTrainers/DegreeTrainer/Games/Free/FreeSettings';
 import ChallengeSettings from '@EarTrainers/DegreeTrainer/Games/Challenge/ChallengeSettings';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 
-type DegreeNote = { name: string; distance: number; enable: boolean };
+type DegreeNote = { symbol: string; distance: number; enable: boolean };
 type FreeTrainerSettingsShape = {
   customNotes: DegreeNote[];
   handleDegreeToggle: (index: number) => void;
-  setCustomNotes: (notes: DegreeNote[]) => void;
+  setEnabledDegrees: (enabled: any[]) => void; // keep loose here; concrete type in component
   selectedMode: string;
   setSelectedMode: (v: string) => void;
 };

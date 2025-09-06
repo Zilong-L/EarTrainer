@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import useI18nStore from '@stores/i18nStore';
-import { modes } from './presets';
-import { degrees } from '@EarTrainers/DegreeTrainer/Constants';
+import { freeModePresets, getPresetById } from './presets';
+import { ScaleDegree } from '@utils/DegreeTrainer/presets';
 
-type DegreeNote = { name: string; distance: number; enable: boolean };
+type DegreeNote = { symbol: string; distance: number; enable: boolean };
 type FreeTrainerSettingsShape = {
   customNotes: DegreeNote[];
   handleDegreeToggle: (index: number) => void;
-  setCustomNotes: (notes: DegreeNote[]) => void;
+  setEnabledDegrees: (enabled: ScaleDegree[]) => void;
   selectedMode: string;
   setSelectedMode: (v: string) => void;
 };
@@ -20,24 +20,18 @@ function FreeSettings({
   const {
     customNotes,
     handleDegreeToggle,
-    setCustomNotes,
+    setEnabledDegrees,
     selectedMode,
     setSelectedMode,
   } = FreeTrainerSettings;
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
 
-  const handleModeSelect = (modeName: string) => {
-    setSelectedMode(modeName);
-    const mode = (
-      modes as Record<string, { name: string; intervals: number[] }>
-    )[modeName];
-    if (mode) {
-      const newNotes: DegreeNote[] = degrees.map(note => ({
-        ...note,
-        enable: mode.intervals.includes(note.distance),
-      }));
-      setCustomNotes(newNotes);
+  const handleModeSelect = (modeId: string) => {
+    setSelectedMode(modeId);
+    const preset = getPresetById(modeId);
+    if (preset) {
+      setEnabledDegrees(preset.enabledDegrees as ScaleDegree[]);
     }
   };
 
@@ -53,7 +47,7 @@ function FreeSettings({
           className="w-full px-4 py-2 border border-bg-accent rounded-lg bg-bg-main text-text-primary focus:ring-2 focus:ring-accent focus:border-accent"
         >
           <option value="">{t('settings.selectMode')}</option>
-          {Object.entries(modes).map(([key, mode]) => (
+          {Object.entries(freeModePresets).map(([key, mode]) => (
             <option key={key} value={key}>
               {mode.name}
             </option>
@@ -68,7 +62,7 @@ function FreeSettings({
         <div className="grid grid-cols-3 gap-3">
           {customNotes.map((note, index) => (
             <div
-              key={note.name}
+              key={note.symbol}
               onClick={() => handleDegreeToggle(index)}
               className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-bg-main rounded"
             >
@@ -78,7 +72,7 @@ function FreeSettings({
                 onChange={() => {}}
                 className="rounded"
               />
-              <span className="text-text-secondary">{note.name}</span>
+              <span className="text-text-secondary">{note.symbol}</span>
             </div>
           ))}
         </div>

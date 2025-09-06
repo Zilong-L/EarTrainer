@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
-import toast from 'react-hot-toast';
 import { Transport } from 'tone';
-import { degrees } from '@EarTrainers/DegreeTrainer/Constants';
 import { getDroneInstance } from '@utils/Tone/samplers';
 import { playNotes } from '@utils/Tone/playbacks';
 import {
@@ -11,6 +9,12 @@ import {
   handleGameLogic,
 } from '@utils/GameLogics';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
+import useDegreeFreeTrainerStore from '@stores/degreeFreeTrainerStore';
+import {
+  applyPresetToDegrees,
+  ScaleDegree,
+} from '@utils/DegreeTrainer/presets';
+import { ORDERED_DEGREES } from '@EarTrainers/DegreeTrainer/Constants';
 
 const useFreeTrainer = () => {
   const {
@@ -29,51 +33,33 @@ const useFreeTrainer = () => {
   const [isAdvance, setIsAdvance] = useState<'No' | 'Ready' | 'Next' | 'Now'>(
     'No'
   );
-  const [customNotes, _setCustomNotes] = useState(degrees);
-  const [selectedMode, setSelectedMode] = useState('');
+  const {
+    enabledDegrees,
+    setEnabledDegrees,
+    toggleDegree,
+    selectedMode,
+    setSelectedMode,
+  } = useDegreeFreeTrainerStore();
 
   const playNoteTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const setCustomNotes = (notes: typeof degrees) => {
-    _setCustomNotes(notes as any);
-    try {
-      localStorage.setItem('degreeTrainerCustomNotes', JSON.stringify(notes));
-    } catch (error) {
-      console.warn('Failed to save custom notes to localStorage:', error);
-      // 继续执行，仅内存状态生效
-    }
-  };
   const handleDegreeToggle = (index: number) => {
-    const newCustomNotes = [...(customNotes as any)];
-    const isCurrentlyEnabled = !!newCustomNotes[index].enable;
-    if (isCurrentlyEnabled) {
-      const enabledCount = newCustomNotes.filter(n => n.enable).length;
-      if (enabledCount <= 1) {
-        toast.error('至少保留一个音级', { id: 'settings-error' });
-        return; // disallow disabling the last one
-      }
-    }
-    newCustomNotes[index].enable = !newCustomNotes[index].enable;
-    setCustomNotes(newCustomNotes);
+    const degreeEnum = ORDERED_DEGREES[index] as ScaleDegree;
+    toggleDegree(degreeEnum);
   };
 
-  useEffect(() => {
-    try {
-      const cached = localStorage.getItem('degreeTrainerCustomNotes');
-      if (!cached) return;
-      try {
-        const parsed = JSON.parse(cached);
-        setCustomNotes(parsed);
-      } catch {
-        // ignore corrupt value
-      }
-    } catch (error) {
-      console.warn('Failed to read custom notes from localStorage:', error);
-      // 使用默认值，继续执行
-    }
-  }, []);
+  // Custom notes persistence handled by Zustand store; no localStorage reads here
 
   const drone = getDroneInstance();
-  const currentNotes = customNotes;
+  const currentNotes = useMemo(
+    () =>
+      applyPresetToDegrees({
+        id: 'current',
+        name: 'current',
+        enabledDegrees,
+        source: 'free',
+      }),
+    [enabledDegrees]
+  );
   const filteredNotes = currentNotes.filter(note => note.enable);
 
   const possibleNotesInRange = useMemo(
@@ -182,7 +168,7 @@ const useFreeTrainer = () => {
     gameState,
     activeNote,
     handleDegreeToggle,
-    customNotes,
+    customNotes: currentNotes,
     isAdvance,
     isHandfree,
     setIsAdvance,
@@ -194,7 +180,7 @@ const useFreeTrainer = () => {
     setGameState,
     useSolfege,
     isPlayingSound,
-    setCustomNotes,
+    setEnabledDegrees,
     selectedMode,
     setSelectedMode,
   } as const;
