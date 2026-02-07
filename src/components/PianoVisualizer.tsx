@@ -3,16 +3,27 @@ import { Note } from 'tonal';
 
 interface PianoVisualizerProps {
   targetChord?: string;
-  activeNotes: number[];
+  /**
+   * Backward-compat: if `pressedNotes`/`sustainedNotes` are omitted, `activeNotes`
+   * will be treated as "pressed" for rendering.
+   */
+  activeNotes?: number[];
+  /** Notes that are currently physically held down (note-on without note-off). */
+  pressedNotes?: number[];
+  /** Notes that are still sounding only due to sustain pedal (key released). */
+  sustainedNotes?: number[];
 }
 
 const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
   targetChord,
-  activeNotes,
+  activeNotes = [],
+  pressedNotes,
+  sustainedNotes,
 }) => {
   const startNote = 36; // C2
   const endNote = 84; // C6
-  const activeNotesSet = new Set(activeNotes);
+  const pressedNotesSet = new Set(pressedNotes ?? activeNotes);
+  const sustainedNotesSet = new Set(sustainedNotes ?? []);
   // let targetNotes = Chord.notes(targetChord).map((note) => Note.simplify(note));
   // targetNotes =[...targetNotes,...  targetNotes.map((note) => Note.enharmonic(note)) ]
 
@@ -57,7 +68,9 @@ const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
     return `${whiteKeyIndex * whiteKeyWidth + whiteKeyWidth * 0.7}%`;
   };
 
-  const isNoteActive = (midiNote: number) => activeNotesSet.has(midiNote);
+  const isNotePressed = (midiNote: number) => pressedNotesSet.has(midiNote);
+  const isNoteSustained = (midiNote: number) =>
+    !isNotePressed(midiNote) && sustainedNotesSet.has(midiNote);
 
   const whiteKeys = Array.from({ length: endNote - startNote + 1 })
     .map((_, index) => startNote + index)
@@ -77,8 +90,10 @@ const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
               key={midiNote}
               className={`relative flex-1 border border-gray-300 
                 ${
-                  isNoteActive(midiNote)
+                  isNotePressed(midiNote)
                     ? 'bg-notification-text shadow-inner'
+                    : isNoteSustained(midiNote)
+                      ? 'bg-notification-text opacity-60 shadow-inner'
                     : isTargetNote(midiNote) || isBassNote(midiNote)
                       ? 'bg-showcase-bg'
                       : 'bg-white hover:bg-gray-50'
@@ -107,8 +122,10 @@ const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
               }}
               className={`h-28 z-10 
                 ${
-                  isNoteActive(midiNote)
+                  isNotePressed(midiNote)
                     ? 'bg-notification-text shadow-lg'
+                    : isNoteSustained(midiNote)
+                      ? 'bg-notification-text opacity-60 shadow-lg'
                     : isTargetNote(midiNote) || isBassNote(midiNote)
                       ? 'bg-showcase-bg'
                       : 'shadow-lg bg-gray-900 hover:bg-gray-800'

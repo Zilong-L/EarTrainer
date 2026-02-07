@@ -21,6 +21,8 @@ interface Key {
 
 interface PianoVisualizerProps {
   activeNotes?: number[];
+  pressedNotes?: number[];
+  sustainedNotes?: number[];
   detectedChords?: string[];
 }
 
@@ -75,16 +77,22 @@ const getBlackKeyX = (midiNote: number, startNote: number): number => {
 // Updated getKeyColor to use MIDI notes
 function getKeyColor(
   midiNote: number,
-  activeMidiNotes: number[],
+  pressedMidiNotes: number[],
+  sustainedMidiNotes: number[],
   rootMidiNote: number | null,
   isBlackKey: boolean
 ): string {
   // Check if this specific MIDI note is the root note
   if (rootMidiNote === midiNote) return '#FFD700'; // Gold for root
 
-  // Check if this specific MIDI note is active
-  if (activeMidiNotes.includes(midiNote)) {
+  // Pressed keys (physically held down) - darker
+  if (pressedMidiNotes.includes(midiNote)) {
     return isBlackKey ? '#1565C0' : '#4FC3F7'; // Dark blue/light blue for active notes
+  }
+
+  // Sustained (key released but still sounding) - lighter
+  if (sustainedMidiNotes.includes(midiNote)) {
+    return isBlackKey ? 'rgba(21, 101, 192, 0.45)' : 'rgba(79, 195, 247, 0.45)';
   }
 
   // Default colors
@@ -93,6 +101,8 @@ function getKeyColor(
 
 const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
   activeNotes = [],
+  pressedNotes,
+  sustainedNotes,
   detectedChords = [],
 }) => {
   const playMidiSounds = useSoundSettingsStore(state => state.playMidiSounds);
@@ -102,6 +112,8 @@ const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
 
   // Get the lowest active note as the potential root (or null if none)
   const rootNoteMidi = activeNotes.length > 0 ? Math.min(...activeNotes) : null;
+  const pressedNotesEffective = pressedNotes ?? activeNotes;
+  const sustainedNotesEffective = sustainedNotes ?? [];
 
   const keys = generateKeys(START_NOTE, END_NOTE);
   const totalWhiteKeys = keys.filter(k => !k.isBlack).length;
@@ -162,7 +174,13 @@ const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
               y={SVG_PADDING_Y}
               width={key.width}
               height={key.height}
-              fill={getKeyColor(key.midi, activeNotes, rootNoteMidi, false)}
+              fill={getKeyColor(
+                key.midi,
+                pressedNotesEffective,
+                sustainedNotesEffective,
+                rootNoteMidi,
+                false
+              )}
               stroke="black"
               strokeWidth="1"
               onClick={() => handleKeyClick(key.midi)}
@@ -180,7 +198,13 @@ const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
               y={SVG_PADDING_Y}
               width={key.width}
               height={key.height}
-              fill={getKeyColor(key.midi, activeNotes, rootNoteMidi, true)}
+              fill={getKeyColor(
+                key.midi,
+                pressedNotesEffective,
+                sustainedNotesEffective,
+                rootNoteMidi,
+                true
+              )}
               stroke="black"
               strokeWidth="1"
               onClick={() => handleKeyClick(key.midi)}

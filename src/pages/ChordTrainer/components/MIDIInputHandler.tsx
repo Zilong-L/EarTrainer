@@ -22,6 +22,8 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({
   setActiveNotes,
   targetChord,
   detectedChords,
+  sustainedNotes,
+  setSustainedNotes,
   showDegree,
   setShowDegree,
 }) => {
@@ -63,7 +65,10 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({
       }
     }
 
-    setActiveNotes(Array.from(sustainedNotesSet).sort((a, b) => a - b));
+    const activeNotesArray = Array.from(sustainedNotesSet).sort((a, b) => a - b);
+    const sustainedOnlyArray = activeNotesArray.filter(n => !pressingNotes.has(n));
+    setActiveNotes(activeNotesArray);
+    setSustainedNotes(sustainedOnlyArray);
   };
 
   useEffect(() => {
@@ -91,6 +96,11 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({
     };
   }, []);
 
+  const sustainedNotesSetForRender = new Set(sustainedNotes);
+  const pressedNotesForRender = activeNotes.filter(
+    midi => !sustainedNotesSetForRender.has(midi)
+  );
+
   return (
     <div className="w-full space-y-4 ">
       <div className="p-4 rounded-lg bg-bg-common">
@@ -106,7 +116,12 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({
         </h3>
       </div>
       <div className="p-4 rounded-lg bg-bg-common">
-        <PianoVisualizer targetChord={targetChord} activeNotes={activeNotes} />
+        <PianoVisualizer
+          targetChord={targetChord}
+          pressedNotes={pressedNotesForRender}
+          sustainedNotes={sustainedNotes}
+          activeNotes={activeNotes}
+        />
         {targetChord && (
           <div className="mt-4 flex items-center justify-end">
             <button
