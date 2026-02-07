@@ -27,6 +27,7 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({
   let sustainActive = false;
   const sustainedNotesSet = new Set<number>();
   const pressingNotes = new Set<number>();
+  const [sustainedNotes, setSustainedNotes] = useState<number[]>([]);
   const [detectedChords, setDetectedChords] = useState<string[]>([]);
 
   useEffect(() => {
@@ -74,7 +75,10 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({
       }
     }
 
-    setActiveNotes(Array.from(sustainedNotesSet).sort((a, b) => a - b));
+    const activeNotesArray = Array.from(sustainedNotesSet).sort((a, b) => a - b);
+    const sustainedOnlyArray = activeNotesArray.filter(n => !pressingNotes.has(n));
+    setActiveNotes(activeNotesArray);
+    setSustainedNotes(sustainedOnlyArray);
   };
 
   useEffect(() => {
@@ -102,12 +106,19 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({
     };
   }, []);
 
+  const sustainedNotesSetForRender = new Set(sustainedNotes);
+  const pressedNotesForRender = activeNotes.filter(
+    midi => !sustainedNotesSetForRender.has(midi)
+  );
+
   return (
     <div className="w-full space-y-4 ">
       <Portal>
         <PianoVisualizer
           detectedChords={detectedChords}
           activeNotes={activeNotes}
+          pressedNotes={pressedNotesForRender}
+          sustainedNotes={sustainedNotes}
         />
       </Portal>
     </div>
