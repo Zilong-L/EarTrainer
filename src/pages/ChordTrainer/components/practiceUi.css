@@ -1,0 +1,75 @@
+/* Practice page UI helpers (range styling + CSS animations) */
+
+.ct-holdRange {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    var(--notification-bg) 0%,
+    var(--notification-bg) var(--ct-pct, 50%),
+    var(--bg-accent) var(--ct-pct, 50%),
+    var(--bg-accent) 100%
+  );
+}
+
+.ct-holdRange:focus {
+  outline: none;
+}
+
+.ct-holdRange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--bg-common);
+  border: 2px solid var(--notification-bg);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.ct-holdRange::-moz-range-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--bg-accent);
+}
+
+.ct-holdRange::-moz-range-progress {
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--notification-bg);
+}
+
+.ct-holdRange::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--bg-common);
+  border: 2px solid var(--notification-bg);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+@keyframes ct-success-fade {
+  0% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.ct-waveFill {
+  will-change: clip-path;
+}
+
+.ct-successFade {
+  animation: ct-success-fade 160ms ease-out forwards;
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-successFade {
+    animation: none !important;
+  }
+}

@@ -92,6 +92,11 @@
       "third": "第三转位",
       "title": "转位模式"
     },
+    "holdToAdvance": {
+      "instant": "立即",
+      "label": "按住切换",
+      "unit": "秒"
+    },
     "modes": {
       "chordpractice": "和弦练习",
       "diatonic": "调内和弦",

@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Key, Midi } from 'tonal';
 import { detect } from '@tonaljs/chord-detect';
 import { compareChords } from '@utils/ChordTrainer/GameLogics';
+import { useAdvanceSettingsStore } from '@ChordTrainer/stores/advanceSettingsStore';
+import useHoldToAdvance from '@ChordTrainer/hooks/useHoldToAdvance';
 
 const useDiatonicGame = () => {
   const [targetChord, setTargetChord] = useState<string>('');
@@ -58,31 +60,43 @@ const useDiatonicGame = () => {
     setChordPool(chords);
   }, [rootNote, scaleType, chordType]);
 
+  // Pick the next chord from the chord pool
+  const getNextChord = useCallback(() => {
+    if (chordPool.length === 0) {
+      return;
+    }
+    setTargetChord(prev => {
+      let randomChord: string;
+      do {
+        randomChord = chordPool[Math.floor(Math.random() * chordPool.length)];
+      } while (randomChord === prev && chordPool.length > 1);
+      return randomChord;
+    });
+  }, [chordPool]);
+
   useEffect(() => {
     if (chordPool.length > 0) {
       getNextChord();
     }
-  }, [chordPool]);
+  }, [chordPool, getNextChord]);
 
-  // Pick the next chord from the chord pool
-  const getNextChord = () => {
-    if (chordPool.length === 0) {
-      return;
-    }
-    let randomChord: string;
-    do {
-      randomChord = chordPool[Math.floor(Math.random() * chordPool.length)];
-    } while (randomChord === targetChord);
-    setTargetChord(randomChord);
-  };
+  const holdToAdvanceMs = useAdvanceSettingsStore(s => s.holdToAdvanceMs);
 
-  useEffect(() => {
-    if (!detectedChords || !targetChord) return;
-    const isMatch = compareChords(detectedChords, targetChord, ignoreTranspose);
-    if (isMatch) {
-      getNextChord();
-    }
-  }, [detectedChords, ignoreTranspose]);
+  const isMatch = useMemo(() => {
+    if (!targetChord || detectedChords.length === 0) return false;
+    return compareChords(detectedChords, targetChord, ignoreTranspose);
+  }, [detectedChords, targetChord, ignoreTranspose]);
+
+  const {
+    phase: holdPhase,
+    runId: holdRunId,
+    successId: holdSuccessId,
+  } = useHoldToAdvance({
+    isMatch,
+    holdMs: holdToAdvanceMs,
+    onAdvance: getNextChord,
+    resetKey: targetChord,
+  });
 
   return {
     targetChord,
@@ -103,6 +117,10 @@ const useDiatonicGame = () => {
     setChordType, // Function to update chordType
     showDegree, // Whether to show chord degrees
     setShowDegree, // Function to update showDegree
+    holdToAdvanceMs,
+    holdPhase,
+    holdRunId,
+    holdSuccessId,
   };
 };
 

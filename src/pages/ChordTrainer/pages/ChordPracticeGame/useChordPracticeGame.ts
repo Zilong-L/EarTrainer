@@ -8,6 +8,8 @@ import {
 } from '@utils/ChordTrainer/GameLogics';
 import { strangeChords } from '@utils/ChordTrainer/Constants';
 import { useChordPracticeStore } from '../../stores/chordPracticeStore';
+import { useAdvanceSettingsStore } from '@ChordTrainer/stores/advanceSettingsStore';
+import useHoldToAdvance from '@ChordTrainer/hooks/useHoldToAdvance';
 
 const useChordPracticeGame = () => {
   const [targetChord, setTargetChord] = useState<string>('');
@@ -17,6 +19,7 @@ const useChordPracticeGame = () => {
 
   const { selectedInversions, selectedChordTypes, drillMode } =
     useChordPracticeStore();
+  const holdToAdvanceMs = useAdvanceSettingsStore(s => s.holdToAdvanceMs);
 
   const notes = useMemo(
     () =>
@@ -114,23 +117,25 @@ const useChordPracticeGame = () => {
     setDetectedChords(chordResult);
   }, [activeNotes]);
 
-  useEffect(() => {
-    if (!targetChord || activeNotes.length === 0) return;
-    const isMatch = compareChords(
+  const isMatch = useMemo(() => {
+    if (!targetChord || activeNotes.length === 0) return false;
+    return compareChords(
       detectedChords,
       targetChord,
       selectedInversions.length === 1 && selectedInversions[0] === 'root'
     );
-    if (isMatch) {
-      getNextChord();
-    }
-  }, [
-    detectedChords,
-    targetChord,
-    activeNotes.length,
-    getNextChord,
-    selectedInversions,
-  ]);
+  }, [detectedChords, targetChord, activeNotes.length, selectedInversions]);
+
+  const {
+    phase: holdPhase,
+    runId: holdRunId,
+    successId: holdSuccessId,
+  } = useHoldToAdvance({
+    isMatch,
+    holdMs: holdToAdvanceMs,
+    onAdvance: getNextChord,
+    resetKey: targetChord,
+  });
 
   useEffect(() => {
     getNextChord();
@@ -143,6 +148,10 @@ const useChordPracticeGame = () => {
     setActiveNotes,
     sustainedNotes,
     setSustainedNotes,
+    holdToAdvanceMs,
+    holdPhase,
+    holdRunId,
+    holdSuccessId,
   };
 };
 

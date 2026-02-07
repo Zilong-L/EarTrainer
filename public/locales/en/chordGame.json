@@ -96,6 +96,11 @@
       "third": "Third Inversion",
       "title": "Inversion Mode"
     },
+    "holdToAdvance": {
+      "instant": "Instant",
+      "label": "Hold to advance",
+      "unit": "s"
+    },
     "modes": {
       "chordpractice": "Chord Practice",
       "diatonic": "Diatonic",
