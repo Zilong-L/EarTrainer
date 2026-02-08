@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { detect } from '@tonaljs/chord-detect';
 import { Chord, Midi, Note } from 'tonal';
 import {
@@ -11,11 +11,20 @@ import { useChordPracticeStore } from '../../stores/chordPracticeStore';
 import { useAdvanceSettingsStore } from '@ChordTrainer/stores/advanceSettingsStore';
 import useHoldToAdvance from '@ChordTrainer/hooks/useHoldToAdvance';
 
+const QUEUE_SIZE = 5;
+const TARGET_INDEX = 1;
+
+type QueueItem = {
+  id: number;
+  chord: string;
+};
+
 const useChordPracticeGame = () => {
-  const [targetChord, setTargetChord] = useState<string>('');
+  const [chordQueue, setChordQueue] = useState<QueueItem[]>([]);
   const [detectedChords, setDetectedChords] = useState<string[]>([]);
   const [activeNotes, setActiveNotes] = useState<number[]>([]);
   const [sustainedNotes, setSustainedNotes] = useState<number[]>([]);
+  const queueIdRef = useRef(0);
 
   const { selectedInversions, selectedChordTypes, drillMode } =
     useChordPracticeStore();
@@ -29,17 +38,19 @@ const useChordPracticeGame = () => {
     []
   );
 
-  const getNextChord = useCallback(() => {
-    setTargetChord(prevTargetChord => {
+  const getNextChordAfter = useCallback(
+    (prevChord: string | null) => {
+      if (selectedChordTypes.length === 0 || selectedInversions.length === 0) {
+        return '';
+      }
+
       const chordType =
         selectedChordTypes[
           Math.floor(Math.random() * selectedChordTypes.length)
-        ];
-      const currentRoot = prevTargetChord
-        ? Chord.get(prevTargetChord).tonic
-        : 'C';
-      let newRoot: string;
+        ]!;
+      const currentRoot = prevChord ? Chord.get(prevChord).tonic : 'C';
 
+      let newRoot: string;
       switch (drillMode) {
         case 'circle_fifths':
           newRoot = Note.simplify(Note.transpose(currentRoot || 'C', 'P5'));
@@ -56,7 +67,7 @@ const useChordPracticeGame = () => {
         case 'random':
         default:
           do {
-            newRoot = notes[Math.floor(Math.random() * notes.length)];
+            newRoot = notes[Math.floor(Math.random() * notes.length)]!;
           } while (currentRoot === newRoot);
           break;
       }
@@ -65,7 +76,8 @@ const useChordPracticeGame = () => {
       const selectedInversion =
         selectedInversions[
           Math.floor(Math.random() * selectedInversions.length)
-        ];
+        ]!;
+
       let position: number;
       switch (selectedInversion) {
         case 'root':
@@ -88,13 +100,32 @@ const useChordPracticeGame = () => {
       }
 
       return getInversion(newRoot, chordType, position) as string;
+    },
+    [drillMode, selectedChordTypes, selectedInversions, notes]
+  );
+
+  const initQueue = useCallback(() => {
+    const next: QueueItem[] = [];
+    let prev: string | null = null;
+    for (let i = 0; i < QUEUE_SIZE; i++) {
+      const chord = getNextChordAfter(prev);
+      next.push({ id: queueIdRef.current++, chord });
+      prev = chord || prev;
+    }
+    setChordQueue(next);
+  }, [getNextChordAfter]);
+
+  const advanceQueue = useCallback(() => {
+    setChordQueue(prevQueue => {
+      if (prevQueue.length !== QUEUE_SIZE) return prevQueue;
+      const last = prevQueue[prevQueue.length - 1]?.chord ?? null;
+      const nextChord = getNextChordAfter(last);
+      return [
+        ...prevQueue.slice(1),
+        { id: queueIdRef.current++, chord: nextChord },
+      ];
     });
-  }, [
-    drillMode,
-    JSON.stringify(selectedChordTypes),
-    JSON.stringify(selectedInversions),
-    notes,
-  ]);
+  }, [getNextChordAfter]);
 
   useEffect(() => {
     if (!activeNotes || activeNotes.length === 0) {
@@ -117,6 +148,8 @@ const useChordPracticeGame = () => {
     setDetectedChords(chordResult);
   }, [activeNotes]);
 
+  const targetChord = chordQueue[TARGET_INDEX]?.chord ?? '';
+
   const isMatch = useMemo(() => {
     if (!targetChord || activeNotes.length === 0) return false;
     return compareChords(
@@ -133,16 +166,18 @@ const useChordPracticeGame = () => {
   } = useHoldToAdvance({
     isMatch,
     holdMs: holdToAdvanceMs,
-    onAdvance: getNextChord,
+    onAdvance: advanceQueue,
     resetKey: targetChord,
   });
 
   useEffect(() => {
-    getNextChord();
-  }, [getNextChord]);
+    initQueue();
+  }, [initQueue]);
 
   return {
     targetChord,
+    chordQueue,
+    targetIndex: TARGET_INDEX,
     detectedChords,
     activeNotes,
     setActiveNotes,

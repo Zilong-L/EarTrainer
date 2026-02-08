@@ -1,8 +1,8 @@
 import React from 'react';
 import MIDIInputHandler from '../../components/MIDIInputHandler';
 import { getNiceChordName } from '@utils/ChordTrainer/GameLogics';
-import FillingChordTitle from '@ChordTrainer/components/FillingChordTitle';
 import HoldToAdvanceControl from '@ChordTrainer/components/HoldToAdvanceControl';
+import ChordQueueScroller from '@ChordTrainer/components/ChordQueueScroller';
 
 interface GameDisplayProps {
   chordPracticeGameSettings: any;
@@ -13,6 +13,8 @@ const GameDisplay: React.FC<GameDisplayProps> = ({
 }) => {
   const {
     targetChord,
+    chordQueue,
+    targetIndex,
     detectedChords,
     activeNotes,
     setActiveNotes,
@@ -23,22 +25,27 @@ const GameDisplay: React.FC<GameDisplayProps> = ({
     holdRunId,
     holdSuccessId,
   } = chordPracticeGameSettings;
-  const title = getNiceChordName([targetChord])[0] ?? '';
+  const queue = (chordQueue ?? []) as Array<{ id: number; chord: string }>;
+  const queueTitles = getNiceChordName(queue.map(q => q.chord));
+  const scrollerItems = queue.map((q, idx) => ({
+    id: q.id,
+    label: queueTitles[idx] ?? '',
+  }));
 
   return (
-    <div className="h-[65vh]  flex flex-col justify-center">
-      <div className="h-[30vh] w-full flex items-end justify-between gap-4 flex-wrap">
-        <div className="flex-1 min-w-0">
-          <FillingChordTitle
-            display={title}
-            fillText={title}
-            isFilling={holdPhase === 'filling'}
-            holdMs={holdToAdvanceMs ?? 0}
-            runId={holdRunId ?? 0}
-            successId={holdSuccessId ?? 0}
-          />
+    <div className="min-h-[65vh] flex flex-col justify-center gap-4">
+      <div className="w-full min-h-[30vh] flex flex-col gap-3">
+        <ChordQueueScroller
+          items={scrollerItems}
+          targetIndex={targetIndex}
+          holdMs={holdToAdvanceMs ?? 0}
+          isFilling={holdPhase === 'filling'}
+          runId={holdRunId ?? 0}
+          successId={holdSuccessId ?? 0}
+        />
+        <div className="flex justify-end">
+          <HoldToAdvanceControl />
         </div>
-        <HoldToAdvanceControl />
       </div>
       <div className="w-full">
         <MIDIInputHandler

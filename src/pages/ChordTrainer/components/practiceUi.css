@@ -59,6 +59,26 @@
   }
 }
 
+.ct-holdProgress {
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--notification-bg);
+  transform-origin: left center;
+  animation-name: ct-hold-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  will-change: transform;
+}
+
+@keyframes ct-hold-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 .ct-waveFill {
   will-change: clip-path;
 }
@@ -71,5 +91,11 @@
 @media (prefers-reduced-motion: reduce) {
   .ct-successFade {
     animation: none !important;
+  }
+}
+
+@media (max-width: 640px) and (orientation: portrait) {
+  .ct-hide-mobile-portrait {
+    display: none !important;
   }
 }

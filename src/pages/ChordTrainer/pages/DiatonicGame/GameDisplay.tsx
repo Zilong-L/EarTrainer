@@ -1,8 +1,8 @@
 import React from 'react';
 import { Progression } from 'tonal';
 import MIDIInputHandler from '../../components/MIDIInputHandler';
-import FillingChordTitle from '@ChordTrainer/components/FillingChordTitle';
 import HoldToAdvanceControl from '@ChordTrainer/components/HoldToAdvanceControl';
+import ChordQueueScroller from '@ChordTrainer/components/ChordQueueScroller';
 
 interface GameDisplayProps {
   diatonicGameSettings: any;
@@ -11,6 +11,8 @@ interface GameDisplayProps {
 const GameDisplay: React.FC<GameDisplayProps> = ({ diatonicGameSettings }) => {
   const {
     targetChord,
+    chordQueue,
+    targetIndex,
     activeNotes,
     detectedChords,
     setActiveNotes,
@@ -25,36 +27,35 @@ const GameDisplay: React.FC<GameDisplayProps> = ({ diatonicGameSettings }) => {
     holdSuccessId,
   } = diatonicGameSettings;
 
-  const romanNumeral = targetChord
-    ? Progression.toRomanNumerals(rootNote, [targetChord])[0]
-    : '';
+  const queue = (chordQueue ?? []) as Array<{ id: number; chord: string }>;
+  const chords = queue.map(q => q.chord);
+  const queueLabels =
+    chords.length && showDegree
+      ? chords.map(
+          chord => Progression.toRomanNumerals(rootNote, [chord])[0] ?? ''
+        )
+      : chords;
+
+  const scrollerItems = queue.map((q, idx) => ({
+    id: q.id,
+    label: queueLabels[idx] ?? '',
+    title: showDegree ? q.chord : undefined,
+  }));
 
   return (
-    <div className="h-[65vh] flex flex-col justify-center">
-      <div className="h-[30vh] w-full flex items-end justify-between gap-4 flex-wrap">
-        <div className="flex-1 min-w-0">
-          <FillingChordTitle
-            display={
-              showDegree ? (
-                <span className="relative group inline-block">
-                  <span className="cursor-pointer">{romanNumeral}</span>
-                  <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2  py-2 px-3 bg-slate-900 text-slate-100 text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                    {targetChord}
-                    <span className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-slate-900"></span>
-                  </span>
-                </span>
-              ) : (
-                targetChord
-              )
-            }
-            fillText={showDegree ? romanNumeral : targetChord}
-            isFilling={holdPhase === 'filling'}
-            holdMs={holdToAdvanceMs ?? 0}
-            runId={holdRunId ?? 0}
-            successId={holdSuccessId ?? 0}
-          />
+    <div className="min-h-[65vh] flex flex-col justify-center gap-4">
+      <div className="w-full min-h-[30vh] flex flex-col gap-3">
+        <ChordQueueScroller
+          items={scrollerItems}
+          targetIndex={targetIndex}
+          holdMs={holdToAdvanceMs ?? 0}
+          isFilling={holdPhase === 'filling'}
+          runId={holdRunId ?? 0}
+          successId={holdSuccessId ?? 0}
+        />
+        <div className="flex justify-end">
+          <HoldToAdvanceControl />
         </div>
-        <HoldToAdvanceControl />
       </div>
       <div className="w-full">
         <MIDIInputHandler

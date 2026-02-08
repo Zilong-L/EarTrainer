@@ -1,29 +1,26 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import './practiceUi.css';
 
-interface FillingChordTitleProps {
-  display: React.ReactNode;
-  fillText: string;
+type FillingChordTextProps = {
+  text: string;
   isFilling: boolean;
   holdMs: number;
   runId: number;
   successId: number;
-}
+  className?: string;
+};
 
-const titleTextClass =
-  'text-[clamp(44px,11vw,72px)] sm:text-[100px] font-bold text-center sm:text-left text-text-primary leading-[1.05] break-words mb-3 sm:mb-4';
-
-const FillingChordTitle: React.FC<FillingChordTitleProps> = ({
-  display,
-  fillText,
+const FillingChordText: React.FC<FillingChordTextProps> = ({
+  text,
   isFilling,
   holdMs,
   runId,
   successId,
+  className = '',
 }) => {
   const shouldAnimateFill = isFilling && holdMs > 0;
 
-  const fillRef = useRef<HTMLHeadingElement | null>(null);
+  const fillRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
 
   const cancelRaf = () => {
@@ -50,10 +47,10 @@ const FillingChordTitle: React.FC<FillingChordTitleProps> = ({
     const duration = Math.max(1, holdMs);
 
     const sampleCount = 26;
-    // Extend the clip region a bit beyond the element box so round glyph overshoot
-    // (e.g. Chewy "C") still gets filled instead of being clipped at 0..100%.
-    const clipPadY = 12; // percent
-    const clipPadX = 2; // percent
+    // Extend the clip region beyond the element box so glyph overshoot
+    // (e.g. Chewy "C" curves, or descenders like "j") doesn't get clipped.
+    const clipPadY = 18; // percent
+    const clipPadX = 5; // percent
     const minY = -clipPadY;
     const maxY = 100 + clipPadY;
     const minX = -clipPadX;
@@ -70,13 +67,9 @@ const FillingChordTitle: React.FC<FillingChordTitleProps> = ({
       const elapsed = now - start;
       const t = Math.min(1, elapsed / duration);
 
-      // 0 -> 100 (filled)
       const fill = t;
-      // Base line moves from below the element (empty) to above it (full),
-      // so the final frame doesn't clip top/bottom glyph overshoot.
       const baseY = maxY - fill * (maxY - minY);
 
-      // Stronger motion mid-fill, calmer near start/end.
       const swell = 0.35 + 0.65 * Math.sin(fill * Math.PI);
       const amp1 = 2.6 * swell;
       const amp2 = 1.2 * swell;
@@ -107,10 +100,10 @@ const FillingChordTitle: React.FC<FillingChordTitleProps> = ({
   }, [shouldAnimateFill, holdMs, runId, reducedMotion]);
 
   return (
-    <div className="relative w-full">
-      <h1 className={titleTextClass}>
-        <span title={fillText}>{display}</span>
-      </h1>
+    <div className="relative inline-block">
+      <div className={className} title={text}>
+        {text}
+      </div>
 
       {successId > 0 && (
         <div
@@ -118,32 +111,29 @@ const FillingChordTitle: React.FC<FillingChordTitleProps> = ({
           className="ct-successFade pointer-events-none absolute inset-0"
           aria-hidden
         >
-          <h1
-            className={titleTextClass}
-            style={{ color: 'var(--notification-bg)' }}
-          >
-            {fillText}
-          </h1>
+          <div className={className} style={{ color: 'var(--notification-bg)' }}>
+            {text}
+          </div>
         </div>
       )}
 
       {shouldAnimateFill && (
         <div className="pointer-events-none absolute inset-0 overflow-visible">
-          <h1
+          <div
             key={runId}
             ref={fillRef}
-            className={`ct-waveFill ${titleTextClass}`}
+            className={`ct-waveFill ${className}`}
             style={{
               color: 'var(--notification-bg)',
               clipPath: reducedMotion ? 'inset(0 0 0 0)' : 'inset(100% 0 0 0)',
             }}
           >
-            {fillText}
-          </h1>
+            {text}
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-export default FillingChordTitle;
+export default FillingChordText;
