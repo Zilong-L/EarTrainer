@@ -85,8 +85,11 @@ const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
   const slotX = (slot: number) => slot * slotPx;
   const slotScale = (slot: number) => (slot === 0 ? 1 : 0.7);
   const slotOpacity = (slot: number) => (slot === 0 ? 1 : 0.7);
+  const fontSizeClass = isMobilePortrait
+    ? 'text-5xl'
+    : 'text-4xl sm:text-6xl lg:text-7xl';
   const textClass =
-    'font-bold text-text-primary text-center leading-[1.12] px-[0.22em] pb-[0.12em] max-w-[82vw] whitespace-nowrap text-4xl sm:text-6xl lg:text-7xl';
+    `font-bold text-text-primary text-center leading-[1.12] px-[0.22em] pb-[0.12em] max-w-[82vw] whitespace-nowrap ${fontSizeClass}`;
 
   return (
     <div
@@ -94,7 +97,7 @@ const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
       className={`relative w-full overflow-hidden ${className}`}
       style={{
         height: isMobilePortrait
-          ? 'clamp(180px, 28vh, 280px)'
+          ? 'clamp(200px, 32vh, 340px)'
           : 'clamp(84px, 18vh, 170px)',
       }}
       aria-label="Chord scroller"
