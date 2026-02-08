@@ -32,25 +32,51 @@ const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
   className = '',
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [width, setWidth] = useState(0);
+  const [rect, setRect] = useState({ width: 0, height: 0 });
+  const [isMobilePortrait, setIsMobilePortrait] = useState(false);
 
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
     const ro = new ResizeObserver(entries => {
-      const next = entries[0]?.contentRect?.width ?? 0;
-      setWidth(next);
+      const nextWidth = entries[0]?.contentRect?.width ?? 0;
+      const nextHeight = entries[0]?.contentRect?.height ?? 0;
+      setRect({ width: nextWidth, height: nextHeight });
     });
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!window.matchMedia) return;
+
+    const mq = window.matchMedia(
+      '(max-width: 640px) and (orientation: portrait)'
+    );
+    const update = () => setIsMobilePortrait(mq.matches);
+    update();
+
+    if (mq.addEventListener) {
+      mq.addEventListener('change', update);
+      return () => mq.removeEventListener('change', update);
+    }
+    mq.addListener(update);
+    return () => mq.removeListener(update);
+  }, []);
+
+  const axis: 'x' | 'y' = isMobilePortrait ? 'y' : 'x';
+
   const slotPx = useMemo(() => {
     // Responsive spacing between the 3 chords: clamp to keep side chords visible.
-    if (!width) return 160;
-    return clamp(width * 0.3, 92, 300);
-  }, [width]);
+    if (axis === 'y') {
+      if (!rect.height) return 120;
+      return clamp(rect.height * 0.34, 78, 190);
+    }
+    if (!rect.width) return 160;
+    return clamp(rect.width * 0.3, 92, 300);
+  }, [axis, rect.height, rect.width]);
 
   const start = Math.max(0, targetIndex - 1);
   const end = Math.min(items.length, targetIndex + 2);
@@ -66,14 +92,18 @@ const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
     <div
       ref={containerRef}
       className={`relative w-full overflow-hidden ${className}`}
-      style={{ height: 'clamp(84px, 18vh, 170px)' }}
+      style={{
+        height: isMobilePortrait
+          ? 'clamp(180px, 28vh, 280px)'
+          : 'clamp(84px, 18vh, 170px)',
+      }}
       aria-label="Chord scroller"
     >
       <AnimatePresence initial={false}>
         {visible.map((item, i) => {
           const idx = start + i;
           const slot = idx - targetIndex; // -1 | 0 | 1 (for the visible window)
-          const x = slotX(slot);
+          const pos = slotX(slot);
           const isTarget = slot === 0;
 
           return (
@@ -81,18 +111,20 @@ const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
               key={item.id}
               className="absolute inset-0 flex items-center justify-center"
               initial={{
-                x: slot === 1 ? x + slotPx : x,
+                ...(axis === 'y'
+                  ? { y: slot === 1 ? pos + slotPx : pos }
+                  : { x: slot === 1 ? pos + slotPx : pos }),
                 opacity: 0,
                 scale: slotScale(slot),
               }}
               animate={{
-                x,
+                ...(axis === 'y' ? { y: pos } : { x: pos }),
                 opacity: slotOpacity(slot),
                 scale: slotScale(slot),
                 transition: { duration: 0.26, ease: 'easeOut' },
               }}
               exit={{
-                x: x - slotPx,
+                ...(axis === 'y' ? { y: pos - slotPx } : { x: pos - slotPx }),
                 opacity: 0,
                 scale: 0.55,
                 transition: { duration: 0.18, ease: 'easeIn' },
