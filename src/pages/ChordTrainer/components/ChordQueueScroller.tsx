@@ -22,6 +22,8 @@ type ChordQueueScrollerProps = {
 const clamp = (n: number, min: number, max: number) =>
   Math.min(max, Math.max(min, n));
 
+const NARROW_BREAKPOINT_PX = 768;
+
 const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
   items,
   targetIndex,
@@ -33,7 +35,6 @@ const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [rect, setRect] = useState({ width: 0, height: 0 });
-  const [isMobilePortrait, setIsMobilePortrait] = useState(false);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -48,25 +49,8 @@ const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
     return () => ro.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (!window.matchMedia) return;
-
-    const mq = window.matchMedia(
-      '(max-width: 640px) and (orientation: portrait)'
-    );
-    const update = () => setIsMobilePortrait(mq.matches);
-    update();
-
-    if (mq.addEventListener) {
-      mq.addEventListener('change', update);
-      return () => mq.removeEventListener('change', update);
-    }
-    mq.addListener(update);
-    return () => mq.removeListener(update);
-  }, []);
-
-  const axis: 'x' | 'y' = isMobilePortrait ? 'y' : 'x';
+  const isNarrow = rect.width > 0 && rect.width < NARROW_BREAKPOINT_PX;
+  const axis: 'x' | 'y' = isNarrow ? 'y' : 'x';
 
   const slotPx = useMemo(() => {
     // Responsive spacing between the 3 chords: clamp to keep side chords visible.
@@ -85,7 +69,7 @@ const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
   const slotX = (slot: number) => slot * slotPx;
   const slotScale = (slot: number) => (slot === 0 ? 1 : 0.7);
   const slotOpacity = (slot: number) => (slot === 0 ? 1 : 0.7);
-  const fontSizeClass = isMobilePortrait
+  const fontSizeClass = axis === 'y'
     ? 'text-5xl'
     : 'text-4xl sm:text-6xl lg:text-7xl';
   const textClass =
@@ -96,7 +80,7 @@ const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
       ref={containerRef}
       className={`relative w-full overflow-hidden ${className}`}
       style={{
-        height: isMobilePortrait
+        height: axis === 'y'
           ? 'clamp(200px, 32vh, 340px)'
           : 'clamp(84px, 18vh, 170px)',
       }}
@@ -114,20 +98,21 @@ const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
               key={item.id}
               className="absolute inset-0 flex items-center justify-center"
               initial={{
-                ...(axis === 'y'
-                  ? { y: slot === 1 ? pos + slotPx : pos }
-                  : { x: slot === 1 ? pos + slotPx : pos }),
+                x: axis === 'x' ? (slot === 1 ? pos + slotPx : pos) : 0,
+                y: axis === 'y' ? (slot === 1 ? pos + slotPx : pos) : 0,
                 opacity: 0,
                 scale: slotScale(slot),
               }}
               animate={{
-                ...(axis === 'y' ? { y: pos } : { x: pos }),
+                x: axis === 'x' ? pos : 0,
+                y: axis === 'y' ? pos : 0,
                 opacity: slotOpacity(slot),
                 scale: slotScale(slot),
                 transition: { duration: 0.26, ease: 'easeOut' },
               }}
               exit={{
-                ...(axis === 'y' ? { y: pos - slotPx } : { x: pos - slotPx }),
+                x: axis === 'x' ? pos - slotPx : 0,
+                y: axis === 'y' ? pos - slotPx : 0,
                 opacity: 0,
                 scale: 0.55,
                 transition: { duration: 0.18, ease: 'easeIn' },
