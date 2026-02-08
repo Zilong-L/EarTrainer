@@ -1,15 +1,24 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { Key, Midi } from 'tonal';
 import { detect } from '@tonaljs/chord-detect';
 import { compareChords } from '@utils/ChordTrainer/GameLogics';
 import { useAdvanceSettingsStore } from '@ChordTrainer/stores/advanceSettingsStore';
 import useHoldToAdvance from '@ChordTrainer/hooks/useHoldToAdvance';
 
+const QUEUE_SIZE = 5;
+const TARGET_INDEX = 1;
+
+type QueueItem = {
+  id: number;
+  chord: string;
+};
+
 const useDiatonicGame = () => {
-  const [targetChord, setTargetChord] = useState<string>('');
+  const [chordQueue, setChordQueue] = useState<QueueItem[]>([]);
   const [detectedChords, setDetectedChords] = useState<string[]>([]);
   const [activeNotes, setActiveNotes] = useState<number[]>([]);
   const [sustainedNotes, setSustainedNotes] = useState<number[]>([]);
+  const queueIdRef = useRef(0);
 
   const [chordPool, setChordPool] = useState<string[]>([]);
   const [rootNote, setRootNote] = useState<string>('C');
@@ -61,26 +70,52 @@ const useDiatonicGame = () => {
   }, [rootNote, scaleType, chordType]);
 
   // Pick the next chord from the chord pool
-  const getNextChord = useCallback(() => {
-    if (chordPool.length === 0) {
-      return;
-    }
-    setTargetChord(prev => {
+  const getNextChordAfter = useCallback(
+    (prevChord: string | null) => {
+      if (chordPool.length === 0) return '';
       let randomChord: string;
       do {
-        randomChord = chordPool[Math.floor(Math.random() * chordPool.length)];
-      } while (randomChord === prev && chordPool.length > 1);
+        randomChord = chordPool[Math.floor(Math.random() * chordPool.length)]!;
+      } while (randomChord === prevChord && chordPool.length > 1);
       return randomChord;
+    },
+    [chordPool]
+  );
+
+  const initQueue = useCallback(() => {
+    if (chordPool.length === 0) {
+      setChordQueue([]);
+      return;
+    }
+    const next: QueueItem[] = [];
+    let prev: string | null = null;
+    for (let i = 0; i < QUEUE_SIZE; i++) {
+      const chord = getNextChordAfter(prev);
+      next.push({ id: queueIdRef.current++, chord });
+      prev = chord || prev;
+    }
+    setChordQueue(next);
+  }, [chordPool.length, getNextChordAfter]);
+
+  const advanceQueue = useCallback(() => {
+    setChordQueue(prevQueue => {
+      if (prevQueue.length !== QUEUE_SIZE) return prevQueue;
+      const last = prevQueue[prevQueue.length - 1]?.chord ?? null;
+      const nextChord = getNextChordAfter(last);
+      return [
+        ...prevQueue.slice(1),
+        { id: queueIdRef.current++, chord: nextChord },
+      ];
     });
-  }, [chordPool]);
+  }, [getNextChordAfter]);
 
   useEffect(() => {
-    if (chordPool.length > 0) {
-      getNextChord();
-    }
-  }, [chordPool, getNextChord]);
+    initQueue();
+  }, [initQueue]);
 
   const holdToAdvanceMs = useAdvanceSettingsStore(s => s.holdToAdvanceMs);
+
+  const targetChord = chordQueue[TARGET_INDEX]?.chord ?? '';
 
   const isMatch = useMemo(() => {
     if (!targetChord || detectedChords.length === 0) return false;
@@ -94,19 +129,20 @@ const useDiatonicGame = () => {
   } = useHoldToAdvance({
     isMatch,
     holdMs: holdToAdvanceMs,
-    onAdvance: getNextChord,
+    onAdvance: advanceQueue,
     resetKey: targetChord,
   });
 
   return {
     targetChord,
+    chordQueue,
+    targetIndex: TARGET_INDEX,
     detectedChords,
     activeNotes,
     chordPool, // The available diatonic chords
     rootNote, // The root note of the scale
     scaleType, // The type of scale (major, minor, harmonic, melodic)
     ignoreTranspose, // Whether to ignore transposition when comparing chords
-    setTargetChord, // Function to update targetChord
     setActiveNotes, // Function to update activeNotes
     sustainedNotes,
     setSustainedNotes,
