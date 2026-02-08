@@ -19,7 +19,7 @@ const HoldToAdvanceControl: React.FC = () => {
   const pct = ((holdToAdvanceMs - MIN_MS) / Math.max(1, MAX_MS - MIN_MS)) * 100;
 
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-bg-accent bg-bg-common px-3 pt-2 pb-2 mb-4 shadow-sm shrink-0">
+    <div className="flex items-center gap-3 rounded-xl border border-bg-accent bg-bg-common px-3 pt-2 pb-2 shadow-sm shrink-0">
       <span className="text-xs font-semibold tracking-wide text-text-secondary whitespace-nowrap uppercase">
         {t('settings.holdToAdvance.label')}
       </span>

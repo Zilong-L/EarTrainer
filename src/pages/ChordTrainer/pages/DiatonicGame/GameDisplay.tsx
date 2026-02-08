@@ -3,6 +3,7 @@ import { Progression } from 'tonal';
 import MIDIInputHandler from '../../components/MIDIInputHandler';
 import HoldToAdvanceControl from '@ChordTrainer/components/HoldToAdvanceControl';
 import ChordQueueScroller from '@ChordTrainer/components/ChordQueueScroller';
+import ShowDegreesControl from '@ChordTrainer/components/ShowDegreesControl';
 
 interface GameDisplayProps {
   diatonicGameSettings: any;
@@ -53,7 +54,8 @@ const GameDisplay: React.FC<GameDisplayProps> = ({ diatonicGameSettings }) => {
           runId={holdRunId ?? 0}
           successId={holdSuccessId ?? 0}
         />
-        <div className="flex justify-end">
+        <div className="flex flex-wrap items-center justify-end gap-3">
+          <ShowDegreesControl value={showDegree} onChange={setShowDegree} />
           <HoldToAdvanceControl />
         </div>
       </div>
@@ -65,8 +67,6 @@ const GameDisplay: React.FC<GameDisplayProps> = ({ diatonicGameSettings }) => {
           detectedChords={detectedChords}
           sustainedNotes={sustainedNotes}
           setSustainedNotes={setSustainedNotes}
-          showDegree={showDegree}
-          setShowDegree={setShowDegree}
         />
       </div>
     </div>

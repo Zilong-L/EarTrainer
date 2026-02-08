@@ -43,7 +43,7 @@ const GameDisplay: React.FC<GameDisplayProps> = ({
           runId={holdRunId ?? 0}
           successId={holdSuccessId ?? 0}
         />
-        <div className="flex justify-end">
+        <div className="flex flex-wrap items-center justify-end gap-3">
           <HoldToAdvanceControl />
         </div>
       </div>
@@ -55,8 +55,6 @@ const GameDisplay: React.FC<GameDisplayProps> = ({
           detectedChords={detectedChords}
           sustainedNotes={sustainedNotes}
           setSustainedNotes={setSustainedNotes}
-          showDegree={false}
-          setShowDegree={() => {}}
         />
       </div>
     </div>

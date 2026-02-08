@@ -13,8 +13,6 @@ interface MIDIInputHandlerProps {
   detectedChords: string[];
   sustainedNotes: number[];
   setSustainedNotes: (notes: number[]) => void;
-  showDegree: boolean;
-  setShowDegree: (show: boolean) => void;
 }
 
 const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({
@@ -24,8 +22,6 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({
   detectedChords,
   sustainedNotes,
   setSustainedNotes,
-  showDegree,
-  setShowDegree,
 }) => {
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
@@ -106,14 +102,12 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({
   );
 
   return (
-    <div className="w-full space-y-4 ">
-      <div className="p-4 rounded-lg bg-bg-common">
+    <div className="w-full space-y-4">
+      <div className="p-4 rounded-lg bg-bg-common space-y-4">
         <h3 className="text-lg font-medium text-text-primary">
           {t('detectedChords')}:{' '}
           <span>{getNiceChordName(detectedChords).join(', ')}</span>
         </h3>
-      </div>
-      <div className="p-4 rounded-lg bg-bg-common">
         <div className="ct-hide-mobile-portrait">
           <PianoVisualizer
             targetChord={targetChord}
@@ -122,25 +116,6 @@ const MIDIInputHandler: React.FC<MIDIInputHandlerProps> = ({
             activeNotes={activeNotes}
           />
         </div>
-        {targetChord && (
-          <div className="mt-4 flex items-center justify-end">
-            <button
-              onClick={() => setShowDegree(!showDegree)}
-              className={`${
-                showDegree ? 'bg-notification-bg' : 'bg-bg-accent'
-              } relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
-            >
-              <span
-                className={`${
-                  showDegree ? 'translate-x-6' : 'translate-x-1'
-                } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
-              />
-            </button>
-            <span className="ml-2 text-sm font-medium text-text-primary">
-              {t('settings.diatonic.showDegrees')}
-            </span>
-          </div>
-        )}
       </div>
     </div>
   );
