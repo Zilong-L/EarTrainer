@@ -11,11 +11,9 @@ const DiatonicGame: React.FC = () => {
   const { isOpen, setIsOpen } = useSettingsModalStore();
   const DiatonicGame = useDiatonicGame();
   return (
-    <main>
-      <div className="flex-1 pt-20 overflow-y-auto bg-bg-main">
-        <div className="max-w-6xl mx-auto">
-          <GameDisplay diatonicGameSettings={DiatonicGame} />
-        </div>
+    <>
+      <div className="max-w-6xl mx-auto px-0 sm:px-4 h-full flex flex-col">
+        <GameDisplay diatonicGameSettings={DiatonicGame} />
       </div>
       <SettingsPanel
         isOpen={isOpen}
@@ -35,7 +33,7 @@ const DiatonicGame: React.FC = () => {
           },
         ]}
       />
-    </main>
+    </>
   );
 };
 

@@ -30,7 +30,6 @@ function SettingsPanel({
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
   const [currentPage, setCurrentPage] = useState<string>('home');
-  console.log(namespace);
   useEffect(() => {
     if (isOpen) {
       document.documentElement.classList.add('modal-open');
@@ -55,9 +54,9 @@ function SettingsPanel({
   )?.component;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 sm:px-6">
       <div className="absolute inset-0 bg-black/50" onClick={handleClose} />
-      <div className="relative w-[90%] max-w-4xl h-[80vh] bg-bg-common rounded-lg shadow-xl overflow-hidden">
+      <div className="relative w-full max-w-4xl h-[80vh] bg-bg-common rounded-lg shadow-xl overflow-hidden">
         {/* Header with Settings label and close button */}
         <div className="flex items-center p-4 border-b border-bg-accent">
           {/* Mobile back button - always takes space but hidden when not needed */}

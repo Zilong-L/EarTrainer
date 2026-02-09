@@ -11,11 +11,9 @@ const ChordPracticeGame: React.FC = () => {
   const chordPracticeGame = useChordPracticeGame();
 
   return (
-    <main>
-      <div className="flex-1 pt-20 overflow-y-auto bg-bg-main">
-        <div className="max-w-6xl mx-auto">
-          <GameDisplay chordPracticeGameSettings={chordPracticeGame} />
-        </div>
+    <>
+      <div className="max-w-6xl mx-auto px-0 sm:px-4 h-full flex flex-col">
+        <GameDisplay chordPracticeGameSettings={chordPracticeGame} />
       </div>
       <SettingsPanel
         isOpen={isOpen}
@@ -34,7 +32,7 @@ const ChordPracticeGame: React.FC = () => {
           },
         ]}
       />
-    </main>
+    </>
   );
 };
 

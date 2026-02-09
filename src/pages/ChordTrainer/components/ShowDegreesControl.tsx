@@ -46,4 +46,3 @@ const ShowDegreesControl: React.FC<ShowDegreesControlProps> = ({
 };
 
 export default ShowDegreesControl;
-
