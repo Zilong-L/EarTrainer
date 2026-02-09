@@ -2,10 +2,13 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { detect } from '@tonaljs/chord-detect';
 import { Chord, Midi, Note } from 'tonal';
 import {
-  compareChords,
   getInversion,
   sortChordsByCommonality,
 } from '@utils/ChordTrainer/GameLogics';
+import {
+  chordTargetFromSymbol,
+  isMatchSuperset,
+} from '@utils/ChordTrainer/ChordTarget';
 import { strangeChords } from '@utils/ChordTrainer/Constants';
 import { useChordPracticeStore } from '../../stores/chordPracticeStore';
 import { useAdvanceSettingsStore } from '@ChordTrainer/stores/advanceSettingsStore';
@@ -26,7 +29,7 @@ const useChordPracticeGame = () => {
   const [sustainedNotes, setSustainedNotes] = useState<number[]>([]);
   const queueIdRef = useRef(0);
 
-  const { selectedInversions, selectedChordTypes, drillMode } =
+  const { selectedInversions, selectedChordTypes, drillMode, requireBass } =
     useChordPracticeStore();
   const holdToAdvanceMs = useAdvanceSettingsStore(s => s.holdToAdvanceMs);
 
@@ -150,14 +153,15 @@ const useChordPracticeGame = () => {
 
   const targetChord = chordQueue[TARGET_INDEX]?.chord ?? '';
 
+  const target = useMemo(
+    () => chordTargetFromSymbol(targetChord, { requireBass }),
+    [targetChord, requireBass]
+  );
+
   const isMatch = useMemo(() => {
-    if (!targetChord || activeNotes.length === 0) return false;
-    return compareChords(
-      detectedChords,
-      targetChord,
-      selectedInversions.length === 1 && selectedInversions[0] === 'root'
-    );
-  }, [detectedChords, targetChord, activeNotes.length, selectedInversions]);
+    if (!target) return false;
+    return isMatchSuperset(activeNotes, target);
+  }, [activeNotes, target]);
 
   const {
     phase: holdPhase,

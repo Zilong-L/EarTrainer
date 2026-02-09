@@ -14,10 +14,12 @@ interface ChordPracticeState {
   selectedChordTypes: string[];
   proMode: boolean;
   drillMode: string;
+  requireBass: boolean;
   setSelectedInversions: (inversions: string[]) => void;
   setSelectedChordTypes: (types: string[]) => void;
   setProMode: (proMode: boolean) => void;
   setDrillMode: (drillMode: string) => void;
+  setRequireBass: (next: boolean) => void;
 }
 
 export const useChordPracticeStore = create<ChordPracticeState>()(
@@ -27,11 +29,13 @@ export const useChordPracticeStore = create<ChordPracticeState>()(
       selectedChordTypes: ['M'],
       proMode: false,
       drillMode: DRILL_MODES.RANDOM,
+      requireBass: true,
       setSelectedInversions: inversions =>
         set({ selectedInversions: inversions }),
       setSelectedChordTypes: types => set({ selectedChordTypes: types }),
       setProMode: proMode => set({ proMode }),
       setDrillMode: drillMode => set({ drillMode }),
+      setRequireBass: next => set({ requireBass: next }),
     }),
     {
       name: 'chord-practice-settings', // unique name for local storage
