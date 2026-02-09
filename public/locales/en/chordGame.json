@@ -20,6 +20,15 @@
     "noAccess": "No Access"
   },
   "notes": "Notes",
+  "diatonicBook": {
+    "button": "Book",
+    "close": "Close",
+    "randomMode": "Random (Diatonic)",
+    "requireSlashBass": "Require slash bass",
+    "searchPlaceholder": "Search progressions...",
+    "selected": "Selected",
+    "title": "Progression Book"
+  },
   "settings": {
     "SoundSettings": "Sound Settings",
     "basicChords": "Basic Chords",
@@ -101,6 +110,7 @@
       "label": "Hold to advance",
       "unit": "s"
     },
+    "requireBass": "Require slash bass",
     "modes": {
       "chordpractice": "Chord Practice",
       "diatonic": "Diatonic",

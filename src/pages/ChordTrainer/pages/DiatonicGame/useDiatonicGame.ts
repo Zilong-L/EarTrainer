@@ -1,9 +1,15 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { Key, Midi } from 'tonal';
 import { detect } from '@tonaljs/chord-detect';
-import { compareChords } from '@utils/ChordTrainer/GameLogics';
+import {
+  chordTargetFromSymbol,
+  isMatchSuperset,
+} from '@utils/ChordTrainer/ChordTarget';
+import { transposeChordSymbol } from '@utils/ChordTrainer/transposeChordSymbol';
 import { useAdvanceSettingsStore } from '@ChordTrainer/stores/advanceSettingsStore';
 import useHoldToAdvance from '@ChordTrainer/hooks/useHoldToAdvance';
+import { useDiatonicProgressionStore } from './diatonicProgressionStore';
+import { DIATONIC_PROGRESSIONS } from './progressions';
 
 const QUEUE_SIZE = 5;
 const TARGET_INDEX = 1;
@@ -26,6 +32,21 @@ const useDiatonicGame = () => {
   const [ignoreTranspose, setIgnoreTranspose] = useState<boolean>(true);
   const [chordType, setChordType] = useState<string>('triads');
   const [showDegree, setShowDegree] = useState<boolean>(false);
+  const progressionCursorRef = useRef(0);
+
+  const progressionMode = useDiatonicProgressionStore(s => s.mode);
+  const progressionId = useDiatonicProgressionStore(s => s.progressionId);
+  const requireSlashBass = useDiatonicProgressionStore(s => s.requireSlashBass);
+
+  const progression = useMemo(() => {
+    if (!progressionId) return null;
+    return DIATONIC_PROGRESSIONS.find(p => p.id === progressionId) ?? null;
+  }, [progressionId]);
+
+  const isProgressionMode =
+    progressionMode === 'progression' &&
+    !!progression &&
+    progression.steps.length > 0;
 
   useEffect(() => {
     if (!activeNotes) return;
@@ -72,6 +93,16 @@ const useDiatonicGame = () => {
   // Pick the next chord from the chord pool
   const getNextChordAfter = useCallback(
     (prevChord: string | null) => {
+      if (isProgressionMode && progression) {
+        const idx = progressionCursorRef.current % progression.steps.length;
+        progressionCursorRef.current++;
+        const step = progression.steps[idx]!;
+        return transposeChordSymbol(
+          step.symbol,
+          progression.baseTonic,
+          rootNote
+        );
+      }
       if (chordPool.length === 0) return '';
       let randomChord: string;
       do {
@@ -79,11 +110,26 @@ const useDiatonicGame = () => {
       } while (randomChord === prevChord && chordPool.length > 1);
       return randomChord;
     },
-    [chordPool]
+    [chordPool, isProgressionMode, progression, rootNote]
   );
 
   const initQueue = useCallback(() => {
-    if (chordPool.length === 0) {
+    if (isProgressionMode) {
+      const len = progression?.steps.length ?? 0;
+      if (len > 0) {
+        // Ensure queue[TARGET_INDEX] starts at step 0.
+        progressionCursorRef.current =
+          (((len - TARGET_INDEX) % len) + len) % len;
+      } else {
+        progressionCursorRef.current = 0;
+      }
+    }
+
+    const canGenerate =
+      (isProgressionMode && (progression?.steps.length ?? 0) > 0) ||
+      chordPool.length > 0;
+
+    if (!canGenerate) {
       setChordQueue([]);
       return;
     }
@@ -95,7 +141,12 @@ const useDiatonicGame = () => {
       prev = chord || prev;
     }
     setChordQueue(next);
-  }, [chordPool.length, getNextChordAfter]);
+  }, [
+    chordPool.length,
+    getNextChordAfter,
+    isProgressionMode,
+    progression?.steps.length,
+  ]);
 
   const advanceQueue = useCallback(() => {
     setChordQueue(prevQueue => {
@@ -117,10 +168,18 @@ const useDiatonicGame = () => {
 
   const targetChord = chordQueue[TARGET_INDEX]?.chord ?? '';
 
+  const requireBass = isProgressionMode
+    ? requireSlashBass && targetChord.includes('/')
+    : !ignoreTranspose;
+
+  const target = useMemo(() => {
+    return chordTargetFromSymbol(targetChord, { requireBass });
+  }, [targetChord, requireBass]);
+
   const isMatch = useMemo(() => {
-    if (!targetChord || detectedChords.length === 0) return false;
-    return compareChords(detectedChords, targetChord, ignoreTranspose);
-  }, [detectedChords, targetChord, ignoreTranspose]);
+    if (!target) return false;
+    return isMatchSuperset(activeNotes, target);
+  }, [activeNotes, target]);
 
   const {
     phase: holdPhase,

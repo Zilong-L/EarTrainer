@@ -11,6 +11,7 @@ import HeaderButtons from '@components/HeaderButtons';
 import HeaderButton from '@components/HeaderButton';
 import useSettingsStore from './stores/settingsStore';
 import { GAMES } from './utils/routes/constants';
+import './chordTrainerUi.css';
 function ChordTrainerOutlet() {
   const { namespace } = useI18nStore();
   const { t, i18n } = useTranslation(namespace);
@@ -49,9 +50,9 @@ function ChordTrainerOutlet() {
           ))}
         </HeaderButtons>
       </Header>
-      <div className="flex-1 pt-20 overflow-y-auto bg-bg-main">
+      <main className="ct-main-pad flex-1 overflow-y-auto bg-bg-main py-6">
         <Outlet />
-      </div>
+      </main>
       <Toaster />
     </div>
   );

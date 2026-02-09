@@ -55,8 +55,9 @@ const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
   const slotPx = useMemo(() => {
     // Responsive spacing between the 3 chords: clamp to keep side chords visible.
     if (axis === 'y') {
-      if (!rect.height) return 120;
-      return clamp(rect.height * 0.34, 78, 190);
+      // Portrait (narrow) layout: give a bit more breathing room between chords.
+      if (!rect.height) return 132;
+      return clamp(rect.height * 0.38, 86, 220);
     }
     if (!rect.width) return 160;
     return clamp(rect.width * 0.3, 92, 300);
@@ -69,20 +70,19 @@ const ChordQueueScroller: React.FC<ChordQueueScrollerProps> = ({
   const slotX = (slot: number) => slot * slotPx;
   const slotScale = (slot: number) => (slot === 0 ? 1 : 0.7);
   const slotOpacity = (slot: number) => (slot === 0 ? 1 : 0.7);
-  const fontSizeClass = axis === 'y'
-    ? 'text-5xl'
-    : 'text-4xl sm:text-6xl lg:text-7xl';
-  const textClass =
-    `font-bold text-text-primary text-center leading-[1.12] px-[0.22em] pb-[0.12em] max-w-[82vw] whitespace-nowrap ${fontSizeClass}`;
+  const fontSizeClass =
+    axis === 'y' ? 'text-5xl' : 'text-4xl sm:text-6xl lg:text-7xl';
+  const textClass = `font-bold text-text-primary text-center leading-[1.12] px-[0.22em] pb-[0.12em] max-w-[82vw] whitespace-nowrap ${fontSizeClass}`;
 
   return (
     <div
       ref={containerRef}
       className={`relative w-full overflow-hidden ${className}`}
       style={{
-        height: axis === 'y'
-          ? 'clamp(200px, 32vh, 340px)'
-          : 'clamp(84px, 18vh, 170px)',
+        height:
+          axis === 'y'
+            ? 'clamp(200px, 32vh, 340px)'
+            : 'clamp(84px, 18vh, 170px)',
       }}
       aria-label="Chord scroller"
     >

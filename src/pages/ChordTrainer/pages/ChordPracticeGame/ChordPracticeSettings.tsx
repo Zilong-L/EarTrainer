@@ -39,6 +39,8 @@ const ChordPracticeSettings: React.FC = () => {
     setDrillMode,
     selectedInversions,
     setSelectedInversions,
+    requireBass,
+    setRequireBass,
   } = useChordPracticeStore();
 
   const handleChordSelect = (chord: string) => {
@@ -116,6 +118,31 @@ const ChordPracticeSettings: React.FC = () => {
                   </button>
                 ))}
             </div>
+          </div>
+
+          {/* Require Bass Toggle */}
+          <div className="flex items-center justify-between rounded-lg border border-bg-accent bg-bg-common px-4 py-3">
+            <span className="text-sm font-semibold text-text-primary">
+              {t('settings.requireBass')}
+            </span>
+            <button
+              type="button"
+              onClick={() => setRequireBass(!requireBass)}
+              aria-pressed={requireBass}
+              className={`${
+                requireBass ? 'bg-notification-bg' : 'bg-bg-accent'
+              } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-notification-bg focus-visible:ring-offset-2 focus-visible:ring-offset-bg-main`}
+              style={{
+                touchAction: 'manipulation',
+                WebkitTapHighlightColor: 'transparent',
+              }}
+            >
+              <span
+                className={`${
+                  requireBass ? 'translate-x-6' : 'translate-x-1'
+                } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+              />
+            </button>
           </div>
 
           {/* Drill Mode Selector */}

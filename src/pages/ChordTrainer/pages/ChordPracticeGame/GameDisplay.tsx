@@ -33,8 +33,8 @@ const GameDisplay: React.FC<GameDisplayProps> = ({
   }));
 
   return (
-    <div className="min-h-[65vh] flex flex-col justify-center gap-4">
-      <div className="w-full min-h-[30vh] flex flex-col gap-3">
+    <div className="flex flex-1 flex-col min-h-0">
+      <div className="flex-1 min-h-[30vh] flex items-center justify-center">
         <ChordQueueScroller
           items={scrollerItems}
           targetIndex={targetIndex}
@@ -43,11 +43,8 @@ const GameDisplay: React.FC<GameDisplayProps> = ({
           runId={holdRunId ?? 0}
           successId={holdSuccessId ?? 0}
         />
-        <div className="flex flex-wrap items-center justify-end gap-3">
-          <HoldToAdvanceControl />
-        </div>
       </div>
-      <div className="w-full">
+      <div className="mt-auto w-full flex flex-col gap-3 pb-2">
         <MIDIInputHandler
           activeNotes={activeNotes}
           targetChord={targetChord}
@@ -56,6 +53,9 @@ const GameDisplay: React.FC<GameDisplayProps> = ({
           sustainedNotes={sustainedNotes}
           setSustainedNotes={setSustainedNotes}
         />
+        <div className="flex flex-wrap items-center justify-end gap-3">
+          <HoldToAdvanceControl />
+        </div>
       </div>
     </div>
   );

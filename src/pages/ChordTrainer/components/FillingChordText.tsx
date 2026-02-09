@@ -111,7 +111,10 @@ const FillingChordText: React.FC<FillingChordTextProps> = ({
           className="ct-successFade pointer-events-none absolute inset-0"
           aria-hidden
         >
-          <div className={className} style={{ color: 'var(--notification-bg)' }}>
+          <div
+            className={className}
+            style={{ color: 'var(--notification-bg)' }}
+          >
             {text}
           </div>
         </div>

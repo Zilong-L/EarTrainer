@@ -20,6 +20,15 @@
     "noAccess": "无法访问"
   },
   "notes": "音符",
+  "diatonicBook": {
+    "button": "进行",
+    "close": "关闭",
+    "randomMode": "随机(调内)",
+    "requireSlashBass": "斜杠和弦要求低音",
+    "searchPlaceholder": "搜索和弦进行...",
+    "selected": "已选择",
+    "title": "和弦进行"
+  },
   "settings": {
     "SoundSettings": "音色设置",
     "basicChords": "基础和弦",
@@ -97,6 +106,7 @@
       "label": "按住切换",
       "unit": "秒"
     },
+    "requireBass": "斜杠和弦要求低音",
     "modes": {
       "chordpractice": "和弦练习",
       "diatonic": "调内和弦",
