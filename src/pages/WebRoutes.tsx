@@ -14,6 +14,9 @@ import TrainingShell, {
 const ChordTrainer = lazy(() => import('./ChordTrainer'));
 const TrainingHome = lazy(() => import('../features/training/TrainingHome'));
 const LearnPage = lazy(() => import('../features/training/LearnPage'));
+const LessonExplainer = lazy(
+  () => import('../features/training/LessonExplainer')
+);
 const PracticeLibrary = lazy(
   () => import('../features/training/PracticeLibrary')
 );
@@ -77,6 +80,7 @@ function RouteContent() {
           <Route element={<TrainingShell />}>
             <Route path="/" element={<TrainingHome />} />
             <Route path="/learn" element={<LearnPage />} />
+            <Route path="/learn/:lessonId" element={<LessonExplainer />} />
             <Route path="/practice" element={<PracticeLibrary />} />
             <Route path="/progress" element={<ProgressPage />} />
             <Route path="/practice/:lessonId" element={<GuidedPractice />} />

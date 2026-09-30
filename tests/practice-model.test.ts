@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import {
+  CHAPTERS,
   createSeededRng,
+  generateComparisonExample,
   generateLessonExamples,
   generateQuestion,
   generateSessionQuestions,
@@ -64,8 +66,29 @@ const assertEvents = (events: PracticeEvent[]) =>
   });
 
 describe('guided curriculum', () => {
-  it('offers seven stable lessons across six stages with bilingual labels', () => {
-    assert.equal(LESSONS.length, 7);
+  it('offers connected bilingual topics across six open musical chapters', () => {
+    assert.equal(LESSONS.length, 25);
+    assert.equal(CHAPTERS.length, 6);
+    assert.equal(
+      new Set(LESSONS.map(lesson => lesson.id)).size,
+      LESSONS.length
+    );
+    assert.deepEqual(
+      new Set(CHAPTERS.flatMap(chapter => chapter.lessonIds)),
+      new Set(LESSONS.map(lesson => lesson.id))
+    );
+    for (const chapter of CHAPTERS) {
+      assert.ok(chapter.lessonIds.length >= 3 && chapter.lessonIds.length <= 5);
+      assert.ok(
+        chapter.title.en &&
+          chapter.title.zh &&
+          chapter.description.en &&
+          chapter.description.zh &&
+          chapter.symbol
+      );
+      for (const id of chapter.lessonIds)
+        assert.equal(getLesson(id)!.chapterId, chapter.id);
+    }
     assert.equal(new Set(LESSONS.map(lesson => lesson.stage)).size, 6);
     for (const lesson of LESSONS) {
       for (const label of [
@@ -183,16 +206,54 @@ describe('guided curriculum', () => {
     }
   });
 
-  it('matches every answer to structurally correct notes, bass and context', () => {
-    const intervals: Record<string, number> = { m3: 3, M3: 4, P5: 7 };
+  it('matches every answer to actual intervals, chord members, bass and phrase context', () => {
+    const intervals: Record<string, number> = {
+      m2: 1,
+      M2: 2,
+      m3: 3,
+      M3: 4,
+      P4: 5,
+      TT: 6,
+      P5: 7,
+    };
     const triads: Record<string, number[]> = {
       major: [0, 4, 7],
       minor: [0, 3, 7],
       diminished: [0, 3, 6],
     };
-    const inversion: Record<string, number> = { root: 0, first: 1, second: 2 };
+    const sevenths: Record<string, number[]> = {
+      maj7: [0, 4, 7, 11],
+      dom7: [0, 4, 7, 10],
+      min7: [0, 3, 7, 10],
+      'half-dim7': [0, 3, 6, 10],
+      dim7: [0, 3, 6, 9],
+    };
+    const inversion: Record<string, number> = {
+      root: 0,
+      first: 1,
+      second: 2,
+      third: 3,
+    };
     const degrees = [0, 2, 4, 5, 7, 9, 11];
-    const functions: Record<string, number> = { I: 0, IV: 5, V: 7, vi: 9 };
+    const functions: Record<string, number> = {
+      I: 0,
+      ii: 2,
+      IV: 5,
+      V: 7,
+      vi: 9,
+      i: 0,
+      iv: 5,
+      v: 7,
+      VI: 8,
+    };
+    const minorChords = ['ii', 'vi', 'i', 'iv', 'v'];
+    const cadences: Record<string, string[]> = {
+      authentic: ['I', 'IV', 'V', 'I'],
+      half: ['I', 'vi', 'ii', 'V'],
+      plagal: ['I', 'V', 'IV', 'I'],
+      deceptive: ['I', 'IV', 'V', 'vi'],
+    };
+    const mod = (value: number) => ((value % 12) + 12) % 12;
     for (const lesson of LESSONS) {
       const rng = createSeededRng(917);
       for (let index = 0; index < 500; index++) {
@@ -206,46 +267,252 @@ describe('guided curriculum', () => {
         switch (question.type) {
           case 'degree':
             assert.deepEqual(notes, [
-              question.tonic + degrees[Number(question.answer) - 1],
+              question.tonic +
+                (question.answer === 'b3'
+                  ? 3
+                  : degrees[Number(question.answer) - 1]),
             ]);
             assert.equal(question.referenceEvents.length, 12);
+            if (lesson.mode === 'minor') {
+              assert.deepEqual(
+                question.referenceEvents
+                  .slice(0, 3)
+                  .map(item => item.note - question.tonic),
+                [0, 3, 7]
+              );
+              assert.deepEqual(
+                question.referenceEvents
+                  .slice(6, 9)
+                  .map(item => item.note - question.tonic),
+                [2, 7, 11]
+              );
+            }
             break;
-          case 'interval':
-            assert.equal(notes[1] - notes[0], intervals[question.answer]);
-            assert.equal(question.referenceEvents.length, 0);
+          case 'interval': {
+            const pair = lesson.mode === 'context' ? notes.slice(-2) : notes;
+            assert.equal(pair.length, 2);
+            assert.equal(
+              pair[1] - pair[0],
+              intervals[question.answer] *
+                (lesson.mode === 'descending' ? -1 : 1)
+            );
+            assert.equal(
+              question.referenceEvents.length,
+              lesson.mode === 'context' ? 12 : 0
+            );
+            if (lesson.mode === 'context') {
+              assert.equal(notes.length, 4);
+              assert.deepEqual(notes.slice(0, 2), [
+                question.tonic,
+                question.tonic + 7,
+              ]);
+              assert.deepEqual(
+                question.hintEvents.map(item => item.note),
+                pair
+              );
+              assert.ok(question.prompt.en.includes('final two'));
+              assert.ok(
+                question.events.every(
+                  (item, noteIndex) =>
+                    noteIndex === 0 ||
+                    item.time > question.events[noteIndex - 1].time
+                )
+              );
+            }
+            if (lesson.mode === 'harmonic')
+              assert.ok(question.events.every(item => item.time === 0));
             break;
+          }
           case 'triad':
             assert.deepEqual(
-              notes.map(note => note - question.tonic),
+              notes
+                .map(note => mod(note - question.tonic))
+                .sort((a, b) => a - b),
               triads[question.answer]
             );
-            assert.ok(question.events.every(event => event.time === 0));
+            assert.deepEqual(
+              question.hintEvents.map(item => item.note - question.tonic),
+              triads[question.answer]
+            );
+            if (lesson.mode === 'arpeggiated')
+              assert.ok(question.events[1].time > question.events[0].time);
+            else assert.ok(question.events.every(item => item.time === 0));
             break;
           case 'inversion': {
-            const pitchClasses = notes
-              .map(note => (note - question.tonic) % 12)
-              .sort((a, b) => a - b);
-            const quality = pitchClasses.includes(4) ? 'major' : 'minor';
-            assert.deepEqual(pitchClasses, triads[quality]);
+            const quality = question.construction.quality;
+            assert.deepEqual(
+              notes
+                .map(note => mod(note - question.tonic))
+                .sort((a, b) => a - b),
+              triads[quality]
+            );
             assert.equal(
-              (Math.min(...notes) - question.tonic) % 12,
+              mod(Math.min(...notes) - question.tonic),
               triads[quality][inversion[question.answer]]
             );
             assert.ok(notes[0] < notes[1] && notes[1] < notes[2]);
+            if (lesson.mode === 'open') assert.ok(notes[2] - notes[0] > 12);
+            assert.equal(
+              question.referenceEvents.length,
+              lesson.mode === 'context' ? 12 : 0
+            );
+            if (lesson.mode === 'context')
+              assert.deepEqual(
+                question.referenceEvents
+                  .slice(0, 3)
+                  .map(item => item.note - question.tonic),
+                triads[quality]
+              );
             break;
           }
           case 'function':
             assert.deepEqual(
               notes.map(note => note - question.tonic),
-              triads[question.answer === 'vi' ? 'minor' : 'major'].map(
-                offset => offset + functions[question.answer]
-              )
+              triads[
+                minorChords.includes(question.answer) ? 'minor' : 'major'
+              ].map(offset => offset + functions[question.answer])
             );
             assert.equal(question.referenceEvents.length, 12);
             break;
+          case 'seventh':
+            assert.deepEqual(
+              notes.map(note => note - question.tonic),
+              sevenths[question.answer]
+            );
+            assert.equal(notes.length, 4);
+            assert.ok(question.events.every(item => item.time === 0));
+            break;
+          case 'seventh-inversion': {
+            const quality = ['maj7', 'dom7', 'min7'][
+              question.construction.variant
+            ];
+            assert.deepEqual(
+              notes
+                .map(note => mod(note - question.tonic))
+                .sort((a, b) => a - b),
+              sevenths[quality]
+            );
+            assert.equal(
+              mod(Math.min(...notes) - question.tonic),
+              sevenths[quality][inversion[question.answer]]
+            );
+            assert.equal(new Set(notes.map(mod)).size, 4);
+            break;
+          }
+          case 'bass-motion': {
+            assert.equal(notes.length, 6);
+            const bass1 = Math.min(...notes.slice(0, 3));
+            const bass2 = Math.min(...notes.slice(3));
+            const movement: Record<string, number> = {
+              hold: 0,
+              'up-step': 1,
+              'down-step': -1,
+              'up-fifth': 7,
+              'down-fifth': -7,
+            };
+            assert.equal(bass2 - bass1, movement[question.answer]);
+            assert.deepEqual(
+              question.hintEvents.map(item => item.note),
+              [bass1, bass2]
+            );
+            assert.deepEqual(
+              question.events.map(item => item.time),
+              [0, 0, 0, 1.6, 1.6, 1.6]
+            );
+            break;
+          }
+          case 'cadence':
+          case 'progression': {
+            const symbols =
+              question.type === 'cadence'
+                ? cadences[question.answer]
+                : question.answer.split('-');
+            assert.equal(notes.length, 12);
+            for (const [chordIndex, symbol] of symbols.entries()) {
+              const offsets =
+                triads[minorChords.includes(symbol) ? 'minor' : 'major'];
+              assert.deepEqual(
+                notes
+                  .slice(chordIndex * 3, chordIndex * 3 + 3)
+                  .map(note => note - question.tonic),
+                offsets.map(offset => offset + functions[symbol])
+              );
+              assert.ok(
+                question.events
+                  .slice(chordIndex * 3, chordIndex * 3 + 3)
+                  .every(
+                    item => Math.abs(item.time - chordIndex * 1.1) < 0.00001
+                  )
+              );
+            }
+            assert.equal(question.referenceEvents.length, 12);
+            assert.ok(
+              question.events
+                .slice(-3)
+                .every(item => item.duration > question.events[0].duration)
+            );
+            if (question.type === 'progression')
+              assert.deepEqual(
+                question.hintEvents.map(item => item.note - question.tonic),
+                symbols.map(symbol => functions[symbol])
+              );
+            else
+              assert.deepEqual(
+                question.hintEvents.map(item => item.note),
+                notes.slice(-6)
+              );
+            break;
+          }
+          default:
+            assert.fail(`Unverified exercise type: ${String(question.type)}`);
         }
       }
     }
+  });
+
+  it('makes wrong-versus-correct contrasts in the same key and incidental context', () => {
+    for (const lesson of LESSONS) {
+      const rng = createSeededRng(918);
+      for (let index = 0; index < 20; index++) {
+        const question = generateQuestion(lesson.id, rng);
+        const exact = generateComparisonExample(question, question.answer)!;
+        assert.deepEqual(exact.events, question.events);
+        assert.deepEqual(exact.hintEvents, question.hintEvents);
+        assert.deepEqual(exact.referenceEvents, question.referenceEvents);
+        for (const option of lesson.choices) {
+          const alternative = generateComparisonExample(question, option.id)!;
+          assert.equal(alternative.tonic, question.tonic);
+          assert.deepEqual(alternative.construction, question.construction);
+          assert.deepEqual(
+            alternative.referenceEvents,
+            question.referenceEvents
+          );
+          assertEvents([...alternative.events, ...alternative.hintEvents]);
+          if (option.id !== question.answer)
+            assert.notDeepEqual(alternative.events, question.events);
+        }
+        assert.equal(
+          generateComparisonExample(question, 'not-an-option'),
+          undefined
+        );
+      }
+    }
+  });
+
+  it('keeps the melodic context prefix and key reference independent of the answer', () => {
+    const lesson = getLesson('intervals-context')!;
+    const examples = generateLessonExamples(lesson.id);
+    for (const example of examples) {
+      assert.deepEqual(
+        example.events.slice(0, 2),
+        examples[0].events.slice(0, 2)
+      );
+      assert.deepEqual(example.referenceEvents, examples[0].referenceEvents);
+    }
+    assert.deepEqual(
+      examples[0].events.slice(-2).map(item => item.note - examples[0].tonic),
+      [4, 7]
+    );
   });
 });
 

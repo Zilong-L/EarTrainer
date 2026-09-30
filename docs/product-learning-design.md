@@ -1,78 +1,70 @@
-# EarTrainer 移动练耳产品与学习设计
+# EarTrainer · 在声音里理解音乐
 
-2026-09-30 · 开发预览设计说明
+2026-09-30 · 开发预览
 
-## 目标
+## 音乐优先
 
-让用户能在手机上完成一条清楚的路径：认识声音 → 有明确目标的短练 → 首次回答 → 对比与解释 → 真实的进度。新引导练习与原有音级、和弦听辨、键盘/MIDI 实验室并存；旧统计保留，绝不转换成新的“无辅助首答”成绩。
+首页提供一个直接的聆听入口；学习路线按相互关联的音乐主题展开；自由工作室保留原有音级、和弦与键盘/MIDI 工具。主导航为「聆听 / 路线 / 工作室」。没有每日任务、打卡、连胜、过关或强制课后报告。
 
-## 教学依据与边界
+解释与练习分开：
 
-- [Baylor Ear Training Compendium：音级入门](https://openbooks.library.baylor.edu/eartraining/chapter/unit-1-scale-degrees/)及[扩展音级](https://openbooks.library.baylor.edu/eartraining/chapter/unit-2-scale-degrees/)以调性参照之后的单音听辨建立相对音高，先用较小的答案集合，再逐渐扩展
-- [University of Idaho Integrated Aural Skills：旋律听辨入门](https://uidaho.pressbooks.pub/auralskills/chapter/ear-training-introduction-to-melodic-dictation/)使用 Do/Mi/Sol 等稳定的主和弦音作锚点，支持先建立调性感的路线
-- [Open Music Theory：三和弦](https://viva.pressbooks.pub/openmusictheory/chapter/triads/)与[Integrated Music Theory：三和弦](https://intmus.github.io/inttheory20-21/03-triads-7chords-leadsheet/a1-triads.html)按根音、三音、五音关系定义和弦性质；转位取决于最低的和弦成员，不取决于上方声部顺序
-- [Eglington & Pavlik 的自适应学习研究](https://www.nature.com/articles/s41539-020-00074-4)支持考虑学习者与项目差异。其任务是词对记忆，不能据此宣称这款练耳软件已经验证学习效果
-- [Little、Cheng 与 Wright 的听觉辨别研究](https://pmc.ncbi.nlm.nih.gov/articles/PMC6384134/)发现小样本成人在音程比较任务中的改善；本产品据此重视示范与专注听辨，但不承诺迁移到真实歌曲的效果
+- `/learn/:lessonId`：独立的声音与图文解释页，示例音、实际 MIDI 对应的钢琴与音程/和弦/低音图形、播放关联的音符与乐句画面。学习示例公开名称，支持慢慢比较
+- `/practice/:lessonId`：干净的连续听辨空间，只保留播放/停止、选择、简短声音对比、继续与音量。想了解原理时点「理解这个声音」，没有常驻解释或教学动画
+- 首次进入练习不会自动发声。点击播放开始；点击「继续」或「换一个声音」代表明确请求播放下一个声音。不会自动倒数，也不会在八题后跳到总结
 
-八题、练习顺序、48–79 MIDI 范围、进阶门槛、回顾建议均是产品启发式，不是经过试验验证的最优数值。不宣称绝对音感、科学认证的掌握程度、医学效果或保证的学习成果。
+## 聆听路线
 
-## 已实现的七节短练，覆盖六种技能
+六个开放章节，由调性参照走向真实和声语境：
 
-| 技能 | 固定答案集合 | 听辨目标 |
-| --- | --- | --- |
-| 找到调性中心 | 1 · Do、3 · Mi、5 · Sol | 先听调性参照，再辨认目标音相对主音的位置 |
-| 听见音程距离 | 小三度、大三度、纯五度 | 上行旋律音程；两个音的时值、音色、力度一致 |
-| 三和弦基本色彩 | 大三和弦、小三和弦 | 完整根音位置三和弦，以三音关系辨认性质 |
-| 加入减三和弦 | 大、小、减三和弦 | 引入缩小的五度，保持完整的三个和弦成员 |
-| 跟随最低音 | 原位、第一转位、第二转位 | 大/小三和弦的最低成员；三音在低音是第一转位 |
-| 听见和声功能 | I、IV、V、vi | 明确的大调参照之后，辨认根音位置功能和弦 |
-| 完整的大调地图 | 1–7 · Do/Re/Mi/Fa/Sol/La/Ti | 同一大调中的全部七个自然音级 |
+1. 主音与调性：Do/Mi/Sol、相邻音级、完整大调音级、小调主三和弦锚点
+2. 旋律中的音程：半音/全音/纯四度、三度与五度、下行距离、同时发声音程、短旋律中的末尾音程
+3. 和弦内部的色彩：大小三和弦、减三和弦、分解和弦、改变转位之后的性质
+4. 低音怎样讲述音乐：密集转位、开放排列、调性中的主和弦转位、两和弦之间的低音保持/级进/五度运动
+5. 三和弦之外：大七/属七/小七、半减七与全减七、非对称七和弦的四种低音
+6. 音乐句子：大调和弦功能、ii 与 IV 的预备关系、终止类型、四和弦大调路线、小调中 V/v 与 VI 的区别
 
-每节课先提供带名称的可点击声音示例。完整音级练习是单独的较难课程，基础课不会在半途中悄悄增加答案类别。所有课程开放，建议路线不会把用户锁在某一关。
+课程全部开放，不用答题次数或分数解锁。课程中新增的音型、和弦进行与 MIDI 示例由本项目生成，不复制外部教学录音。范围是相对听觉与基础调性/和弦关系；不宣称已经覆盖真实歌曲听写、完整节奏训练、唱音评估、所有调式、所有爵士和声或云端账户。
 
-尚未实现的扩展：下行/和声音程、短旋律听写、小调体系、七和弦专项、连续和弦进行听辨、唱音评估、云端同步与跨设备账户。已有自由实验室可自选更丰富的和弦和输入方式，但不因此视为引导课程已覆盖这些技能。
+## 教学与生成边界
 
-## 生成与公平性
+- 音级在先建立的大调或小调参照里听；小调使用以 Do 为主音的 1、♭3、5，避免把 Mi 和 Me 混淆
+- 音程距离与起始绝对音高区分，包含上行、下行、同时发声与短旋律语境；指定目标始终明确
+- 三和弦性质取决于根音上的三音/五音，不能用「快乐/悲伤」取代定义；排列改变不等于性质改变
+- 转位由实际最低和弦成员决定。开放排列保留全部成员，并对整个和弦作八度移动；不会为了限音域而删掉定义音
+- 减七和弦的对称结构会使孤立转位的根音认定有歧义，因此只提供明确原位参照的性质比较，不用于转位听辨
+- 终止练习区分宽泛的正格、半终止、变格与阻碍类型；不把所有 V–I 都称为完全正格终止。功能解释限于给定调性语境
+- 七和弦包含全部四个成员；大七/属七/小七按实际三度与七度组合，第三转位确实以七音为低音
+- 目标、参照、提示与对比均在 MIDI 48–79，时值与事件起始有限且合法
+- 答案类别先均匀抽取，再独立抽取调性/根音及排列。允许连续出现相同类别，避免二选一交替泄漏
+- 重播不换音。回答后的 A/B 对比保持目标根音/调性和无关排列条件，只改变要比较的类别
+- 未回答时不显示目标音名、标记键盘、谱面、答案相关动画或无障碍标签。学习页的命名示例与练习页是独立路由
 
-- 原创 MIDI 音型，由现有 Tone 引擎合成；不拷贝教学网站录音
-- 先独立抽取答案类别，再抽取主音/根音与音域。选项保持稳定顺序，但正确答案不偏向某个位置
-- 允许答案类别连续重复。禁止“排除上一题答案”的策略，以免二选一练习变成可预测的交替
-- 每道题的音符与答案保持不变，重播不会换题；题目都有独立 ID
-- 大调音级偏移为 0/2/4/5/7/9/11 半音；音程练习的距离为 3/4/7 半音
-- 大、小、减三和弦分别为 0/4/7、0/3/7、0/3/6；根音与注册范围的分布一致
-- 三和弦转位旋转成员并将低位成员升高八度，答案由实际最低音计算
-- 功能课的参照对所有答案相同。参照采用固定的 I–IV–V–I 声部连接，IV/V 可为转位；它是“调性参照”，不宣称根音位置的终止式
-- 新引导课所有目标、参照与提示事件在 MIDI 48–79 的公共范围，时值正数且有限
-- 不用增三和弦或减七和弦考未建立根音的转位：对称音集合会产生根音歧义；也不混合转位 sus2/sus4 制造同音异名答案。背景见 [Open Music Theory：增和弦](https://viva.pressbooks.pub/openmusictheory/chapter/augmented-options/)
-- 未回答时不显示目标音名、和弦符号、标记钢琴、谱面或答案相关的动画/无障碍标签。声音图形只是装饰
+## 记录更轻
 
-原有自由和弦实验室的音域设置以低位为主要约束；完整和弦可能延展超过上界。这与新引导课的严格事件范围不同。
+连续聆听不写入题目、答案、分数或每日记录，只在当前浏览器记住上次的主题与音量。存储损坏或不可用不会妨碍播放。
 
-## 回答、辅助与反馈
+以前的完整八题短练记录与原有实验室数据保持兼容，不删除、不迁移成新的成绩。旧短练只在页脚的「以前的记录」里查看。原有保存/校验/进度代码保留供既有数据读取，不再驱动首页或路径。
 
-正常重播和必要调性参照不扣分。提示音型会将该题标为辅助；揭晓与跳过单独记录。首次选择锁定，每道题最多贡献一次首答，之后播放、比较、点击或重试都不能增加首答成功。
+## 声音与可访问性
 
-错误回答后显示正确/所选名称以及结构说明，例如“三音距根音四个半音”或“第一转位的最低音是三音”。不用“大调一定快乐、小调一定悲伤”作为定义。下一题由用户主动进入，没有强制倒计时或遮盖题目的奖励音效。
+- 始终有停止；停止、离开路由、隐藏页面或更换例子会取消已排队/仍在加载的旧播放
+- 音量控件、音色加载回退与错误重试保留。默认使用较低的软件音量；设备实际声压仍由设备与耳机决定
+- 只有完整听完目标才启用答题；加载或参照被打断不会被误当作已经听到目标
+- 快速重复答题不会改变已选答案；快速重复「继续」不会跳过多题；声音对比不会把选择变成分数
+- 触摸控件至少 48 CSS 像素，窄屏重排，键盘焦点可见，文字与符号反馈不只依赖颜色
+- 学习页动态尊重减少动态效果；练习页无教学动画。不会在切换回隐藏页之后突然恢复播放
+- 模拟单元测试不能替代真实 iPhone/Safari、耳机音质与 MIDI 硬件验证
 
-只将完整的八题短练加入历史。离开或刷新不会把未答题变成错误，也不会凭空生成完整成绩；未完成短练不持久化。播放需用户操作；取消、切换页面、隐藏标签页会停止声音并使待处理播放失效。
+## 参考依据
 
-## 进度的含义
+- [Baylor Ear Training Compendium · Scale degrees](https://openbooks.library.baylor.edu/eartraining/chapter/unit-1-scale-degrees/)：在调性参照中建立相对音级
+- [University of Idaho Integrated Aural Skills · Melodic dictation](https://uidaho.pressbooks.pub/auralskills/chapter/ear-training-introduction-to-melodic-dictation/)：用稳定的主三和弦音建立锚点
+- [Open Music Theory · Triads](https://viva.pressbooks.pub/openmusictheory/chapter/triads/)：三和弦性质、成员与转位
+- [Open Music Theory · Seventh chords](https://viva.pressbooks.pub/openmusictheory/chapter/seventh-chords/)：七和弦结构与转位
+- [Integrated Music Theory · Triads and seventh chords](https://intmus.github.io/inttheory20-21/03-triads-7chords-leadsheet/a1-triads.html)：和弦成员及七和弦结构
+- [University of Idaho · Intervals through key relationships](https://idaho.pressbooks.pub/auralskills/chapter/intervals-through-key-relationships/)：音程与调性位置的区别
+- [Music Theory for the 21st-Century Classroom · Harmonic function](https://musictheory.pugetsound.edu/mt21c/HarmonicFunction.html)：主、属与预备属的语境
+- [Open Music Theory · Augmented options](https://viva.pressbooks.pub/openmusictheory/chapter/augmented-options/)：对称和弦与根音歧义的背景
+- [WCAG 2.2 · Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)、[Target size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html)、[Audio control](https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html)：窄屏、触摸与声音控制
 
-独立首答正确数 ÷ 已完成短练中的全部题目，是主要正确率；辅助、揭晓和跳过不会提高它。保留每个答案类别与主音音级的覆盖信息。
-
-“可进阶”至少需三次完整短练、24 题、每个答案类别三次独立试答、三个主音音级、80% 独立首答正确率，并避免近期明显下降。它仅是建议，不叫“已掌握”。七选一课程可能要比三轮更久才能达到每类覆盖。
-
-推荐优先关注近期有明显困难的技能，然后给尚未稳定的基础技能。此版是多次练习与覆盖驱动的路线推荐，不宣称已经实现间隔重复或个性化机器学习。
-
-记录仅存在当前浏览器，独立键名、版本校验、完整记录验证、去重及容量上限保护旧统计。最多保留最近 200 次完整短练；浏览器存储不可用时当次仍可完成，显示保存失败，并在本页临时保留。清理数据、换设备或无痕模式可能失去历史。
-
-## 移动与可访问性验收
-
-- 手机主导航为今日/学习/练习/进度；练习中隐藏底部导航，将注意力留给题目
-- 主要操作目标至少 48 CSS 像素；选项有文字与符号反馈，无需仅凭红绿区分
-- 可键盘操作、有清楚的焦点样式和跳至主要内容链接；声音与保存状态有可读的状态区域
-- 按 320 CSS 像素设计重排，使用安全区内边距；尊重减少动态效果设置
-- 播放起于明确点击、始终可停止，有音量控制和低设备音量提醒。数字限幅不保证耳机或扬声器的实际声压安全
-- [WCAG 2.2 最小目标尺寸](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)、[增强目标尺寸](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html)、[状态信息](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html)、[重排](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)、[焦点不被遮挡](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html)、[声音控制](https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html)为设计依据
-
-验收情况以对应开发提交的测试/构建/浏览器记录为准。模拟测试不能替代真实 iPhone/Safari 听音、耳机音质与 MIDI 硬件验证。开发预览通过验收后，正式主站替换仍应单独确认。
+课程顺序、示例音型、音域、播放节奏与界面设计是产品选择，不是经过学习效果试验验证的最优方案。没有「科学认证掌握」、绝对音感、保证迁移到真实歌曲或医疗效果的宣称。

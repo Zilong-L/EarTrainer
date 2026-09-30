@@ -5,9 +5,10 @@ import {
   HomeIcon,
   AcademicCapIcon,
   MusicalNoteIcon,
-  ChartBarIcon,
 } from '@heroicons/react/24/outline';
+import { getLesson, text } from '../practice/model';
 import './training.css';
+import './music.css';
 
 export function TrainingError({ children }: { children: ReactNode }) {
   return <TrainingBoundary>{children}</TrainingBoundary>;
@@ -40,10 +41,9 @@ class TrainingBoundary extends Component<
 }
 
 const items = [
-  { to: '/', icon: HomeIcon, en: 'Today', zh: '今日' },
-  { to: '/learn', icon: AcademicCapIcon, en: 'Learn', zh: '学习' },
-  { to: '/practice', icon: MusicalNoteIcon, en: 'Practice', zh: '练习' },
-  { to: '/progress', icon: ChartBarIcon, en: 'Progress', zh: '进度' },
+  { to: '/', icon: HomeIcon, en: 'Listen', zh: '聆听' },
+  { to: '/learn', icon: AcademicCapIcon, en: 'Path', zh: '路线' },
+  { to: '/practice', icon: MusicalNoteIcon, en: 'Studio', zh: '工作室' },
 ];
 
 export default function TrainingShell() {
@@ -52,16 +52,26 @@ export default function TrainingShell() {
   const location = useLocation();
   useEffect(() => {
     document.documentElement.lang = zh ? 'zh-CN' : 'en';
-    const title = location.pathname.startsWith('/practice/')
-      ? zh
-        ? '专注练习'
-        : 'Focused practice'
-      : (items.find(item => item.to === location.pathname)?.[
-          zh ? 'zh' : 'en'
-        ] ?? (zh ? '练耳' : 'Ear training'));
+    const currentLesson = getLesson(location.pathname.split('/')[2] ?? '');
+    const title =
+      location.pathname.startsWith('/learn/') && currentLesson
+        ? text(currentLesson.title, i18n.language)
+        : location.pathname.startsWith('/practice/')
+          ? zh
+            ? '聆听'
+            : 'Listening'
+          : (items.find(item => item.to === location.pathname)?.[
+              zh ? 'zh' : 'en'
+            ] ?? (zh ? '练耳' : 'Ear training'));
     document.title = `${title} · Ear Trainer`;
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [location.pathname, zh]);
+    if (location.hash) {
+      document
+        .getElementById(location.hash.slice(1))
+        ?.scrollIntoView({ block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, [location.pathname, location.hash, i18n.language, zh]);
   const changeLanguage = () => {
     const next = zh ? 'en' : 'zh';
     try {
@@ -89,16 +99,18 @@ export default function TrainingShell() {
             Ear<span className="trainer-brand-light">Trainer</span>
           </span>
         </Link>
-        <nav
-          className="trainer-desktop-nav"
-          aria-label={zh ? '主导航' : 'Main navigation'}
-        >
-          {items.map(item => (
-            <NavLink key={item.to} to={item.to} end>
-              {zh ? item.zh : item.en}
-            </NavLink>
-          ))}
-        </nav>
+        {!inSession && (
+          <nav
+            className="trainer-desktop-nav"
+            aria-label={zh ? '主导航' : 'Main navigation'}
+          >
+            {items.map(item => (
+              <NavLink key={item.to} to={item.to} end={item.to === '/'}>
+                {zh ? item.zh : item.en}
+              </NavLink>
+            ))}
+          </nav>
+        )}
         <button
           type="button"
           className="trainer-language"
@@ -113,18 +125,17 @@ export default function TrainingShell() {
       </div>
       {!inSession && (
         <footer className="trainer-footer">
-          <p>
-            {zh
-              ? '每天听一点，慢慢听得更清楚'
-              : 'A little listening, a clearer musical ear'}
-          </p>
-          <a
-            href="https://github.com/Zilong-L/EarTrainer/issues"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {zh ? '反馈与开源' : 'Feedback & source'}
-          </a>
+          <p>{zh ? 'All about music' : 'All about music'}</p>
+          <div className="music-footer-links">
+            <Link to="/progress">{zh ? '以前的记录' : 'Earlier practice'}</Link>
+            <a
+              href="https://github.com/Zilong-L/EarTrainer/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {zh ? '反馈与开源' : 'Feedback & source'}
+            </a>
+          </div>
         </footer>
       )}
       {!inSession && (
@@ -133,7 +144,7 @@ export default function TrainingShell() {
           aria-label={zh ? '主导航' : 'Main navigation'}
         >
           {items.map(item => (
-            <NavLink key={item.to} to={item.to} end>
+            <NavLink key={item.to} to={item.to} end={item.to === '/'}>
               <item.icon aria-hidden="true" />
               <span>{zh ? item.zh : item.en}</span>
             </NavLink>

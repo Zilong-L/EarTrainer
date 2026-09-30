@@ -1,0 +1,853 @@
+.lesson-explainer {
+  max-width: 1050px;
+  margin: 0 auto;
+  min-width: 0;
+}
+.lesson-heading {
+  max-width: 730px;
+  margin: 0 0 42px;
+}
+.lesson-heading .music-back {
+  margin-bottom: 18px;
+}
+.lesson-heading .music-eyebrow {
+  margin-bottom: 13px !important;
+}
+.lesson-heading h1 {
+  font-family: Georgia, 'Noto Serif', serif;
+  font-size: clamp(34px, 4.6vw, 52px);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.6px;
+  margin-bottom: 21px;
+}
+.lesson-intro {
+  color: #bac4b8;
+  font-size: 15px;
+  line-height: 1.85;
+}
+.lesson-sound {
+  border-top: 1px solid #62715e;
+  padding-top: 27px;
+}
+.lesson-sound-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.lesson-explainer h2 {
+  font-size: 22px;
+  font-weight: 400;
+  color: #ece5d2;
+}
+.lesson-sound-heading > span {
+  font-size: 12px;
+  color: #b0bca9;
+}
+.lesson-example-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 27px;
+}
+.lesson-example-choices > button {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid #65755f;
+  border-radius: 5px;
+  background: transparent;
+  color: #d6ddca;
+  padding: 12px 16px;
+  font-size: 13px;
+}
+.lesson-example-choices > button[aria-pressed='true'] {
+  border-color: #d5c9a5;
+  background: #daceac12;
+  color: #f0dfac;
+}
+.lesson-example-choices > button:hover {
+  background: #daceac0c;
+}
+.lesson-example-choices svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+}
+.lesson-sound-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 44px;
+  align-items: start;
+}
+.lesson-visual {
+  min-width: 0;
+  background: #ffffff03;
+  border: 1px solid #4a5a46;
+  border-radius: 8px;
+  padding: 23px;
+}
+.lesson-visual-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+}
+.lesson-visual-title > span {
+  font-family: Georgia, serif;
+  color: #e4d4ad;
+  font-size: 20px;
+}
+.lesson-visual-title > small {
+  color: #b1bfa6;
+  font-size: 11px;
+  text-align: right;
+}
+.lesson-sound-copy {
+  padding-top: 10px;
+  min-width: 0;
+}
+.lesson-sound-copy h3 {
+  font-size: 24px;
+  font-family: Georgia, serif;
+  font-weight: 400;
+  margin-bottom: 16px;
+  color: #e5d4ac;
+}
+.lesson-sound-copy > p {
+  color: #c0c9b7;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.lesson-play-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-top: 24px;
+}
+.lesson-play-controls .music-primary {
+  min-width: 180px;
+}
+.lesson-play-controls svg {
+  width: 17px;
+  height: 17px;
+}
+.lesson-detail-button {
+  min-height: 48px;
+  padding: 12px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 0;
+  background: transparent;
+  color: #c5ceba;
+  font-size: 12px;
+  text-align: left;
+}
+.lesson-detail-button:hover {
+  color: #f1dfac;
+}
+.lesson-audio-status {
+  min-height: 26px;
+  color: #d7d8bf;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.lesson-sound-copy .lesson-caption {
+  margin-top: 11px;
+  font-size: 11px;
+  color: #a9b79c;
+  line-height: 1.8;
+}
+.lesson-distance-diagram {
+  padding: 40px 0 32px;
+}
+.lesson-distance-pitches {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  align-items: center;
+  gap: 8px;
+}
+.lesson-distance-pitches > span {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lesson-distance-pitches > span:last-child {
+  text-align: right;
+}
+.lesson-distance-pitches small {
+  font-size: 11px;
+  color: #bac5b2;
+  line-height: 1.6;
+}
+.lesson-distance-pitches strong {
+  font-family: Georgia, serif;
+  font-size: 27px;
+  font-weight: 400;
+  color: #e3d3ac;
+}
+.lesson-distance-pitches .lesson-distance-value {
+  text-align: center;
+  gap: 2px;
+}
+.lesson-distance-value strong {
+  font-size: 43px;
+}
+.lesson-semitone-rail {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--steps), minmax(0, 1fr));
+  margin-top: 30px;
+}
+.lesson-semitone-rail:before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: calc(50% / var(--steps));
+  right: calc(50% / var(--steps));
+  height: 1px;
+  background: #728466;
+}
+.lesson-semitone-rail > span {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1;
+  gap: 10px;
+}
+.lesson-semitone-rail i {
+  width: 12px;
+  height: 12px;
+  border: 1px solid #758969;
+  background: #26352b;
+  border-radius: 50%;
+}
+.lesson-semitone-rail .is-endpoint i {
+  border-color: #e0cf9f;
+  width: 13px;
+  height: 13px;
+}
+.lesson-semitone-rail .is-sounding i {
+  background: #e0cf9f;
+}
+.lesson-semitone-rail small {
+  font-size: 10px;
+  color: #a8b698;
+}
+.lesson-diagram-note {
+  text-align: center;
+  font-size: 11px;
+  color: #b0bda3;
+  margin-top: 17px !important;
+}
+.lesson-chord-diagram {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 14px;
+  align-items: center;
+  margin: 20px 0 25px;
+}
+.lesson-bass-route {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 15px;
+  padding: 18px 0 0;
+}
+.lesson-bass-route small,
+.lesson-bass-route > span {
+  color: #bac7ad;
+  font-size: 11px;
+}
+.lesson-bass-route strong {
+  color: #e5d6b0;
+  font-family: Georgia, serif;
+  font-size: 21px;
+  font-weight: 400;
+}
+.lesson-chord-diagram svg {
+  width: 100%;
+  overflow: visible;
+}
+.lesson-pitch-axis {
+  stroke: #78896b;
+  stroke-width: 1;
+}
+.lesson-pitch-guide {
+  stroke: #586b4e;
+  stroke-width: 0.7;
+}
+.lesson-pitch-note {
+  fill: #26352b;
+  stroke: #d9c795;
+  stroke-width: 1.3;
+}
+.lesson-chord-diagram .is-sounding .lesson-pitch-note {
+  fill: #e1d0a0;
+}
+.lesson-pitch-name {
+  fill: #e4d4ae;
+  font-size: 15px;
+  font-family: Georgia, serif;
+}
+.lesson-pitch-member {
+  fill: #bdc9ad;
+  font-size: 10px;
+}
+.lesson-pitch-bottom {
+  fill: #ddceaa;
+  font-family: Georgia, serif;
+  font-size: 17px;
+  text-anchor: middle;
+}
+.lesson-member-list {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.lesson-member-list > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3px 12px;
+  border-bottom: 1px solid #526346;
+  padding-bottom: 8px;
+}
+.lesson-member-list > div:last-child {
+  border-bottom: 0;
+}
+.lesson-member-list span {
+  color: #c9d0b9;
+  font-size: 11px;
+}
+.lesson-member-list strong {
+  color: #e2d2a9;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: Georgia, serif;
+}
+.lesson-member-list small {
+  grid-column: 1/-1;
+  color: #a8b797;
+  font-size: 10px;
+}
+.lesson-member-list > .is-sounding strong {
+  color: #ffe7a6;
+}
+.lesson-piano {
+  position: relative;
+  height: 111px;
+  width: 100%;
+}
+.lesson-white-keys {
+  display: flex;
+  height: 100%;
+  gap: 2px;
+}
+.lesson-piano-key {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  min-width: 0;
+  position: relative;
+}
+.lesson-white-keys > span {
+  flex: 1;
+  background: #dfdfcd;
+  color: #293e2d;
+  border-radius: 0 0 3px 3px;
+  border: 1px solid #c0cbb4;
+  padding-bottom: 10px;
+}
+.lesson-white-keys > .is-example {
+  border: 2px solid #c8a75b;
+  box-shadow: inset 0 -7px #ccb166;
+}
+.lesson-white-keys > .is-sounding {
+  background: #d5bb78;
+  box-shadow: inset 0 -7px #b28d3e;
+}
+.lesson-black-keys {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.lesson-black-keys > span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  height: 62%;
+  background: #17231d;
+  border: 1px solid #63745d;
+  border-radius: 0 0 3px 3px;
+  color: #e5d7b0;
+  padding-bottom: 7px;
+}
+.lesson-black-keys > .is-example {
+  border: 2px solid #d3b972;
+}
+.lesson-black-keys > .is-sounding {
+  background: #a28a52;
+  color: #fff3cd;
+}
+.lesson-piano-key small {
+  font-family: Georgia, serif;
+  font-size: 11px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.lesson-piano-key i {
+  font-size: 8px;
+  font-style: normal;
+}
+.lesson-visual-legend {
+  margin-top: 14px !important;
+  color: #b4bfa6;
+  font-size: 10px;
+  line-height: 1.7;
+}
+.lesson-sequence {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  margin-top: 31px;
+}
+.lesson-sequence-group {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  align-items: start;
+  gap: 17px;
+}
+.lesson-sequence-label {
+  font-size: 11px;
+  color: #b7c4aa;
+  padding-top: 17px;
+}
+.lesson-frame-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+.lesson-frame-list > button {
+  flex: 1;
+  min-width: 65px;
+  min-height: 59px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 12px;
+  color: #d7d9c2;
+  border: 1px solid #526649;
+  background: #ffffff02;
+  border-radius: 5px;
+}
+.lesson-frame-list > button.is-inspected {
+  border-color: #c6b889;
+}
+.lesson-frame-list > button.is-sounding {
+  background: #daceac1c;
+  color: #f2dfad;
+  border-color: #dccba0;
+}
+.lesson-frame-list > button > span {
+  font-family: Georgia, serif;
+  font-size: 18px;
+}
+.lesson-frame-list small {
+  color: #b3c1a5;
+  font-size: 10px;
+}
+.lesson-volume {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 19px 0 23px;
+  flex-wrap: wrap;
+}
+.lesson-volume label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #bdc7b1;
+  font-size: 11px;
+}
+.lesson-volume label svg {
+  width: 17px;
+  height: 17px;
+}
+.lesson-volume input {
+  width: 120px;
+  max-width: 100%;
+  height: 48px;
+  accent-color: #daceac;
+}
+.lesson-volume small {
+  color: #aebda1;
+  font-size: 10px;
+  margin-left: auto;
+}
+.lesson-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 27px 0 32px;
+  border-top: 1px solid #4e5e43;
+  border-bottom: 1px solid #4e5e43;
+}
+.lesson-comparison h2 {
+  margin-bottom: 14px;
+}
+.lesson-comparison p {
+  color: #b9c4ad;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.lesson-comparison-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.lesson-comparison-controls label {
+  font-size: 13px;
+  color: #d1d6bf;
+  line-height: 1.5;
+}
+.lesson-comparison-controls select {
+  flex: 1;
+  min-width: 130px;
+  max-width: 100%;
+  min-height: 48px;
+  border: 1px solid #748065;
+  background: #253229;
+  color: #e0dfc9;
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.lesson-comparison-controls .music-secondary {
+  flex-basis: 100%;
+}
+.lesson-comparison-controls svg,
+.lesson-next svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+}
+.lesson-ear {
+  display: grid;
+  grid-template-columns: 65px 1fr;
+  gap: 20px;
+  padding: 34px 0;
+  align-items: start;
+}
+.lesson-ear-mark {
+  color: #cabb8e;
+  font-family: Georgia, serif;
+  font-size: 49px;
+}
+.lesson-ear h2 {
+  margin-bottom: 12px;
+}
+.lesson-ear p {
+  color: #bfc8b3;
+  font-size: 14px;
+  line-height: 1.85;
+  max-width: 680px;
+}
+.lesson-next {
+  border-top: 1px solid #4e5e43;
+  padding-top: 29px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: end;
+}
+.lesson-next > div > p {
+  font-size: 12px;
+  color: #bac6ad;
+  margin-bottom: 17px;
+}
+.lesson-next-topic {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 64px;
+  max-width: 40%;
+  gap: 10px;
+  padding: 8px 0;
+}
+.lesson-next-topic small {
+  color: #acbc9c;
+  font-size: 11px;
+}
+.lesson-next-topic > span {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #d5d6bc;
+  font-size: 16px;
+}
+.lesson-explainer button,
+.lesson-explainer select,
+.lesson-explainer a {
+  touch-action: manipulation;
+}
+.lesson-explainer button:disabled {
+  opacity: 0.5;
+}
+@media (max-width: 850px) {
+  .lesson-sound-layout {
+    gap: 25px;
+    grid-template-columns: 1.1fr 1fr;
+  }
+  .lesson-visual {
+    padding: 19px;
+  }
+  .lesson-chord-diagram {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .lesson-chord-diagram svg {
+    height: 190px;
+  }
+  .lesson-member-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .lesson-member-list > div:last-child {
+    border-bottom: 1px solid #526346;
+  }
+  .lesson-comparison {
+    gap: 25px;
+  }
+}
+@media (max-width: 640px) {
+  .lesson-heading {
+    margin-bottom: 30px;
+  }
+  .lesson-heading .music-back {
+    margin-bottom: 11px;
+  }
+  .lesson-heading h1 {
+    font-size: 33px;
+    margin-bottom: 17px;
+  }
+  .lesson-intro {
+    font-size: 13px;
+    line-height: 1.85;
+  }
+  .lesson-sound {
+    padding-top: 24px;
+  }
+  .lesson-explainer h2 {
+    font-size: 21px;
+  }
+  .lesson-sound-heading {
+    margin-bottom: 18px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .lesson-sound-heading > span {
+    font-size: 11px;
+  }
+  .lesson-example-choices {
+    gap: 7px;
+    margin-bottom: 22px;
+  }
+  .lesson-example-choices > button {
+    flex: 1;
+    min-width: 115px;
+    padding: 11px 12px;
+    font-size: 12px;
+  }
+  .lesson-sound-layout {
+    grid-template-columns: 1fr;
+    gap: 21px;
+  }
+  .lesson-visual {
+    padding: 20px 17px;
+  }
+  .lesson-chord-diagram {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 12px;
+  }
+  .lesson-chord-diagram svg {
+    height: auto;
+  }
+  .lesson-member-list {
+    display: flex;
+  }
+  .lesson-member-list > div:last-child {
+    border-bottom: 0;
+  }
+  .lesson-sound-copy {
+    padding-top: 0;
+  }
+  .lesson-sound-copy h3 {
+    font-size: 23px;
+    margin-bottom: 12px;
+  }
+  .lesson-sound-copy > p {
+    font-size: 13px;
+  }
+  .lesson-play-controls {
+    margin-top: 19px;
+  }
+  .lesson-play-controls .music-primary {
+    width: 100%;
+  }
+  .lesson-sound-copy .lesson-caption {
+    font-size: 10px;
+  }
+  .lesson-sequence {
+    margin-top: 24px;
+    gap: 14px;
+  }
+  .lesson-sequence-group {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+  .lesson-sequence-label {
+    padding-top: 0;
+  }
+  .lesson-frame-list {
+    gap: 6px;
+  }
+  .lesson-frame-list > button {
+    min-width: 55px;
+    padding: 10px 6px;
+  }
+  .lesson-frame-list > button > span {
+    font-size: 17px;
+  }
+  .lesson-frame-list small {
+    font-size: 9px;
+  }
+  .lesson-volume {
+    gap: 12px;
+    padding-bottom: 18px;
+  }
+  .lesson-volume small {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+  .lesson-comparison {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 25px 0;
+  }
+  .lesson-comparison h2 {
+    margin-bottom: 12px;
+  }
+  .lesson-comparison p {
+    font-size: 12px;
+  }
+  .lesson-comparison-controls {
+    gap: 9px;
+  }
+  .lesson-comparison-controls label {
+    font-size: 12px;
+  }
+  .lesson-comparison-controls select {
+    min-width: 0;
+  }
+  .lesson-ear {
+    grid-template-columns: 33px 1fr;
+    gap: 16px;
+    padding: 29px 0;
+  }
+  .lesson-ear-mark {
+    font-size: 36px;
+  }
+  .lesson-ear h2 {
+    font-size: 19px;
+  }
+  .lesson-ear p {
+    font-size: 12px;
+  }
+  .lesson-next {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 22px;
+  }
+  .lesson-next .music-primary {
+    width: 100%;
+  }
+  .lesson-next-topic {
+    max-width: none;
+  }
+  .lesson-next-topic > span {
+    justify-content: space-between;
+  }
+}
+@media (max-width: 360px) {
+  .lesson-heading h1 {
+    font-size: 29px;
+  }
+  .lesson-visual {
+    padding: 18px 13px;
+  }
+  .lesson-visual-title > span {
+    font-size: 18px;
+  }
+  .lesson-visual-title > small {
+    font-size: 10px;
+  }
+  .lesson-distance-pitches strong {
+    font-size: 22px;
+  }
+  .lesson-distance-value strong {
+    font-size: 35px;
+  }
+  .lesson-distance-pitches small {
+    font-size: 10px;
+  }
+  .lesson-chord-diagram {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .lesson-chord-diagram svg {
+    height: 185px;
+  }
+  .lesson-member-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .lesson-member-list > div:last-child {
+    border-bottom: 1px solid #526346;
+  }
+  .lesson-piano {
+    height: 102px;
+  }
+  .lesson-piano-key small {
+    font-size: 9px;
+  }
+  .lesson-example-choices > button {
+    min-width: 100px;
+  }
+  .lesson-comparison-controls label {
+    flex-basis: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lesson-explainer *,
+  .lesson-explainer *:before,
+  .lesson-explainer *:after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

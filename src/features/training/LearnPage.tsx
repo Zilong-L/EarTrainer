@@ -1,49 +1,67 @@
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { LESSONS } from '../practice/model';
-import LessonCard from './LessonCard';
-import useTrainingProgress from './useTrainingProgress';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import { CHAPTERS, getLesson, text } from '../practice/model';
 
 export default function LearnPage() {
   const { i18n } = useTranslation();
   const zh = i18n.language.startsWith('zh');
-  const { summary } = useTrainingProgress();
   return (
-    <main>
-      <header className="trainer-page-heading">
-        <p className="trainer-eyebrow">
-          {zh ? '一步一步，建立听觉地图' : 'BUILD YOUR LISTENING MAP'}
+    <main className="music-path">
+      <header className="music-page-heading">
+        <p className="music-eyebrow">
+          {zh ? '从一个音，到音乐的语言' : 'FROM SOUND TO MUSICAL LANGUAGE'}
         </p>
-        <h1>{zh ? '你的学习路线' : 'Your learning path'}</h1>
+        <h1>{zh ? '聆听路线' : 'The listening path'}</h1>
         <p>
           {zh
-            ? '先建立调性感，再听音程与和弦。所有练习都可以自由进入，进阶提示来自多次练习，不是一道题的结果。'
-            : 'Find a tonal center, then explore intervals and harmony. Every lesson is open; progress guidance comes from several sessions, never a single answer.'}
+            ? '顺着听，也可以从任何地方走进去。把同一个关系放进不同的声音里，慢慢听清楚。'
+            : 'Follow it in order, or step in anywhere. Hear the same relationship in different musical settings.'}
         </p>
       </header>
-      <div className="trainer-path-note">
-        <span>{zh ? '先认识声音' : 'Meet the sound'}</span>
-        <span aria-hidden="true">→</span>
-        <span>{zh ? '8 题专注听辨' : '8 focused questions'}</span>
-        <span aria-hidden="true">→</span>
-        <span>{zh ? '对比、复盘、再练' : 'Compare, reflect, repeat'}</span>
-      </div>
-      <div className="trainer-lesson-grid">
-        {LESSONS.map((lesson, index) => (
-          <LessonCard
-            key={lesson.id}
-            lesson={lesson}
-            language={i18n.language}
-            index={index}
-            status={summary.lessons[lesson.id].status}
-            accuracy={summary.lessons[lesson.id].accuracy}
-          />
-        ))}
-      </div>
-      <p className="trainer-footnote">
-        {zh
-          ? '“可进阶”是练习建议，不是掌握能力的认证。换一个调、隔天再听，能帮助检验是否真的听熟了。'
-          : '“Ready to grow” is practice guidance, not a mastery certificate. Try another key and come back on a different day to check what feels familiar.'}
-      </p>
+      {CHAPTERS.map((chapter, index) => (
+        <section
+          key={chapter.id}
+          id={
+            index === 0
+              ? 'tonal'
+              : index === 2
+                ? 'harmony'
+                : index === 5
+                  ? 'movement'
+                  : chapter.id
+          }
+          className="music-chapter"
+        >
+          <div className="music-chapter-intro">
+            <span className="music-chapter-number">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <span className="music-chapter-symbol" aria-hidden="true">
+              {chapter.symbol}
+            </span>
+            <h2>{text(chapter.title, i18n.language)}</h2>
+            <p>{text(chapter.description, i18n.language)}</p>
+          </div>
+          <div className="music-chapter-topics">
+            {chapter.lessonIds.map((id, topicIndex) => {
+              const lesson = getLesson(id);
+              return (
+                lesson && (
+                  <Link key={id} to={`/learn/${id}`} className="music-topic">
+                    <span className="music-topic-number">{topicIndex + 1}</span>
+                    <div>
+                      <h3>{text(lesson.title, i18n.language)}</h3>
+                      <p>{text(lesson.description, i18n.language)}</p>
+                    </div>
+                    <ArrowRightIcon aria-hidden="true" />
+                  </Link>
+                )
+              );
+            })}
+          </div>
+        </section>
+      ))}
     </main>
   );
 }
