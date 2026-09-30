@@ -1,0 +1,583 @@
+.chord-lab {
+  --lab-bg: #f6f5f0;
+  --lab-surface: #ffffff;
+  --lab-ink: #1e3035;
+  --lab-muted: #596b6e;
+  --lab-line: #d8e1dd;
+  --lab-soft: #edf3ef;
+  --lab-accent: #17664f;
+  --lab-accent-ink: #ffffff;
+  --lab-success: #e6f4e9;
+  color: var(--lab-ink);
+  background: var(--lab-bg);
+  font-family:
+    'Nunito',
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    sans-serif;
+  min-height: 100svh;
+  line-height: 1.5;
+}
+body:not(.light) .chord-lab {
+  --lab-bg: #172528;
+  --lab-surface: #203237;
+  --lab-ink: #ecf1eb;
+  --lab-muted: #bdcdc6;
+  --lab-line: #405653;
+  --lab-soft: #293f3d;
+  --lab-accent: #9cddbb;
+  --lab-accent-ink: #15372b;
+  --lab-success: #2e5140;
+}
+.chord-lab *,
+.chord-lab *::before,
+.chord-lab *::after {
+  box-sizing: border-box;
+}
+.chord-lab button,
+.chord-lab select,
+.chord-lab input {
+  font: inherit;
+}
+.chord-lab button,
+.chord-lab a,
+.chord-lab select,
+.chord-lab summary {
+  -webkit-tap-highlight-color: transparent;
+}
+.chord-lab button {
+  cursor: pointer;
+}
+.chord-lab button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.chord-lab button:focus-visible,
+.chord-lab a:focus-visible,
+.chord-lab select:focus-visible,
+.chord-lab input:focus-visible,
+.chord-lab summary:focus-visible {
+  outline: 3px solid var(--lab-accent);
+  outline-offset: 4px;
+}
+.chord-lab-header {
+  max-width: 1120px;
+  margin: auto;
+  padding: 20px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--lab-line);
+  gap: 12px;
+}
+.chord-lab-back {
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--lab-muted);
+}
+.chord-lab-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.chord-lab-icon {
+  padding: 10px;
+  border: 1px solid var(--lab-line);
+  border-radius: 50%;
+  background: var(--lab-surface);
+  color: var(--lab-ink);
+}
+.chord-lab-icon svg {
+  width: 20px;
+  height: 20px;
+}
+.chord-lab-main {
+  max-width: 1060px;
+  padding: 40px 32px 52px;
+  margin: auto;
+}
+.chord-lab-heading {
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.chord-lab-eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--lab-accent);
+  margin: 0 0 8px;
+}
+.chord-lab-heading h1 {
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin: 0 0 10px;
+}
+.chord-lab-heading > div > p:not(.chord-lab-eyebrow) {
+  color: var(--lab-muted);
+  font-size: 14px;
+  margin: 0;
+  max-width: 450px;
+}
+.chord-lab-score {
+  display: flex;
+  flex-shrink: 0;
+  gap: 24px;
+  padding: 16px 20px;
+  background: var(--lab-surface);
+  border: 1px solid var(--lab-line);
+  border-radius: 16px;
+}
+.chord-lab-score > div {
+  display: flex;
+  flex-direction: column;
+}
+.chord-lab-score strong {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+}
+.chord-lab-score small {
+  font-size: 14px;
+  color: var(--lab-muted);
+}
+.chord-lab-score span {
+  font-size: 11px;
+  color: var(--lab-muted);
+}
+.chord-lab-setup {
+  display: grid;
+  grid-template-columns: 1.3fr 0.65fr 1fr 1fr;
+  gap: 18px;
+  padding: 20px 24px;
+  background: var(--lab-surface);
+  border: 1px solid var(--lab-line);
+  border-radius: 18px 18px 0 0;
+}
+.chord-lab-setup label,
+.chord-lab-listening > label:not(.chord-lab-toggle) {
+  color: var(--lab-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+.chord-lab select {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--lab-line);
+  padding: 10px 28px 10px 10px;
+  border-radius: 8px;
+  margin-top: 7px;
+  min-height: 44px;
+  color: var(--lab-ink);
+  background: var(--lab-bg);
+  font-size: 14px;
+}
+.chord-lab-listening {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 18px 24px;
+  background: var(--lab-soft);
+  border: 1px solid var(--lab-line);
+  border-top: 0;
+  border-radius: 0 0 18px 18px;
+}
+.chord-lab-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--lab-ink);
+  cursor: pointer;
+  min-height: 44px;
+}
+.chord-lab-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--lab-accent);
+  flex-shrink: 0;
+}
+.chord-lab-toggle small {
+  display: block;
+  font-size: 11px;
+  color: var(--lab-muted);
+  font-weight: 400;
+}
+.chord-lab-context-note {
+  color: var(--lab-muted);
+  font-size: 12px;
+  margin: 10px 8px 0;
+}
+.chord-lab-player {
+  padding: 32px 26px;
+  margin: 24px 0;
+  border-radius: 18px;
+  background: var(--lab-surface);
+  border: 1px solid var(--lab-line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.chord-lab-player-status {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.chord-lab-player-status strong {
+  font-size: 18px;
+  font-weight: 800;
+}
+.chord-lab-player-status p {
+  font-size: 13px;
+  color: var(--lab-muted);
+  margin: 3px 0 0;
+}
+.chord-lab-wave {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: var(--lab-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.chord-lab-wave i {
+  display: block;
+  width: 4px;
+  border-radius: 3px;
+  height: 14px;
+  background: var(--lab-accent);
+}
+.chord-lab-wave i:nth-child(2),
+.chord-lab-wave i:nth-child(4) {
+  height: 24px;
+}
+.chord-lab-wave i:nth-child(3) {
+  height: 34px;
+}
+.chord-lab-player.is-playing .chord-lab-wave i {
+  animation: lab-pulse 0.8s infinite alternate;
+}
+.chord-lab-player.is-playing .chord-lab-wave i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.chord-lab-player.is-playing .chord-lab-wave i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.chord-lab-player.is-playing .chord-lab-wave i:nth-child(4) {
+  animation-delay: 0.45s;
+}
+@keyframes lab-pulse {
+  to {
+    transform: scaleY(0.4);
+  }
+}
+.chord-lab-playback-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.chord-lab-primary,
+.chord-lab-secondary,
+.chord-lab-next {
+  border-radius: 10px;
+  min-height: 48px;
+  padding: 12px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.chord-lab-primary {
+  background: var(--lab-accent);
+  color: var(--lab-accent-ink);
+  border: 1px solid var(--lab-accent);
+}
+.chord-lab-secondary,
+.chord-lab-next {
+  border: 1px solid var(--lab-line);
+  color: var(--lab-ink);
+  background: var(--lab-surface);
+}
+.chord-lab button svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.chord-lab-secondary:hover,
+.chord-lab-answer:hover:not(:disabled),
+.chord-lab-next:hover {
+  background: var(--lab-soft);
+}
+.chord-lab-section-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 0 14px;
+  gap: 12px;
+}
+.chord-lab-section-label h2 {
+  font-weight: 800;
+  font-size: 15px;
+}
+.chord-lab-section-label span {
+  font-size: 12px;
+  color: var(--lab-muted);
+}
+.chord-lab-answers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 12px;
+}
+.chord-lab-answer {
+  position: relative;
+  background: var(--lab-surface);
+  border: 1px solid var(--lab-line);
+  border-radius: 13px;
+  min-height: 106px;
+  padding: 20px 12px;
+  color: var(--lab-ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+}
+.chord-lab-answer strong {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.chord-lab-answer > span {
+  font-size: 11px;
+  color: var(--lab-muted);
+}
+.chord-lab-answer.is-correct {
+  background: var(--lab-success);
+  border: 2px solid var(--lab-accent);
+}
+.chord-lab-answer .chord-lab-answer-mark {
+  position: absolute;
+  top: 6px;
+  right: 9px;
+  color: var(--lab-accent);
+  font-size: 14px;
+}
+.chord-lab-answer.is-missed {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+.chord-lab-question-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 20px 0 24px;
+}
+.chord-lab-text-button {
+  color: var(--lab-muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  border: 0;
+  background: transparent;
+  min-height: 44px;
+  font-size: 13px;
+}
+.chord-lab-next.is-ready {
+  background: var(--lab-accent);
+  color: var(--lab-accent-ink);
+  border-color: var(--lab-accent);
+}
+.chord-lab-complete {
+  color: var(--lab-accent);
+  font-size: 13px;
+}
+.chord-lab-explanation {
+  background: var(--lab-soft);
+  border: 1px solid var(--lab-line);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.chord-lab-explanation h2 {
+  font-size: 25px;
+  font-weight: 800;
+  margin: 0 0 16px;
+}
+.chord-lab-explanation h2 span {
+  color: var(--lab-muted);
+  font-size: 15px;
+  margin-left: 12px;
+}
+.chord-lab-explanation dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.5fr 2fr;
+  gap: 18px;
+}
+.chord-lab-explanation dt {
+  font-size: 11px;
+  color: var(--lab-muted);
+}
+.chord-lab-explanation dd {
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+.chord-lab-explanation p:not(.chord-lab-eyebrow) {
+  font-size: 12px;
+  color: var(--lab-muted);
+  margin: 16px 0 0;
+}
+.chord-lab-details {
+  border-top: 1px solid var(--lab-line);
+  padding-top: 18px;
+  color: var(--lab-muted);
+  font-size: 12px;
+}
+.chord-lab-details summary {
+  cursor: pointer;
+  font-weight: 700;
+  min-height: 32px;
+}
+.chord-lab-details p {
+  margin: 12px 0;
+}
+.chord-lab-levels {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  margin: 16px 0;
+}
+.chord-lab-levels label {
+  display: block;
+  font-weight: 700;
+}
+.chord-lab-levels output {
+  float: right;
+}
+.chord-lab-levels input {
+  width: 100%;
+  display: block;
+  margin-top: 14px;
+  min-height: 24px;
+  accent-color: var(--lab-accent);
+}
+.chord-lab-error {
+  color: #ae4033;
+  font-size: 13px;
+}
+@media (max-width: 760px) {
+  .chord-lab-main {
+    padding: 24px 18px 40px;
+  }
+  .chord-lab-header {
+    padding: 14px 18px;
+  }
+  .chord-lab-heading {
+    display: block;
+    margin-bottom: 24px;
+  }
+  .chord-lab-score {
+    margin-top: 20px;
+    width: 100%;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 18px;
+  }
+  .chord-lab-score strong {
+    font-size: 22px;
+  }
+  .chord-lab-setup {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 16px;
+  }
+  .chord-lab-listening {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 16px;
+  }
+  .chord-lab-listening .chord-lab-toggle {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .chord-lab-player {
+    padding: 24px 16px;
+    margin: 20px 0;
+    gap: 20px;
+  }
+  .chord-lab-wave {
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+  }
+  .chord-lab-player-status {
+    gap: 14px;
+    width: 100%;
+  }
+  .chord-lab-playback-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 8px;
+  }
+  .chord-lab-playback-controls .chord-lab-primary {
+    grid-column: 1 / -1;
+  }
+  .chord-lab-primary,
+  .chord-lab-secondary {
+    min-height: 46px;
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+  .chord-lab-answers {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+  }
+  .chord-lab-answer {
+    min-height: 90px;
+    padding: 14px 6px;
+  }
+  .chord-lab-answer strong {
+    font-size: 24px;
+  }
+  .chord-lab-explanation {
+    padding: 18px;
+  }
+  .chord-lab-explanation dl {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .chord-lab-levels {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .chord-lab-shortcuts {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chord-lab-player.is-playing .chord-lab-wave i {
+    animation: none;
+  }
+  .chord-lab-answer {
+    transition: none;
+  }
+}

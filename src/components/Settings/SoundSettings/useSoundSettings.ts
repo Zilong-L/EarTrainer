@@ -1,7 +1,7 @@
 import { useSoundSettingsStore } from '@stores/soundSettingsStore';
 
 export type UseSoundSettingsReturn = ReturnType<
-  typeof useSoundSettingsStore
+  typeof useSoundSettingsStore.getState
 > & {
   clamps: {
     dronePan: { min: number; max: number };

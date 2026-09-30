@@ -1,18 +1,17 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { getSamplerInstance } from '@utils/Tone/samplers';
-import { Sampler, PolySynth, Synth, Filter, Gain, Panner } from 'tone';
+import { getSamplerInstance, getDroneInstance } from '@utils/Tone/samplers';
 
-// Define the state and actions types
 interface SoundSettingsState {
   selectedInstrument: string;
-  selectedQuality: string; // Consider using a union type e.g., 'low' | 'medium' | 'high'
+  selectedQuality: string;
   dronePan: number;
   droneFilter: number;
   isLoadingInstrument: boolean;
+  instrumentLoadError: string | null;
   playMidiSounds: boolean;
   setSelectedInstrument: (instrument: string) => void;
-  setSelectedQuality: (quality: string) => void; // Consider union type here too
+  setSelectedQuality: (quality: string) => void;
   setDronePan: (pan: number) => void;
   setDroneFilter: (filter: number) => void;
   setIsLoadingInstrument: (loading: boolean) => void;
@@ -23,108 +22,89 @@ interface SoundSettingsState {
   ) => Promise<void>;
 }
 
-// Define the interface for the object returned by getSamplerInstance
-// Based on the SamplerManager class in ToneInstance.js
-interface SamplerManagerInstance {
-  sampler: Sampler | PolySynth | Synth | any; // The actual sampler instance (Tone.Sampler or potentially others)
-  filter: Filter;
-  gainNode: Gain;
-  panner: Panner;
-  setSamplerLoading?: (loading: boolean) => void; // Made optional to resolve TS inference issue
-  setVolume: (value: number) => void;
-  setFilterFrequency: (freq: number) => void;
-  setPortamento: (value: number) => void;
-  setPan: (value: number) => void;
-  changeSampler: (instrumentName: string, quality?: string) => Promise<void>; // Async method
-}
-
-// Function to handle loading the initial instrument after hydration
-const loadInitialInstrument = (state: SoundSettingsState) => {
-  console.log('Sound settings rehydrated. Loading initial instrument...');
-  // Use the defined interface. getSamplerInstance might return null if not initialized.
-  const samplerManager: SamplerManagerInstance | null = getSamplerInstance();
-  if (samplerManager) {
-    // Check if sampler manager instance exists
-    // Use the store's own setter function via the 'state' object
-    state.setIsLoadingInstrument(true);
-    // Call changeSampler on the manager instance
-    samplerManager // Corrected variable name here
-      .changeSampler(state.selectedInstrument, state.selectedQuality) // Use the manager's method
-      .then(() => {
-        console.log(
-          `Initial instrument ${state.selectedInstrument} (${state.selectedQuality}) loaded successfully after hydration.`
-        );
-      })
-      .catch((err: Error) => {
-        // Type the error
-        console.error(
-          'Failed to load initial instrument after hydration:',
-          err
-        );
-      })
-      .finally(() => {
-        state.setIsLoadingInstrument(false);
-      });
-  } else {
-    console.warn('Sampler instance not available during rehydration.');
-  }
-};
-
-// // Define the store creator type with middleware
-// type SoundSettingsCreator = StateCreator<
-//     SoundSettingsState,
-//     [["zustand/persist", unknown]] // Define middleware types if needed, using unknown for simplicity here
-// >;
+let instrumentRequest = 0;
 
 export const useSoundSettingsStore = create<SoundSettingsState>()(
-  // Use the ()() syntax for middleware
   persist(
     (set): SoundSettingsState => ({
-      selectedInstrument: 'bass-electric',
-      selectedQuality: 'medium', // Consider 'low' | 'medium' | 'high' union type
+      selectedInstrument: 'piano',
+      selectedQuality: 'medium',
       dronePan: 0,
       droneFilter: 1200,
       isLoadingInstrument: false,
+      instrumentLoadError: null,
       playMidiSounds: true,
       setSelectedInstrument: instrument =>
         set({ selectedInstrument: instrument }),
       setSelectedQuality: quality => set({ selectedQuality: quality }),
-      setDronePan: pan => set({ dronePan: pan }),
-      setDroneFilter: filter => set({ droneFilter: filter }),
+      setDronePan: pan => {
+        const value = Number.isFinite(pan) ? Math.min(1, Math.max(-1, pan)) : 0;
+        getDroneInstance().sampler.setPan(value);
+        set({ dronePan: value });
+      },
+      setDroneFilter: filter => {
+        const value = Number.isFinite(filter)
+          ? Math.min(2000, Math.max(20, filter))
+          : 1200;
+        getDroneInstance().sampler.setFilterFrequency(value);
+        set({ droneFilter: value });
+      },
       setIsLoadingInstrument: loading => set({ isLoadingInstrument: loading }),
       setPlayMidiSounds: playMidiSounds => set({ playMidiSounds }),
       changeInstrument: async (newInstrument, newQuality) => {
-        console.log(
-          'Changing instrument to:',
-          newInstrument,
-          'Quality:',
-          newQuality
-        );
-        const sampler = getSamplerInstance();
-        if (!sampler) return;
-        set({ isLoadingInstrument: true });
+        const request = ++instrumentRequest;
+        set({ isLoadingInstrument: true, instrumentLoadError: null });
         try {
-          await sampler.changeSampler(newInstrument, newQuality);
+          await getSamplerInstance().changeSampler(newInstrument, newQuality);
+          if (request !== instrumentRequest) return;
           set({
             selectedInstrument: newInstrument,
             selectedQuality: newQuality,
           });
         } catch (error) {
-          console.error('Failed to change instrument:', error);
+          if (request !== instrumentRequest) return;
+          console.warn(
+            'Instrument unavailable; keeping the previous usable sound.',
+            error
+          );
+          set({ instrumentLoadError: newInstrument });
         } finally {
-          set({ isLoadingInstrument: false });
+          if (request === instrumentRequest)
+            set({ isLoadingInstrument: false });
         }
       },
     }),
     {
-      name: 'sound-settings-storage', // localStorage key name
+      name: 'sound-settings-storage',
+      // Do not restore transient loading/error state from a previous session.
+      partialize: state => ({
+        selectedInstrument: state.selectedInstrument,
+        selectedQuality: state.selectedQuality,
+        dronePan: state.dronePan,
+        droneFilter: state.droneFilter,
+        playMidiSounds: state.playMidiSounds,
+      }),
+      merge: (persisted, current) => {
+        const saved = persisted as Partial<SoundSettingsState> | undefined;
+        return {
+          ...current,
+          selectedInstrument:
+            saved?.selectedInstrument ?? current.selectedInstrument,
+          selectedQuality: saved?.selectedQuality ?? current.selectedQuality,
+          dronePan: saved?.dronePan ?? current.dronePan,
+          droneFilter: saved?.droneFilter ?? current.droneFilter,
+          playMidiSounds: saved?.playMidiSounds ?? current.playMidiSounds,
+        };
+      },
       onRehydrateStorage: () => (state, error) => {
-        if (error) {
-          console.error('Failed to rehydrate sound settings:', error);
-        } else if (state) {
-          // Call the extracted function
-          loadInitialInstrument(state);
-          // You could add calls to other rehydration functions here later
+        if (error) console.warn('Could not restore sound settings.', error);
+        if (state) {
+          state.setDronePan(state.dronePan);
+          state.setDroneFilter(state.droneFilter);
+          void state.changeInstrument(
+            state.selectedInstrument,
+            state.selectedQuality
+          );
         }
       },
     }

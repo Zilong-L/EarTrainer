@@ -6,9 +6,17 @@ import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettings
 import useI18nStore from '@stores/i18nStore';
 
 const Statistics: React.FC = () => {
-  const { practiceRecords, isStatOpen, setPracticeRecords, setIsStatOpen } =
-    useChordColorTrainerSettingsStore();
+  const {
+    practiceRecords: legacyRecords,
+    firstAttemptRecords,
+    isStatOpen,
+    setPracticeRecords,
+    setFirstAttemptRecords,
+    setIsStatOpen,
+  } = useChordColorTrainerSettingsStore();
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+  const [showLegacy, setShowLegacy] = useState(false);
+  const practiceRecords = showLegacy ? legacyRecords : firstAttemptRecords;
   const chartRef = useRef<HTMLDivElement>(null);
   const plotInstance = useRef<any>(null);
   const { namespace } = useI18nStore();
@@ -121,6 +129,7 @@ const Statistics: React.FC = () => {
   const handleDeleteConfirm = () => {
     localStorage.removeItem('ChordColorTrainerRecords');
     setPracticeRecords({});
+    setFirstAttemptRecords({});
     setIsDeleteConfirmOpen(false);
   };
 
@@ -129,13 +138,28 @@ const Statistics: React.FC = () => {
       {/* Chart */}
       <div className="space-y-4">
         <h3 className="text-xl font-bold text-text-primary">
-          {t('statistics.chordAccuracy')}
+          {showLegacy
+            ? t('training.legacyAccuracy')
+            : t('training.firstTryAccuracy')}
         </h3>
         <div className="w-full h-64 overflow-hidden">
           <div ref={chartRef} className="w-full h-full"></div>
         </div>
       </div>
 
+      <p className="text-sm text-text-secondary">
+        {t('training.scoreHistoryHint')}
+      </p>
+      {Object.keys(legacyRecords).length > 0 && (
+        <label className="flex gap-2 items-center text-sm text-text-primary">
+          <input
+            type="checkbox"
+            checked={showLegacy}
+            onChange={event => setShowLegacy(event.target.checked)}
+          />
+          {t('training.showLegacy')}
+        </label>
+      )}
       {/* Statistics Toggle */}
       <div className="flex items-center justify-between p-4 bg-bg-accent rounded-lg cursor-pointer hover:bg-bg-accent-hover transition-colors">
         <span className="text-text-primary">{t('statistics.statistics')}</span>

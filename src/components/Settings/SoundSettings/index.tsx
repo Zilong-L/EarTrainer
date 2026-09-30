@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import useI18nStore from '@stores/i18nStore';
 import HorizontalSlider from '@components/slider/HorizontalSlider';
 import CustomListbox from '@components/Listbox';
+import useSoundSettings from './useSoundSettings';
 const instrumentsList = [
   'bass-electric',
   'bassoon',
@@ -29,7 +30,6 @@ const instrumentsList = [
   'sawtooth',
   'pad',
 ];
-import { useSoundSettingsStore } from '@stores/soundSettingsStore';
 const SoundSettings: React.FC = () => {
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
@@ -41,31 +41,34 @@ const SoundSettings: React.FC = () => {
     setDronePan,
     droneFilter,
     setDroneFilter,
-    changeInstrument, // Destructure the new callback
-  } = useSoundSettingsStore();
+    changeInstrument,
+    instrumentLoadError,
+    clamps,
+  } = useSoundSettings();
 
-  const clamps = {
-    dronePan: {
-      min: -1,
-      max: 1,
-    },
-    droneFilter: {
-      min: 20,
-      max: 2000,
-    },
-  };
-
-  // useEffect(() => {
-  //   if (!isLoadingInstrument) {
-  //     console.log('play')
-
-  //   }
-  // }, [isLoadingInstrument]);
-
-  // Removed handleQualityChange function
-  // console.log(clamps)
   return (
     <div className="p-6 space-y-12 max-w-[800px] mx-auto">
+      <p className="text-sm text-text-secondary">
+        {t('settings.soundSafety', {
+          defaultValue:
+            'Start with a low device volume. Digital peak limiting cannot guarantee safe headphone or speaker levels.',
+        })}
+      </p>
+      {isLoadingInstrument && (
+        <p role="status" className="text-sm text-text-secondary">
+          {t('settings.loadingInstrument', {
+            defaultValue: 'Loading instrument…',
+          })}
+        </p>
+      )}
+      {instrumentLoadError && (
+        <p role="alert" className="text-sm text-text-primary">
+          {t('settings.instrumentLoadError', {
+            defaultValue:
+              'This instrument could not load. The previous sound is still available; try selecting it again.',
+          })}
+        </p>
+      )}
       {/* Quality Selector */}
       <div className="space-y-3">
         <CustomListbox
@@ -118,6 +121,7 @@ const SoundSettings: React.FC = () => {
         {instrumentsList.map(instrument => (
           <button
             key={instrument}
+            aria-pressed={selectedInstrument === instrument}
             onClick={() => changeInstrument(instrument, selectedQuality)}
             disabled={isLoadingInstrument}
             className={`px-4 py-2 rounded-lg transition-all capitalize

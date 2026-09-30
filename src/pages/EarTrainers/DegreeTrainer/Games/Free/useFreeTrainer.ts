@@ -10,7 +10,10 @@ import {
 } from '@utils/GameLogics';
 import { useDegreeTrainerSettings } from '@EarTrainers/DegreeTrainer/Settings/useDegreeTrainerSettings';
 import useDegreeFreeTrainerStore from './stores/degreeFreeTrainerStore';
-import { applyPresetToDegrees, ScaleDegree } from '@EarTrainers/DegreeTrainer/utils/presets';
+import {
+  applyPresetToDegrees,
+  ScaleDegree,
+} from '@EarTrainers/DegreeTrainer/utils/presets';
 
 const useFreeTrainer = () => {
   const {

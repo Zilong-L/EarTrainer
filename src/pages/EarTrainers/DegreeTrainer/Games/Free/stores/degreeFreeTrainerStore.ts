@@ -21,7 +21,8 @@ interface FreeTrainerActions {
   setCustomPresets: (presets: Record<string, ScaleDegree[]>) => void;
 }
 
-const initialEnabledDegrees: ScaleDegree[] = freeModePresets.ionian.enabledDegrees;
+const initialEnabledDegrees: ScaleDegree[] =
+  freeModePresets.ionian.enabledDegrees;
 
 const useDegreeFreeTrainerStore = create<
   FreeTrainerState & FreeTrainerActions

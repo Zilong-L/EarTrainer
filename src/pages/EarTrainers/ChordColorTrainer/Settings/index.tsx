@@ -9,20 +9,17 @@ import useI18nStore from '@stores/i18nStore';
 interface ChordColorTrainerSettingsProps {
   isSettingsOpen: boolean;
   setIsSettingsOpen: (open: boolean) => void;
-  playChord: () => void;
 }
 
 const ChordColorTrainerSettings: React.FC<ChordColorTrainerSettingsProps> = ({
   isSettingsOpen,
   setIsSettingsOpen,
-  playChord,
 }) => {
   const { namespace } = useI18nStore();
   const { t } = useTranslation(namespace);
 
   const closeSettings = () => {
     setIsSettingsOpen(false);
-    playChord();
   };
 
   const components = [

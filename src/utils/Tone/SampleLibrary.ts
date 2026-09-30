@@ -5,6 +5,7 @@
  * https://github.com/nbrosowsky/tonejs-instruments
  */
 import { PolySynth, Synth, Sampler } from 'tone';
+import { Note } from 'tonal';
 
 export type Quality = 'low' | 'medium' | 'high' | 'full';
 
@@ -14,6 +15,7 @@ export interface LoadOptions {
   quality?: Quality;
   ext?: string;
   onload?: () => void;
+  onerror?: (error: Error) => void;
 }
 
 type SampleMap = Record<string, string>;
@@ -92,11 +94,13 @@ const SampleLibrary: any = {
         console.warn(`Unknown synth type: ${type}`);
         return null;
     }
+    synth.volume.value = -8;
+    synth.maxPolyphony = 16;
     return synth;
   },
 
   load(arg: LoadOptions) {
-    const t = arg || {};
+    const t = { ...arg };
     t.instruments = t.instruments || this.list;
     t.baseUrl = t.baseUrl || this.baseUrl;
     t.onload = t.onload || this.onload || undefined;
@@ -130,22 +134,41 @@ const SampleLibrary: any = {
     };
 
     const minifySamples = (samples: SampleMap, quality?: Quality) => {
-      if (!quality) return samples;
+      const sortedNotes = Object.keys(samples).sort(
+        (a, b) => (Note.midi(a) ?? 0) - (Note.midi(b) ?? 0)
+      );
+      if (sortedNotes.length <= 2) return samples;
       const minBy = getMinBy(quality);
-      return Object.keys(samples)
-        .filter((_, index) => index % minBy === 0)
-        .reduce<SampleMap>((filtered, key) => {
-          filtered[key] = samples[key];
-          return filtered;
-        }, {});
+      const count = Math.min(
+        sortedNotes.length,
+        Math.max(2, Math.ceil(sortedNotes.length / minBy))
+      );
+      // Sample-map insertion order groups pitch classes, not registers. Select
+      // across the full range, retaining both endpoints for realistic repitching.
+      return Array.from(
+        { length: count },
+        (_, index) =>
+          sortedNotes[
+            Math.round((index * (sortedNotes.length - 1)) / (count - 1))
+          ]
+      ).reduce<SampleMap>((filtered, key) => {
+        filtered[key] = samples[key];
+        return filtered;
+      }, {});
     };
 
     const buildSampler = (instrument: string) => {
+      if (!this.list.includes(instrument)) {
+        throw new Error(`Unknown instrument: ${instrument}`);
+      }
       const source = this[instrument] as SampleMap;
       const filtered = minifySamples(source, t.quality);
       return new Sampler(filtered, {
         baseUrl: `${t.baseUrl}${instrument}/`,
         onload: t.onload,
+        onerror: t.onerror,
+        attack: 0.005,
+        release: 0.2,
       });
     };
 

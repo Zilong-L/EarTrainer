@@ -121,7 +121,8 @@ function FreeSettings({
             getLabel={(opt: string) => {
               if (opt === 'custom') return t('settings.custom');
               if (freeModePresets[opt as keyof typeof freeModePresets]) {
-                return freeModePresets[opt as keyof typeof freeModePresets].name;
+                return freeModePresets[opt as keyof typeof freeModePresets]
+                  .name;
               }
               return opt; // custom preset name
             }}

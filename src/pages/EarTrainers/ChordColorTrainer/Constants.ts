@@ -180,7 +180,7 @@ const chordPreset: ChordPreset = {
       chordTypes: ['o'],
     },
     {
-      degree: 'III',
+      degree: 'IIIb',
       chordTypes: ['M'],
     },
     {
@@ -192,11 +192,11 @@ const chordPreset: ChordPreset = {
       chordTypes: ['m'],
     },
     {
-      degree: 'VI',
+      degree: 'VIb',
       chordTypes: ['M'],
     },
     {
-      degree: 'VII',
+      degree: 'VIIb',
       chordTypes: ['M'],
     },
   ],
@@ -258,6 +258,8 @@ const chordPreset: ChordPreset = {
   ],
 };
 
+// Legacy jazz recipes include rootless voicings. Chord-color questions instead
+// use Tonal's chord intervals in musicTheory.ts.
 const VoicingDictionary: VoicingDictionaryType = {
   rootPosition: {
     M: ['1P 3M 5P'],
@@ -267,20 +269,20 @@ const VoicingDictionary: VoicingDictionaryType = {
     m7: ['1P 3m 5P 7m'],
     '7': ['1P 3M 5P 7m'],
     M7: ['1P 3M 5P 7M'],
-    '69': ['1P 3M 5P 6A'],
+    '69': ['1P 3M 5P 6M 9M'],
     m7b5: ['1P 3m 5d 7m'],
-    '7b9': ['3M 6m 7m 9m'],
-    '7b13': ['1P 3M 5m 7m'],
-    dim7: ['1P 3m 5d 6M'],
+    '7b9': ['1P 3M 5P 7m 9m'],
+    '7b13': ['1P 3M 7m 13m'],
+    dim7: ['1P 3m 5d 7d'],
   },
   M: ['1P 3M 5P', '3M 5P 8P', '5P 8P 10M'],
   m: ['1P 3m 5P', '3m 5P 8P', '5P 8P 10m'],
   dim: ['1P 3m 5d', '3m 5d 8P', '5d 8P 10m'],
-  aug: ['1P 3M 5A', '3M  5A 8P', '5A 8P 10m'],
+  aug: ['1P 3M 5A', '3M 5A 8P', '5A 8P 10M'],
   m7: ['1P 3m 5P 7m', '7m 9M 10m 12P'],
   '7': ['3M 6M 7m 9M', '7m 9M 10M 13M'],
   M7: ['3M 5P 7M 9M', '7M 9M 10M 12P'],
-  '69': ['3M 5P 6A 9M'],
+  '69': ['3M 5P 6M 9M'],
   m7b5: ['3m 5d 7m 8P', '7m 8P 10m 12d'],
   '7b9': ['3M 6m 7m 9m', '7m 9m 10M 13m'],
   '7b13': ['3M 6m 7m 9m', '7m 9m 10M 13m'],

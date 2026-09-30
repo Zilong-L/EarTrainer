@@ -1,329 +1,326 @@
-import { useState, useEffect, useCallback } from 'react';
-import { getTransport } from 'tone';
-import { DegreeToDistance } from '@utils/Constants';
-import { VoicingDictionary } from '@EarTrainers/ChordColorTrainer/Constants';
-import { getSamplerInstance, getDroneInstance } from '@utils/Tone/samplers'; // Added scheduleNotes
-import { scheduleNotes } from '@utils/Tone/playbacks'; // Added scheduleNotes
-import { Chord, Voicing, Interval, Note, Midi } from 'tonal';
-import { playNotesTogether, playNotes } from '@utils/Tone/playbacks';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
+import { Chord, Note } from 'tonal';
+import { getSamplerInstance, getDroneInstance } from '@utils/Tone/samplers';
+import { cancelAllSounds, scheduleNotes } from '@utils/Tone/playbacks';
+import useChordColorTrainerSettingsStore from '@stores/chordColorTrainerSettingsStore';
 import useChordColorTrainerSettings from './useChordColorTrainerSettings';
 import { getChords, compareChords } from '@utils/ChordTrainer/GameLogics';
+import {
+  buildChordQuestion,
+  chooseNextChord,
+  createChordEvents,
+  type ChordQuestion,
+} from './musicTheory';
 
 const useChordColorTrainer = (chordPlayOption: string) => {
+  const { t } = useTranslation('chordColorTrainer');
+  const settings = useChordColorTrainerSettings();
   const {
     bpm,
-    droneVolume,
     pianoVolume,
     rootNote,
     range,
     degreeChordTypes,
     updatePracticeRecords,
-    // selectedInstrument,
-  } = useChordColorTrainerSettings();
-
-  const [currentChord, setCurrentChord] = useState<any>('');
+    preset,
+  } = settings;
+  const { inversionMode, bassEnabled, bassLevel, backingMode } =
+    useChordColorTrainerSettingsStore();
+  const [currentChord, setCurrentChord] = useState<ChordQuestion | null>(null);
   const [disabledChords, setDisabledChords] = useState<string[]>([]);
   const [gameStarted, setGameStarted] = useState(false);
-  const [filteredChords, setFilteredChords] = useState<any[]>([]);
-  const [activeChord, setActiveChord] = useState('');
-  const [activeNotes, setActiveNotes] = useState<number[]>([]); // Define activeNotes state
-  const [isAdvance, setIsAdvance] = useState<string>('No');
+  const [activeNotes, setActiveNotes] = useState<number[]>([]);
+  const [isAdvance, setIsAdvance] = useState('No');
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [lastGuess, setLastGuess] = useState('');
+  const [wasRevealed, setWasRevealed] = useState(false);
+  const [session, setSession] = useState({
+    answered: 0,
+    correct: 0,
+    streak: 0,
+  });
+  const answeredRef = useRef(false);
+  const finishTimer = useRef<ReturnType<typeof setTimeout>>();
+  const playbackRef = useRef(0);
+  const currentRef = useRef<ChordQuestion | null>(null);
 
-  const piano = getSamplerInstance();
-  const drone = getDroneInstance();
+  const filteredChords = useMemo(() => {
+    const all = degreeChordTypes.flatMap(chord =>
+      (chord.chordTypes || []).map(chordType => ({
+        degree: chord.degree || '',
+        chordType,
+      }))
+    );
+    return all.filter(
+      (choice, index) =>
+        all.findIndex(
+          other =>
+            other.degree === choice.degree &&
+            Chord.get(['C', other.chordType]).chroma ===
+              Chord.get(['C', choice.chordType]).chroma
+        ) === index &&
+        buildChordQuestion(choice, rootNote, range, inversionMode) !== null
+    );
+  }, [degreeChordTypes, rootNote, range, inversionMode]);
+
+  const stopPlayback = useCallback(() => {
+    playbackRef.current += 1;
+    clearTimeout(finishTimer.current);
+    cancelAllSounds();
+    getDroneInstance().stop();
+    setIsPlaying(false);
+  }, []);
 
   useEffect(() => {
-    drone.updateRoot(rootNote);
-    drone.setVolume(droneVolume);
-    piano.setVolume(pianoVolume);
-  }, [droneVolume, pianoVolume, rootNote]);
+    getSamplerInstance().setVolume(pianoVolume);
+  }, [pianoVolume]);
 
+  // A setting change creates a fresh question, but never starts sound by itself.
   useEffect(() => {
-    const newChord = generateRandomChord();
-    setCurrentChord(newChord);
-  }, [filteredChords]);
-
-  useEffect(() => {
-    if (activeChord) {
-      handleChordGuess(activeChord);
-    }
-  }, [activeChord]);
-
-  useEffect(() => {
-    if (isAdvance === 'Now') {
-      advanceGame();
-    }
-    // Do nothing if 'No' or 'Ready'
-  }, [isAdvance]);
-
-  const advanceGame = () => {
-    const nextChord = generateRandomChord();
-    setCurrentChord(nextChord);
-    setIsAdvance('No');
+    stopPlayback();
+    const choice = chooseNextChord(filteredChords, currentRef.current);
+    const next = choice
+      ? buildChordQuestion(choice, rootNote, range, inversionMode)
+      : null;
+    currentRef.current = next;
+    setCurrentChord(next);
     setDisabledChords([]);
-    // playChord(nextChord.notes, 0.2); // Replaced with new pattern
-    playChordColorPattern(nextChord.notes);
-  };
-  const startGame = () => {
-    getTransport().stop();
-    getTransport().position = 0;
-    getTransport().cancel();
-    setGameStarted(true);
-    playChordColorPattern(currentChord.notes);
-    getTransport().start();
-  };
+    setLastGuess('');
+    setWasRevealed(false);
+    setIsAdvance('No');
+    answeredRef.current = false;
+  }, [filteredChords, rootNote, range, inversionMode, stopPlayback]);
 
-  const playTonic = () => {
-    playNotesTogether(rootNote, 0.05, bpm);
-  };
-
-  const playChord = (notes: string[] | null = null, delay = 0.05) => {
-    if (!notes) {
-      notes = currentChord.notes;
-    }
-    if (notes) playNotesTogether(notes, delay, bpm);
-  };
-
-  const playBrokenChord = (notes: string[] | null = null, delay = 0.05) => {
-    if (!notes) {
-      notes = currentChord.notes;
-    }
-    if (notes) playNotes(notes, delay, bpm);
-  };
-
-  // New function for the specific playback pattern using scheduleNotes exclusively
-  const playChordColorPattern = (notes: string[]) => {
-    if (!notes || notes.length === 0) {
-      notes = currentChord.notes;
-    }
-
-    const t = 60 / bpm; // Time unit based on bpm
-    let events = null;
-    let reversedNotes; // Declare reversedNotes outside the switch
-
-    switch (chordPlayOption) {
-      case 'random':
-        // Implement random chord play logic
-        const randomNotes = [...notes].sort(() => Math.random() - 0.5);
-        events = randomNotes.map((note, i) => ({
-          note: note,
-          time: i * 0.25 * t, // Relative time
-          duration: 2 * t, // Sustain notes
-        }));
-        break;
-      case 'ascending':
-        // Implement ascending chord play logic
-        events = notes.map((note, i) => ({
-          note: note,
-          time: i * 0.25 * t, // Relative time
-          duration: 2 * t, // Sustain notes
-        }));
-        break;
-      case 'descending':
-        // Implement descending chord play logic
-        reversedNotes = notes.slice().reverse();
-        events = reversedNotes.map((note, i) => ({
-          note: note,
-          time: i * 0.25 * t, // Relative time
-          duration: 2 * t, // Sustain notes
-        }));
-        break;
-      default:
-        // Default: Original pattern provided by user
-        // 1. Upscale arpeggio
-        const upscaleArpeggioEvents = notes.map((note, i) => ({
-          note: note,
-          time: i * 0.25 * t, // Relative time
-          duration: (4 - i * 0.25) * t,
-        }));
-
-        // 2. First full chord
-        const firstFullChordEvents = notes.map(note => ({
-          note: note,
-          time: 2 * t, // After upscale
-          duration: 2 * t,
-        }));
-
-        // 3. Downscale arpeggio
-        reversedNotes = notes.slice().reverse(); // Assign here
-        const downscaleArpeggioEvents = reversedNotes.map((note, i) => ({
-          note: note,
-          time: (4 + 0.25 * i) * t, // After first full chord
-          duration: (4 - i * 0.25) * t, // Simplified duration
-        }));
-
-        // 4. Second full chord
-        const secondFullChordEvents = notes.map(note => ({
-          note: note,
-          time: 6 * t, // After downscale
-          duration: 2 * t,
-        }));
-
-        events = [
-          ...upscaleArpeggioEvents,
-          ...firstFullChordEvents,
-          ...downscaleArpeggioEvents,
-          ...secondFullChordEvents,
-        ];
-        break;
-      case 'block':
-        // Implement block chord play logic
-        events = notes.map(note => ({
-          note: note,
-          time: 0, // All notes at the same time
-          duration: 2 * t, // Sustain notes
-        }));
-        break;
-    }
-
-    scheduleNotes(events);
-  };
-
-  useEffect(() => {
-    if (isAdvance === 'Pending') {
-      if (activeNotes.length === 0) {
-        setIsAdvance('Now');
-      }
-      return; // Early return
-    }
-
-    if (activeNotes && activeNotes.length > 0) {
-      const detectedChords = getChords(activeNotes);
-      if (detectedChords && detectedChords.length > 0) {
-        const steps = DegreeToDistance[currentChord?.degree] || 0;
-        const midiNote = Midi.toMidi(rootNote || 'C4');
-        const noteName = midiNote
-          ? Midi.midiToNoteName(midiNote + steps)
-          : null;
-        const note = (noteName || '').slice(0, -1);
-        const chordType = currentChord?.chordType || '';
-        const chord = note + chordType;
-        const isCorrect = compareChords(detectedChords as any, chord);
-        if (isCorrect) {
-          if (activeNotes.length >= 6) {
-            setIsAdvance('Pending'); // Changed from 'Now' to 'Pending'
-          } else {
-            setIsAdvance('Ready'); // Unchanged
-          }
+  const playEvents = useCallback(
+    async (events: Parameters<typeof scheduleNotes>[0]) => {
+      if (!events.length) return false;
+      stopPlayback();
+      const request = playbackRef.current;
+      try {
+        await scheduleNotes(events);
+        if (request !== playbackRef.current) return false;
+        setIsPlaying(true);
+        const seconds = Math.max(
+          ...events.map(event => event.time + event.duration)
+        );
+        finishTimer.current = setTimeout(
+          () => setIsPlaying(false),
+          (seconds + 0.5) * 1000
+        );
+        return true;
+      } catch {
+        if (request === playbackRef.current) {
+          setIsPlaying(false);
+          toast.error(t('training.audioError'), { id: 'audio-error' });
         }
+        return false;
       }
-    }
-  }, [activeNotes, currentChord, rootNote, isAdvance]); // Added isAdvance to dependencies
+    },
+    [stopPlayback, t]
+  );
 
-  const getNotesForChord = (numeral: string) => {
-    const numeralDegree = /([IV]+)([b#]?)/.exec(numeral)?.[0] || '';
-    const steps = DegreeToDistance[numeralDegree] || 0;
-    const midiNote = Midi.toMidi(rootNote || 'C4');
-    const noteName = midiNote ? Midi.midiToNoteName(midiNote + steps) : null;
-    const note = (noteName || '').slice(0, -1);
-
-    const chordType = numeral.slice(numeralDegree.length);
-    const chord = Chord.get(note + chordType);
-    const chordRange = [
-      range[0],
-      Note.fromMidi((Note.midi(range[1]) || 0) + Interval.semitones('P8')),
-    ];
-    const dictionary = VoicingDictionary.rootPosition;
-    const possibleChords = Voicing.search(
-      chord.symbol,
-      chordRange,
-      dictionary as any
-    );
-    const notes =
-      possibleChords[Math.floor(Math.random() * possibleChords.length)];
-    return notes;
-  };
-
-  const handleChordGuess = (guessedChord: string) => {
-    // If in 'Ready' state, just play the sound for comparison, don't guess/record/disable
-    if (isAdvance !== 'No') {
-      const notes = getNotesForChord(guessedChord);
-      playChordColorPattern(notes);
-      setActiveChord(''); // Reset active chord after playing
-      return; // Exit early, skip guessing logic
-    }
-
-    const isCorrect =
-      guessedChord === `${currentChord.degree}${currentChord.chordType}`;
-    if (isCorrect) {
-      setIsAdvance('Ready'); // Pending state, wait for user to trigger next
-      setDisabledChords([]); // Re-enable all buttons on correct guess
-      updatePracticeRecords(guessedChord, isCorrect);
-      playChordColorPattern(currentChord.notes); // Play current chord on correct guess
-    } else {
-      setDisabledChords(prev => [...prev, guessedChord]);
-      updatePracticeRecords(guessedChord, isCorrect);
-      // Play the guessed chord's notes on incorrect guess
-      const notes = getNotesForChord(guessedChord);
-      playChordColorPattern(notes);
-    }
-    setActiveChord('');
-  };
-
-  const endGame = useCallback(() => {
-    getTransport().stop();
-    getTransport().position = 0;
-    getTransport().cancel();
-    setGameStarted(false);
-    setDisabledChords([]);
-    setIsAdvance('No');
-    drone.stop();
-  }, [drone]);
-
-  // Auto-cleanup on unmount so pages don't need to call endGame explicitly
-  useEffect(() => {
-    return () => {
-      endGame();
-    };
-  }, [endGame]);
-
-  // 将 degreeChordTypes 对象转换为数组并过滤掉空的级数和弦组合
-  useEffect(() => {
-    if (degreeChordTypes) {
-      const allCombinations = degreeChordTypes.flatMap(
-        (chord: any) =>
-          chord.chordTypes?.map((chordType: any) => ({
-            degree: chord.degree,
-            chordType,
-          })) || []
+  const playQuestion = useCallback(
+    (question: ChordQuestion | null, pattern = chordPlayOption) => {
+      if (!question) return Promise.resolve(false);
+      return playEvents(
+        createChordEvents(question, pattern, bpm, {
+          bassEnabled,
+          bassLevel,
+          backingMode,
+          tonic: rootNote,
+          minor: preset === '小调',
+        })
       );
-      setFilteredChords(allCombinations);
-    }
-  }, [degreeChordTypes, rootNote]);
+    },
+    [
+      playEvents,
+      chordPlayOption,
+      bpm,
+      bassEnabled,
+      bassLevel,
+      backingMode,
+      rootNote,
+      preset,
+    ]
+  );
 
-  // 生成一个随机的级数和和弦类型组合
-  const generateRandomChord = () => {
-    if (!filteredChords || filteredChords.length === 0) {
-      return null;
-    }
-    const RomanNumeral =
-      filteredChords[Math.floor(Math.random() * filteredChords.length)];
-    if (!RomanNumeral) {
-      return null;
-    }
-    const notes = getNotesForChord(
-      RomanNumeral.degree + RomanNumeral.chordType
-    );
-    return { ...RomanNumeral, notes: notes };
-  };
+  const playChordColorPattern = useCallback(
+    () => playQuestion(currentChord),
+    [playQuestion, currentChord]
+  );
+  const playChord = useCallback(
+    () => playQuestion(currentChord, 'block'),
+    [playQuestion, currentChord]
+  );
+  const playBass = useCallback(
+    () =>
+      currentChord
+        ? playEvents([
+            {
+              note: currentChord.bassNote,
+              time: 0.05,
+              duration: 1.4,
+              voice: 'bass',
+              velocity: 0.45,
+            },
+          ])
+        : Promise.resolve(false),
+    [currentChord, playEvents]
+  );
+  const playTonic = useCallback(
+    () =>
+      playEvents([
+        { note: rootNote, time: 0.05, duration: 1.2, velocity: 0.6 },
+      ]),
+    [rootNote, playEvents]
+  );
 
+  const startGame = useCallback(async () => {
+    if (!currentChord) return;
+    if (await playQuestion(currentChord)) setGameStarted(true);
+  }, [currentChord, playQuestion]);
+
+  const advanceGame = useCallback(async () => {
+    const choice = chooseNextChord(filteredChords, currentChord);
+    const next = choice
+      ? buildChordQuestion(choice, rootNote, range, inversionMode)
+      : null;
+    if (!next) return;
+    answeredRef.current = false;
+    currentRef.current = next;
+    setCurrentChord(next);
+    setIsAdvance('No');
+    setDisabledChords([]);
+    setLastGuess('');
+    setWasRevealed(false);
+    await playQuestion(next);
+  }, [
+    filteredChords,
+    currentChord,
+    rootNote,
+    range,
+    inversionMode,
+    playQuestion,
+  ]);
+
+  const recordFirstAttempt = useCallback(
+    (correct: boolean) => {
+      if (!currentChord || answeredRef.current) return;
+      answeredRef.current = true;
+      updatePracticeRecords(
+        `${currentChord.degree}${currentChord.chordType}`,
+        correct
+      );
+      setSession(previous => ({
+        answered: previous.answered + 1,
+        correct: previous.correct + Number(correct),
+        streak: correct ? previous.streak + 1 : 0,
+      }));
+    },
+    [currentChord, updatePracticeRecords]
+  );
+
+  const setActiveChord = useCallback(
+    (guess: string) => {
+      if (!gameStarted || !currentChord || disabledChords.includes(guess))
+        return;
+      const correct =
+        guess === `${currentChord.degree}${currentChord.chordType}`;
+      if (isAdvance !== 'No') {
+        const choice = filteredChords.find(
+          chord => `${chord.degree}${chord.chordType}` === guess
+        );
+        if (choice)
+          void playQuestion(
+            buildChordQuestion(choice, rootNote, range, inversionMode)
+          );
+        return;
+      }
+      recordFirstAttempt(correct);
+      setLastGuess(guess);
+      if (correct) {
+        setIsAdvance('Ready');
+        setDisabledChords([]);
+        void playQuestion(currentChord);
+      } else {
+        setDisabledChords(previous => [...previous, guess]);
+        // Keep the target audible after a miss; comparisons are available after reveal.
+        void playQuestion(currentChord);
+      }
+    },
+    [
+      gameStarted,
+      currentChord,
+      disabledChords,
+      isAdvance,
+      filteredChords,
+      playQuestion,
+      rootNote,
+      range,
+      inversionMode,
+      recordFirstAttempt,
+    ]
+  );
+
+  const revealAnswer = useCallback(() => {
+    if (!gameStarted || !currentChord || isAdvance !== 'No') return;
+    recordFirstAttempt(false);
+    setWasRevealed(true);
+    setIsAdvance('Ready');
+    setDisabledChords([]);
+  }, [gameStarted, currentChord, isAdvance, recordFirstAttempt]);
+
+  useEffect(() => {
+    if (
+      !gameStarted ||
+      isAdvance !== 'No' ||
+      !currentChord ||
+      !activeNotes.length
+    )
+      return;
+    if (compareChords(getChords(activeNotes) || [], currentChord.symbol)) {
+      setActiveChord(`${currentChord.degree}${currentChord.chordType}`);
+    }
+  }, [activeNotes, currentChord, gameStarted, isAdvance, setActiveChord]);
+
+  useEffect(() => {
+    const hide = () => {
+      if (document.hidden) stopPlayback();
+    };
+    document.addEventListener('visibilitychange', hide);
+    return () => {
+      document.removeEventListener('visibilitychange', hide);
+      stopPlayback();
+    };
+  }, [stopPlayback]);
+
+  const bassPitchClass = currentChord
+    ? Note.pitchClass(currentChord.bassNote)
+    : '';
   return {
     currentChord,
     disabledChords,
     gameStarted,
     filteredChords,
-    activeChord,
     isAdvance,
-    setIsAdvance,
-    bpm,
     setActiveChord,
     startGame,
+    advanceGame,
     playChord,
     playTonic,
-    playBrokenChord,
+    playBass,
     playChordColorPattern,
-    activeNotes, // Export activeNotes
-    setActiveNotes, // Export setActiveNotes
+    activeNotes,
+    setActiveNotes,
+    stopPlayback,
+    revealAnswer,
+    wasRevealed,
+    session,
+    lastGuess,
+    isPlaying,
+    bassPitchClass,
   };
 };
 

@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 import { persist, PersistOptions } from 'zustand/middleware';
 import { Frequency } from 'tone';
+import type {
+  InversionMode,
+  BackingMode,
+} from '@EarTrainers/ChordColorTrainer/musicTheory';
 import {
   degrees,
   defaultDegreeChordTypes,
@@ -35,6 +39,7 @@ interface ChordColorTrainerState {
   rootNote: string;
   range: [string, string];
   practiceRecords: PracticeRecords;
+  firstAttemptRecords: PracticeRecords;
   currentNotes: DegreeInfo[];
   preset: string;
   customPresets: CustomPresets;
@@ -42,6 +47,10 @@ interface ChordColorTrainerState {
   isStatOpen: boolean;
   degreeChordTypes: DegreeInfo[];
   chordPlayOption: string;
+  inversionMode: InversionMode;
+  bassEnabled: boolean;
+  bassLevel: number;
+  backingMode: BackingMode;
 }
 
 interface ChordColorTrainerActions {
@@ -51,6 +60,7 @@ interface ChordColorTrainerActions {
   setRootNote: (rootNote: string) => void;
   setRange: (range: [string, string]) => void;
   setPracticeRecords: (practiceRecords: PracticeRecords) => void;
+  setFirstAttemptRecords: (firstAttemptRecords: PracticeRecords) => void;
   updatePracticeRecords: (degree: string, isCorrect: boolean) => void;
   setCurrentNotes: (currentNotes: DegreeInfo[]) => void;
   setPreset: (preset: string) => void;
@@ -59,6 +69,10 @@ interface ChordColorTrainerActions {
   setIsStatOpen: (isStatOpen: boolean) => void;
   setDegreeChordTypes: (degreeChordTypes: DegreeInfo[]) => void;
   setChordPlayOption: (chordPlayOption: string) => void;
+  setInversionMode: (inversionMode: InversionMode) => void;
+  setBassEnabled: (bassEnabled: boolean) => void;
+  setBassLevel: (bassLevel: number) => void;
+  setBackingMode: (backingMode: BackingMode) => void;
 }
 
 const useChordColorTrainerSettingsStore = create<
@@ -66,12 +80,13 @@ const useChordColorTrainerSettingsStore = create<
 >()(
   persist(
     set => ({
-      bpm: 40,
+      bpm: 80,
       droneVolume: 0.3,
-      pianoVolume: 1.0,
+      pianoVolume: 0.55,
       rootNote: 'C3',
-      range: [Frequency('C3').toNote(), Frequency('C4').toNote()],
+      range: [Frequency('C3').toNote(), Frequency('C5').toNote()],
       practiceRecords: {},
+      firstAttemptRecords: {},
       currentNotes: degrees.map(degree => ({
         ...degree,
         chordTypes: [],
@@ -82,26 +97,33 @@ const useChordColorTrainerSettingsStore = create<
       muteDrone: false,
       isStatOpen: true,
       degreeChordTypes: defaultDegreeChordTypes,
-      chordPlayOption: 'default',
+      chordPlayOption: 'block',
+      inversionMode: 'root',
+      bassEnabled: true,
+      bassLevel: 0.35,
+      backingMode: 'off',
 
-      setBpm: bpm => set({ bpm }),
+      setBpm: bpm => set({ bpm: Math.max(40, Math.min(200, bpm)) }),
       setDroneVolume: droneVolume => set({ droneVolume }),
-      setPianoVolume: pianoVolume => set({ pianoVolume }),
+      setPianoVolume: pianoVolume =>
+        set({ pianoVolume: Math.max(0, Math.min(1, pianoVolume)) }),
       setRootNote: rootNote => set({ rootNote }),
       setRange: range => set({ range }),
       setPracticeRecords: practiceRecords => set({ practiceRecords }),
+      setFirstAttemptRecords: firstAttemptRecords =>
+        set({ firstAttemptRecords }),
       updatePracticeRecords: (degree, isCorrect) =>
         set(state => {
           const updatedRecords = {
-            ...state.practiceRecords,
+            ...state.firstAttemptRecords,
             [degree]: {
-              total: (state.practiceRecords[degree]?.total || 0) + 1,
+              total: (state.firstAttemptRecords[degree]?.total || 0) + 1,
               correct:
-                (state.practiceRecords[degree]?.correct || 0) +
+                (state.firstAttemptRecords[degree]?.correct || 0) +
                 (isCorrect ? 1 : 0),
             },
           };
-          return { practiceRecords: updatedRecords };
+          return { firstAttemptRecords: updatedRecords };
         }),
       setCurrentNotes: currentNotes => set({ currentNotes }),
       setPreset: preset => set({ preset }),
@@ -111,6 +133,11 @@ const useChordColorTrainerSettingsStore = create<
       setDegreeChordTypes: (degreeChordTypes: DegreeInfo[]) =>
         set({ degreeChordTypes }),
       setChordPlayOption: (chordPlayOption: string) => set({ chordPlayOption }),
+      setInversionMode: inversionMode => set({ inversionMode }),
+      setBassEnabled: bassEnabled => set({ bassEnabled }),
+      setBassLevel: bassLevel =>
+        set({ bassLevel: Math.max(0, Math.min(1, bassLevel)) }),
+      setBackingMode: backingMode => set({ backingMode }),
     }),
     {
       name: 'ChordColorTrainerSettings',

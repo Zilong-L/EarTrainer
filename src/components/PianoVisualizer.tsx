@@ -94,9 +94,9 @@ const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
                     ? 'bg-notification-text shadow-inner'
                     : isNoteSustained(midiNote)
                       ? 'bg-notification-text opacity-60 shadow-inner'
-                    : isTargetNote(midiNote) || isBassNote(midiNote)
-                      ? 'bg-showcase-bg'
-                      : 'bg-white hover:bg-gray-50'
+                      : isTargetNote(midiNote) || isBassNote(midiNote)
+                        ? 'bg-showcase-bg'
+                        : 'bg-white hover:bg-gray-50'
                 }
                 transition-colors duration-100
                 rounded-b-lg
@@ -126,9 +126,9 @@ const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
                     ? 'bg-notification-text shadow-lg'
                     : isNoteSustained(midiNote)
                       ? 'bg-notification-text opacity-60 shadow-lg'
-                    : isTargetNote(midiNote) || isBassNote(midiNote)
-                      ? 'bg-showcase-bg'
-                      : 'shadow-lg bg-gray-900 hover:bg-gray-800'
+                      : isTargetNote(midiNote) || isBassNote(midiNote)
+                        ? 'bg-showcase-bg'
+                        : 'shadow-lg bg-gray-900 hover:bg-gray-800'
                 }
                 transition-colors duration-100
                 rounded-b-lg

@@ -54,7 +54,9 @@ const useChallengeStore = create<
                 const parsed = JSON.parse(rawProgress) as UserProgress[];
                 if (Array.isArray(parsed) && parsed.length)
                   state.setUserProgress(parsed);
-              } catch {}
+              } catch {
+                // Keep defaults when legacy saved progress is malformed.
+              }
             }
             if (rawVersion) {
               const ver = Number(rawVersion);

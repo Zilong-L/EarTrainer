@@ -79,11 +79,11 @@ function getKeyColor(
   midiNote: number,
   pressedMidiNotes: number[],
   sustainedMidiNotes: number[],
-  rootMidiNote: number | null,
+  bassMidiNote: number | null,
   isBlackKey: boolean
 ): string {
-  // Check if this specific MIDI note is the root note
-  if (rootMidiNote === midiNote) return '#FFD700'; // Gold for root
+  // Check if this specific MIDI note is the bass note
+  if (bassMidiNote === midiNote) return '#FFD700'; // Gold for bass
 
   // Pressed keys (physically held down) - darker
   if (pressedMidiNotes.includes(midiNote)) {
@@ -110,8 +110,8 @@ const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
     state => state.setPlayMidiSounds
   );
 
-  // Get the lowest active note as the potential root (or null if none)
-  const rootNoteMidi = activeNotes.length > 0 ? Math.min(...activeNotes) : null;
+  // Get the lowest active note as the sounding bass (or null if none)
+  const bassNoteMidi = activeNotes.length > 0 ? Math.min(...activeNotes) : null;
   const pressedNotesEffective = pressedNotes ?? activeNotes;
   const sustainedNotesEffective = sustainedNotes ?? [];
 
@@ -127,7 +127,7 @@ const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
   };
 
   return (
-    <div className="font-chewy hidden md:block absolute right-4 top-[38.2%] -translate-y-[50%] text-white rounded gap-4 bg-black/50 p-4 w-[300px]">
+    <div className="mt-4 rounded-xl border border-bg-accent p-4 w-full max-w-sm text-text-primary bg-bg-common">
       <div className="flex  justify-between flex-col">
         <div className="text-4xl font-bold ">{detectedChords[0] || '-'}</div>
 
@@ -178,7 +178,7 @@ const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
                 key.midi,
                 pressedNotesEffective,
                 sustainedNotesEffective,
-                rootNoteMidi,
+                bassNoteMidi,
                 false
               )}
               stroke="black"
@@ -202,7 +202,7 @@ const PianoVisualizer: React.FC<PianoVisualizerProps> = ({
                 key.midi,
                 pressedNotesEffective,
                 sustainedNotesEffective,
-                rootNoteMidi,
+                bassNoteMidi,
                 true
               )}
               stroke="black"

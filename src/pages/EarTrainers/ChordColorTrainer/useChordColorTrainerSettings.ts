@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { chordPreset } from '@EarTrainers/ChordColorTrainer/Constants';
 import { CHORD_TYPES } from '@EarTrainers/ChordColorTrainer/Constants';
 import useChordColorTrainerSettingsStore from '../../../stores/chordColorTrainerSettingsStore';
@@ -11,7 +10,7 @@ const useChordColorTrainerSettings = () => {
     pianoVolume,
     rootNote,
     range,
-    practiceRecords,
+    firstAttemptRecords,
     currentNotes,
     preset,
     customPresets,
@@ -23,7 +22,7 @@ const useChordColorTrainerSettings = () => {
     setPianoVolume,
     setRootNote,
     setRange,
-    setPracticeRecords,
+    setFirstAttemptRecords,
     updatePracticeRecords,
     setCurrentNotes,
     setDegreeChordTypes,
@@ -34,36 +33,24 @@ const useChordColorTrainerSettings = () => {
   } = useChordColorTrainerSettingsStore();
   const { selectedInstrument } = useSoundSettingsStore();
 
-  useEffect(() => {
-    const storedRecords = JSON.parse(
-      localStorage.getItem('ChordColorTrainerRecords') || '{}'
-    );
-    setPracticeRecords(storedRecords);
-  }, [setPracticeRecords]);
-
-  useEffect(() => {
-    setDegreeChordTypes(
-      customPresets[preset] || chordPreset[preset] || degreeChordTypes
-    );
-  }, [preset, customPresets, setDegreeChordTypes, degreeChordTypes]);
-
   return {
     bpm,
     droneVolume,
     pianoVolume,
     rootNote,
     range,
-    practiceRecords,
+    practiceRecords: firstAttemptRecords,
     currentNotes,
     setBpm,
     setDroneVolume,
     setPianoVolume,
     setRootNote,
     setRange,
-    setPracticeRecords,
+    setPracticeRecords: setFirstAttemptRecords,
     updatePracticeRecords,
     setCurrentNotes,
-    degreeChordTypes,
+    degreeChordTypes:
+      customPresets[preset] || chordPreset[preset] || degreeChordTypes,
     setDegreeChordTypes,
     CHORD_TYPES,
     preset,
