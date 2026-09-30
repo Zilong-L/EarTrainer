@@ -2,18 +2,24 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useLocation,
+  Navigate,
 } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-import useI18nStore from '@stores/i18nStore';
-import { AnimatePresence, motion } from 'motion/react';
-import { useLocalStorage } from '@uidotdev/usehooks';
-import Button from '@components/Button';
+import TrainingShell, {
+  TrainingError,
+} from '../features/training/TrainingShell';
 
-// Lazy load components
 const ChordTrainer = lazy(() => import('./ChordTrainer'));
-const Intro = lazy(() => import('./Intro'));
+const TrainingHome = lazy(() => import('../features/training/TrainingHome'));
+const LearnPage = lazy(() => import('../features/training/LearnPage'));
+const PracticeLibrary = lazy(
+  () => import('../features/training/PracticeLibrary')
+);
+const ProgressPage = lazy(() => import('../features/training/ProgressPage'));
+const GuidedPractice = lazy(
+  () => import('../features/practice/GuidedPractice')
+);
 const DegreeTrainer = lazy(
   () => import('@EarTrainers/DegreeTrainer/DegreeTrainer')
 );
@@ -26,181 +32,69 @@ const DegreeTrainerSettingsProvider = lazy(() =>
   )
 );
 
-// Loading component
-const LoadingSpinner: React.FC = () => (
-  <div className="flex items-center justify-center min-h-screen">
-    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-  </div>
-);
-
-const WebRoutes: React.FC = () => {
+function LoadingScreen() {
   return (
-    <Router>
-      <ThemedContent />
-    </Router>
+    <div className="trainer-loading" role="status">
+      <span className="trainer-loading-dot" aria-hidden="true" />
+      <p>Getting ready · 正在准备</p>
+    </div>
   );
-};
+}
 
-const LanguageSwitcher: React.FC = () => {
-  const [language, setLanguage] = useLocalStorage('language', 'en');
+function RouteContent() {
   const { i18n } = useTranslation();
   useEffect(() => {
-    i18n.changeLanguage(language);
-  }, [language, i18n]);
-  const changeLanguage = (lng: string) => {
-    setLanguage(lng);
-    console.log('切换前的当前语言:', i18n.language); // 打印切换前的语言
-    i18n
-      .changeLanguage(lng)
-      .then(() => {
-        console.log('切换后的当前语言:', i18n.language); // 打印切换后的语言
-      })
-      .catch(err => {
-        console.error('语言切换失败:', err); // 捕获切换语言时的错误
-      });
-  };
-
-  return (
-    <div className="flex justify-center items-center gap-2">
-      <Button
-        className="bg-transparent text-white text-2xl"
-        onClick={() => changeLanguage('zh')}
-      >
-        中文
-      </Button>
-      <Button
-        className="bg-transparent text-white text-2xl"
-        onClick={() => changeLanguage('en')}
-      >
-        English
-      </Button>
-    </div>
-  );
-};
-
-const ThemedContent: React.FC = () => {
-  const location = useLocation();
-  const { namespace } = useI18nStore();
-  const { t, i18n } = useTranslation(namespace);
-  const [isDark, setIsDark] = useLocalStorage('isdark', false);
-  useEffect(() => {
-    if (!isDark) {
-      document.body.classList.add('light');
-    } else {
-      document.body.classList.remove('light');
+    document.body.classList.add('light');
+    try {
+      const saved = JSON.parse(localStorage.getItem('language') ?? 'null');
+      if (saved === 'en' || saved === 'zh') void i18n.changeLanguage(saved);
+    } catch {
+      // Preserve the detected language if storage is invalid or unavailable.
     }
-  }, [isDark]);
-
-  const toggleTheme = () => {
-    setIsDark(prev => !prev);
-  };
-
+  }, [i18n]);
   return (
-    <div
-      className={`${i18n.language === 'zh' ? 'font-chinese' : 'font-chewy'} relative`}
-    >
-      <AnimatePresence mode="wait">
-        <Suspense fallback={<LoadingSpinner />}>
-          <Routes location={location}>
-            <Route path="/" element={<Intro />} />
-
-            <Route
-              path="/chord-trainer/*"
-              element={
-                <Suspense fallback={<LoadingSpinner />}>
-                  <DegreeTrainerSettingsProvider>
-                    <ChordTrainer />
-                  </DegreeTrainerSettingsProvider>
-                </Suspense>
-              }
-            ></Route>
-
-            <Route
-              path="/ear-trainer"
-              element={
-                <motion.div
-                  key={location.pathname}
-                  initial={location.pathname === '/' ? {} : { opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={location.pathname === '/' ? {} : { opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
-                >
-                  <Intro />
-                </motion.div>
-              }
-            />
-
-            <Route
-              path="/ear-trainer/degree-trainer"
-              element={
-                <motion.div
-                  key={location.pathname}
-                  initial={location.pathname === '/' ? {} : { opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={location.pathname === '/' ? {} : { opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
-                >
-                  <Suspense fallback={<LoadingSpinner />}>
-                    <DegreeTrainerSettingsProvider>
-                      <DegreeTrainer />
-                    </DegreeTrainerSettingsProvider>
-                  </Suspense>
-                </motion.div>
-              }
-            />
-
-            <Route
-              path="/ear-trainer/chord-color-trainer"
-              element={
-                <motion.div
-                  key={location.pathname}
-                  initial={location.pathname === '/' ? {} : { opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={location.pathname === '/' ? {} : { opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
-                >
-                  <ChordColorTrainer />
-                </motion.div>
-              }
-            />
-          </Routes>
-        </Suspense>
-      </AnimatePresence>
-
-      {location.pathname !== '/' && location.pathname !== '/ear-trainer' && (
-        <button
-          onClick={toggleTheme}
-          style={{
-            position: 'absolute',
-            bottom: '100px',
-            right: '10px',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: '24px',
-          }}
-        >
-          {isDark ? '🌙' : '☀️'}
-        </button>
-      )}
-      <div className="text-center p-2 bg-black">
-        <p>
-          <a
-            href="https://github.com/Zilong-L/EarTrainer/issues"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: 'lightblue' }}
-          >
-            {t('Open Source Message')}
-          </a>
-        </p>
-        <LanguageSwitcher />
-      </div>
-    </div>
+    <TrainingError>
+      <Suspense fallback={<LoadingScreen />}>
+        <Routes>
+          <Route element={<TrainingShell />}>
+            <Route path="/" element={<TrainingHome />} />
+            <Route path="/learn" element={<LearnPage />} />
+            <Route path="/practice" element={<PracticeLibrary />} />
+            <Route path="/progress" element={<ProgressPage />} />
+            <Route path="/practice/:lessonId" element={<GuidedPractice />} />
+          </Route>
+          <Route path="/ear-trainer" element={<Navigate to="/" replace />} />
+          <Route
+            path="/chord-trainer/*"
+            element={
+              <DegreeTrainerSettingsProvider>
+                <ChordTrainer />
+              </DegreeTrainerSettingsProvider>
+            }
+          />
+          <Route
+            path="/ear-trainer/degree-trainer"
+            element={
+              <DegreeTrainerSettingsProvider>
+                <DegreeTrainer />
+              </DegreeTrainerSettingsProvider>
+            }
+          />
+          <Route
+            path="/ear-trainer/chord-color-trainer"
+            element={<ChordColorTrainer />}
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
+    </TrainingError>
   );
-};
+}
 
-export default WebRoutes;
+export default function WebRoutes() {
+  return (
+    <Router>
+      <RouteContent />
+    </Router>
+  );
+}

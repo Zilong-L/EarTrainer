@@ -393,7 +393,7 @@ describe('chooseNextChord', () => {
     );
   });
 
-  it('samples unique choices stably and excludes the current answer', () => {
+  it('samples unique choices stably and permits the current answer', () => {
     const choices = [choice, minor, { ...choice }, dominant, { ...minor }];
     assert.equal(
       chooseNextChord(choices, null, () => 0),
@@ -409,7 +409,7 @@ describe('chooseNextChord', () => {
     );
     assert.equal(
       chooseNextChord(choices, choice, () => 0),
-      minor
+      choice
     );
     assert.equal(
       chooseNextChord(choices, choice, () => 1),
@@ -419,6 +419,21 @@ describe('chooseNextChord', () => {
       chooseNextChord(choices, { degree: 'IV', chordType: 'M' }, () => 0),
       choice
     );
+  });
+  it('does not force binary choices to alternate', () => {
+    const sequence = [0.1, 0.2, 0.8, 0.9, 0.15];
+    let previous = choice;
+    const answers = sequence.map(value => {
+      previous = chooseNextChord([choice, minor], previous, () => value)!;
+      return previous.chordType;
+    });
+    assert.deepEqual(answers, [
+      choice.chordType,
+      choice.chordType,
+      'm',
+      'm',
+      choice.chordType,
+    ]);
   });
 });
 

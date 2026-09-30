@@ -11,3 +11,5 @@
     * [How to Use](/en/keyboard-training/how-to-use.md)
     * [Keyboard Shortcuts](/en/keyboard-training/keyboard-shortcuts.md)
     * [Main Features](/en/keyboard-training/main-features.md)
+
+- [移动练耳学习设计 / Mobile learning design](/product-learning-design.md)

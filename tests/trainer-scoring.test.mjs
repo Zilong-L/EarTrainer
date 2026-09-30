@@ -191,7 +191,7 @@ test('wrong then right counts one first attempt against target, never against wr
     { answered: 1, correct: 0, streak: 0 }
   );
   assert.deepEqual(mounted.records, [{ target: 'IM', correct: false }]);
-  trainer.setActiveChord('IIm'); // Comparison after solving is unscored.
+  trainer.setActiveChord('IM'); // Comparison after solving is unscored.
   mounted.render();
   assert.equal(mounted.records.length, 1);
 });
@@ -211,10 +211,10 @@ test('correct first answer increases streak once and next resets question state'
   );
   await trainer.advanceGame();
   trainer = mounted.render();
-  assert.equal(trainer.currentChord.degree, 'II');
+  assert.equal(trainer.currentChord.degree, 'I');
   assert.equal(trainer.isAdvance, 'No');
   assert.equal(trainer.wasRevealed, false);
-  trainer.setActiveChord('IIm');
+  trainer.setActiveChord('IM');
   trainer = mounted.render();
   assert.deepEqual(
     { ...trainer.session },
@@ -264,7 +264,7 @@ test('settings change resets answer state and hidden tabs cancel audio', async (
   trainer.revealAnswer();
   mounted.settings.rootNote = 'Eb3';
   trainer = mounted.render();
-  assert.equal(trainer.currentChord.root, 'F'); // II in the new Eb key; avoids repeating I.
+  assert.equal(trainer.currentChord.root, 'Eb'); // Repeated I remains eligible in the new key.
   assert.equal(trainer.isAdvance, 'No');
   assert.equal(trainer.wasRevealed, false);
   const before = mounted.cancellations();

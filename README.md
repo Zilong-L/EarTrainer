@@ -3,9 +3,15 @@
 
 This is a simple sight-singing and ear-training tool to help improve musical perception.
 
+## Guided mobile practice
+
+A mobile-first Today / Learn / Practice / Progress experience with seven focused eight-question lessons: tonal anchors, melodic thirds and fifths, triad qualities, inversions, major-key functions and the diatonic scale. Labeled examples introduce each sound before scoring. First responses, hints, reveals and skips are tracked separately; completed-session progress stays in the current browser. Existing lab routes and records are preserved.
+
+[Learning design and evidence](docs/product-learning-design.md)
+
 ## Core Features
 - [Ear Training](https://musictrainer.barnman.cc/ear-trainer)
-   - Pitch Recognition: Practice recognizing pitches to improve musical hearing. I think intervals are useless.
+   - Relative Pitch: Practice scale degrees, intervals and harmony with a clear listening focus.
    - Practice Statistics: Practice data is stored locally, allowing you to track your progress at any time.
    - Keyboard and MIDI Input Support: Practice using either a keyboard or MIDI device.
    - Handfree Mode: Practice without looking at the screen. Answer is given after a set time.

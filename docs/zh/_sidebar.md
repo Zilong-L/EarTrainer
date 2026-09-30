@@ -11,3 +11,5 @@
     * [如何使用](/zh/键盘训练/如何使用.md)
     * [快捷键介绍](/zh/键盘训练/快捷键介绍.md)
     * [主要功能](/zh/键盘训练/主要功能.md)
+
+- [移动练耳学习设计 / Mobile learning design](/product-learning-design.md)

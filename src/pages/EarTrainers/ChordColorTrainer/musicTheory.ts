@@ -172,7 +172,7 @@ export function buildChordQuestion(
 /** Deduplicate once and sample eligible candidates, without retry loops. */
 export function chooseNextChord(
   choices: readonly ChordChoice[] | null | undefined,
-  current: ChordChoice | null | undefined,
+  _current: ChordChoice | null | undefined,
   random: () => number = Math.random
 ): ChordChoice | null {
   const unique = new Map<string, ChordChoice>();
@@ -188,15 +188,9 @@ export function chooseNextChord(
   }
   const available = [...unique.values()];
   if (available.length === 0) return null;
-  const candidates =
-    available.length > 1 && current
-      ? available.filter(
-          choice =>
-            choice.degree !== current.degree ||
-            choice.chordType !== current.chordType
-        )
-      : available;
-  return candidates[randomIndex(candidates.length, random)];
+  // Repeated answer classes are intentional. Removing the current class makes
+  // two-choice exercises alternate predictably and leaks the next answer.
+  return available[randomIndex(available.length, random)];
 }
 
 const foregroundEvent = (
