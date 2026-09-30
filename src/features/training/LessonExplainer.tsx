@@ -8,7 +8,15 @@ import {
   StopIcon,
   SpeakerWaveIcon,
 } from '@heroicons/react/24/outline';
-import { getSamplerInstance } from '@utils/Tone/samplers';
+import { getSamplerInstance, setGuitarVolume } from '@utils/Tone/samplers';
+import GuitarControls from '../practice/GuitarControls';
+import {
+  configureGuitarSound,
+  DEFAULT_GUITAR_SETTINGS,
+  guitarShapeFor,
+  type GuitarSettings,
+} from '../practice/guitarPractice';
+import GuitarDiagram from './GuitarDiagram';
 import { useSoundSettingsStore } from '@stores/soundSettingsStore';
 import {
   CHAPTERS,
@@ -205,9 +213,15 @@ function Explanation({ lesson }: { lesson: Lesson }) {
   const chapter = CHAPTERS.find(item => item.id === lesson.chapterId);
   const ordered = CHAPTERS.flatMap(item => item.lessonIds);
   const next = getLesson(ordered[ordered.indexOf(lesson.id) + 1] ?? '');
+  const isGuitar = lesson.mode === 'guitar';
+  const [guitarSettings, setGuitarSettings] = useState(DEFAULT_GUITAR_SETTINGS);
+  const [shapeIndex, setShapeIndex] = useState(0);
   const examples = useMemo(
-    () => generateLessonExamples(lesson.id),
-    [lesson.id]
+    () =>
+      generateLessonExamples(lesson.id).map(item =>
+        isGuitar ? configureGuitarSound(item, guitarSettings, shapeIndex) : item
+      ),
+    [lesson.id, isGuitar, guitarSettings, shapeIndex]
   );
   const [selected, setSelected] = useState(0);
   const [compareId, setCompareId] = useState(examples[1]?.choice.id ?? '');
@@ -229,9 +243,10 @@ function Explanation({ lesson }: { lesson: Lesson }) {
     ) ?? examples.find(item => item.choice.id !== example.choice.id);
 
   useEffect(() => {
-    getSamplerInstance().setVolume(volume);
+    if (isGuitar) setGuitarVolume(volume);
+    else getSamplerInstance().setVolume(volume);
     saveListeningPreferences({ volume });
-  }, [volume]);
+  }, [volume, isGuitar]);
   useEffect(() => {
     if (audio.status !== 'playing') {
       setElapsed(null);
@@ -284,6 +299,15 @@ function Explanation({ lesson }: { lesson: Lesson }) {
     setPlayback(buildLearningPlayback(lesson, [examples[index]]));
     setInspected(null);
     void play([examples[index]]);
+  };
+
+  const updateGuitar = (settings: GuitarSettings, index = shapeIndex) => {
+    stop();
+    setGuitarSettings(settings);
+    setShapeIndex(index);
+    const item = configureGuitarSound(example, settings, index);
+    setPlayback(buildLearningPlayback(lesson, [item]));
+    setInspected(null);
   };
 
   const activeFrames =
@@ -387,22 +411,44 @@ function Explanation({ lesson }: { lesson: Lesson }) {
               </span>
               <small>{activeFrame ? c.now : c.diagram}</small>
             </div>
-            <PitchDiagram
-              lesson={lesson}
-              example={currentExample}
-              frame={frame}
-              notes={structure}
-              activeNotes={activeNotes}
-              zh={zh}
-            />
-            <Piano
-              notes={notesForKeys}
-              structure={structure}
-              activeNotes={activeNotes}
-              chord={frame?.chord}
-              zh={zh}
-            />
-            <p className="lesson-visual-legend">{c.legend}</p>
+            {isGuitar ? (
+              <GuitarDiagram
+                shape={guitarShapeFor(currentExample)}
+                tonic={currentExample.tonic}
+                activeStrings={
+                  elapsed === null
+                    ? []
+                    : playback.events
+                        .filter(
+                          event =>
+                            event.guitarString !== undefined &&
+                            elapsed >= event.time &&
+                            elapsed < event.time + event.duration
+                        )
+                        .map(event => event.guitarString!)
+                }
+                zh={zh}
+              />
+            ) : (
+              <>
+                <PitchDiagram
+                  lesson={lesson}
+                  example={currentExample}
+                  frame={frame}
+                  notes={structure}
+                  activeNotes={activeNotes}
+                  zh={zh}
+                />
+                <Piano
+                  notes={notesForKeys}
+                  structure={structure}
+                  activeNotes={activeNotes}
+                  chord={frame?.chord}
+                  zh={zh}
+                />
+                <p className="lesson-visual-legend">{c.legend}</p>
+              </>
+            )}
           </div>
           <div className="lesson-sound-copy">
             <h3>{text(currentExample.choice.label, language)}</h3>
@@ -445,12 +491,63 @@ function Explanation({ lesson }: { lesson: Lesson }) {
               aria-atomic="true"
             >
               <span>{status}</span>
-              {loadError && <span>{c.fallback}</span>}
+              {!isGuitar && loadError && <span>{c.fallback}</span>}
             </div>
             <p className="lesson-caption">{frame?.chord ? c.voiced : c.note}</p>
           </div>
         </div>
 
+        {isGuitar && (
+          <div className="guitar-explore">
+            <GuitarControls
+              settings={guitarSettings}
+              onChange={settings => updateGuitar(settings)}
+              zh={zh}
+            />
+            <div
+              className="guitar-shapes"
+              aria-label={
+                zh ? '同一和弦的不同指型' : 'Different shapes of the same chord'
+              }
+            >
+              {[0, 1, 2].map(index => {
+                const shape = guitarShapeFor(example, index);
+                return (
+                  <button
+                    key={shape.id}
+                    type="button"
+                    aria-pressed={shapeIndex === index}
+                    onClick={() => updateGuitar(guitarSettings, index)}
+                  >
+                    {text(shape.label, language)}
+                  </button>
+                );
+              })}
+            </div>
+            <p>
+              {zh
+                ? '保持同一和弦，比较音域、间距与重复音的变化。最低音始终是根音。'
+                : 'Hold the same chord and compare register, spacing and doubled notes. The bass stays the root.'}
+            </p>
+            <button
+              className="music-secondary"
+              type="button"
+              onClick={() =>
+                void play([
+                  example,
+                  configureGuitarSound(
+                    example,
+                    guitarSettings,
+                    (shapeIndex + 1) % 3
+                  ),
+                ])
+              }
+            >
+              <PlayIcon aria-hidden="true" />
+              {zh ? '同一和弦，换个指型听' : 'Same chord, another voicing'}
+            </button>
+          </div>
+        )}
         <div className="lesson-sequence" aria-label={c.sequence}>
           {groups.map(group => (
             <div className="lesson-sequence-group" key={group.phase}>

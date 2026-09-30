@@ -58,7 +58,9 @@ const assertEvents = (events: PracticeEvent[]) =>
   events.forEach(item => {
     assert.ok(Number.isInteger(item.note));
     assert.ok(
-      item.note >= PRACTICE_MIDI_RANGE[0] && item.note <= PRACTICE_MIDI_RANGE[1]
+      item.note >=
+        (item.guitarString === undefined ? PRACTICE_MIDI_RANGE[0] : 40) &&
+        item.note <= PRACTICE_MIDI_RANGE[1]
     );
     assert.ok(Number.isFinite(item.time) && item.time >= 0);
     assert.ok(Number.isFinite(item.duration) && item.duration > 0);
@@ -67,7 +69,7 @@ const assertEvents = (events: PracticeEvent[]) =>
 
 describe('guided curriculum', () => {
   it('offers connected bilingual topics across six open musical chapters', () => {
-    assert.equal(LESSONS.length, 25);
+    assert.equal(LESSONS.length, 26);
     assert.equal(CHAPTERS.length, 6);
     assert.equal(
       new Set(LESSONS.map(lesson => lesson.id)).size,
@@ -202,7 +204,15 @@ describe('guided curriculum', () => {
       const expected = 6000 / lesson.choices.length;
       for (const count of Object.values(classes))
         assert.ok(Math.abs(count - expected) < expected * 0.15);
-      for (const count of roots) assert.ok(Math.abs(count - 500) < 100);
+      if (lesson.mode === 'guitar') {
+        for (const pc of [2, 4, 9]) assert.ok(Math.abs(roots[pc] - 2000) < 300);
+        assert.equal(
+          roots
+            .filter((_, pc) => ![2, 4, 9].includes(pc))
+            .reduce((a, b) => a + b, 0),
+          0
+        );
+      } else for (const count of roots) assert.ok(Math.abs(count - 500) < 100);
     }
   });
 
@@ -324,6 +334,28 @@ describe('guided curriculum', () => {
             break;
           }
           case 'triad':
+            if (lesson.mode === 'guitar') {
+              assert.deepEqual(
+                [
+                  ...new Set(notes.map(note => mod(note - question.tonic))),
+                ].sort((a, b) => a - b),
+                triads[question.answer]
+              );
+              assert.equal(mod(Math.min(...notes) - question.tonic), 0);
+              assert.ok(
+                question.events.every(
+                  (item, i) =>
+                    item.guitarString !== undefined &&
+                    (i === 0 ||
+                      item.guitarString! > question.events[i - 1].guitarString!)
+                )
+              );
+              assert.deepEqual(
+                question.hintEvents.map(item => item.note),
+                notes
+              );
+              break;
+            }
             assert.deepEqual(
               notes
                 .map(note => mod(note - question.tonic))

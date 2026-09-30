@@ -381,7 +381,12 @@ test('every catalog lesson renders real structures and can play its selected exa
       const render = env.explainer(lesson.id);
       let page = render();
       assert.equal(env.schedules.length, 0);
-      assert.ok(section(page, 'lesson-piano'));
+      assert.ok(
+        section(
+          page,
+          lesson.mode === 'guitar' ? 'guitar-diagram' : 'lesson-piano'
+        )
+      );
       assert.ok(frameButtons(page).length);
       assert.doesNotMatch(text(page), /undefined|NaN|Infinity/);
       assert.equal(practiceLink(page).props.to, `/practice/${lesson.id}`);
@@ -397,7 +402,11 @@ test('every catalog lesson renders real structures and can play its selected exa
       env.advanceFrame(0.1);
       page = render();
       assert.ok(
-        soundingKeys(page).length,
+        lesson.mode === 'guitar'
+          ? allNodes(section(page, 'guitar-diagram')).some(node =>
+              hasClass(node, 'is-sounding')
+            )
+          : soundingKeys(page).length,
         `${lesson.id} has real sounding pitches`
       );
       finishSound(env);

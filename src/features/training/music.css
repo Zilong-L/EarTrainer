@@ -1240,3 +1240,41 @@
     font-size: 10px;
   }
 }
+
+/* One quiet setup row, without exposing the question's current fingering. */
+.guitar-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem 1.2rem;
+  margin: 1.5rem auto;
+  max-width: 48rem;
+}
+.guitar-controls label {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 0;
+  font-size: 0.85rem;
+  color: var(--music-muted, #78877c);
+}
+.guitar-controls select {
+  max-width: 100%;
+  min-height: 44px;
+  padding: 0.45rem 0.7rem;
+  background: var(--music-paper, #faf9f4);
+  border: 1px solid #ccd7cf;
+  border-radius: 0.65rem;
+  color: var(--music-ink, #233c32);
+}
+.guitar-controls p {
+  flex-basis: 100%;
+  margin: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--music-muted, #78877c);
+}
+.guitar-controls select:focus-visible,
+.guitar-shapes button:focus-visible {
+  outline: 3px solid #6b907c;
+  outline-offset: 3px;
+}

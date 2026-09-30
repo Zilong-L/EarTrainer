@@ -2,6 +2,8 @@ import { Transport, Frequency, Time, getContext, now } from 'tone';
 import {
   getSamplerInstance,
   getBassInstance,
+  getGuitarStringInstance,
+  type GuitarInstrument,
   ensureAudioStarted,
   releasePlaybackVoices,
   stopAllVoices,
@@ -13,6 +15,9 @@ export interface NoteEvent {
   duration: number;
   voice?: 'foreground' | 'bass';
   velocity?: number;
+  /** Physical string index, low E (0) through high E (5). */
+  guitarString?: number;
+  instrument?: GuitarInstrument;
 }
 
 let playbackGeneration = 0;
@@ -52,29 +57,86 @@ async function scheduleNotes(events: NoteEvent[]): Promise<void> {
       event.time >= 0 &&
       Number.isFinite(event.duration) &&
       event.duration > 0 &&
-      (typeof event.note === 'string' || Number.isFinite(event.note))
+      (typeof event.note === 'string' || Number.isFinite(event.note)) &&
+      (event.guitarString === undefined ||
+        (Number.isInteger(event.guitarString) &&
+          event.guitarString >= 0 &&
+          event.guitarString <= 5))
   );
   if (!validEvents.length) return;
 
+  const guitarInstruments = new Set(
+    validEvents
+      .filter(event => event.guitarString !== undefined)
+      .map(event => event.instrument ?? 'guitar-acoustic')
+  );
+  if (guitarInstruments.size > 1) {
+    throw new Error('A playback must use one guitar instrument.');
+  }
+  if (
+    [...guitarInstruments].some(
+      instrument =>
+        instrument !== 'guitar-acoustic' && instrument !== 'guitar-nylon'
+    )
+  ) {
+    throw new Error('Unknown guitar instrument.');
+  }
+
   // Tone.start runs from the originating click, before waiting for sample loading.
-  await ensureAudioStarted();
-  if (validEvents.some(event => event.voice !== 'bass')) {
-    await getSamplerInstance().ready;
+  try {
+    await ensureAudioStarted();
+  } catch (error) {
+    if (generation === playbackGeneration) throw error;
+    return;
   }
   if (generation !== playbackGeneration) return;
+  const managers = validEvents.map(event =>
+    event.guitarString !== undefined
+      ? getGuitarStringInstance(event.guitarString, event.instrument)
+      : event.voice === 'bass'
+        ? getBassInstance()
+        : getSamplerInstance()
+  );
+  try {
+    // Muted/unused strings and the foreground piano do not block guitar loads.
+    await Promise.all([...new Set(managers)].map(manager => manager.ready));
+  } catch (error) {
+    if (generation === playbackGeneration) {
+      cancelPlayback();
+      throw error;
+    }
+    return;
+  }
+  if (
+    generation !== playbackGeneration ||
+    managers.some(manager => !manager.loaded)
+  ) {
+    return;
+  }
 
-  validEvents.forEach(event => {
-    const manager =
-      event.voice === 'bass' ? getBassInstance() : getSamplerInstance();
+  const stringAttacks = new Map<number, number>();
+  validEvents.forEach((event, index) => {
+    const manager = managers[index];
     const note = toNote(event.note);
     Transport.schedule(time => {
       if (generation !== playbackGeneration || !manager.loaded) return;
+      if (event.guitarString !== undefined) {
+        // A string can ring one note at a time. Its old release must not cut
+        // off a subsequent strum of the same pitch on that physical string.
+        manager.sampler.releaseAll(time);
+        stringAttacks.set(event.guitarString, index);
+      }
       manager.sampler.triggerAttack(note, time, velocityFor(event));
     }, event.time);
     // Own the release schedule, so cancelled synth notes cannot later release
     // a new note of the same pitch through PolySynth's internal delayed timer.
     Transport.schedule(time => {
-      if (generation === playbackGeneration && manager.loaded) {
+      if (
+        generation === playbackGeneration &&
+        manager.loaded &&
+        (event.guitarString === undefined ||
+          stringAttacks.get(event.guitarString) === index)
+      ) {
         manager.sampler.triggerRelease(note, time);
       }
     }, event.time + event.duration);

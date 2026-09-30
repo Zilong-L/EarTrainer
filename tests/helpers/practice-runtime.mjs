@@ -112,6 +112,7 @@ export function makeRuntime({
     tone: { getContext: () => context, Transport: transport },
     '@utils/Tone/samplers': {
       getSamplerInstance: () => ({ setVolume: value => volumes.push(value) }),
+      setGuitarVolume: value => volumes.push(value),
     },
     '@utils/Tone/playbacks': {
       cancelAllSounds: () => cancelled++,
@@ -177,6 +178,8 @@ export function makeRuntime({
   };
   const audioModule = load('src/features/practice/usePracticeAudio.ts');
   dependencies['./usePracticeAudio'] = audioModule;
+  dependencies['./guitarStrum'] = load('src/features/practice/guitarStrum.ts');
+  dependencies['../practice/guitarStrum'] = dependencies['./guitarStrum'];
   const model = load('src/features/practice/model.ts');
   dependencies['./model'] = {
     ...model,
@@ -212,6 +215,17 @@ export function makeRuntime({
     dependencies['./listeningPreferences'];
   dependencies['./lessonVisuals'] = load(
     'src/features/training/lessonVisuals.ts'
+  );
+  dependencies['./guitarPractice'] = load(
+    'src/features/practice/guitarPractice.ts'
+  );
+  dependencies['../practice/guitarPractice'] = dependencies['./guitarPractice'];
+  dependencies['./GuitarControls'] = load(
+    'src/features/practice/GuitarControls.tsx'
+  );
+  dependencies['../practice/GuitarControls'] = dependencies['./GuitarControls'];
+  dependencies['./GuitarDiagram'] = load(
+    'src/features/training/GuitarDiagram.tsx'
   );
   dependencies['./lessonExplainer.css'] = {};
   const expand = node => {

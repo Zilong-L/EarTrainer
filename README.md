@@ -5,7 +5,9 @@ This is a simple sight-singing and ear-training tool to help improve musical per
 
 ## Guided mobile practice
 
-A mobile-first Today / Learn / Practice / Progress experience with seven focused eight-question lessons: tonal anchors, melodic thirds and fifths, triad qualities, inversions, major-key functions and the diatonic scale. Labeled examples introduce each sound before scoring. First responses, hints, reveals and skips are tracked separately; completed-session progress stays in the current browser. Existing lab routes and records are preserved.
+A mobile-first listening path with 26 topics across six musical chapters. Continuous listening practice keeps the sound in focus; separate illustrated explanations show the actual notes. Guitar strum practice recognizes major/minor quality across 18 playable voicings, with nylon/steel timbres and fast/slow downstrokes. Existing piano practice, lab routes and local records are preserved.
+
+[Guitar strum design and validation](docs/dev/guitar-strums.md) · [Sample attribution](public/samples/ATTRIBUTION.txt)
 
 [Learning design and evidence](docs/product-learning-design.md)
 

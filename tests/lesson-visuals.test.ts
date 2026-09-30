@@ -211,7 +211,7 @@ describe('standalone learning illustrations', () => {
   });
 
   it('always includes every played pitch in the compact keyboard range', () => {
-    for (const lesson of LESSONS) {
+    for (const lesson of LESSONS.filter(item => item.mode !== 'guitar')) {
       for (const example of generateLessonExamples(lesson.id)) {
         const notes = [
           ...example.events,

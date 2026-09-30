@@ -1,3 +1,10 @@
+import {
+  buildStrumEvents,
+  getGuitarShapes,
+  type GuitarChordId,
+  type GuitarStyle,
+} from './guitarStrum';
+
 /** Pure, auditable practice content. Times and durations are seconds; notes are MIDI. */
 export type LocalizedText = { en: string; zh: string };
 export type Language = 'en' | 'zh';
@@ -20,6 +27,7 @@ export type LessonId =
   | 'intervals-context'
   | 'triads-arpeggiated'
   | 'triads-voiced'
+  | 'guitar-strums'
   | 'inversions-open'
   | 'inversions-context'
   | 'bass-motion'
@@ -61,6 +69,8 @@ export type PracticeEvent = {
   time: number;
   duration: number;
   velocity?: number;
+  guitarString?: number;
+  instrument?: GuitarStyle;
 };
 export type Lesson = {
   id: LessonId;
@@ -72,7 +82,8 @@ export type Lesson = {
     | 'arpeggiated'
     | 'voiced'
     | 'open'
-    | 'context';
+    | 'context'
+    | 'guitar';
   title: LocalizedText;
   description: LocalizedText;
   instruction: LocalizedText;
@@ -651,6 +662,25 @@ LESSONS.push(
   )
 );
 
+LESSONS.push(
+  topic(
+    'guitar-strums',
+    'triads',
+    'triad',
+    localized('Guitar strum colors', '扫弦里的和弦色彩'),
+    localized(
+      'Recognize major and minor through changing guitar voicings.',
+      '换着吉他指型扫弦，仍然听出大小三和弦。'
+    ),
+    localized(
+      'A downstroke crosses the played strings from low E toward high E. Notes overlap rather than becoming a scale. Open strings, barre shapes and upper positions change the spacing and doubled notes, but the third still defines major or minor. These are sample-based strum simulations.',
+      '下扫按弦序从低音弦扫向高音弦，音的尾音相互重叠，不是逐音弹音阶。开放和弦、横按与高把位改变间距和重复音，但三音仍然决定大三或小三和弦。这里使用采样音色模拟扫弦。'
+    ),
+    triads.slice(0, 2),
+    'guitar'
+  )
+);
+
 export const CHAPTERS: Chapter[] = [
   {
     id: 'home',
@@ -696,6 +726,7 @@ export const CHAPTERS: Chapter[] = [
       'triads-diminished',
       'triads-arpeggiated',
       'triads-voiced',
+      'guitar-strums',
     ],
   },
   {
@@ -1048,8 +1079,25 @@ function constructQuestion(
       const rootNotes = triadOffsets[answer].map(offset => tonic + offset);
       const notes =
         lesson.mode === 'voiced' ? invert(rootNotes, variant % 3) : rootNotes;
-      events = lesson.mode === 'arpeggiated' ? arpeggio(notes) : block(notes);
-      hintEvents = arpeggio(rootNotes, 0.7);
+      if (lesson.mode === 'guitar') {
+        const root = tonic % 12 === 4 ? 'E' : tonic % 12 === 2 ? 'D' : 'A';
+        const shapes = getGuitarShapes(`${root}-${answer}` as GuitarChordId);
+        const shape = shapes[variant % shapes.length];
+        events = buildStrumEvents(shape, {
+          speed: 'fast',
+          seed: tonic + variant,
+        });
+      } else {
+        events = lesson.mode === 'arpeggiated' ? arpeggio(notes) : block(notes);
+      }
+      hintEvents =
+        lesson.mode === 'guitar'
+          ? events.map((item, index) => ({
+              ...item,
+              time: index * 0.45,
+              duration: 0.9,
+            }))
+          : arpeggio(rootNotes, 0.7);
       prompt = localized(
         'Which triad quality did you hear?',
         '你听到的是哪种三和弦？'
@@ -1371,12 +1419,16 @@ export function generateQuestion(
     throw new RangeError(`Unknown practice lesson: ${String(lessonId)}`);
   const selected = lesson.choices[sampleIndex(lesson.choices.length, rng)];
   const tonic =
-    (lesson.type === 'degree' || lesson.type === 'interval' ? 55 : 48) +
-    sampleIndex(12, rng);
+    lesson.mode === 'guitar'
+      ? [45, 40, 50][sampleIndex(3, rng)]
+      : (lesson.type === 'degree' || lesson.type === 'interval' ? 55 : 48) +
+        sampleIndex(12, rng);
   const majorInversion =
     lesson.type !== 'inversion' || sampleIndex(2, rng) === 0;
   const variant =
-    lesson.mode === 'voiced' || lesson.type === 'seventh-inversion'
+    lesson.mode === 'voiced' ||
+    lesson.mode === 'guitar' ||
+    lesson.type === 'seventh-inversion'
       ? sampleIndex(3, rng)
       : 0;
   const randomId = sampleIndex(0x100000000, rng).toString(36);
@@ -1405,7 +1457,11 @@ export function generateLessonExamples(lessonId: LessonId): LessonExample[] {
   const lesson = getLesson(lessonId);
   if (!lesson) return [];
   const tonic =
-    lesson.type === 'degree' || lesson.type === 'interval' ? 60 : 48;
+    lesson.mode === 'guitar'
+      ? 45
+      : lesson.type === 'degree' || lesson.type === 'interval'
+        ? 60
+        : 48;
   return lesson.choices.map(selected => {
     const question = constructQuestion(
       lesson,

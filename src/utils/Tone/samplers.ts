@@ -16,6 +16,7 @@ import {
 import { Note } from 'tonal';
 
 type Instrument = Sampler | PolySynth<Synth>;
+export type GuitarInstrument = 'guitar-acoustic' | 'guitar-nylon';
 
 interface DroneInstance {
   sampler: SamplerManager;
@@ -230,6 +231,143 @@ function getBassInstance(): SamplerManager {
   return bassInstance;
 }
 
+// Each physical string owns its sample sources. Tone.Sampler releases all
+// sources of a pitch, so sharing one sampler would mute unison strings together.
+class GuitarStringManager {
+  sampler!: Sampler;
+  readonly filter: Filter;
+  readonly gainNode: Gain;
+  readonly panner: Panner;
+  readonly ready: Promise<void>;
+  disposed = false;
+  private finishLoad?: (error?: unknown) => void;
+
+  constructor(
+    readonly activeInstrument: GuitarInstrument,
+    volume: number
+  ) {
+    this.filter = new Filter({
+      frequency: 12000,
+      type: 'lowpass',
+      rolloff: -12,
+    });
+    this.gainNode = new Gain(clamp(volume, 0, 1) * 0.7);
+    this.panner = new Panner(0);
+    this.filter.chain(this.panner, this.gainNode, globalChorous);
+
+    this.ready = new Promise<void>((resolve, reject) => {
+      let finished = false;
+      let timeout: ReturnType<typeof setTimeout> | undefined;
+      this.finishLoad = error => {
+        if (finished) return;
+        finished = true;
+        if (timeout) clearTimeout(timeout);
+        this.finishLoad = undefined;
+        if (error) {
+          this.dispose();
+          reject(error);
+        } else {
+          resolve();
+        }
+      };
+      try {
+        this.sampler = SampleLibrary.load({
+          instruments: activeInstrument,
+          baseUrl: '/samples/',
+          quality: 'medium',
+          onload: () => this.finishLoad?.(),
+          onerror: (error: Error) => this.finishLoad?.(error),
+        }) as Sampler;
+        if (!(this.sampler instanceof Sampler)) {
+          this.finishLoad?.(new Error('Guitar samples are unavailable.'));
+        }
+        if (this.disposed) {
+          this.sampler?.dispose();
+        } else {
+          this.sampler.connect(this.filter);
+          if (this.sampler.loaded) this.finishLoad?.();
+          else if (!finished) {
+            timeout = setTimeout(
+              () =>
+                this.finishLoad?.(
+                  new Error('Guitar sample loading timed out.')
+                ),
+              20000
+            );
+          }
+        }
+      } catch (error) {
+        this.finishLoad?.(error);
+      }
+    });
+    // Keep the strict rejected readiness promise for playback to report. A
+    // manager can be cancelled before playback gets a chance to await it.
+    void this.ready.catch(() => undefined);
+  }
+
+  get loaded(): boolean {
+    return !this.disposed && !this.sampler.disposed && this.sampler.loaded;
+  }
+
+  setVolume(value: number): void {
+    if (!this.disposed) {
+      this.gainNode.gain.rampTo(clamp(value, 0, 1) * 0.7, 0.05);
+    }
+  }
+
+  cancel(): void {
+    if (!this.loaded) this.dispose();
+    else this.sampler.releaseAll(now());
+  }
+
+  dispose(): void {
+    if (this.disposed) return;
+    this.disposed = true;
+    // Settle pending readiness immediately. The playback generation/loaded
+    // checks prevent a cancelled request from installing Transport events.
+    this.finishLoad?.();
+    this.sampler?.releaseAll(now());
+    this.sampler?.disconnect();
+    this.sampler?.dispose();
+    this.filter.dispose();
+    this.panner.dispose();
+    this.gainNode.dispose();
+  }
+}
+
+let guitarVolume = 0.5;
+let guitarBank: {
+  instrument: GuitarInstrument;
+  strings: Array<GuitarStringManager | undefined>;
+} | null = null;
+
+function getGuitarStringInstance(
+  guitarString: number,
+  instrument: GuitarInstrument = 'guitar-acoustic'
+): GuitarStringManager {
+  if (!Number.isInteger(guitarString) || guitarString < 0 || guitarString > 5) {
+    throw new Error('Guitar string must be an index from 0 to 5.');
+  }
+  if (instrument !== 'guitar-acoustic' && instrument !== 'guitar-nylon') {
+    throw new Error('Unknown guitar instrument.');
+  }
+  if (guitarBank?.instrument !== instrument) {
+    guitarBank?.strings.forEach(manager => manager?.dispose());
+    guitarBank = { instrument, strings: new Array(6) };
+  }
+  let manager = guitarBank.strings[guitarString];
+  if (!manager || manager.disposed) {
+    manager = new GuitarStringManager(instrument, guitarVolume);
+    guitarBank.strings[guitarString] = manager;
+  }
+  return manager;
+}
+
+function setGuitarVolume(volume: number): void {
+  guitarVolume = clamp(volume, 0, 1);
+  guitarBank?.strings.forEach(manager => manager?.setVolume(guitarVolume));
+}
+
 let droneInstance: DroneInstance | null = null;
 function getDroneInstance(): DroneInstance {
   if (!droneInstance) {
@@ -310,6 +448,11 @@ function preloadAudio(path: string): Player | null {
 function releasePlaybackVoices(): void {
   foregroundInstance?.cancel();
   bassInstance?.cancel();
+  const bank = guitarBank;
+  bank?.strings.forEach((manager, index) => {
+    manager?.cancel();
+    if (manager?.disposed) bank.strings[index] = undefined;
+  });
 }
 
 function stopAllVoices(): void {
@@ -325,6 +468,8 @@ const getAnswerGainNode = (): Gain => answerGainNode;
 export {
   getSamplerInstance,
   getBassInstance,
+  getGuitarStringInstance,
+  setGuitarVolume,
   getDroneInstance,
   preloadAudio,
   getAnswerGainNode,

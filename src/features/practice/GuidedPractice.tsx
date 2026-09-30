@@ -8,7 +8,13 @@ import {
   SpeakerWaveIcon,
 } from '@heroicons/react/24/outline';
 import { useSoundSettingsStore } from '@stores/soundSettingsStore';
-import { getSamplerInstance } from '@utils/Tone/samplers';
+import { getSamplerInstance, setGuitarVolume } from '@utils/Tone/samplers';
+import GuitarControls from './GuitarControls';
+import {
+  configureGuitarSound,
+  DEFAULT_GUITAR_SETTINGS,
+  type GuitarSettings,
+} from './guitarPractice';
 import {
   generateComparisonExample,
   generateQuestion,
@@ -122,6 +128,11 @@ function ListeningRoom({ lesson }: { lesson: Lesson }) {
   const c = copy[language];
   const location = useLocation();
   const [question, setQuestion] = useState(() => generateQuestion(lesson.id));
+  const [guitarSettings, setGuitarSettings] = useState(DEFAULT_GUITAR_SETTINGS);
+  const isGuitar = lesson.mode === 'guitar';
+  const targetQuestion = isGuitar
+    ? configureGuitarSound(question, guitarSettings)
+    : question;
   const [heard, setHeard] = useState(false);
   const [decision, setDecision] = useState<{ selected: string | null } | null>(
     null
@@ -141,9 +152,10 @@ function ListeningRoom({ lesson }: { lesson: Lesson }) {
   const canAnswer = heard && audio.status !== 'loading' && !decision;
 
   useEffect(() => {
-    getSamplerInstance().setVolume(volume);
+    if (isGuitar) setGuitarVolume(volume);
+    else getSamplerInstance().setVolume(volume);
     saveListeningPreferences({ volume, lastLessonId: lesson.id });
-  }, [volume, lesson.id]);
+  }, [volume, lesson.id, isGuitar]);
   useEffect(() => {
     advanceRef.current = false;
   }, [question.id]);
@@ -156,7 +168,7 @@ function ListeningRoom({ lesson }: { lesson: Lesson }) {
   const playSound = async (
     sound: PracticeSound = 'target',
     events?: PracticeEvent[],
-    target: PracticeQuestion = question
+    target: PracticeQuestion = targetQuestion
   ) => {
     const request = ++requestRef.current;
     loadingRef.current = true;
@@ -199,7 +211,11 @@ function ListeningRoom({ lesson }: { lesson: Lesson }) {
     setHeard(false);
     setDecision(null);
     setQuestion(next);
-    void playSound('target', undefined, next);
+    void playSound(
+      'target',
+      undefined,
+      isGuitar ? configureGuitarSound(next, guitarSettings) : next
+    );
   };
   const status =
     audio.status === 'loading'
@@ -217,12 +233,26 @@ function ListeningRoom({ lesson }: { lesson: Lesson }) {
   const correct = decision?.selected === question.answer;
   const contrast =
     decision?.selected && !correct
-      ? generateComparisonExample(question, decision.selected)
+      ? generateComparisonExample(targetQuestion, decision.selected)
       : undefined;
+  const styledContrast =
+    contrast && isGuitar
+      ? configureGuitarSound(
+          contrast,
+          guitarSettings,
+          targetQuestion.construction.variant
+        )
+      : contrast;
+  const changeGuitarSettings = (settings: GuitarSettings) => {
+    stopSound();
+    setGuitarSettings(settings);
+    heardRef.current = false;
+    setHeard(false);
+  };
   const playBoth = () => {
-    if (!contrast) return;
-    const first = comparisonEvents(question);
-    const second = comparisonEvents(contrast);
+    if (!styledContrast) return;
+    const first = comparisonEvents(targetQuestion);
+    const second = comparisonEvents(styledContrast);
     const end = Math.max(...first.map(event => event.time + event.duration));
     void playSound('comparison', [
       ...first,
@@ -272,7 +302,7 @@ function ListeningRoom({ lesson }: { lesson: Lesson }) {
           aria-atomic="true"
         >
           <span>{status}</span>
-          {instrumentLoadError && <span>{c.fallback}</span>}
+          {!isGuitar && instrumentLoadError && <span>{c.fallback}</span>}
         </div>
         <fieldset className="music-choices" disabled={!canAnswer}>
           <legend>{text(question.prompt, language)}</legend>
@@ -327,7 +357,10 @@ function ListeningRoom({ lesson }: { lesson: Lesson }) {
                   type="button"
                   className="music-secondary"
                   onClick={() =>
-                    void playSound('comparison', comparisonEvents(contrast))
+                    void playSound(
+                      'comparison',
+                      comparisonEvents(styledContrast!)
+                    )
                   }
                 >
                   <SpeakerWaveIcon aria-hidden="true" />
@@ -363,6 +396,14 @@ function ListeningRoom({ lesson }: { lesson: Lesson }) {
           </div>
         )}
       </section>
+      {isGuitar && (
+        <GuitarControls
+          settings={guitarSettings}
+          onChange={changeGuitarSettings}
+          zh={language === 'zh'}
+          practice
+        />
+      )}
       <div className="music-room-tools">
         <Link
           to={`/learn/${lesson.id}`}

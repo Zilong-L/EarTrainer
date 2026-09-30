@@ -244,6 +244,32 @@ function makePlayback() {
   return { ...env, api, foreground, bass, managerApi };
 }
 
+function makeGuitarPlayback() {
+  const env = makeSamplers();
+  const playback = loadModule('src/utils/Tone/playbacks.ts', {
+    tone: env.tone,
+    './samplers': env.api,
+  });
+  return { ...env, api: { ...env.api, ...playback } };
+}
+
+function finishSamples(pending) {
+  pending.forEach(load => {
+    load.sampler.loaded = true;
+    load.onload();
+  });
+}
+
+function guitarSweep(instrument = 'guitar-acoustic') {
+  return Array.from({ length: 6 }, (_, guitarString) => ({
+    note: 40 + guitarString * 5,
+    time: guitarString * 0.025,
+    duration: 1,
+    guitarString,
+    instrument,
+  }));
+}
+
 test('foreground has one dry, filtered, gain-controlled path and independent bass', () => {
   const { api, nodes, context } = makeSamplers();
   const foreground = api.getSamplerInstance();
@@ -538,4 +564,306 @@ test('bass-only sequences do not wait on foreground sample downloads', async () 
     { note: 'C2', time: 0, duration: 1, voice: 'bass' },
   ]);
   assert.equal(transport.starts.length, 1);
+});
+
+test('guitar strings load strict samples through independent shared-safe output paths', async () => {
+  const { api, pending, nodes, tone } = makeSamplers();
+  api.setGuitarVolume(0.3);
+  const low = api.getGuitarStringInstance(0, 'guitar-acoustic');
+  const high = api.getGuitarStringInstance(5, 'guitar-acoustic');
+  assert.notEqual(low, high);
+  assert.notEqual(low.sampler, high.sampler);
+  assert.equal(pending.length, 2);
+  assert.ok(pending.every(load => load.instruments === 'guitar-acoustic'));
+  assert.equal(nodes.filter(node => node instanceof tone.PolySynth).length, 0);
+  assert.equal(low.gainNode.gain.value, 0.21);
+  assert.equal(low.sampler.connections[0], low.filter);
+  assert.equal(low.filter.connections[0], low.panner);
+  assert.equal(low.panner.connections[0], low.gainNode);
+  assert.equal(low.gainNode.connections[0], api.globalChorous);
+  assert.equal(low.loaded, false);
+  finishSamples(pending);
+  await Promise.all([low.ready, high.ready]);
+  assert.equal(low.loaded, true);
+  const foreground = api.getSamplerInstance();
+  assert.notEqual(foreground.sampler, low.sampler);
+  assert.notEqual(foreground.gainNode, low.gainNode);
+  api.stopAllVoices();
+  assert.equal(low.sampler.calls.at(-1)[0], 'releaseAll');
+});
+
+test('unison notes on different guitar strings attack and release independently', async () => {
+  const { api, pending, transport } = makeGuitarPlayback();
+  const playback = api.scheduleNotes([
+    { note: 64, time: 0, duration: 0.4, guitarString: 2 },
+    { note: 64, time: 0.03, duration: 1.2, guitarString: 5 },
+  ]);
+  await tick();
+  assert.equal(pending.length, 2);
+  finishSamples(pending);
+  await playback;
+  const first = api.getGuitarStringInstance(2);
+  const second = api.getGuitarStringInstance(5);
+  transport.events[0].callback(5);
+  transport.events[2].callback(5.03);
+  assert.deepEqual(first.sampler.calls.at(-1), ['attack', 'midi:64', 5, 0.8]);
+  assert.deepEqual(second.sampler.calls.at(-1), [
+    'attack',
+    'midi:64',
+    5.03,
+    0.8,
+  ]);
+  const secondCalls = second.sampler.calls.length;
+  transport.events[1].callback(5.4);
+  assert.deepEqual(first.sampler.calls.at(-1), ['release', 'midi:64', 5.4]);
+  assert.equal(second.sampler.calls.length, secondCalls);
+  transport.events[3].callback(6.23);
+  assert.deepEqual(second.sampler.calls.at(-1), ['release', 'midi:64', 6.23]);
+});
+
+test('an older string release cannot truncate a later same-string strum', async () => {
+  const { api, pending, transport } = makeGuitarPlayback();
+  const playback = api.scheduleNotes([
+    { note: 64, time: 0, duration: 1, guitarString: 5 },
+    { note: 64, time: 0.5, duration: 1, guitarString: 5 },
+  ]);
+  await tick();
+  assert.equal(pending.length, 1);
+  finishSamples(pending);
+  await playback;
+  const sampler = pending[0].sampler;
+  transport.events[0].callback(5);
+  transport.events[2].callback(5.5);
+  const calls = sampler.calls.length;
+  transport.events[1].callback(6);
+  assert.equal(sampler.calls.length, calls);
+  transport.events[3].callback(6.5);
+  assert.deepEqual(sampler.calls.at(-1), ['release', 'midi:64', 6.5]);
+});
+
+test('guitar-only playback waits just for used strings, without waiting for piano', async () => {
+  const { api, pending, transport } = makeGuitarPlayback();
+  const foreground = api.getSamplerInstance();
+  const pianoLoad = foreground.changeSampler('piano');
+  const playback = api.scheduleNotes([
+    { note: 'E4', time: 0, duration: 1, guitarString: 5 },
+  ]);
+  await tick();
+  assert.deepEqual(
+    pending.map(load => load.instruments),
+    ['piano', 'guitar-acoustic']
+  );
+  finishSamples(pending.slice(1));
+  await playback;
+  assert.equal(transport.starts.length, 1);
+  assert.equal(transport.events.length, 2);
+  assert.equal(foreground.activeInstrument, 'triangle');
+  finishSamples(pending.slice(0, 1));
+  await pianoLoad;
+});
+
+test('repeated guitar replays reuse a bounded six-string bank and cancel old sweeps', async () => {
+  const { api, pending, transport, nodes, tone } = makeGuitarPlayback();
+  const firstPlayback = api.scheduleNotes(guitarSweep());
+  await tick();
+  assert.equal(pending.length, 6);
+  finishSamples(pending);
+  await firstPlayback;
+  const managers = Array.from({ length: 6 }, (_, index) =>
+    api.getGuitarStringInstance(index)
+  );
+  const nodeCount = nodes.length;
+  for (let replay = 0; replay < 12; replay++) {
+    const previousEvents = [...transport.events];
+    previousEvents[0].callback(5);
+    await api.scheduleNotes(guitarSweep());
+    const calls = pending.map(load => load.sampler.calls.length);
+    previousEvents.forEach(event => event.callback(15));
+    assert.deepEqual(
+      pending.map(load => load.sampler.calls.length),
+      calls
+    );
+    managers.forEach((manager, index) => {
+      assert.equal(api.getGuitarStringInstance(index), manager);
+    });
+    assert.equal(transport.events.length, 12);
+  }
+  assert.equal(pending.length, 6);
+  assert.equal(nodes.length, nodeCount);
+  assert.equal(
+    nodes.filter(node => node instanceof tone.Sampler && !node.disposed).length,
+    6
+  );
+  assert.equal(nodes.filter(node => node instanceof tone.PolySynth).length, 0);
+  const events = [...transport.events];
+  api.cancelAllSounds();
+  const calls = pending.map(load => load.sampler.calls.length);
+  events.forEach(event => event.callback(15));
+  assert.deepEqual(
+    pending.map(load => load.sampler.calls.length),
+    calls
+  );
+  assert.equal(transport.events.length, 0);
+  assert.equal(transport.position, 0);
+  assert.ok(
+    pending.every(load => load.sampler.calls.at(-1)[0] === 'releaseAll')
+  );
+});
+
+test('Stop disposes pending guitar loads and prevents late audio or errors', async () => {
+  const { api, pending, transport, nodes } = makeGuitarPlayback();
+  const playback = api.scheduleNotes(guitarSweep());
+  await tick();
+  assert.equal(pending.length, 6);
+  api.cancelAllSounds();
+  await playback;
+  assert.ok(pending.every(load => load.sampler.disposed));
+  assert.equal(nodes.filter(node => !node.disposed).length, 3);
+  finishSamples(pending);
+  pending[0].onerror(new Error('obsolete load failure'));
+  await tick();
+  assert.equal(transport.starts.length, 0);
+  assert.equal(transport.events.length, 0);
+  assert.ok(pending.every(load => load.sampler.connections.length === 0));
+});
+
+test('cancelling guitar during audio unlock never allocates a late string bank', async () => {
+  const { api, pending, tone, transport } = makeGuitarPlayback();
+  let unlock;
+  tone.start = () =>
+    new Promise(resolve => {
+      unlock = resolve;
+    });
+  const playback = api.scheduleNotes(guitarSweep());
+  api.cancelAllSounds();
+  unlock();
+  await playback;
+  assert.equal(pending.length, 0);
+  assert.equal(transport.events.length, 0);
+  assert.equal(transport.starts.length, 0);
+});
+
+test('guitar style switching disposes the old bank and only the latest load starts', async () => {
+  const { api, pending, transport, nodes, tone } = makeGuitarPlayback();
+  const old = api.scheduleNotes(guitarSweep('guitar-acoustic'));
+  await tick();
+  const acoustic = [...pending];
+  const latest = api.scheduleNotes(guitarSweep('guitar-nylon'));
+  await tick();
+  assert.ok(acoustic.every(load => load.sampler.disposed));
+  assert.equal(pending.length, 12);
+  const nylon = pending.slice(6);
+  finishSamples(nylon);
+  await Promise.all([old, latest]);
+  assert.equal(transport.starts.length, 1);
+  assert.equal(transport.events.length, 12);
+  finishSamples(acoustic);
+  await tick();
+  assert.equal(transport.starts.length, 1);
+  assert.equal(
+    nodes.filter(node => node instanceof tone.Sampler && !node.disposed).length,
+    6
+  );
+  transport.events[0].callback(5);
+  assert.equal(nylon[0].sampler.calls.at(-1)[0], 'attack');
+  assert.ok(
+    acoustic.every(
+      load => !load.sampler.calls.some(call => call[0] === 'attack')
+    )
+  );
+});
+
+test('style switching outside playback settles and invalidates pending guitar readiness', async () => {
+  const { api, pending, transport } = makeGuitarPlayback();
+  const playback = api.scheduleNotes([
+    { note: 40, time: 0, duration: 1, guitarString: 0 },
+  ]);
+  await tick();
+  const obsolete = pending[0];
+  const nylon = api.getGuitarStringInstance(0, 'guitar-nylon');
+  await playback;
+  assert.equal(obsolete.sampler.disposed, true);
+  assert.equal(transport.starts.length, 0);
+  assert.equal(transport.events.length, 0);
+  finishSamples(pending);
+  await nylon.ready;
+  assert.equal(nylon.loaded, true);
+});
+
+test('guitar load failure rejects playback, cleans pending strings, and can retry samples', async () => {
+  const { api, pending, transport, tone, nodes } = makeGuitarPlayback();
+  const playback = api.scheduleNotes(guitarSweep());
+  await tick();
+  pending[2].onerror(new Error('guitar network failure'));
+  await assert.rejects(playback, /guitar network failure/);
+  assert.equal(transport.starts.length, 0);
+  assert.equal(transport.events.length, 0);
+  assert.ok(pending.every(load => load.sampler.disposed));
+  assert.equal(nodes.filter(node => node instanceof tone.PolySynth).length, 0);
+  const retry = api.scheduleNotes(guitarSweep());
+  await tick();
+  finishSamples(pending.slice(6));
+  await retry;
+  assert.equal(transport.starts.length, 1);
+  assert.equal(pending.length, 12);
+});
+
+test('guitar volume is clamped, kept on replay/style switches, and independent of piano', async () => {
+  const { api, pending } = makeSamplers();
+  const foreground = api.getSamplerInstance();
+  api.setGuitarVolume(0.2);
+  const acoustic = api.getGuitarStringInstance(0);
+  finishSamples(pending);
+  await acoustic.ready;
+  assert.equal(acoustic.gainNode.gain.value, 0.2 * 0.7);
+  api.setGuitarVolume(2);
+  assert.equal(acoustic.gainNode.gain.value, 0.7);
+  assert.equal(foreground.gainNode.gain.value, 0.35);
+  const nylon = api.getGuitarStringInstance(0, 'guitar-nylon');
+  assert.equal(acoustic.sampler.disposed, true);
+  assert.equal(acoustic.filter.disposed, true);
+  assert.equal(acoustic.panner.disposed, true);
+  assert.equal(acoustic.gainNode.disposed, true);
+  assert.equal(nylon.gainNode.gain.value, 0.7);
+  finishSamples(pending.slice(1));
+  await nylon.ready;
+  api.setGuitarVolume(-1);
+  assert.equal(nylon.gainNode.gain.value, 0);
+  api.setGuitarVolume(NaN);
+  assert.equal(nylon.gainNode.gain.value, 0);
+  assert.equal(api.getGuitarStringInstance(0, 'guitar-nylon'), nylon);
+});
+
+test('guitar playback validates string indexes and rejects mixed styles before allocating', async () => {
+  const { api, pending, transport } = makeGuitarPlayback();
+  for (const index of [-1, 6, NaN, 0.5]) {
+    assert.throws(
+      () => api.getGuitarStringInstance(index),
+      /index from 0 to 5/
+    );
+  }
+  await api.scheduleNotes([
+    { note: 64, time: 0, duration: 1, guitarString: 6 },
+  ]);
+  await assert.rejects(
+    api.scheduleNotes([
+      {
+        note: 40,
+        time: 0,
+        duration: 1,
+        guitarString: 0,
+        instrument: 'guitar-acoustic',
+      },
+      {
+        note: 64,
+        time: 0,
+        duration: 1,
+        guitarString: 5,
+        instrument: 'guitar-nylon',
+      },
+    ]),
+    /one guitar instrument/
+  );
+  assert.equal(pending.length, 0);
+  assert.equal(transport.starts.length, 0);
 });

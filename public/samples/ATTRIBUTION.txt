@@ -1,0 +1,25 @@
+Instrument sample credits
+
+Sample collection: tonejs-instruments by Nicholaus P. Brosowsky (nbrosowsky).
+Source: https://github.com/nbrosowsky/tonejs-instruments
+Collection sample license: Creative Commons Attribution 3.0 Unported (CC BY 3.0)
+License: https://creativecommons.org/licenses/by/3.0/
+Legal code: https://creativecommons.org/licenses/by/3.0/legalcode
+Upstream license statement: https://github.com/nbrosowsky/tonejs-instruments/blob/master/LICENSE.md
+Original source list: https://github.com/nbrosowsky/tonejs-instruments/blob/master/sample-source-info.txt
+
+Guitar source credits from the upstream source list:
+- Acoustic guitar: University of Iowa Electronic Music Studios
+  http://theremin.music.uiowa.edu/
+- Nylon/classical guitar: quartertone on Freesound,
+  11573__quartertone__classicalguitar-multisampled
+  https://freesound.org/people/quartertone/sounds/11573/
+
+Other upstream collection sources: Karoryfer, VSCO / Versilian Studios,
+flcellogrl on Freesound, and donyaquick on Freesound; see the full source list.
+
+The upstream collection prepared the samples for consistent playback. EarTrainer
+uses the existing files with sampler pitch transposition and schedules timing,
+volume and duration. The guitar-strum feature does not modify the audio files.
+This is a sample-based simulation, without direction-specific strum recordings,
+velocity layers or palm-mute articulations. Attribution does not imply endorsement.
