@@ -593,7 +593,7 @@ function PracticeSession({ lesson }: { lesson: Lesson }) {
                       void playSound('example', comparisonEvents(example))
                     }
                   >
-                    <span aria-hidden="true">▶</span>{' '}
+                    <span aria-hidden="true">▶︎</span>{' '}
                     {text(example.choice.label, language)}
                   </button>
                 ))}
@@ -641,7 +641,7 @@ function PracticeSession({ lesson }: { lesson: Lesson }) {
                 disabled={loading}
               >
                 <span className="practice-play-icon" aria-hidden="true">
-                  ▶
+                  ▶︎
                 </span>
                 <span>{heard ? c.replay : c.listen}</span>
               </button>

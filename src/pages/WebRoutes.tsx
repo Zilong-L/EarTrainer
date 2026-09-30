@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -43,6 +44,7 @@ function LoadingScreen() {
 
 function RouteContent() {
   const { i18n } = useTranslation();
+  const { pathname } = useLocation();
   useEffect(() => {
     document.body.classList.add('light');
     try {
@@ -52,6 +54,22 @@ function RouteContent() {
       // Preserve the detected language if storage is invalid or unavailable.
     }
   }, [i18n]);
+  useEffect(() => {
+    const zh = i18n.language.startsWith('zh');
+    document.documentElement.lang = zh ? 'zh-CN' : 'en';
+    const titles = {
+      '/ear-trainer/degree-trainer': zh ? '音级自由练习' : 'Scale-degree lab',
+      '/ear-trainer/chord-color-trainer': zh
+        ? '和弦听觉实验室'
+        : 'Chord listening lab',
+    };
+    const title = pathname.startsWith('/chord-trainer')
+      ? zh
+        ? '键盘和弦练习'
+        : 'Keyboard chord lab'
+      : titles[pathname as keyof typeof titles];
+    if (title) document.title = `${title} · Ear Trainer`;
+  }, [pathname, i18n.language]);
   return (
     <TrainingError>
       <Suspense fallback={<LoadingScreen />}>

@@ -1,4 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  DialogTitle,
+} from '@headlessui/react';
 import { useTranslation } from 'react-i18next';
 import useI18nStore from '@stores/i18nStore';
 import '@styles/scrollbar.css';
@@ -28,7 +34,8 @@ function SettingsPanel({
   title = 'settings.Settings',
 }: SettingsPanelProps) {
   const { namespace } = useI18nStore();
-  const { t } = useTranslation(namespace);
+  const { t, i18n } = useTranslation(namespace);
+  const zh = i18n.language.startsWith('zh');
   const [currentPage, setCurrentPage] = useState<string>('home');
   useEffect(() => {
     if (isOpen) {
@@ -54,17 +61,22 @@ function SettingsPanel({
   )?.component;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 sm:px-6">
-      <div className="absolute inset-0 bg-black/50" onClick={handleClose} />
-      <div className="relative w-full max-w-4xl h-[80vh] bg-bg-common rounded-lg shadow-xl overflow-hidden">
+    <Dialog
+      open={isOpen}
+      onClose={handleClose}
+      className="fixed inset-0 z-[100] flex items-center justify-center px-4 sm:px-6"
+    >
+      <DialogBackdrop className="absolute inset-0 bg-black/50" />
+      <DialogPanel className="relative w-full max-w-4xl h-[80dvh] flex flex-col bg-bg-common rounded-lg shadow-xl overflow-hidden">
         {/* Header with Settings label and close button */}
-        <div className="flex items-center p-4 border-b border-bg-accent">
+        <div className="flex shrink-0 items-center p-4 border-b border-bg-accent">
           {/* Mobile back button - always takes space but hidden when not needed */}
-          <div className="w-8 md:hidden">
+          <div className="w-12 md:hidden">
             {currentPage !== 'home' && (
               <button
                 onClick={() => setCurrentPage('home')}
-                className="p-2 hover:bg-bg-hover rounded-full"
+                aria-label={zh ? '返回设置菜单' : 'Back to settings menu'}
+                className="p-2 min-w-12 min-h-12 hover:bg-bg-hover rounded-full"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -84,13 +96,15 @@ function SettingsPanel({
             )}
           </div>
 
-          <h2 className="text-xl font-semibold text-text-primary flex-1 text-center md:text-left">
+          <DialogTitle className="text-xl font-semibold text-text-primary flex-1 text-center md:text-left">
             {t(title)}
-          </h2>
+          </DialogTitle>
 
           <button
             onClick={handleClose}
-            className="p-2 hover:bg-bg-hover rounded-full"
+            aria-label={zh ? '关闭设置' : 'Close settings'}
+            data-autofocus
+            className="p-2 min-w-12 min-h-12 hover:bg-bg-hover rounded-full"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +124,7 @@ function SettingsPanel({
         </div>
 
         {/* Content container with navigation and content area */}
-        <div className="flex h-[calc(100%-4rem)]">
+        <div className="flex flex-1 min-h-0">
           {/* Navigation Sidebar - Hidden on mobile */}
           <div className="w-48 border-r border-bg-accent bg-bg-common h-full hidden md:block">
             <nav className="p-4 space-y-2 bg-bg-common">
@@ -127,9 +141,9 @@ function SettingsPanel({
           </div>
 
           {/* Content Area */}
-          <div className="flex-1 flex flex-col pb-6 bg-bg-main">
+          <div className="flex-1 min-w-0 min-h-0 flex flex-col pb-6 bg-bg-main">
             <div
-              className="p-6 overflow-y-auto h-full box-border  bg-bg-main"
+              className="p-6 overflow-y-auto min-h-0 flex-1 box-border bg-bg-main"
               style={{ paddingBottom: '0', scrollbarGutter: 'stable' }}
             >
               {/* Home content - Different for mobile and desktop */}
@@ -169,8 +183,8 @@ function SettingsPanel({
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </DialogPanel>
+    </Dialog>
   );
 }
 

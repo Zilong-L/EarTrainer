@@ -369,7 +369,7 @@ test('tonal questions and labeled examples establish reference before target, wh
   const env = makeRuntime();
   const render = env.page('degrees-core');
   let page = render();
-  button(page, '▶ 1 · Do').props.onClick();
+  button(page, '▶︎ 1 · Do').props.onClick();
   await tick();
   const demo = env.schedules[0];
   assert.ok(demo.length > 1, 'a degree demonstration needs tonal context');
@@ -557,7 +557,7 @@ test('stopping during tonal context cannot unlock a first answer before the targ
   assert.equal(answerFieldset(page).props.disabled, true);
   button(page, '1 · Do').props.onClick();
   assert.equal(text(render()).includes('The answer is'), false);
-  button(page, '▶Listen to the question').props.onClick();
+  button(page, '▶︎Listen to the question').props.onClick();
   await tick();
   page = render();
   assert.equal(answerFieldset(page).props.disabled, true);
