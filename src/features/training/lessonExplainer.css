@@ -272,8 +272,10 @@
   font-size: 21px;
   font-weight: 400;
 }
-.lesson-chord-diagram svg {
+.trainer-app .lesson-chord-diagram svg {
   width: 100%;
+  height: auto;
+  aspect-ratio: 240 / 190;
   overflow: visible;
 }
 .lesson-pitch-axis {
