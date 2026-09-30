@@ -856,11 +856,14 @@
 
 .guitar-diagram {
   width: 100%;
-  color: #254d3d;
+  color: #e4d4ad;
 }
-.guitar-diagram svg {
+.trainer-app .guitar-diagram svg {
+  display: block;
   width: 100%;
-  max-height: 370px;
+  height: auto;
+  aspect-ratio: 360 / 300;
+  max-height: 420px;
   overflow: visible;
 }
 .guitar-diagram text {
@@ -871,7 +874,7 @@
 .guitar-diagram p {
   text-align: center;
   font-size: 0.75rem;
-  color: #64796e;
+  color: #bac5b2;
   margin: 0.4rem 0;
 }
 .guitar-fret,
@@ -879,31 +882,31 @@
   stroke: #9aae9f;
 }
 .guitar-nut {
-  stroke: #385a47;
+  stroke: #c2cbb7;
   stroke-width: 5;
 }
 .guitar-finger {
-  fill: #416a53;
-  stroke: #416a53;
+  fill: #b7c6a4;
+  stroke: #b7c6a4;
   stroke-width: 2;
 }
 .guitar-finger.is-bass {
-  fill: #98704b;
-  stroke: #98704b;
+  fill: #e3ba82;
+  stroke: #e3ba82;
 }
 .guitar-open {
   fill: none;
-  stroke: #416a53;
+  stroke: #b7c6a4;
   stroke-width: 2;
 }
 .guitar-diagram .guitar-fret-number {
-  fill: #fff;
+  fill: #18231f;
   font-size: 11px;
 }
 .guitar-diagram .guitar-string-label,
 .guitar-diagram .guitar-position {
   font-size: 12px;
-  fill: #6c8073;
+  fill: #bac5b2;
 }
 .guitar-diagram .guitar-pitch {
   font-size: 13px;
@@ -911,11 +914,11 @@
 }
 .guitar-diagram .guitar-member {
   font-size: 10px;
-  fill: #64796e;
+  fill: #bac5b2;
 }
 .guitar-diagram .guitar-bass {
   font-size: 10px;
-  fill: #98704b;
+  fill: #e3ba82;
 }
 .guitar-muted {
   font-size: 21px;
@@ -938,13 +941,13 @@
   fill: #f4dfbd;
 }
 .guitar-explore {
-  border-top: 1px solid #d8e2d8;
+  border-top: 1px solid #62715e;
   margin-top: 1.5rem;
   padding: 1rem 0;
   text-align: center;
 }
 .guitar-explore > p {
-  color: #64796e;
+  color: #bac5b2;
   font-size: 0.85rem;
   max-width: 40rem;
   margin: 1rem auto;
@@ -958,14 +961,14 @@
 .guitar-shapes button {
   min-height: 44px;
   padding: 0.6rem 0.9rem;
-  border: 1px solid #bdcebf;
+  border: 1px solid #65755f;
   border-radius: 2rem;
   font-size: 0.85rem;
 }
 .guitar-shapes button[aria-pressed='true'] {
-  background: #e4eee3;
-  color: #254d3d;
-  border-color: #63846d;
+  background: #daceac12;
+  color: #f0dfac;
+  border-color: #d5c9a5;
 }
 @media (max-width: 480px) {
   .guitar-controls {

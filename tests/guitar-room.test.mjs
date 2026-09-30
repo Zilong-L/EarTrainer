@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFileSync } from 'node:fs';
 import {
   makeRuntime,
   allNodes,
@@ -104,4 +105,15 @@ test('guitar Learn holds chord quality while changing true fret diagrams and A/B
   button(render(), 'Stop sound').props.onClick();
   assert.equal(env.timers.size, 0);
   env.unmount();
+});
+
+test('guitar diagrams retain full size over the shared icon sizing rule', () => {
+  const css = readFileSync(
+    new URL('../src/features/training/lessonExplainer.css', import.meta.url),
+    'utf8'
+  );
+  assert.match(
+    css,
+    /\.trainer-app \.guitar-diagram svg\s*\{[^}]*width: 100%;[^}]*height: auto;/
+  );
 });

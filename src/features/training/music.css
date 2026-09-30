@@ -1255,23 +1255,23 @@
   gap: 0.4rem;
   min-width: 0;
   font-size: 0.85rem;
-  color: var(--music-muted, #78877c);
+  color: var(--trainer-muted);
 }
 .guitar-controls select {
   max-width: 100%;
   min-height: 44px;
   padding: 0.45rem 0.7rem;
-  background: var(--music-paper, #faf9f4);
-  border: 1px solid #ccd7cf;
+  background: #25332b;
+  border: 1px solid #65755f;
   border-radius: 0.65rem;
-  color: var(--music-ink, #233c32);
+  color: var(--trainer-ink);
 }
 .guitar-controls p {
   flex-basis: 100%;
   margin: 0;
   text-align: center;
   font-size: 0.75rem;
-  color: var(--music-muted, #78877c);
+  color: var(--trainer-muted);
 }
 .guitar-controls select:focus-visible,
 .guitar-shapes button:focus-visible {
